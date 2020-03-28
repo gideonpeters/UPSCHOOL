@@ -1,0 +1,39 @@
+<template>
+	<div>
+		<div>
+			<v-btn color="grey" icon @click="$router.go(-1)">
+				<v-icon>mdi-arrow-left</v-icon>
+			</v-btn>
+		</div>
+		<div class="pa-3">
+			<v-img
+				v-if="news.image.url"
+				:src="`http://127.0.0.1:8000${news.image.url}`"
+				max-height="300"
+				contain
+			></v-img>
+			<h2 class="mt-2">{{ news.title }}</h2>
+			<div class="fs-5 mb-3 mt-2">Uploaded 5 mins ago</div>
+			<v-divider></v-divider>
+			<div v-html="news.body" class="mt-3"></div>
+		</div>
+	</div>
+</template>
+
+<script>
+export default {
+	props: {
+		isStudent: {
+			type: Boolean,
+			default: false
+		}
+	},
+	computed: {
+		news() {
+			let id = this.$route.params.id;
+
+			return this.$store.getters.getNewsById(id);
+		}
+	}
+};
+</script>

@@ -1,0 +1,221 @@
+<template>
+	<div>
+		<div class="d-flex">
+			<div>
+				<h3>{{course.course_code}}: {{course.title}}</h3>
+			</div>
+			<v-spacer></v-spacer>
+			<!-- <div>
+				<div class="text-center" v-if="!student">
+					<v-menu offset-y>
+						<template v-slot:activator="{ on }">
+							<v-btn outlined color="green accent-4" class="fs-5" v-on="on">ENROLL</v-btn>
+						</template>
+						<v-list>
+							<v-list-item v-for="(item, index) in enrollActions" :key="index" @click="alert(item)">
+								<v-list-item-title>{{ item.title }}</v-list-item-title>
+							</v-list-item>
+						</v-list>
+					</v-menu>
+				</div>
+			</div>-->
+		</div>
+
+		<div>
+			<v-card flat class="pa-3 mt-5">
+				<v-tabs v-model="tab" background-color="transparent">
+					<v-tab v-for="item in items" :key="item.id">{{ item.tab }}</v-tab>
+				</v-tabs>
+
+				<v-tabs-items v-model="tab">
+					<v-tab-item v-for="(item, ix) in items" :key="ix">
+						<v-card flat class="pa-3" v-if="ix == 0" min-height="500">
+							<v-card-text>
+								<v-row align="center" class="mx-0">
+									<v-rating :value="4.5" color="amber" dense half-increments readonly size="14"></v-rating>
+
+									<div class="grey--text ml-4">4.5 (413 participants so far)</div>
+								</v-row>
+
+								<div class="my-4 subtitle-1">Description</div>
+
+								<div>Real analysis is an area of analysis that studies concepts such as sequences and their limits, continuity, differentiation, integration and sequences of functions. By definition, real analysis focuses on the real numbers, often including positive and negative infinity to form the extended real line.</div>
+							</v-card-text>
+
+							<v-divider class="mx-4"></v-divider>
+
+							<v-card-title>Prerequisites</v-card-title>
+
+							<v-card-text>
+								<v-chip-group v-model="selection" active-class="deep-purple accent-4 white--text" column>
+									<v-chip
+										v-for="item in course.prerequisites"
+										:key="item.id"
+									>{{ courseCode(item.course_id) }}</v-chip>
+								</v-chip-group>
+							</v-card-text>
+
+							<v-card-text>
+								<div class="mb-4 subtitle-1">Facilitators</div>
+
+								<div
+									v-for="facilitator in course.facilitators"
+									:key="facilitator.id"
+								>{{ courseStaff(facilitator.staff_id) }}</div>
+							</v-card-text>
+
+							<v-card-actions>
+								<div class="d-flex flex-lg-row flex-column">
+									<div>
+										<v-btn color="deep-purple lighten-2" text @click="reserve">Enroll as Student</v-btn>
+									</div>
+									<div>
+										<v-btn color="deep-purple lighten-2" text @click="reserve">Enroll as Staff</v-btn>
+									</div>
+								</div>
+							</v-card-actions>
+						</v-card>
+						<v-card flat class="pa-3" v-if="ix == 1" min-height="500">
+							<v-btn color="primary" depressed text>Add Section</v-btn>
+
+							<div class="mt-5 border-dashed pb-5" v-for="section in course.sections" :key="section.id">
+								<div class="d-flex justify-space-between align-center">
+									<h3>{{section.title}}</h3>
+									<div class="text-center" v-if="!student">
+										<v-menu offset-y>
+											<template v-slot:activator="{ on }">
+												<v-btn v-on="on" depressed icon>
+													<v-icon color="grey">mdi-dots-vertical</v-icon>
+												</v-btn>
+											</template>
+											<v-list>
+												<v-list-item v-for="(item, index) in sectionActions" :key="index" @click="alert(item)">
+													<v-list-item-title>{{ item.title }}</v-list-item-title>
+												</v-list-item>
+											</v-list>
+										</v-menu>
+									</div>
+								</div>
+								<div
+									class="fs-3 mt-3 align-center d-flex pointer"
+									v-for="(subsection, idx) in section.subsection"
+									:key="idx"
+								>
+									<section-item :subsection="subsection" />
+								</div>
+								<div class="d-flex mt-4 align-baseline">
+									<div class="fs-5 font-weight-light">Updated 5 mins ago</div>
+									<div class="px-2"></div>
+									<div class="fs-5 font-weight-light">Uploaded 5 mins ago</div>
+								</div>
+							</div>
+						</v-card>
+						<v-card flat class="pa-3" v-if="ix == 2" min-height="500">
+							<v-data-table
+								:headers="headers"
+								:items="course.participants"
+								:items-per-page="10"
+								hide-default-footer
+							>
+								<template v-slot:item.action="{}">
+									<v-btn depressed tile>Action</v-btn>
+								</template>
+							</v-data-table>
+						</v-card>
+						<v-card flat class="pa-3" v-if="ix == 3" min-height="500">
+							<div class="fs-3">Currently under construction</div>
+						</v-card>
+						<v-card flat class="pa-3" v-if="ix == 4" min-height="500">
+							<div class="fs-3">Currently under construction</div>
+						</v-card>
+
+						<v-card flat class="pa-3" v-if="ix == 5" min-height="500">
+							<div class="fs-3">Currently under construction</div>
+						</v-card>
+					</v-tab-item>
+				</v-tabs-items>
+			</v-card>
+		</div>
+	</div>
+</template>
+
+<script>
+import SectionItem from "@/components/general/SectionItem";
+export default {
+	components: {
+		SectionItem
+	},
+	props: {
+		student: {
+			type: Boolean,
+			default: false
+		}
+	},
+	data() {
+		return {
+			tab: null,
+			isHovered: false,
+			selection: null,
+			items: [
+				{ id: 1, tab: "OVERVIEW" },
+				{ id: 2, tab: "COURSE MATERIAL" },
+				{ id: 3, tab: "PARTICIPANTS" },
+				{ id: 4, tab: "SUBMISSIONS" },
+				{ id: 5, tab: "GRADES" },
+				{ id: 6, tab: "SETTINGS" }
+			],
+			headers: [
+				{
+					text: "Name",
+					align: "left",
+					sortable: false,
+					value: "name"
+				},
+				{ text: "Matriculation Number", value: "matric_number" },
+				{ text: "Registration Number", value: "reg_number" },
+				{ text: "Department", value: "department" },
+				{ text: "Grade/Level", value: "level" },
+				// { text: "Residence", value: "residence" },
+				{ text: "Actions", value: "action", sortable: false }
+			],
+			sectionActions: [
+				{ id: 1, title: "Add Document" },
+				{ id: 2, title: "Add Submission" },
+				{ id: 3, title: "Edit Section" },
+				{ id: 4, title: "Delete Section" }
+			],
+			enrollActions: [
+				{ id: 1, title: "Student Enrollment" },
+				{ id: 2, title: "Staff Enrollment" }
+			]
+		};
+	},
+	computed: {
+		course() {
+			let id = this.$route.params.id;
+			return this.$store.getters.getCourseById(id);
+		}
+	},
+	methods: {
+		reserve() {},
+		courseCode(id) {
+			let course = this.$store.state.courses.find(
+				course => course.id == id
+			);
+
+			return course.course_code;
+		},
+		courseStaff(id) {
+			let staff = this.$store.state.staff.find(item => item.id == id);
+
+			return ` ${staff.title} ${staff.name}`;
+		}
+	}
+};
+</script>
+
+<style lang="scss" scoped>
+.border-dashed {
+	border-bottom: 1px dashed grey;
+}
+</style>
