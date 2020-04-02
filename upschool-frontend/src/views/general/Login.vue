@@ -1,66 +1,62 @@
 <template>
-	<div class="auth-body">
-		<v-row no-gutters>
-			<v-col cols="5">
-				<div class="bg-img"></div>
-			</v-col>
-			<v-col>
-				<div class="pa-4">
-					<div class="d-flex flex-column align-center">
-						<div class="mb-5">
-							<v-img cover fixed width="220px" height="220px" :src="logo" />
-						</div>
-					</div>
-					<div class="d-flex justify-center">
-						<div>
-							<v-row no-gutters justify="center" align="center">
-								<v-col cols="7">
-									<div class="mt-5">
-										<div class="fs-2 font-weight-light">Login to your school dashboard</div>
-									</div>
-								</v-col>
-								<v-col cols="7">
-									<div class="mt-5">
-										<v-text-field v-model="userId" label="User ID" outlined :rules="[rules.required]"></v-text-field>
-									</div>
-								</v-col>
-								<v-col cols="7">
-									<div>
-										<v-text-field
-											outlined
-											:append-icon="
+	<div class="auth-body d-flex justify-center align-center">
+		<v-card flat class="d-flex" height="90%" width="80%">
+			<v-row no-gutters>
+				<v-col cols="5" md="0" class="bg-img" v-if="$vuetify.breakpoint.mdAndUp"></v-col>
+				<v-col cols="12" md="7">
+					<v-card class="pa-5" tile flat>
+						<div class="pa-4 d-flex flex-column">
+							<div class="d-flex flex-column align-center">
+								<div>
+									<v-img cover fixed width="220px" height="220px" :src="logo" />
+								</div>
+							</div>
+							<div class="d-flex justify-center">
+								<v-row justify="center" align="center" no-gutters>
+									<v-col cols="12" md="8">
+										<div class>
+											<div class="fs-2 font-weight-light">Login to your school dashboard</div>
+										</div>
+										<div class="mt-5">
+											<v-text-field v-model="userId" label="User ID" outlined :rules="[rules.required]"></v-text-field>
+										</div>
+										<div>
+											<v-text-field
+												outlined
+												:append-icon="
 												show3
 													? 'mdi-eye'
 													: 'mdi-eye-off'
 											"
-											:rules="[
+												:rules="[
 												rules.required,
 												rules.emailMatch
 											]"
-											:type="show3 ? 'text' : 'password'"
-											name="input-10-2"
-											label="Password"
-											hint="At least 8 characters"
-											value="wqfasds"
-											class="input-group--focused"
-											@click:append="show3 = !show3"
-										></v-text-field>
-									</div>
-								</v-col>
-								<v-col cols="7">
-									<div class="d-flex align-baseline justify-space-between">
-										<div>
-											<v-btn color="primary" block depressed @click="goToPage">LOGIN</v-btn>
+												:type="show3 ? 'text' : 'password'"
+												name="input-10-2"
+												label="Password"
+												hint="At least 8 characters"
+												value="wqfasds"
+												class="input-group--focused"
+												@click:append="show3 = !show3"
+											></v-text-field>
 										</div>
-										<div class="fs-4 password-info t-primary pb-1">Forgot your User ID or Password?</div>
-									</div>
-								</v-col>
-							</v-row>
+										<div class="d-flex flex-lg-row flex-column align-lg-baseline justify-lg-space-between">
+											<div class="d-flex mb-2">
+												<v-btn color="primary" block depressed @click="goToPage">LOGIN</v-btn>
+											</div>
+											<div
+												class="fs-4 password-info t-primary pb-1 text-center text-lg-start"
+											>Forgot your User ID or Password?</div>
+										</div>
+									</v-col>
+								</v-row>
+							</div>
 						</div>
-					</div>
-				</div>
-			</v-col>
-		</v-row>
+					</v-card>
+				</v-col>
+			</v-row>
+		</v-card>
 	</div>
 </template>
 
@@ -108,11 +104,14 @@ export default {
 <style lang="scss" scoped>
 .auth-body {
 	font-family: "Roboto";
-	background: white;
+	background: #7038a8d9;
+	height: 100vh;
+	width: 100vw;
+	overflow-x: hidden;
 }
 
 .bg-img {
-	height: calc(100vh - 100px);
+	min-height: 100%;
 	background-image: url("./../../assets/loginphoto.jpg");
 	background-size: cover;
 	background-repeat: no-repeat;
