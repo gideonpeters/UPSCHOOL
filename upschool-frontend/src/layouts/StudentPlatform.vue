@@ -1,69 +1,6 @@
 /* eslint-disable */
 <template>
 	<v-app>
-		<!-- <v-navigation-drawer
-			v-model="drawer"
-			app
-			dark
-			:mini-variant.sync="$vuetify.breakpoint.mdAndUp ? mini : false"
-			:permanent="$vuetify.breakpoint.mdAndUp"
-			hide-overlay
-			color="#683587"
-			class="drawer disable-dbl-tap-zoom"
-		>
-			<div style="display: flex;">
-				<v-list>
-					<v-list-item class="py-3 mx-3">
-						<v-icon
-							:ripple="false"
-							size="20"
-							@click.stop="mini = !mini"
-						>
-							$vuetify.icons.sidebar-menu
-						</v-icon>
-					</v-list-item>
-					<v-list-item
-						v-for="item in items"
-						:key="item.title"
-						:ripple="false"
-						class="py-1 mx-3 my-4"
-						exact
-						:active-class="mini ? 'active-tab ' : ''"
-						:to="{ name: item.route }"
-					>
-						<v-list-item-icon
-							style="position: relative; z-index: 9999999999"
-						>
-							<v-icon size="20" style="z-index: 9999999999">
-								{{ item.icon }}
-							</v-icon>
-						</v-list-item-icon>
-
-						<v-list-item-content style="position: relative">
-							{{ item.title }}
-						</v-list-item-content>
-					</v-list-item>
-					<v-list-item
-						style="position: absolute; bottom: 0px; left: 0px; right: 0px; display:flex; justify-content: center"
-						class="py-1"
-						:class="mini ? '' : 'f '"
-						exact
-						:to="{ name: 'main.help' }"
-					>
-						<v-list-item-icon style="position: relative">
-							<v-icon size="20">
-								$vuetify.icons.sidebar-email
-							</v-icon>
-						</v-list-item-icon>
-
-						<v-list-item-content style="position: relative">
-							Send us an email
-						</v-list-item-content>
-					</v-list-item>
-				</v-list>
-			</div>
-		</v-navigation-drawer>-->
-
 		<v-card flat>
 			<v-navigation-drawer
 				app
@@ -74,12 +11,16 @@
 			>
 				<v-list-item class="px-2 py-4">
 					<v-list-item-avatar>
-						<v-img src="https://randomuser.me/api/portraits/women/80.jpg"></v-img>
+						<v-img
+							src="https://randomuser.me/api/portraits/women/80.jpg"
+						></v-img>
 					</v-list-item-avatar>
 
 					<v-list-item-title>
-						<div>Bethel Ofuyatan</div>
-						<div class="fs-4 my-3">Student #: 15CJ02876</div>
+						<div>{{ user.user.name }}</div>
+						<div class="fs-4 my-3">
+							Student #: {{ user.matric_number }}
+						</div>
 						<div class="fs-4">Covenant University</div>
 					</v-list-item-title>
 
@@ -98,7 +39,7 @@
 					<v-list-item
 						exact
 						active-class=" active-tab"
-						:to="{name: dash.route}"
+						:to="{ name: dash.route }"
 						v-for="dash in dashes"
 						:key="dash.icon"
 						link
@@ -108,7 +49,9 @@
 						</v-list-item-icon>
 
 						<v-list-item-content>
-							<v-list-item-title class="text-uppercase">{{ dash.title }}</v-list-item-title>
+							<v-list-item-title class="text-uppercase">{{
+								dash.title
+							}}</v-list-item-title>
 						</v-list-item-content>
 					</v-list-item>
 				</v-list>
@@ -121,7 +64,7 @@
 					<v-list-item
 						exact
 						active-class=" active-tab"
-						:to="{name: item.route}"
+						:to="{ name: item.route }"
 						v-for="item in items"
 						:key="item.title"
 						link
@@ -131,64 +74,80 @@
 						</v-list-item-icon>
 
 						<v-list-item-content>
-							<v-list-item-title class="text-uppercase">{{ item.title }}</v-list-item-title>
+							<v-list-item-title class="text-uppercase">{{
+								item.title
+							}}</v-list-item-title>
 						</v-list-item-content>
 					</v-list-item>
 				</v-list>
 
 				<v-footer absolute>
-					<!-- <v-spacer></v-spacer> -->
 					<div
 						class="py-2 pointer"
 						v-if="!mini"
-						@click="goToPage('main.login'), $store.commit('openSnackbar', 'Visit again!')"
-					>LOGOUT</div>
+						@click="
+							goToPage('main.login'),
+								$store.commit('openSnackbar', 'Visit again!')
+						"
+					>
+						LOGOUT
+					</div>
 				</v-footer>
 			</v-navigation-drawer>
 			<!-- <v-card :ripple="false" color="grey lighten-4" flat height="100%" tile> -->
 			<v-app-bar app class="primary disable-dbl-tap-zoom">
-				<!-- <v-toolbar-title>
-					<div class="nav-title text-truncate">
-						<i
-							v-if="$vuetify.breakpoint.xs"
-							class="mdi mdi-menu mr-5"
-							@click="(mini = !mini), (drawer = true)"
-						/>
-						{{ navTitle }}
-					</div>
-				</v-toolbar-title>-->
 				<v-icon
 					color="white"
-					@click=" $vuetify.breakpoint.mdAndUp ? mini = !mini : drawer = !drawer"
-				>mdi-menu</v-icon>
+					@click="
+						$vuetify.breakpoint.mdAndUp
+							? (mini = !mini)
+							: (drawer = !drawer)
+					"
+					>mdi-menu</v-icon
+				>
 
 				<v-spacer />
 
 				<v-menu offset-y :close-on-content-click="closeOnContentClick">
 					<template v-slot:activator="{ on }">
-						<v-btn depressed color="primary" dark v-on="on" v-if="keyStat">
-							<v-icon color="white" class="pointer">mdi-apps</v-icon>
+						<v-btn
+							depressed
+							color="primary"
+							dark
+							v-on="on"
+							v-if="keyStat"
+						>
+							<v-icon color="white" class="pointer"
+								>mdi-apps</v-icon
+							>
 						</v-btn>
 					</template>
 
-					<v-card class="pa-4 primary-box-shadow" min-width="150px" max-height="350px" flat>
+					<v-card
+						class="pa-4 primary-box-shadow"
+						min-width="150px"
+						max-height="350px"
+						flat
+					>
 						<v-container>
 							<v-row>
-								<v-col cols="4" v-for="(item, index) in apps" :key="index">
-									<div class="d-flex flex-column align-center" @click="goToPage(item.route)">
+								<v-col
+									cols="4"
+									v-for="(item, index) in apps"
+									:key="index"
+								>
+									<div
+										class="d-flex flex-column align-center"
+										@click="goToPage(item.route)"
+									>
 										<div>
-											<v-icon>{{item.icon}}</v-icon>
+											<v-icon>{{ item.icon }}</v-icon>
 										</div>
-										<div>{{item.title}}</div>
+										<div>{{ item.title }}</div>
 									</div>
 								</v-col>
 							</v-row>
 						</v-container>
-						<!-- <v-list>
-							<v-list-item">
-								<v-list-item-title>{{ item.title }}</v-list-item-title>
-							</v-list-item>
-						</v-list>-->
 					</v-card>
 				</v-menu>
 
@@ -202,7 +161,9 @@
 					</template>
 					<v-list>
 						<v-list-item v-for="(item, i) in itemsx" :key="i">
-							<v-list-item-title>{{ item.title }}</v-list-item-title>
+							<v-list-item-title>{{
+								item.title
+							}}</v-list-item-title>
 						</v-list-item>
 					</v-list>
 				</v-menu>
@@ -240,7 +201,6 @@
 				</v-menu>-->
 			</v-app-bar>
 		</v-card>
-		<!-- </v-card> -->
 
 		<v-content>
 			<v-container>
@@ -458,21 +418,21 @@ export default {
 			else if (!this.keyStat) result = generalItems;
 
 			return result;
+		},
+		user() {
+			return this.$store.state.loggedInUser;
 		}
-		// mini: {
-		// 	get() {
-		// 		return (
-		// 			this.$vuetify.breakpoint.mdOnly || this.overwriteBreakpoint
-		// 		);
-		// 	},
-		// 	set(value) {
-		// 		this.overwriteBreakpoint = value;
-		// 	}
-		// }
 	},
 	methods: {
 		goToPage(routeName) {
 			this.$router.push({ name: routeName });
+		}
+	},
+	async created() {
+		try {
+			this.$store.dispatch("getUser");
+		} catch (err) {
+			console.log(err);
 		}
 	}
 };

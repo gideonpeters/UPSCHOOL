@@ -4,9 +4,11 @@
 			<v-row wrap>
 				<v-col cols="12" sm="12" md="12">
 					<div class="d-flex align-baseline py-3">
-						<div class="fs-2 font-weight-light">Welcome, Gideon!</div>
+						<div class="fs-2 font-weight-light">
+							Welcome, {{ student.first_name }}!
+						</div>
 						<v-spacer></v-spacer>
-						<div>{{date.toDateString()}}</div>
+						<div>{{ date.toDateString() }}</div>
 					</div>
 					<v-divider></v-divider>
 				</v-col>
@@ -14,39 +16,110 @@
 					<div class="d-flex flex-column">
 						<div>
 							<v-card class="pa-3 mb-5" flat>
-								<custom-header title="FEATURED POST" ctaText="View more" route="student.news"></custom-header>
+								<custom-header
+									title="FEATURED POST"
+									ctaText="View more"
+									route="student.news"
+								></custom-header>
+								<v-img
+									:src="
+										`https://127.0.0.1:8000${latestNews.image.url}`
+									"
+									class="white--text align-end"
+									gradient="to bottom, rgba(0,0,0,.1), rgba(0,0,0,.5)"
+									height="200px"
+								>
+									<v-card-title
+										v-text="latestNews.title"
+									></v-card-title>
+								</v-img>
+
+								<v-card-actions>
+									<v-spacer></v-spacer>
+
+									<v-btn icon>
+										<v-icon>mdi-heart</v-icon>
+									</v-btn>
+
+									<v-btn icon>
+										<v-icon>mdi-bookmark</v-icon>
+									</v-btn>
+
+									<v-btn icon>
+										<v-icon>mdi-share-variant</v-icon>
+									</v-btn>
+								</v-card-actions>
 							</v-card>
 						</div>
 						<div>
 							<v-card class="pa-3 mb-5" flat>
-								<custom-header title="TODAY'S SCHEDULE" ctaText="View full schedule" route="student.news"></custom-header>
+								<custom-header
+									title="TODAY'S SCHEDULE"
+									ctaText="View full schedule"
+									route="student.news"
+								></custom-header>
 								<div>
-									<v-data-table :headers="headers" :items="schedule" hide-default-header hide-default-footer>
+									<v-data-table
+										:headers="headers"
+										:items="schedule"
+										hide-default-header
+										hide-default-footer
+									>
 										<template v-slot:item.check="{ item }">
-											<v-icon size="10" :color="item.id == 1 ? 'blue accent-2 ' : 'grey'">mdi-circle</v-icon>
+											<v-icon
+												size="10"
+												:color="
+													item.id == 1
+														? 'blue accent-2 '
+														: 'grey'
+												"
+												>mdi-circle</v-icon
+											>
 											<!-- <v-simple-checkbox v-model="item.check" disabled> -->
 											<!-- </v-simple-checkbox> -->
 										</template>
 										<template v-slot:item.name="{ item }">
-											<div>{{ item.course_id ? (`${getCourse(item.course_id).course_code}: ${getCourse(item.course_id).title}`) : item.name }}</div>
+											<div>
+												{{
+													item.course_id
+														? `${
+																getCourse(
+																	item.course_id
+																).course_code
+														  }: ${
+																getCourse(
+																	item.course_id
+																).title
+														  }`
+														: item.name
+												}}
+											</div>
 											<!-- <v-icon size="10" :color="item.id == 1 ? 'blue accent-2 ' : 'grey'">mdi-circle</v-icon> -->
 											<!-- <v-simple-checkbox v-model="item.check" disabled> -->
 											<!-- </v-simple-checkbox> -->
 										</template>
 										<template v-slot:item.time="{ item }">
-											<div class="d-flex fs-4 font-weight-bold grey--text">
-												<div>{{item.time}}</div>
+											<div
+												class="d-flex fs-4 font-weight-bold grey--text"
+											>
+												<div>{{ item.time }}</div>
 											</div>
 											<!-- <v-icon size="15" :color="item.id == 1 ? 'blue accent-2 ' : 'grey'">mdi-circle</v-icon> -->
 											<!-- <v-simple-checkbox v-model="item.check" disabled> -->
 											<!-- </v-simple-checkbox> -->
 										</template>
 										<template v-slot:item.venue="{ item }">
-											<div class="d-flex fs-4 font-italic grey--text">
+											<div
+												class="d-flex fs-4 font-italic grey--text"
+											>
 												<div class="mr-1">
-													<v-icon size="15" color="grey">mdi-map-marker</v-icon>
+													<v-icon
+														size="15"
+														color="grey"
+														>mdi-map-marker</v-icon
+													>
 												</div>
-												<div>{{item.venue}}</div>
+												<div>{{ item.venue }}</div>
 											</div>
 											<!-- <v-icon size="15" :color="item.id == 1 ? 'blue accent-2 ' : 'grey'">mdi-circle</v-icon> -->
 											<!-- <v-simple-checkbox v-model="item.check" disabled> -->
@@ -61,15 +134,35 @@
 								<v-container fluid class="pa-0">
 									<v-row no-gutters>
 										<v-col cols="12">
-											<custom-header title="UPCOMING C.A." ctaText="View all" route="student.news"></custom-header>
+											<custom-header
+												title="UPCOMING C.A."
+												ctaText="View all"
+												route="student.news"
+											></custom-header>
 										</v-col>
 										<!-- <v-col cols="12" sm="3" v-for="i in 4" :key="i">
 														<quiz-card  />
 										</v-col>-->
 										<v-col cols="12">
-											<v-slide-group v-model="model" class center-active show-arrows>
-												<v-slide-item v-for="n in 15" :key="n" v-slot:default="{ active, toggle }">
-													<quiz-card class :input-value="active" @click="toggle" />
+											<v-slide-group
+												v-model="model"
+												class
+												center-active
+												show-arrows
+											>
+												<v-slide-item
+													v-for="n in 15"
+													:key="n"
+													v-slot:default="{
+														active,
+														toggle
+													}"
+												>
+													<quiz-card
+														class
+														:input-value="active"
+														@click="toggle"
+													/>
 												</v-slide-item>
 											</v-slide-group>
 										</v-col>
@@ -82,18 +175,46 @@
 								<v-container fluid class="pa-0">
 									<v-row no-gutters>
 										<v-col cols="12">
-											<custom-header title="UPCOMING ASSIGNMENTS" ctaText="View all" route="student.news"></custom-header>
+											<custom-header
+												title="UPCOMING ASSIGNMENTS"
+												ctaText="View all"
+												route="student.news"
+											></custom-header>
 										</v-col>
 										<v-col cols="12">
-											<v-data-table :headers="asgnHeaders" :items="asgn" hide-default-footer>
-												<template v-slot:item.check="{ item }">
-													<v-icon size="15" :color="item.id == 1 ? 'blue accent-2 ' : 'grey'">mdi-circle</v-icon>
+											<v-data-table
+												:headers="asgnHeaders"
+												:items="asgn"
+												hide-default-footer
+											>
+												<template
+													v-slot:item.check="{ item }"
+												>
+													<v-icon
+														size="15"
+														:color="
+															item.id == 1
+																? 'blue accent-2 '
+																: 'grey'
+														"
+														>mdi-circle</v-icon
+													>
 													<!-- <v-simple-checkbox v-model="item.check" disabled> -->
 													<!-- </v-simple-checkbox> -->
 												</template>
-												<template v-slot:item.action="{  }">
-													<v-icon small class="mr-2 pointer">mdi-eye</v-icon>
-													<v-icon small class="pointer">mdi-pencil</v-icon>
+												<template
+													v-slot:item.action="{}"
+												>
+													<v-icon
+														small
+														class="mr-2 pointer"
+														>mdi-eye</v-icon
+													>
+													<v-icon
+														small
+														class="pointer"
+														>mdi-pencil</v-icon
+													>
 												</template>
 											</v-data-table>
 										</v-col>
@@ -106,12 +227,32 @@
 								<v-container fluid class="pa-0">
 									<v-row no-gutters>
 										<v-col cols="12">
-											<custom-header title="UPCOMING EXAMS" ctaText="View all" route="student.news"></custom-header>
+											<custom-header
+												title="UPCOMING EXAMS"
+												ctaText="View all"
+												route="student.news"
+											></custom-header>
 										</v-col>
 										<v-col cols="12">
-											<v-slide-group v-model="model" class center-active show-arrows>
-												<v-slide-item v-for="n in 15" :key="n" v-slot:default="{ active, toggle }">
-													<quiz-card class :input-value="active" @click="toggle" />
+											<v-slide-group
+												v-model="model"
+												class
+												center-active
+												show-arrows
+											>
+												<v-slide-item
+													v-for="n in 15"
+													:key="n"
+													v-slot:default="{
+														active,
+														toggle
+													}"
+												>
+													<quiz-card
+														class
+														:input-value="active"
+														@click="toggle"
+													/>
 												</v-slide-item>
 											</v-slide-group>
 										</v-col>
@@ -127,7 +268,11 @@
 							<v-card class="pa-3 mb-5" flat>
 								<v-row>
 									<v-col cols="12">
-										<custom-header title="ACADEMIC PROGRESS" ctaText="View" route="student.profile"></custom-header>
+										<custom-header
+											title="ACADEMIC PROGRESS"
+											ctaText="View"
+											route="student.profile"
+										></custom-header>
 									</v-col>
 									<v-col cols="4" class="px-5">
 										<v-progress-circular
@@ -138,17 +283,32 @@
 											:width="width"
 											color="light-blue"
 										>
-											<v-icon size="25" color="light-blue">mdi-school-outline</v-icon>
+											<v-icon size="25" color="light-blue"
+												>mdi-school-outline</v-icon
+											>
 										</v-progress-circular>
 									</v-col>
 									<v-col class="px-5">
 										<div>
 											<div class="d-flex flex-column">
-												<div class="font-weight-bold fs-4">PROGRAM</div>
-												<div class="fs-4">Computer Engineering (B.Eng.)</div>
+												<div
+													class="font-weight-bold fs-4"
+												>
+													PROGRAM
+												</div>
+												<div class="fs-4">
+													Computer Engineering
+													(B.Eng.)
+												</div>
 											</div>
-											<div class="d-flex flex-column mt-4">
-												<div class="font-weight-bold fs-4">STATUS</div>
+											<div
+												class="d-flex flex-column mt-4"
+											>
+												<div
+													class="font-weight-bold fs-4"
+												>
+													STATUS
+												</div>
 												<div class="fs-4">PROMOTED</div>
 											</div>
 										</div>
@@ -157,13 +317,24 @@
 								<v-divider></v-divider>
 								<v-row>
 									<v-col cols="12">
-										<custom-header title="CREDITS TO GRADUATE"></custom-header>
+										<custom-header
+											title="CREDITS TO GRADUATE"
+										></custom-header>
 										<div class="fs-3">
-											<div>You need a total of 128 units to graduate</div>
+											<div>
+												You need a total of 128 units to
+												graduate
+											</div>
 											<div class="d-flex mt-3">
-												<div>Current credits achieved:</div>
+												<div>
+													Current credits achieved:
+												</div>
 												<v-spacer></v-spacer>
-												<div class="font-weight-bold mr-5">58</div>
+												<div
+													class="font-weight-bold mr-5"
+												>
+													58
+												</div>
 											</div>
 										</div>
 									</v-col>
@@ -175,11 +346,19 @@
 								<v-container fluid class="pa-0">
 									<v-row no-gutters>
 										<v-col cols="12">
-											<custom-header title="NEWS" ctaText="View more" route="student.news"></custom-header>
+											<custom-header
+												title="NEWS"
+												ctaText="View more"
+												route="student.news"
+											></custom-header>
 										</v-col>
 										<v-col>
 											<div class="d-flex flex-column">
-												<div class="fs-3 text-uppercase font-weight-bold grey--text">{{latestNews.title}}</div>
+												<div
+													class="fs-3 text-uppercase font-weight-bold grey--text"
+												>
+													{{ latestNews.title }}
+												</div>
 												<v-card
 													v-html="latestNews.body"
 													flat
@@ -194,8 +373,14 @@
 															color="primary"
 															text
 															small
-															@click="goToPage('student.news.details', latestNews.id)"
-														>read more</v-btn>
+															@click="
+																goToPage(
+																	'student.news.details',
+																	latestNews.id
+																)
+															"
+															>read more</v-btn
+														>
 													</div>
 												</div>
 												<!-- <div class="primary--text fs-4 mt-4 pointer" >Read more</div> -->
@@ -211,17 +396,28 @@
 								<v-container fluid class="pa-0">
 									<v-row no-gutters>
 										<v-col cols="12">
-											<custom-header title="EVENTS" ctaText="View more" route="student.news"></custom-header>
+											<custom-header
+												title="EVENTS"
+												ctaText="View more"
+												route="student.news"
+											></custom-header>
 										</v-col>
 										<v-col>
 											<div class="d-flex flex-column">
-												<div class="fs-3 text-uppercase font-weight-bold grey--text">{{latestEvent.name}}</div>
+												<div
+													class="fs-3 text-uppercase font-weight-bold grey--text"
+												>
+													{{ latestEvent.name }}
+												</div>
 												<v-card
 													flat
 													max-height="76"
 													v-line-clamp:20="4"
 													class="fs-4 d-flex text-wrap"
-												>{{latestEvent.description}}</v-card>
+													>{{
+														latestEvent.description
+													}}</v-card
+												>
 												<!-- <div class="primary--text fs-4 mt-4 pointer">ADD TO SCHEDULE</div> -->
 											</div>
 										</v-col>
@@ -345,6 +541,9 @@ export default {
 		},
 		schedule() {
 			return this.$store.state.loggedInUser.schedule;
+		},
+		student() {
+			return this.$store.state.loggedInUser;
 		}
 	},
 	methods: {
@@ -354,6 +553,9 @@ export default {
 		getCourse(id) {
 			return this.$store.getters.getCourseById(id);
 		}
+	},
+	async mounted() {
+		this.$store.dispatch("getNews");
 	}
 };
 </script>

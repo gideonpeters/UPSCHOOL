@@ -1,5 +1,6 @@
 import Vue from "vue";
 import VueRouter from "vue-router";
+import store from "./../store/store";
 
 import studentRoutes from "./studentRoutes";
 import staffRoutes from "./staffRoutes";
@@ -13,6 +14,22 @@ import ParentPlatform from "./../layouts/ParentPlatform";
 
 Vue.use(VueRouter);
 
+// const ifNotAuthenticated = (to, from, next) => {
+// 	if (!store.getters.isAuthenticated) {
+// 		next();
+// 		return;
+// 	}
+// 	next("/");
+// };
+
+// const ifAuthenticated = (to, from, next) => {
+// 	if (store.getters.isAuthenticated) {
+// 		next();
+// 		return;
+// 	}
+// 	next("/");
+// };
+
 export default new VueRouter({
 	mode: "history",
 	base: process.env.BASE_URL,
@@ -21,10 +38,12 @@ export default new VueRouter({
 			path: "/upschool",
 			component: ParentPlatform,
 			children: parentRoutes
+			// beforeEnter: ifAuthenticated
 		},
 		{
 			path: "/",
 			component: () => import("./../layouts/Auth"),
+			// beforeEnter: ifNotAuthenticated,
 			children: [
 				{
 					path: "",
@@ -42,9 +61,20 @@ export default new VueRouter({
 			path: "/student",
 			component: StudentPlatform,
 			children: studentRoutes
+			// beforeEnter: ifAuthenticated
 		},
-		{ path: "/staff", component: StaffPlatform, children: staffRoutes },
-		{ path: "/admin", component: AdminPlatform, children: adminRoutes },
+		{
+			path: "/staff",
+			component: StaffPlatform,
+			children: staffRoutes
+			// beforeEnter: ifAuthenticated
+		},
+		{
+			path: "/admin",
+			component: AdminPlatform,
+			children: adminRoutes
+			// beforeEnter: ifAuthenticated
+		},
 		{
 			path: "/help",
 			name: "main.help",

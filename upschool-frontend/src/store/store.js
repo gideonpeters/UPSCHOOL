@@ -6,6 +6,7 @@ Vue.use(Vuex);
 
 export default new Vuex.Store({
 	state: {
+		token: localStorage.getItem("upschool-token") || "tre",
 		courseCategories: [
 			{
 				id: 1,
@@ -3540,6 +3541,7 @@ export default new Vuex.Store({
 		getCourses({ courses }) {
 			return courses;
 		},
+		isAuthenticated: ({ token }) => !!token,
 		getEvent: ({ events }) => id => {
 			return events.find(event => event.id == id);
 		},
@@ -3574,6 +3576,28 @@ export default new Vuex.Store({
 		}
 	},
 	actions: {
+		async login({ commit }, user) {
+			try {
+				// commit("auth_request");
+				let res = await axios.post("login", user);
+
+				const token = res.data.token;
+				const userInfo = res.data.user;
+
+				localStorage.setItem("upschool-token", token);
+				axios.defaults.headers.common["Authorization"] = token;
+
+				// commit("auth_success", token, userInfo);
+			} catch (error) {
+				// commit("auth_eror");
+				localStorage.removeItem("upschool-token");
+			}
+		},
+		async getUser({ state }) {
+			let res = await axios.post("auth/me");
+
+			res.status ? (state.loggedInUser = res.data.user) : null;
+		},
 		async getColleges({ state }) {
 			let res = await axios.get("college");
 			console.log(res.data);

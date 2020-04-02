@@ -2,52 +2,93 @@
 	<div class="auth-body d-flex justify-center align-center">
 		<v-card flat class="d-flex" height="90%" width="80%">
 			<v-row no-gutters>
-				<v-col cols="5" md="0" class="bg-img" v-if="$vuetify.breakpoint.mdAndUp"></v-col>
+				<v-col
+					cols="5"
+					md="0"
+					class="bg-img"
+					v-if="$vuetify.breakpoint.mdAndUp"
+				></v-col>
 				<v-col cols="12" md="7">
 					<v-card class="pa-5" tile flat>
 						<div class="pa-4 d-flex flex-column">
 							<div class="d-flex flex-column align-center">
 								<div>
-									<v-img cover fixed width="220px" height="220px" :src="logo" />
+									<v-img
+										cover
+										fixed
+										width="220px"
+										height="220px"
+										:src="logo"
+									/>
 								</div>
 							</div>
 							<div class="d-flex justify-center">
-								<v-row justify="center" align="center" no-gutters>
+								<v-row
+									justify="center"
+									align="center"
+									no-gutters
+								>
 									<v-col cols="12" md="8">
 										<div class>
-											<div class="fs-2 font-weight-light">Login to your school dashboard</div>
+											<div class="fs-2 font-weight-light">
+												Login to your school dashboard
+											</div>
 										</div>
 										<div class="mt-5">
-											<v-text-field v-model="userId" label="User ID" outlined :rules="[rules.required]"></v-text-field>
+											<v-text-field
+												v-model="userId"
+												label="User ID"
+												outlined
+												:rules="[rules.required]"
+											></v-text-field>
 										</div>
 										<div>
 											<v-text-field
 												outlined
 												:append-icon="
-												show3
-													? 'mdi-eye'
-													: 'mdi-eye-off'
-											"
-												:rules="[
-												rules.required,
-												rules.emailMatch
-											]"
-												:type="show3 ? 'text' : 'password'"
+													show3
+														? 'mdi-eye'
+														: 'mdi-eye-off'
+												"
+												:rules="[rules.required]"
+												:type="
+													show3 ? 'text' : 'password'
+												"
 												name="input-10-2"
 												label="Password"
+												v-model="password"
 												hint="At least 8 characters"
 												value="wqfasds"
 												class="input-group--focused"
 												@click:append="show3 = !show3"
+												@keypress.enter="
+													userId ? goToPage : ''
+												"
 											></v-text-field>
 										</div>
-										<div class="d-flex flex-lg-row flex-column align-lg-baseline justify-lg-space-between">
+										<div
+											class="d-flex flex-lg-row flex-column align-lg-baseline justify-lg-space-between"
+										>
 											<div class="d-flex mb-2">
-												<v-btn color="primary" block depressed @click="goToPage">LOGIN</v-btn>
+												<v-btn
+													color="primary"
+													block
+													depressed
+													:disabled="
+														!(
+															!!userId &&
+															!!password
+														)
+													"
+													@click="goToPage"
+													>LOGIN</v-btn
+												>
 											</div>
 											<div
 												class="fs-4 password-info t-primary pb-1 text-center text-lg-start"
-											>Forgot your User ID or Password?</div>
+											>
+												Forgot your User ID or Password?
+											</div>
 										</div>
 									</v-col>
 								</v-row>

@@ -41,7 +41,15 @@ class AuthController extends Controller
      */
     public function me()
     {
-        return response()->json(auth()->user());
+        return response()->json(
+            [
+                'status' => true,
+                'message' => 'this is the authenticated user information',
+                'user' =>  auth()->user()->userable,
+                // 'userable' => auth()->user()->userable
+            ],
+            201
+        );
     }
 
     /**
