@@ -55,7 +55,7 @@
 								<v-card flat v-if="item == 'Academic Profile'" min-height="500">
 									<div class="d-flex flex-column mb-4">
 										<div class="font-weight-bold fs-4">PROGRAM</div>
-										<div>Bachelor of Engineering (B.Eng.)</div>
+										<!-- <div>{{student.program.degree.name}} ({{student.progam.degree.short_name}})</div> -->
 										<div class="font-italic">Major in Computer Engineering</div>
 									</div>
 
@@ -89,7 +89,7 @@
 
 									<div class="d-flex flex-column mb-4">
 										<div class="font-weight-bold fs-4">LEVEL/GRADE</div>
-										<div>500 level</div>
+										<div>{{student.level}} level</div>
 									</div>
 								</v-card>
 
@@ -110,7 +110,7 @@
 										<div class="font-weight-bold fs-4">NATIONALITY</div>
 										<div>{{ student.nationality }}</div>
 									</div>
-									<div
+									<!-- <div
 										class="d-flex flex-column"
 										v-for="(guardian,
 										idx) in student.guardians"
@@ -125,7 +125,7 @@
 											<div class="font-weight-bold fs-4">PHONE NUMBER</div>
 											<div>{{ guardian.phone_number }}</div>
 										</div>
-									</div>
+									</div>-->
 								</v-card>
 
 								<v-card flat v-if="item == 'Graduation Requirements'" min-height="500">
@@ -431,9 +431,7 @@ export default {
 		// 	return this.$store.state.loggedInUser;
 		// },
 		program() {
-			return this.$store.state.programs.find(
-				program => program.id == this.student.program_id
-			);
+			return this.$store.state.programs.find(program => program.id == 1);
 		}
 	},
 	methods: {

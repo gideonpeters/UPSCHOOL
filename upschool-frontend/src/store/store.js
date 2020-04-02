@@ -3595,6 +3595,7 @@ export default new Vuex.Store({
 		},
 		async getUser({ state }) {
 			let res = await axios.post("auth/me");
+			console.log(res.data);
 
 			res.status ? (state.loggedInUser = res.data.user) : null;
 		},
