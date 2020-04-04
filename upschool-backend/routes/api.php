@@ -35,6 +35,7 @@ Route::group([
 Route::group([], function ($router) {
     Route::get('courses', 'CourseController@index');
     Route::post('courses', 'CourseController@store');
+    Route::get('courses/{id}', 'CourseController@show');
 });
 
 Route::group([], function ($router) {

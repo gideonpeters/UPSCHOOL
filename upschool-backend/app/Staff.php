@@ -10,6 +10,8 @@ use Illuminate\Database\Eloquent\Model;
 class Staff extends Model
 {
     //
+    protected $with = ['user'];
+
     public function user()
     {
         return $this->morphOne(User::class, 'userable');

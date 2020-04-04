@@ -14,7 +14,9 @@ use Illuminate\Database\Eloquent\Model;
 class Course extends Model
 {
     //
-    public function semesterType()
+    protected $with = ['semester_type', 'prerequisites'];
+
+    public function semester_type()
     {
         return $this->belongsTo(SemesterType::class);
     }
@@ -52,6 +54,6 @@ class Course extends Model
 
     public function curriculumItem()
     {
-        return $this->belongsTo(CurriculumItem::class);
+        return $this->hasOne(CurriculumItem::class);
     }
 }

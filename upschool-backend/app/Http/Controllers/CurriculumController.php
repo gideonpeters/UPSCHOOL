@@ -7,54 +7,55 @@ use Illuminate\Http\Request;
 
 class CurriculumController extends Controller
 {
-    /**
-     * Display a listing of the resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
     public function index()
     {
         //
+        $curricula = Curriculum::all();
+
+        return response()->json([
+            'status' => true,
+            'message' => 'these are all the curricula',
+            'data' => $curricula
+        ], 201);
     }
 
-    /**
-     * Show the form for creating a new resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
-    public function create()
-    {
-        //
-    }
-
-    /**
-     * Store a newly created resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @return \Illuminate\Http\Response
-     */
     public function store(Request $request)
     {
         //
+        $curriculum = new Curriculum();
+
+        $curriculum->program_id = $request->program_id;
+        $curriculum->level = $request->level;
+
+        $curriculum->save();
+
+        return response()->json([
+            'status' => true,
+            'message' => 'curriculum created successfully',
+            'data' => $curriculum
+        ], 201);
     }
 
-    /**
-     * Display the specified resource.
-     *
-     * @param  \App\Curriculum  $curriculum
-     * @return \Illuminate\Http\Response
-     */
-    public function show(Curriculum $curriculum)
+    public function show(Curriculum $curriculum, $id)
     {
         //
+        $curriculum = Curriculum::find($id);
+
+        if (!$curriculum) {
+            return response()->json([
+                'status' => false,
+                'message' => 'This curriculum does not exist',
+                'data' => []
+            ], 201);
+        }
+
+        return response()->json([
+            'status' => true,
+            'message' => 'This is the retrieved curriculum',
+            'data' => $curriculum
+        ], 201);
     }
 
-    /**
-     * Show the form for editing the specified resource.
-     *
-     * @param  \App\Curriculum  $curriculum
-     * @return \Illuminate\Http\Response
-     */
     public function edit(Curriculum $curriculum)
     {
         //

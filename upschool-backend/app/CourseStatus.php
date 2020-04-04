@@ -18,4 +18,9 @@ class CourseStatus extends Model
     {
         return $this->hasMany(GraduationUnit::class);
     }
+
+    public function curriculum_item()
+    {
+        return $this->hasOne(CurriculumItem::class);
+    }
 }

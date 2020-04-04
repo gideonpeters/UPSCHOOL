@@ -39,7 +39,7 @@
 
 								<div class="my-4 subtitle-1">Description</div>
 
-								<div>Real analysis is an area of analysis that studies concepts such as sequences and their limits, continuity, differentiation, integration and sequences of functions. By definition, real analysis focuses on the real numbers, often including positive and negative infinity to form the extended real line.</div>
+								<div>{{course.description}}</div>
 							</v-card-text>
 
 							<v-divider class="mx-4"></v-divider>
@@ -48,10 +48,7 @@
 
 							<v-card-text>
 								<v-chip-group v-model="selection" active-class="deep-purple accent-4 white--text" column>
-									<v-chip
-										v-for="item in course.prerequisites"
-										:key="item.id"
-									>{{ courseCode(item.course_id) }}</v-chip>
+									<v-chip v-for="item in course.prerequisites" :key="item.id">{{ item.course_id }}</v-chip>
 								</v-chip-group>
 							</v-card-text>
 
@@ -61,7 +58,7 @@
 								<div
 									v-for="facilitator in course.facilitators"
 									:key="facilitator.id"
-								>{{ courseStaff(facilitator.staff_id) }}</div>
+								>{{ facilitator.user.name }}</div>
 							</v-card-text>
 
 							<v-card-actions>
@@ -156,6 +153,7 @@ export default {
 			tab: null,
 			isHovered: false,
 			selection: null,
+			course: [],
 			items: [
 				{ id: 1, tab: "OVERVIEW" },
 				{ id: 2, tab: "COURSE MATERIAL" },
@@ -190,26 +188,19 @@ export default {
 			]
 		};
 	},
-	computed: {
-		course() {
-			let id = this.$route.params.id;
-			return this.$store.getters.getCourseById(id);
-		}
-	},
+	// computed: {
+	// 	course() {
+	// 		let id = this.$route.params.id;
+	// 		return this.$store.getters.getCourseById(id);
+	// 	}
+	// },
 	methods: {
-		reserve() {},
-		courseCode(id) {
-			let course = this.$store.state.courses.find(
-				course => course.id == id
-			);
+		reserve() {}
+	},
+	async mounted() {
+		let id = this.$route.params.id;
 
-			return course.course_code;
-		},
-		courseStaff(id) {
-			let staff = this.$store.state.staff.find(item => item.id == id);
-
-			return ` ${staff.title} ${staff.name}`;
-		}
+		this.course = await this.$store.dispatch("getCourseById", id);
 	}
 };
 </script>

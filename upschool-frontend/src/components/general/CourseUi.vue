@@ -282,6 +282,13 @@ export default {
 			this.dialogFull = true;
 		}
 	},
+	async mounted() {
+		try {
+			this.$store.dispatch("getAllCourses");
+		} catch (error) {
+			console.log(error);
+		}
+	},
 	watch: {
 		// select(val) {
 		// 	// console.log(val, this.subItems);

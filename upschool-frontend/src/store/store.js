@@ -808,6 +808,7 @@ export default new Vuex.Store({
 				]
 			}
 		],
+		course_statuses: [],
 		student_courses: [
 			{
 				id: 1,
@@ -3628,6 +3629,20 @@ export default new Vuex.Store({
 			let res = await axios.get("news");
 			console.log(res.data);
 			state.news = res.data.data;
+		},
+		async getCourseStatus({ state }) {
+			let res = await axios.get("course-status");
+
+			state.course_statuses = res.data.data;
+		},
+		async getAllCourses({ state }) {
+			let res = await axios.get("courses");
+
+			state.courses = res.data.data;
+		},
+		async getCourseById({}, id) {
+			let res = await axios.get(`courses/${id}`);
+			return res.data.data;
 		},
 		setupDashboard({ dispatch }) {
 			dispatch("getStudents");

@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Program;
+use App\Curriculum;
 use Illuminate\Http\Request;
 
 class ProgramController extends Controller
@@ -35,6 +36,13 @@ class ProgramController extends Controller
         $program->min_cgpa = $request->min_cgpa;
 
         $program->save();
+
+        $curriculum = new Curriculum();
+
+        $curriculum->program_id = $program->id;
+
+        $curriculum->save();
+
 
         return response()->json([
             'status' => true,

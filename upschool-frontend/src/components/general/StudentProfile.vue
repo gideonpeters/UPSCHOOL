@@ -309,19 +309,25 @@
 									<v-card flat>
 										<v-tabs v-model="curriculumTab" background-color="transparent">
 											<v-tab
-												v-for="item in program.curriculum"
+												v-for="item in student.program.curricula"
 												:key="item.id"
 												:href="'#tab-'+item.level"
 											>{{ item.level }}</v-tab>
 										</v-tabs>
 
 										<v-tabs-items v-model="curriculumTab">
-											<v-tab-item v-for="item in program.curriculum" :key="item.id" :value="'tab-'+item.level">
-												<v-card flat>
+											<v-tab-item
+												v-for="item in student.program.curricula"
+												:key="item.id"
+												:value="'tab-'+item.level"
+											>
+												<v-card flat class="pa-3">
 													<curriculum-item
-														v-for="curriculumItem in item.groupings"
-														:key="curriculumItem.id"
-														:curriculumItem="curriculumItem"
+														:level="item.level"
+														v-for="status in courseStatuses"
+														:status="status"
+														:key="status.id"
+														:curriculumItem="item.curriculum_items.filter(it => it.level == item.level)"
 													/>
 													<!-- <v-card-text>{{ item }}</v-card-text> -->
 												</v-card>
@@ -432,6 +438,9 @@ export default {
 		// },
 		program() {
 			return this.$store.state.programs.find(program => program.id == 1);
+		},
+		courseStatuses() {
+			return this.$store.state.course_statuses;
 		}
 	},
 	methods: {
@@ -465,6 +474,13 @@ export default {
 			});
 		},
 		commitAction() {}
+	},
+	async mounted() {
+		try {
+			this.$store.dispatch("getCourseStatus");
+		} catch (error) {
+			console.log(error);
+		}
 	}
 };
 </script>

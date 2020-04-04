@@ -26,7 +26,7 @@ class CurriculumItemController extends Controller
 
         $curriculum_item->level = $request->level;
         $curriculum_item->credit_unit = $request->credit_unit;
-        $curriculum_item->program_id = $request->program_id;
+        $curriculum_item->curriculum_id = $request->curriculum_id;
         $curriculum_item->course_status_id = $request->course_status_id;
         $curriculum_item->course_id = $request->course_id;
 
@@ -34,7 +34,7 @@ class CurriculumItemController extends Controller
 
         return response()->json([
             'status' => true,
-            'message' => 'course status created successfully',
+            'message' => 'curriculum_item created successfully',
             'data' => $curriculum_item
         ], 201);
     }

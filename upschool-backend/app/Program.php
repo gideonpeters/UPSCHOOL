@@ -6,6 +6,7 @@ use App\Degree;
 use App\Option;
 use App\School;
 use App\Student;
+use App\Curriculum;
 use App\Department;
 use App\CurriculumItem;
 use App\GraduationUnit;
@@ -14,7 +15,7 @@ use Illuminate\Database\Eloquent\Model;
 class Program extends Model
 {
     //
-    protected $with = ['department', 'degree'];
+    protected $with = ['department', 'degree', 'curricula'];
 
     public function department()
     {
@@ -51,8 +52,8 @@ class Program extends Model
         return $this->hasOneThrough(Option::class, Student::class);
     }
 
-    public function curriculum_items()
+    public function curricula()
     {
-        return $this->hasMany(CurriculumItem::class);
+        return $this->hasMany(Curriculum::class);
     }
 }

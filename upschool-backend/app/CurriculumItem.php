@@ -15,16 +15,16 @@ class CurriculumItem extends Model
 
     public function status()
     {
-        return $this->hasOne(CourseStatus::class);
+        return $this->belongsTo(CourseStatus::class);
     }
 
     public function course()
     {
-        return $this->hasOne(Course::class);
+        return $this->belongsTo(Course::class);
     }
 
     public function curriculum()
     {
-        return $this->belongsTo(Curriculum::class);
+        return $this->hasOne(Curriculum::class);
     }
 }

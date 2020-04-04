@@ -66,7 +66,7 @@ class CourseController extends Controller
         return response()->json([
             'status' => true,
             'message' => 'This is the retrieved course',
-            'data' => $course
+            'data' => $course->load('facilitators', 'prerequisites')
         ], 201);
     }
 
