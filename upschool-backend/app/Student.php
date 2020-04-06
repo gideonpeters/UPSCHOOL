@@ -6,6 +6,7 @@ use App\File;
 use App\User;
 use App\Course;
 use App\Option;
+use App\Result;
 use App\Program;
 use App\Guardian;
 use Illuminate\Database\Eloquent\Model;
@@ -43,6 +44,11 @@ class Student extends Model
     public function image()
     {
         return $this->morphOne(File::class, 'fileable');
+    }
+
+    public function results()
+    {
+        return $this->hasMany(Result::class);
     }
 
     // public function option()

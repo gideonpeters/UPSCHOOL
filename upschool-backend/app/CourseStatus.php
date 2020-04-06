@@ -11,7 +11,7 @@ class CourseStatus extends Model
     //
     public function courses()
     {
-        return $this->hasMany(Course::class);
+        return $this->morphMany(Course::class, 'courseable');
     }
 
     public function graduationUnits()

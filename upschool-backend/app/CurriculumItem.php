@@ -5,6 +5,7 @@ namespace App;
 use App\Course;
 use App\Program;
 use App\Curriculum;
+use App\Enrollment;
 use App\CourseStatus;
 use Illuminate\Database\Eloquent\Model;
 
@@ -13,18 +14,28 @@ class CurriculumItem extends Model
     //status, course, prerequisite
     protected $with = ['course', 'status'];
 
+    public function course()
+    {
+        return $this->belongsToMany(Course::class, 'courses_curriculum_items', 'curriculum_item_id', 'course_id');
+    }
+
     public function status()
     {
         return $this->belongsTo(CourseStatus::class);
     }
 
-    public function course()
+    public function enrollments()
     {
-        return $this->belongsTo(Course::class);
+        return $this->belongsToMany(Enrollment::class, 'enrollments_curriculum_items', 'curriculum_item_id', 'enrollment_id');
     }
 
-    public function curriculum()
+    public function programs()
     {
-        return $this->hasOne(Curriculum::class);
+        return $this->belongsToMany(Program::class, 'programs_curriculum_items', 'curriculum_item_id', 'program_id');
     }
+
+    // public function curriculum()
+    // {
+    //     return $this->belongsTo(Curriculum::class);
+    // }
 }

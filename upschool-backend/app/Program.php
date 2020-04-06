@@ -52,8 +52,13 @@ class Program extends Model
         return $this->hasOneThrough(Option::class, Student::class);
     }
 
-    public function curricula()
+    // public function curricula()
+    // {
+    //     return $this->hasMany(Curriculum::class);
+    // }
+
+    public function curriculum_items()
     {
-        return $this->hasMany(Curriculum::class);
+        return $this->belongsToMany(CurriculumItem::class, 'programs_curriculum_items', 'program_id', 'curriculum_item_id');
     }
 }

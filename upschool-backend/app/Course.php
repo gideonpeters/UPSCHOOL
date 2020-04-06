@@ -21,11 +21,6 @@ class Course extends Model
         return $this->belongsTo(SemesterType::class);
     }
 
-    public function status()
-    {
-        return $this->belongsTo(CourseStatus::class);
-    }
-
     public function students()
     {
         return $this->hasMany(Student::class);
@@ -38,7 +33,7 @@ class Course extends Model
 
     public function categories()
     {
-        return $this->belongsToMany(Category::class);
+        return $this->belongsToMany(Category::class, 'courses_course_categories', 'course_id', 'course_category_id');
     }
 
     public function prerequisites()
@@ -51,9 +46,8 @@ class Course extends Model
         return $this->belongsToMany(Course::class, 'prerequisite_course', 'prerequisite_id', 'course_id',);
     }
 
-
-    public function curriculumItem()
+    public function curriculum_items()
     {
-        return $this->hasOne(CurriculumItem::class);
+        return $this->belongsToMany(CurriculumItem::class, 'courses_curriculum_items', 'course_id', 'curriculum_item_id');
     }
 }

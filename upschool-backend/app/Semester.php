@@ -4,6 +4,7 @@ namespace App;
 
 use App\Event;
 use App\Course;
+use App\Result;
 use App\ScheduleItem;
 use App\SemesterType;
 use App\AcademicSession;
@@ -22,6 +23,11 @@ class Semester extends Model
     public function semester()
     {
         return $this->belongsTo(SemesterType::class, 'semester_type_id');
+    }
+
+    public function results()
+    {
+        return $this->hasMany(Result::class);
     }
 
     public function academicSession()

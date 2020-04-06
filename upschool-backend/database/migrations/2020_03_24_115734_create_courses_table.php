@@ -21,8 +21,8 @@ class CreateCoursesTable extends Migration
             $table->text('description')->nullable();
             $table->foreignId('prerequisite_id')->nullable(); //prerequisite for course
             $table->foreignId('department_id')->nullable();
+            $table->unsignedInteger('courseable_id');
             // $table->unsignedInteger('credit_units'); //should be in curriculum... not here
-            $table->foreignId('semester_type_id');  //should be in curriculum
             // $table->foreignId('course_status_id')->nullable(); //core or nuc ... should be in curriculum
             $table->timestamps();
         });

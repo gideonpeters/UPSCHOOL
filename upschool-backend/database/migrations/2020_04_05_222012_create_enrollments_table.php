@@ -4,7 +4,7 @@ use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
 
-class CreateCurriculumItemsTable extends Migration
+class CreateEnrollmentsTable extends Migration
 {
     /**
      * Run the migrations.
@@ -13,13 +13,11 @@ class CreateCurriculumItemsTable extends Migration
      */
     public function up()
     {
-        Schema::create('curriculum_items', function (Blueprint $table) {
+        Schema::create('enrollments', function (Blueprint $table) {
             $table->id();
-            $table->string('level');
-            $table->unsignedBigInteger('credit_unit');
-            $table->foreignId('curriculum_id');
-            $table->foreignId('course_status_id');
-            // $table->foreignId('course_id');
+            $table->foreignId('student_id');
+            $table->foreignId('semester_id');
+            $table->boolean('approval_status');
             $table->timestamps();
         });
     }
@@ -31,6 +29,6 @@ class CreateCurriculumItemsTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('curriculum_items');
+        Schema::dropIfExists('enrollments');
     }
 }
