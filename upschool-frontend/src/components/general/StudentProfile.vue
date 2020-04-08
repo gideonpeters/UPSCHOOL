@@ -56,12 +56,14 @@
 									<div class="d-flex flex-column mb-4">
 										<div class="font-weight-bold fs-4">PROGRAM</div>
 										<!-- <div>{{student.program.degree.name}} ({{student.progam.degree.short_name}})</div> -->
-										<div class="font-italic">Major in Computer Engineering</div>
+										<div
+											class="font-italic"
+										>Major in {{student.program.name}}({{ student.program.degree.short_name }})</div>
 									</div>
 
 									<div class="d-flex flex-column mb-4">
 										<div class="font-weight-bold fs-4">DURATION</div>
-										<div>5 Years</div>
+										<div>{{student.program.no_of_years}} Years</div>
 									</div>
 
 									<div class="d-flex flex-column mb-4">
@@ -71,20 +73,17 @@
 
 									<div class="d-flex flex-column mb-4">
 										<div class="font-weight-bold fs-4">DEPARTMENT</div>
-										<div>
-											Electrical and Information
-											Engineering (EIE)
-										</div>
+										<div>{{student.program.department.name}} ({{student.program.department.short_name}})</div>
 									</div>
 
 									<div class="d-flex flex-column mb-4">
 										<div class="font-weight-bold fs-4">COLLEGE</div>
-										<div>College of Engineering</div>
+										<div>{{student.program.department.college.name}}</div>
 									</div>
 
 									<div class="d-flex flex-column mb-4">
 										<div class="font-weight-bold fs-4">ACADEMIC STANDING</div>
-										<div>Promoted</div>
+										<div>{{student.promotion_status}}</div>
 									</div>
 
 									<div class="d-flex flex-column mb-4">
@@ -106,7 +105,7 @@
 									</div>
 									<div class="d-flex flex-column mb-4">
 										<div class="font-weight-bold fs-4">ADDRESS</div>
-										<div>{{ student.home_address }}</div>
+										<div>{{ student.address }}</div>
 									</div>
 									<div class="d-flex flex-column mb-4">
 										<div class="font-weight-bold fs-4">NATIONALITY</div>
