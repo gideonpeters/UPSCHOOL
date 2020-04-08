@@ -2,7 +2,7 @@
 
 namespace App;
 
-use App\ScheduleItem;
+use App\Semester;
 use Illuminate\Database\Eloquent\Model;
 
 class Event extends Model
@@ -13,8 +13,8 @@ class Event extends Model
         return $this->belongsTo(Semester::class);
     }
 
-    public function schedule_item()
+    public function users()
     {
-        return $this->belongsToMany(ScheduleItem::class);
+        return $this->belongsToMany(User::class);
     }
 }

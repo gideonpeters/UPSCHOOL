@@ -12,12 +12,7 @@ class ScheduleItem extends Model
     //
     public function user()
     {
-        return $this->belongsToMany(User::class);
-    }
-
-    public function event()
-    {
-        return $this->belongsToMany(Event::class);
+        return $this->belongsTo(User::class);
     }
 
     public function semester()

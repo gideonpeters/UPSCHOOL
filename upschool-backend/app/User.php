@@ -2,9 +2,10 @@
 
 namespace App;
 
+use App\Event;
 use App\ScheduleItem;
-use Tymon\JWTAuth\Contracts\JWTSubject;
 // use Illuminate\Contracts\Auth\MustVerifyEmail;
+use Tymon\JWTAuth\Contracts\JWTSubject;
 use Illuminate\Notifications\Notifiable;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 
@@ -63,7 +64,12 @@ class User extends Authenticatable implements JWTSubject
 
     public function schedule_items()
     {
-        return $this->belongsToMany(ScheduleItem::class);
+        return $this->hasMany(ScheduleItem::class);
+    }
+
+    public function events()
+    {
+        return $this->belongsToMany(Event::class);
     }
 
     // public function image()
