@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Semester;
 use Illuminate\Http\Request;
+use Illuminate\Support\Carbon;
 
 class SemesterController extends Controller
 {
@@ -66,6 +67,15 @@ class SemesterController extends Controller
     public function update(Request $request, Semester $semester)
     {
         //
+        $currentSemester = Semester::latest()->first();
+        $today = Carbon::now();
+        $end = Carbon::parse($currentSemester->end_date);
+
+        $diffDays = date_diff($today, $end)->format('%a');
+        $diffWeeks = floor($diffDays / 7);
+        $diffMonths = date_diff($today, $end)->format('%m');
+
+        dd($currentSemester, $today, $diffDays, $diffWeeks, $diffMonths);
     }
 
     public function destroy(Semester $semester)

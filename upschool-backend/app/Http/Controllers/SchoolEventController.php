@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Event;
 use App\SchoolEvent;
 use Illuminate\Http\Request;
 
@@ -17,25 +18,31 @@ class SchoolEventController extends Controller
         //
     }
 
-    /**
-     * Show the form for creating a new resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
-    public function create()
-    {
-        //
-    }
-
-    /**
-     * Store a newly created resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @return \Illuminate\Http\Response
-     */
     public function store(Request $request)
     {
         //
+        $schoolEvent = new SchoolEvent();
+        $schoolEvent->title = $request->title;
+        $schoolEvent->description = $request->description;
+
+        $schoolEvent->save();
+
+        $event = new Event();
+        $event->start_time = $request->start_time;
+        $event->end_time = $request->end_time;
+        $event->venue = $request->venue;
+        $event->recurrence = $request->recurrence;
+        $event->date = $request->date;
+        $event->eventable_id = $schoolEvent->id;
+        $event->eventable_type = 'App\SchoolEvent';
+
+        $event->save();
+
+        return response()->json([
+            'status' => true,
+            'message' => 'school event created successfully',
+            'data' => $schoolEvent->load('event')
+        ], 201);
     }
 
     /**

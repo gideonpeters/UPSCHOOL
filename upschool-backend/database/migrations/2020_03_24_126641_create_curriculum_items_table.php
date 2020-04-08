@@ -13,15 +13,15 @@ class CreateCurriculumItemsTable extends Migration
      */
     public function up()
     {
-        Schema::create('curriculum_items', function (Blueprint $table) {
-            $table->id();
-            $table->string('level');
-            $table->unsignedBigInteger('credit_unit');
-            // $table->foreignId('curriculum_id');
-            $table->foreignId('course_status_id');
-            // $table->foreignId('course_id');
-            $table->timestamps();
-        });
+        // Schema::create('curriculum_items', function (Blueprint $table) {
+        //     $table->id();
+        //     $table->string('level');
+        //     $table->unsignedBigInteger('credit_unit');
+        //     // $table->foreignId('curriculum_id');
+        //     $table->foreignId('course_status_id');
+        //     $table->foreignId('course_id');
+        //     $table->timestamps();
+        // });
     }
 
     /**

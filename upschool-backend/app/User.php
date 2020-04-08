@@ -2,8 +2,9 @@
 
 namespace App;
 
-use App\SchoolEvent;
+use App\Event;
 // use Illuminate\Contracts\Auth\MustVerifyEmail;
+use App\SchoolEvent;
 use App\ScheduleItem;
 use Tymon\JWTAuth\Contracts\JWTSubject;
 use Illuminate\Notifications\Notifiable;
@@ -67,9 +68,9 @@ class User extends Authenticatable implements JWTSubject
         return $this->hasMany(ScheduleItem::class);
     }
 
-    public function school_events()
+    public function events()
     {
-        return $this->belongsToMany(SchoolEvent::class);
+        return $this->belongsToMany(Event::class);
     }
 
     // public function image()

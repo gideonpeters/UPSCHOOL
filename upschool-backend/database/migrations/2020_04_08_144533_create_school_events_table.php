@@ -15,7 +15,9 @@ class CreateSchoolEventsTable extends Migration
     {
         Schema::create('school_events', function (Blueprint $table) {
             $table->id();
-
+            $table->string('title');
+            $table->string('description')->nullable();
+            // $table->foreignId('schoo')->nullable();
             $table->timestamps();
         });
     }

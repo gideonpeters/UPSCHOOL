@@ -17,12 +17,7 @@ class CreateScheduleItemsTable extends Migration
             $table->id();
             $table->string('title');
             $table->string('description')->nullable();
-            $table->dateTime('start_time');
-            $table->dateTime('end_time');
-            $table->string('frequency')->nullable();
-            $table->date('date');
-            $table->string('venue')->nullable();
-            $table->foreignId('event_id')->nullable();
+            $table->foreignId('user_id')->nullable();
             $table->timestamps();
         });
     }
