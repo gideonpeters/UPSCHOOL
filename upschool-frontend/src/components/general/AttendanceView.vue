@@ -2,13 +2,13 @@
 	<v-app>
 		<div class="my-5">
 			<v-icon size="20" class="mr-2" @click="$router.go(-1)">mdi-arrow-left</v-icon>
-			Events & Attendance / {{studentInfo.name}}
+			Events & Attendance / {{student.first_name}} {{student.middle_name}} {{student.last_name}}
 		</div>
 
 		<v-row>
 			<v-col cols="12" md="4">
 				<div class="d-flex flex-column justify-center">
-					<student-card :student="studentInfo" />
+					<student-card :student="student" />
 					<div class="d-flex flex-column justify-center" v-if="!isStudent">
 						<v-btn color="success" outlined depressed class="mb-2">Create Clearance</v-btn>
 						<v-btn color="success" depressed>Generate Report</v-btn>
@@ -27,7 +27,7 @@
 								<v-col cols="12" md="12">
 									<div v-if="indx == 0">
 										<v-expansion-panels multiple>
-											<v-expansion-panel v-for="(event, i) in studentInfo.events" :key="i">
+											<v-expansion-panel v-for="(event, i) in student.events" :key="i">
 												<v-expansion-panel-header class="text-uppercase">{{event.name}}</v-expansion-panel-header>
 												<v-expansion-panel-content>
 													<div
@@ -64,7 +64,7 @@
 												<div class="px-4">
 													<div
 														class="d-flex justify-space-between fs-4 pb-4"
-														v-for="event in studentInfo.events"
+														v-for="event in student.events"
 														:key="event.id"
 													>
 														<div>Number of {{event.name}} defaults</div>
@@ -325,8 +325,8 @@ export default {
 				total_attendance: "17",
 				scored_attendance: 7
 			}
-		],
-		studentInfo: {}
+		]
+		// student: {}
 	}),
 	computed: {
 		items() {
@@ -358,14 +358,21 @@ export default {
 					this.courseAttendance.length) *
 					100
 			).toFixed(2);
+		},
+		student() {
+			let id = this.$route.params.id;
+			if (!id) {
+				return this.$store.state.loggedInUser;
+			}
+			return this.$store.getters.getStudent(id);
 		}
 	},
 	mounted() {
-		let id = this.$route.params.id;
-		if (!id) {
-			id = this.$store.state.loggedInUser.matric_number;
-		}
-		this.studentInfo = this.$store.getters.getStudent(id);
+		// let id = this.$route.params.id;
+		// if (!id) {
+		// 	id = this.$store.state.loggedInUser.matric_number;
+		// }
+		// this.student = this.$store.getters.getStudent(id);
 	},
 	methods: {
 		dothis() {
