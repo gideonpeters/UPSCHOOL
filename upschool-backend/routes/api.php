@@ -38,6 +38,9 @@ Route::group([], function ($router) {
     Route::get('courses/{id}', 'CourseController@show');
 });
 
+Route::post('enroll', 'EnrollmentController@enrollCourses');
+Route::get('enroll', 'EnrollmentController@index');
+
 Route::group([], function ($router) {
     Route::get('course-status', 'CourseStatusController@index');
     Route::post('course-status', 'CourseStatusController@store');

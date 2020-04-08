@@ -221,7 +221,7 @@
 										<custom-header title="CREDITS TO GRADUATE"></custom-header>
 										<div class="fs-3">
 											<div>
-												You need a total of 128 units to
+												You need a total of {{student.program.min_graduation_units}} units to
 												graduate
 											</div>
 											<div class="d-flex mt-3">

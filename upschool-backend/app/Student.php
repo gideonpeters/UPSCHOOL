@@ -9,6 +9,7 @@ use App\Option;
 use App\Result;
 use App\Program;
 use App\Guardian;
+use App\ResultItem;
 use Illuminate\Database\Eloquent\Model;
 
 class Student extends Model
@@ -46,9 +47,9 @@ class Student extends Model
         return $this->morphOne(File::class, 'fileable');
     }
 
-    public function results()
+    public function result_items()
     {
-        return $this->hasMany(Result::class);
+        return $this->hasMany(ResultItem::class);
     }
 
     // public function option()

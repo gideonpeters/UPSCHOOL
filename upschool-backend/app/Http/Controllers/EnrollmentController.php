@@ -15,24 +15,49 @@ class EnrollmentController extends Controller
     public function index()
     {
         //
+        $enrollments = Enrollment::all();
+
+        return response()->json([
+            'status' => true,
+            'message' => 'all enrollments',
+            'data' => $enrollments->load('curriculum_items')
+        ], 201);
     }
 
-    /**
-     * Show the form for creating a new resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
-    public function create()
+    public function enrollCourses(Request $request)
     {
         //
+        $courses = json_decode($request->course_ids);
+
+        $enrollment = new Enrollment();
+        $enrollment->student_id = $request->student_id;
+        $enrollment->semester_id = $request->semester_id;
+        $enrollment->approval_status = false;
+
+        $enrollment->save();
+
+        $enrollment->curriculum_items()->attach($courses);
+
+        return response()->json([
+            'status' => true,
+            'message' => 'succe.
+            ssfully enrolled courses',
+            'data' => $enrollment->load('curriculum_items')
+        ], 201);
     }
 
-    /**
-     * Store a newly created resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @return \Illuminate\Http\Response
-     */
+    public function approveenrollCourses()
+    {
+        //
+
+    }
+
+    public function addOrDropCourses()
+    {
+        //
+
+    }
+
     public function store(Request $request)
     {
         //

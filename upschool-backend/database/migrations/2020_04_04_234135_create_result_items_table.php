@@ -15,9 +15,13 @@ class CreateResultItemsTable extends Migration
     {
         Schema::create('result_items', function (Blueprint $table) {
             $table->id();
-            $table->foreignId('result_id');
+            $table->foreignId('student_id');
+            $table->foreignId('semester_id');
             $table->foreignId('curriculum_item_id');
-            $table->string('grade_score');
+            $table->unsignedInteger('exam')->nullable();
+            $table->unsignedInteger('ca_1')->nullable();
+            $table->unsignedInteger('ca_2')->nullable();
+            $table->string('grade_score')->nullable();
             $table->unsignedInteger('weighted_score')->nullable();
             $table->timestamps();
         });

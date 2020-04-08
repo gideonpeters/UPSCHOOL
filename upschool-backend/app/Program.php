@@ -15,7 +15,7 @@ use Illuminate\Database\Eloquent\Model;
 class Program extends Model
 {
     //
-    protected $with = ['department', 'degree', 'curricula'];
+    protected $with = ['department', 'degree', 'curriculum_items'];
 
     public function department()
     {
