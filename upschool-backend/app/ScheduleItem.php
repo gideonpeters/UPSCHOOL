@@ -17,7 +17,7 @@ class ScheduleItem extends Model
 
     public function event()
     {
-        return $this->belongsTo(Event::class);
+        return $this->belongsToMany(Event::class);
     }
 
     public function semester()

@@ -15,6 +15,6 @@ class Event extends Model
 
     public function schedule_item()
     {
-        return $this->hasOne(ScheduleItem::class);
+        return $this->belongsToMany(ScheduleItem::class);
     }
 }
