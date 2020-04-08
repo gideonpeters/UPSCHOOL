@@ -20,6 +20,9 @@ class CreateEventsTable extends Migration
             $table->dateTime('start_time');
             $table->dateTime('end_time');
             $table->foreignId('semester_id');
+
+            $table->unsignedBigInteger('eventable_id');
+            $table->string('eventable_type');
             $table->timestamps();
         });
     }

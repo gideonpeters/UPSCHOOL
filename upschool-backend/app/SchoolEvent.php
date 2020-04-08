@@ -2,9 +2,10 @@
 
 namespace App;
 
+use App\Event;
 use Illuminate\Database\Eloquent\Model;
 
-class Exam extends Model
+class SchoolEvent extends Model
 {
     //
     public function event()

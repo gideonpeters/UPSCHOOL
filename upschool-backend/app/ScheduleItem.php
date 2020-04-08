@@ -19,4 +19,9 @@ class ScheduleItem extends Model
     {
         return $this->belongsTo(Semester::class);
     }
+
+    public function event()
+    {
+        return $this->morphOne(Event::class, 'eventable');
+    }
 }
