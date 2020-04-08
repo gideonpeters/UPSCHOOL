@@ -18,6 +18,11 @@ class CreateStudentsTable extends Migration
             $table->string('first_name');
             $table->string('middle_name');
             $table->string('last_name');
+            $table->string('sex');
+            $table->string('state_of_origin');
+            $table->string('phone_number');
+            $table->string('address');
+            $table->string('nationality');
             $table->string('matric_number')->unique();
             $table->string('reg_number')->unique();
             $table->string('level')->nullable();

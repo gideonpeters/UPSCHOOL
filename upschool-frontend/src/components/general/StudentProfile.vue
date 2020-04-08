@@ -96,7 +96,9 @@
 								<v-card flat v-if="item == 'Personal Information'" min-height="500">
 									<div class="d-flex flex-column mb-4">
 										<div class="font-weight-bold fs-4">FULL NAME</div>
-										<div>{{ student.name }}</div>
+										<div
+											class="font-italic"
+										>{{ `${student.first_name} ${student.middle_name} ${student.last_name}` }}</div>
 									</div>
 									<div class="d-flex flex-column mb-4">
 										<div class="font-weight-bold fs-4">PHONE NUMBER</div>
@@ -317,7 +319,7 @@
 
 										<v-tabs-items v-model="curriculumTab">
 											<v-tab-item
-												v-for="item in student.program.curricula"
+												v-for="item in student.program.curriculum_items"
 												:key="item.id"
 												:value="'tab-'+item.level"
 											>
@@ -448,10 +450,10 @@ export default {
 			let res;
 			switch (item) {
 				case "Graduation Requirements":
-					res = `To graduate from the 5-year Bachelor of Engineering (B.Eng) Degree Programme in ${this.student.program}, students must have successfully completed a minimum of 215 Credit Units as shown:`;
+					res = `To graduate from the 5-year Bachelor of Engineering (B.Eng) Degree Programme in ${this.student.program.name}, students must have successfully completed a minimum of ${this.student.program.min_graduation_units} Credit Units as shown:`;
 					break;
 				case "Curriculum":
-					res = `This is the outlined curriculum for the the 5-year Bachelor of Engineering (B.Eng) Degree Programme in ${this.student.program}, students must have successfully completed a minimum of 215 Credit Units as shown in the graduation requirements`;
+					res = `This is the outlined curriculum for the the 5-year Bachelor of Engineering (B.Eng) Degree Programme in ${this.student.program.name}, students must have successfully completed a minimum of ${this.student.program.min_graduation_units} Credit Units as shown in the graduation requirements`;
 					break;
 				case "Academic Profile":
 					res = `Academic Information outlined below`;
