@@ -10,6 +10,8 @@ use Illuminate\Database\Eloquent\Model;
 class ScheduleItem extends Model
 {
     //
+    protected $with = ['event'];
+
     public function user()
     {
         return $this->belongsTo(User::class);

@@ -13,8 +13,8 @@ class Event extends Model
         return $this->belongsTo(Semester::class);
     }
 
-    public function users()
+    public function eventable()
     {
-        return $this->belongsToMany(User::class);
+        return $this->morphTo();
     }
 }
