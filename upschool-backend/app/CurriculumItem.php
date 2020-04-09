@@ -12,7 +12,7 @@ use Illuminate\Database\Eloquent\Model;
 class CurriculumItem extends Model
 {
     //status, course, prerequisite
-    protected $with = ['course', 'status'];
+    protected $with = ['status', 'curriculumable:id,title,course_code,description'];
 
     public function curriculumable()
     {

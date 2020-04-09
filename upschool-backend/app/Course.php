@@ -24,12 +24,12 @@ class Course extends Model
 
     public function participants()
     {
-        return $this->curriculum_items()->wherePivot('course_id', $this->id)->get();
+        return $this->belongsToMany(Student::class, 'student_courses')->using(StudentCourse::class);
     }
 
-    public function courseable()
+    public function curriculum_items()
     {
-        return $this->MorphTo();
+        return $this->morphMany(CurriculumItem::class, 'curriculumable');
     }
 
     public function facilitators()

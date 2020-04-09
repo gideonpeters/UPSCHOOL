@@ -10,6 +10,7 @@ use App\Result;
 use App\Program;
 use App\Guardian;
 use App\ResultItem;
+use App\StudentCourse;
 use Illuminate\Database\Eloquent\Model;
 
 class Student extends Model
@@ -24,7 +25,7 @@ class Student extends Model
 
     public function courses()
     {
-        return $this->hasMany(Course::class);
+        return $this->belongsToMany(Course::class, 'student_courses')->using(StudentCourse::class);
     }
 
     public function program()

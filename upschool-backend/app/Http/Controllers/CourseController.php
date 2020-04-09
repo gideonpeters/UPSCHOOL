@@ -55,21 +55,41 @@ class CourseController extends Controller
         //
         $course = Course::find($id);
 
-        dd($course->curriculum_items);
+        // dd($course->curriculum_items);
 
-        // if (!$course) {
-        //     return response()->json([
-        //         'status' => false,
-        //         'message' => 'This course does not exist',
-        //         'data' => []
-        //     ], 201);
-        // }
+        if (!$course) {
+            return response()->json([
+                'status' => false,
+                'message' => 'This course does not exist',
+                'data' => []
+            ], 201);
+        }
 
-        // return response()->json([
-        //     'status' => true,
-        //     'message' => 'This is the retrieved course',
-        //     'data' => $course->load('facilitators', 'prerequisites')
-        // ], 201);
+        return response()->json([
+            'status' => true,
+            'message' => 'This is the retrieved course',
+            'data' => $course->load('facilitators', 'prerequisites')
+        ], 201);
+    }
+
+    public function indexParticipants($id)
+    {
+        $course = Course::find($id);
+        // dd($course);
+
+        if (!$course) {
+            return response()->json([
+                'status' => false,
+                'message' => 'This course does not exist',
+                'data' => []
+            ], 201);
+        }
+
+        return response()->json([
+            'status' => true,
+            'message' => 'This is the retrieved course',
+            'data' => $course->load('facilitators', 'participants')
+        ], 201);
     }
 
 

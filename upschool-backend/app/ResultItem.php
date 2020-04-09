@@ -21,8 +21,8 @@ class ResultItem extends Model
         return $this->belongsTo(Semester::class);
     }
 
-    public function curriculum_item()
+    public function course()
     {
-        return $this->belongsTo(CurriculumItem::class);
+        return $this->belongsTo(Course::class);
     }
 }
