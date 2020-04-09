@@ -31,15 +31,15 @@
 					<v-tab-item v-for="(item, ix) in items" :key="ix">
 						<v-card flat class="pa-3" v-if="ix == 0" min-height="500">
 							<v-card-text>
-								<v-row align="center" class="mx-0">
-									<v-rating :value="4.5" color="amber" dense half-increments readonly size="14"></v-rating>
-
-									<div class="grey--text ml-4">4.5 (413 participants so far)</div>
-								</v-row>
-
 								<div class="my-4 subtitle-1">Description</div>
 
 								<div>{{course.description}}</div>
+								<v-row align="center" class="mx-0 mt-5">
+									<div>CLASSES:</div>
+									<!-- <v-rating :value="4.5" color="amber" dense half-increments readonly size="14"></v-rating> -->
+
+									<div class="grey--text ml-4" v-for="i in 2" :key="i">Mondays 8:00AM -10PM</div>
+								</v-row>
 							</v-card-text>
 
 							<v-divider class="mx-4"></v-divider>
@@ -48,27 +48,27 @@
 
 							<v-card-text>
 								<v-chip-group v-model="selection" active-class="deep-purple accent-4 white--text" column>
-									<v-chip v-for="item in course.prerequisites" :key="item.id">{{ item.course_id }}</v-chip>
+									<v-chip v-for="item in course.prerequisites" :key="item.id">{{ item.course_code }}</v-chip>
 								</v-chip-group>
 							</v-card-text>
 
 							<v-card-text>
 								<div class="mb-4 subtitle-1">Facilitators</div>
 
-								<div
+								<!-- <div
 									v-for="facilitator in course.facilitators"
 									:key="facilitator.id"
-								>{{ facilitator.user.name }}</div>
+								>{{ facilitator.user.name }}</div>-->
 							</v-card-text>
 
 							<v-card-actions>
 								<div class="d-flex flex-lg-row flex-column">
 									<div>
-										<v-btn color="deep-purple lighten-2" text @click="reserve">Enroll as Student</v-btn>
+										<v-btn color="deep-purple lighten-2" text @click="reserve">Enrolled as Student</v-btn>
 									</div>
-									<div>
+									<!-- <div>
 										<v-btn color="deep-purple lighten-2" text @click="reserve">Enroll as Staff</v-btn>
-									</div>
+									</div>-->
 								</div>
 							</v-card-actions>
 						</v-card>
@@ -107,7 +107,7 @@
 								</div>
 							</div>
 						</v-card>
-						<v-card flat class="pa-3" v-if="ix == 2" min-height="500">
+						<!-- <v-card flat class="pa-3" v-if="ix == 2" min-height="500">
 							<v-data-table
 								:headers="headers"
 								:items="course.participants"
@@ -117,8 +117,11 @@
 								<template v-slot:item.action="{}">
 									<v-btn depressed tile>Action</v-btn>
 								</template>
+								<template
+									v-slot:item.name="{item}"
+								>{{`${item.first_name} ${item.middle_name} ${item.last_name}`}}</template>
 							</v-data-table>
-						</v-card>
+						</v-card>-->
 						<v-card flat class="pa-3" v-if="ix == 3" min-height="500">
 							<div class="fs-3">Currently under construction</div>
 						</v-card>
@@ -153,7 +156,7 @@ export default {
 			tab: null,
 			isHovered: false,
 			selection: null,
-			course: [],
+			// course: [],
 			items: [
 				{ id: 1, tab: "OVERVIEW" },
 				{ id: 2, tab: "COURSE MATERIAL" },
@@ -171,7 +174,7 @@ export default {
 				},
 				{ text: "Matriculation Number", value: "matric_number" },
 				{ text: "Registration Number", value: "reg_number" },
-				{ text: "Department", value: "department" },
+				{ text: "Program", value: "program.name" },
 				{ text: "Grade/Level", value: "level" },
 				// { text: "Residence", value: "residence" },
 				{ text: "Actions", value: "action", sortable: false }
@@ -189,18 +192,17 @@ export default {
 		};
 	},
 	computed: {
-		// course() {
-		// 	let id = this.$route.params.id;
-		// 	return this.$store.getters.getCourseById(id);
-		// }
+		course() {
+			let id = this.$route.params.id;
+			return this.$store.getters.getCourseById(id);
+		}
 	},
 	methods: {
 		reserve() {}
 	},
 	async mounted() {
-		let id = this.$route.params.id;
-
-		this.course = await this.$store.dispatch("getCourseById", id);
+		// let id = this.$route.params.id;
+		// this.course = await this.$store.dispatch("getCourseById", id);
 	}
 };
 </script>

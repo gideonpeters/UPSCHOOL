@@ -15,7 +15,7 @@ use Illuminate\Database\Eloquent\Relations\MorphTo;
 class Course extends Model
 {
     //
-    protected $with = ['semester_type', 'prerequisites'];
+    protected $with = ['semester_type',];
 
     public function semester_type()
     {

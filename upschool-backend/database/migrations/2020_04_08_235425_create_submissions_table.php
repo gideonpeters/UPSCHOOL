@@ -15,6 +15,9 @@ class CreateSubmissionsTable extends Migration
     {
         Schema::create('submissions', function (Blueprint $table) {
             $table->id();
+            $table->foreignId('student_id');
+            $table->foreignId('subsection_id');
+            $table->unsignedInteger('grade_score')->nullable();
             $table->timestamps();
         });
     }

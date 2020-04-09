@@ -64,7 +64,12 @@ export default new Vuex.Store({
 								name: "Mobility of electrons.docx",
 								type: "file"
 							},
-							{ id: 3, name: "Term Paper", type: "assignment" }
+							{
+								id: 3,
+								name: "Term Paper",
+								type: "assignment",
+								submissions: []
+							}
 						]
 					},
 					{
