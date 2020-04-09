@@ -14,9 +14,9 @@ class CurriculumItem extends Model
     //status, course, prerequisite
     protected $with = ['course', 'status'];
 
-    public function course()
+    public function curriculumable()
     {
-        return $this->belongsToMany(Course::class, 'courses_curriculum_items', 'curriculum_item_id', 'course_id');
+        return $this->morphTo();
     }
 
     public function status()

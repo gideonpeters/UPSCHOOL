@@ -1,21 +1,21 @@
 <template>
 	<div class="d-flex flex-column">
-		<div class="fs-3 text-uppercase">{{event.name}}</div>
+		<div class="fs-3 text-uppercase">{{event.title}}</div>
 		<v-card
 			flat
 			class="fs-4 d-flex text-wrap"
 			max-height="100"
-			min-height="100"
+			min-height="50"
 			v-line-clamp:20="4"
 		>{{event.description}}</v-card>
 		<div class="d-flex align-center justify-space-between mt-3">
 			<div class="fs-4 font-italic">
 				<v-icon size="15" color="grey">mdi-map-marker</v-icon>
-				{{event.venue}}
+				{{event.event.venue}}
 			</div>
 			<div class="fs-4">
 				<v-icon size="15" color="grey">mdi-clock</v-icon>
-				{{event.time}}
+				{{event.event.start_time}}
 			</div>
 		</div>
 		<!-- <div class="d-flex">

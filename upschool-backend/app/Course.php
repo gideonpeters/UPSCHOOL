@@ -10,6 +10,7 @@ use App\Prerequisite;
 use App\SemesterType;
 use App\CurriculumItem;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\Relations\MorphTo;
 
 class Course extends Model
 {
@@ -21,9 +22,14 @@ class Course extends Model
         return $this->belongsTo(SemesterType::class);
     }
 
-    public function students()
+    public function participants()
     {
-        return $this->hasMany(Student::class);
+        return $this->curriculum_items()->wherePivot('course_id', $this->id)->get();
+    }
+
+    public function courseable()
+    {
+        return $this->MorphTo();
     }
 
     public function facilitators()
@@ -46,8 +52,8 @@ class Course extends Model
         return $this->belongsToMany(Course::class, 'prerequisite_course', 'prerequisite_id', 'course_id',);
     }
 
-    public function curriculum_items()
-    {
-        return $this->belongsToMany(CurriculumItem::class, 'courses_curriculum_items', 'course_id', 'curriculum_item_id');
-    }
+    // public function curriculum_items()
+    // {
+    //     return $this->belongsToMany(CurriculumItem::class, 'courses_curriculum_items', 'course_id', 'curriculum_item_id');
+    // }
 }

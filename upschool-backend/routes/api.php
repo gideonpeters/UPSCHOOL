@@ -133,6 +133,13 @@ Route::group([], function ($router) {
 });
 
 Route::group([], function ($router) {
+    Route::get('school-event', 'SchoolEventController@index');
+    Route::post('school-event', 'SchoolEventController@store');
+    Route::get('school-event/{event_id}', 'SchoolEventController@show');
+    Route::post('school-event/{event_id}', 'SchoolEventController@update');
+});
+
+Route::group([], function ($router) {
     Route::get('attendance', 'AttendanceController@index');
     Route::post('attendance', 'AttendanceController@store');
     Route::get('attendance/{attendance_id}', 'AttendanceController@show');

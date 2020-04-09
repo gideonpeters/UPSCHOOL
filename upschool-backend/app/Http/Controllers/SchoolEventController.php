@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Event;
 use App\SchoolEvent;
 use Illuminate\Http\Request;
+use Illuminate\Support\Carbon;
 
 class SchoolEventController extends Controller
 {
@@ -16,6 +17,13 @@ class SchoolEventController extends Controller
     public function index()
     {
         //
+        $schoolEvents = SchoolEvent::with('event')->get();
+
+        return response()->json([
+            'status' => true,
+            'message' => 'these are all the school events',
+            'data' => $schoolEvents
+        ], 201);
     }
 
     public function store(Request $request)
@@ -32,9 +40,10 @@ class SchoolEventController extends Controller
         $event->end_time = $request->end_time;
         $event->venue = $request->venue;
         $event->recurrence = $request->recurrence;
-        $event->date = $request->date;
+        $event->status = false;
         $event->eventable_id = $schoolEvent->id;
         $event->eventable_type = 'App\SchoolEvent';
+        $event->semester_id = 2;
 
         $event->save();
 
@@ -51,9 +60,24 @@ class SchoolEventController extends Controller
      * @param  \App\SchoolEvent  $schoolEvent
      * @return \Illuminate\Http\Response
      */
-    public function show(SchoolEvent $schoolEvent)
+    public function show(SchoolEvent $schoolEvent, $id)
     {
         //
+        $schoolEvent = SchoolEvent::find($id);
+
+        if (!$schoolEvent) {
+            return response()->json([
+                'status' => false,
+                'message' => 'school event not found',
+                'data' => []
+            ], 201);
+        }
+
+        return response()->json([
+            'status' => true,
+            'message' => 'school event found',
+            'data' => $schoolEvent->load('event')
+        ], 201);
     }
 
     /**

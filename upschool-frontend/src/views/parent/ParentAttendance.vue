@@ -29,23 +29,17 @@
 																<v-text-field label="Title of Event" outlined required></v-text-field>
 															</v-col>
 															<v-col cols="12" sm="6" md="12">
-																<v-combobox
+																<v-select
 																	v-model="selectFrequency"
 																	:items="frequency"
 																	tile
 																	label="Frequency"
-																	multiple
 																	chips
 																	required
-																></v-combobox>
+																></v-select>
 															</v-col>
 															<v-col cols="12" sm="6" md="12">
-																<VueTrix
-																	v-model="editorContent"
-																	placeholder="Describe the event"
-																	localStorage
-																	style="width: 100%"
-																/>
+																<v-textarea v-model="editorContent" label="Description" outlined />
 															</v-col>
 															<v-col cols="12" sm="6" md="12">
 																<v-select
@@ -164,28 +158,6 @@
 												</v-toolbar-items>
 											</v-toolbar>
 											<v-list three-line subheader>
-												<!-- <v-subheader>ATTENDABLE GROUPS</v-subheader> -->
-												<!-- <v-list-item>
-													<v-list-item-content>
-														<v-list-item-title>ATTENDABLE GROUPS</v-list-item-title>
-														<v-row>
-															<v-col cols="12" md="12">
-																<div
-																	class="d-flex align-center fs-4 mb-3 mt-2 justify-space-between"
-																	v-for="(attendableGroup, idx) in attendableGroups"
-																	:key="idx"
-																>
-																	<div class="d-flex align-center">
-																		<div class="pr-4">
-																			<v-icon size="15">mdi-circle-slice-8</v-icon>
-																		</div>
-																		<div>{{ attendableGroup}}</div>
-																	</div>
-																</div>
-															</v-col>
-														</v-row>
-													</v-list-item-content>
-												</v-list-item>-->
 												<v-list-item>
 													<v-list-item-content>
 														<v-list-item-title>Manage Attendable Group</v-list-item-title>
@@ -234,37 +206,6 @@
 													</v-list-item-content>
 												</v-list-item>
 											</v-list>
-											<v-divider></v-divider>
-											<!-- <v-list three-line subheader>
-												<v-subheader>General</v-subheader>
-												<v-list-item>
-													<v-list-item-action>
-														<v-checkbox v-model="notifications"></v-checkbox>
-													</v-list-item-action>
-													<v-list-item-content>
-														<v-list-item-title>Notifications</v-list-item-title>
-														<v-list-item-subtitle>Notify me about updates to apps or games that I downloaded</v-list-item-subtitle>
-													</v-list-item-content>
-												</v-list-item>
-												<v-list-item>
-													<v-list-item-action>
-														<v-checkbox v-model="sound"></v-checkbox>
-													</v-list-item-action>
-													<v-list-item-content>
-														<v-list-item-title>Sound</v-list-item-title>
-														<v-list-item-subtitle>Auto-update apps at any time. Data charges may apply</v-list-item-subtitle>
-													</v-list-item-content>
-												</v-list-item>
-												<v-list-item>
-													<v-list-item-action>
-														<v-checkbox v-model="widgets"></v-checkbox>
-													</v-list-item-action>
-													<v-list-item-content>
-														<v-list-item-title>Auto-add widgets</v-list-item-title>
-														<v-list-item-subtitle>Automatically add home screen widgets</v-list-item-subtitle>
-													</v-list-item-content>
-												</v-list-item>
-											</v-list>-->
 										</v-card>
 									</v-dialog>
 								</div>
@@ -329,17 +270,21 @@ export default {
 			"All SIWES Students",
 			"All Final year students"
 		],
-		frequency: [
-			"Once",
-			"Mondays",
-			"Tuesdays",
-			"Wednesdays",
-			"Thursdays",
-			"Fridays",
-			"Saturdays",
-			"Sundays"
-		],
-		priority: ["Voluntary", "Mandatory"]
+		frequency: ["Once", "Daily", "Weekly", "Monthly"],
+		priority: ["Voluntary", "Mandatory"],
+		headers: [
+			{
+				text: "NAME",
+				align: "start",
+				sortable: false,
+				value: "title"
+			},
+			{ text: "TIME", value: "event.start_time" },
+			{ text: "FREQUENCY", value: "event.recurrence" },
+			{ text: "STATUS", value: "event.status" },
+			{ text: "PRIORITY", value: "event.priority" }
+			// { text: "WEIGHTED SCORE", value: "protein" }
+		]
 	}),
 	computed: {
 		students() {
@@ -349,10 +294,7 @@ export default {
 			return this.$store.state.studentHeaders;
 		},
 		events() {
-			return this.$store.state.events;
-		},
-		headers() {
-			return this.$store.state.eventHeaders;
+			return this.$store.state.schoolEvents;
 		}
 	},
 	methods: {
@@ -370,6 +312,13 @@ export default {
 		},
 		editItem() {},
 		deleteItem() {}
+	},
+	async mounted() {
+		try {
+			this.$store.dispatch("getSchoolEvents");
+		} catch (error) {
+			console.log(error);
+		}
 	}
 };
 </script>

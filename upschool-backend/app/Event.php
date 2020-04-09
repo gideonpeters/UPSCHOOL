@@ -9,6 +9,9 @@ use Illuminate\Database\Eloquent\Model;
 class Event extends Model
 {
     // 
+    protected $guarded = [];
+    // protected $with = ['events'];
+
     public function semester()
     {
         return $this->belongsTo(Semester::class);

@@ -95,12 +95,19 @@ export default {
 			return this.$store.state.news;
 		},
 		events() {
-			return this.$store.state.events;
+			return this.$store.state.schoolEvents;
 		}
 	},
 	methods: {
 		goToPage(name) {
 			this.$router.push({ name: name });
+		}
+	},
+	async mounted() {
+		try {
+			this.$store.dispatch("getNews");
+		} catch (error) {
+			console.log(error);
 		}
 	}
 };

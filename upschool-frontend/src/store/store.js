@@ -1891,18 +1891,6 @@ export default new Vuex.Store({
 				phone_number: "080947373728"
 			}
 		],
-		eventHeaders: [
-			{
-				text: "NAME",
-				align: "start",
-				sortable: false,
-				value: "name"
-			},
-			{ text: "FREQUENCY", value: "frequency" },
-			{ text: "STATUS", value: "status" },
-			{ text: "PRIORITY", value: "priority" }
-			// { text: "WEIGHTED SCORE", value: "protein" }
-		],
 		events: [
 			{
 				id: 1,
@@ -3536,7 +3524,8 @@ export default new Vuex.Store({
 				image:
 					"https://whatsupnewp.com/wp-content/uploads/2020/03/banner.png"
 			}
-		]
+		],
+		schoolEvents: []
 	},
 	getters: {
 		getCourses({ courses }) {
@@ -3630,6 +3619,11 @@ export default new Vuex.Store({
 			console.log(res.data);
 			state.news = res.data.data;
 		},
+		async getSchoolEvents({ state }) {
+			let res = await axios.get("school-event");
+			console.log(res.data);
+			state.schoolEvents = res.data.data;
+		},
 		async getCourseStatus({ state }) {
 			let res = await axios.get("course-status");
 
@@ -3637,7 +3631,7 @@ export default new Vuex.Store({
 		},
 		async getAllCourses({ state }) {
 			let res = await axios.get("courses");
-
+			console.log(res.data);
 			state.courses = res.data.data;
 		},
 		async getCourseById({}, id) {

@@ -24,7 +24,10 @@ class CreateEventsTable extends Migration
 
             $table->foreignId('semester_id');
 
-            $table->date('date');
+            $table->boolean('status')->default(false)->nullable();
+            $table->boolean('priority')->default(false)->nullable();
+
+            // $table->date('date');
 
             $table->unsignedBigInteger('eventable_id');
             $table->string('eventable_type');

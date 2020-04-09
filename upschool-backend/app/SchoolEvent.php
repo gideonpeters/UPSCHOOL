@@ -8,7 +8,7 @@ use Illuminate\Database\Eloquent\Model;
 class SchoolEvent extends Model
 {
     //
-    protected $with = ['event'];
+    // protected $with = ['event'];
 
     public function event()
     {

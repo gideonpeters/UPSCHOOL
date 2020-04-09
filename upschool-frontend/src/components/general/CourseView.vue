@@ -188,12 +188,12 @@ export default {
 			]
 		};
 	},
-	// computed: {
-	// 	course() {
-	// 		let id = this.$route.params.id;
-	// 		return this.$store.getters.getCourseById(id);
-	// 	}
-	// },
+	computed: {
+		// course() {
+		// 	let id = this.$route.params.id;
+		// 	return this.$store.getters.getCourseById(id);
+		// }
+	},
 	methods: {
 		reserve() {}
 	},
