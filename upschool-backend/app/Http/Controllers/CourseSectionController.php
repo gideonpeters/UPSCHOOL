@@ -7,77 +7,51 @@ use Illuminate\Http\Request;
 
 class CourseSectionController extends Controller
 {
-    /**
-     * Display a listing of the resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
-    public function index()
+
+    public function index($id)
     {
         //
+        $sections = CourseSection::whereCourseId($id)->get();
+
+        return response()->json([
+            'status' => true,
+            'message' => 'these are all the sections for this course',
+            'data' => $sections->load('subsections')
+        ], 201);
     }
 
-    /**
-     * Show the form for creating a new resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
-    public function create()
-    {
-        //
-    }
-
-    /**
-     * Store a newly created resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @return \Illuminate\Http\Response
-     */
     public function store(Request $request)
     {
         //
+        $section = new CourseSection();
+        $section->title = $request->title;
+        $section->course_id = $request->course_id;
+        $section->body = $request->body;
+
+        $section->save();
+
+        return response()->json([
+            'status' => true,
+            'message' => 'section created successfully',
+            'data' => $section
+        ], 201);
     }
 
-    /**
-     * Display the specified resource.
-     *
-     * @param  \App\CourseSection  $courseSection
-     * @return \Illuminate\Http\Response
-     */
     public function show(CourseSection $courseSection)
     {
         //
     }
 
-    /**
-     * Show the form for editing the specified resource.
-     *
-     * @param  \App\CourseSection  $courseSection
-     * @return \Illuminate\Http\Response
-     */
     public function edit(CourseSection $courseSection)
     {
         //
     }
 
-    /**
-     * Update the specified resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @param  \App\CourseSection  $courseSection
-     * @return \Illuminate\Http\Response
-     */
     public function update(Request $request, CourseSection $courseSection)
     {
         //
     }
 
-    /**
-     * Remove the specified resource from storage.
-     *
-     * @param  \App\CourseSection  $courseSection
-     * @return \Illuminate\Http\Response
-     */
     public function destroy(CourseSection $courseSection)
     {
         //

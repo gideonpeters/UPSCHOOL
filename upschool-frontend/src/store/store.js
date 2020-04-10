@@ -3634,6 +3634,13 @@ export default new Vuex.Store({
 
 			state.course_statuses = res.data.data;
 		},
+		async getCourseSection({}, id) {
+			let res = await axios.get(`course-section/${id}`);
+
+			console.log(res.data);
+
+			return res.data.data;
+		},
 		async getAllCourses({ state }) {
 			let res = await axios.get("courses");
 			console.log(res.data);

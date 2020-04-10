@@ -15,7 +15,7 @@ class CreateStudentCoursesTable extends Migration
     {
         Schema::create('student_courses', function (Blueprint $table) {
             $table->id();
-            // $table->foreignId('semester_id');
+            $table->foreignId('semester_id');
             $table->foreignId('student_id');
             $table->foreignId('course_id');
 

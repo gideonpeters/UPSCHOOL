@@ -75,7 +75,7 @@
 						<v-card flat class="pa-3" v-if="ix == 1" min-height="500">
 							<v-btn color="primary" depressed text>Add Section</v-btn>
 
-							<div class="mt-5 border-dashed pb-5" v-for="section in course.sections" :key="section.id">
+							<div class="mt-5 border-dashed pb-5" v-for="section in courseSections" :key="section.id">
 								<div class="d-flex justify-space-between align-center">
 									<h3>{{section.title}}</h3>
 									<div class="text-center" v-if="!student">
@@ -95,7 +95,7 @@
 								</div>
 								<div
 									class="fs-3 mt-3 align-center d-flex pointer"
-									v-for="(subsection, idx) in section.subsection"
+									v-for="(subsection, idx) in section.subsections"
 									:key="idx"
 								>
 									<section-item :subsection="subsection" />
@@ -188,7 +188,8 @@ export default {
 			enrollActions: [
 				{ id: 1, title: "Student Enrollment" },
 				{ id: 2, title: "Staff Enrollment" }
-			]
+			],
+			courseSections: []
 		};
 	},
 	computed: {
@@ -201,7 +202,15 @@ export default {
 		reserve() {}
 	},
 	async mounted() {
-		// let id = this.$route.params.id;
+		try {
+			let id = this.$route.params.id;
+			this.courseSections = await this.$store.dispatch(
+				"getCourseSection",
+				id
+			);
+		} catch (error) {
+			console.log(error);
+		}
 		// this.course = await this.$store.dispatch("getCourseById", id);
 	}
 };

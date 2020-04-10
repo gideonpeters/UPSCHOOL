@@ -284,7 +284,7 @@ export default {
 	},
 	async mounted() {
 		try {
-			// this.$store.dispatch("getAllCourses");
+			this.$store.dispatch("getAllCourses");
 		} catch (error) {
 			console.log(error);
 		}

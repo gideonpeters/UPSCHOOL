@@ -50,6 +50,20 @@ Route::group([], function ($router) {
 });
 
 Route::group([], function ($router) {
+    // Route::get('course-section', 'CourseSectionController@index');
+    Route::post('course-section', 'CourseSectionController@store');
+    Route::get('course-section/{section_id}', 'CourseSectionController@index');
+    Route::post('course-section/{section_id}', 'CourseSectionController@update');
+});
+
+Route::group([], function ($router) {
+    // Route::get('course-section', 'SubsectionController@index');
+    Route::post('course-material', 'SubsectionController@store');
+    // Route::get('course-material/{material_id}', 'SubsectionController@index');
+    // Route::post('course-material/{material_id}', 'SubsectionController@update');
+});
+
+Route::group([], function ($router) {
     Route::get('curriculum-item', 'CurriculumItemController@index');
     Route::post('curriculum-item', 'CurriculumItemController@store');
     Route::get('curriculum-item/{item_id}', 'CurriculumItemController@show');

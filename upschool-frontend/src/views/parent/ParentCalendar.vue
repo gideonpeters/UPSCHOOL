@@ -44,7 +44,6 @@
 						color="primary"
 						:events="events"
 						:event-color="getEventColor"
-						:now="today"
 						:type="type"
 						@click:event="showEvent"
 						@click:more="viewDay"
@@ -120,7 +119,8 @@ export default {
 			"Birthday",
 			"Conference",
 			"Party"
-		]
+		],
+		today: new Date(Date.now()).toString()
 	}),
 	computed: {
 		title() {

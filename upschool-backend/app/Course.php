@@ -8,7 +8,9 @@ use App\Category;
 use App\CourseStatus;
 use App\Prerequisite;
 use App\SemesterType;
+use App\CourseSection;
 use App\CurriculumItem;
+use App\ContinuousAssessment;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\MorphTo;
 
@@ -20,6 +22,11 @@ class Course extends Model
     public function semester_type()
     {
         return $this->belongsTo(SemesterType::class);
+    }
+
+    public function sections()
+    {
+        return $this->hasMany(CourseSection::class);
     }
 
     public function participants()
@@ -50,6 +57,11 @@ class Course extends Model
     public function prerequisite_to_courses()
     {
         return $this->belongsToMany(Course::class, 'prerequisite_course', 'prerequisite_id', 'course_id',);
+    }
+
+    public function continuous_assessments()
+    {
+        return $this->hasMany(ContinuousAssessment::class);
     }
 
     // public function curriculum_items()

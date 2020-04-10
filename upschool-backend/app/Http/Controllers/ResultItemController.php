@@ -2,7 +2,9 @@
 
 namespace App\Http\Controllers;
 
+use App\Semester;
 use App\ResultItem;
+use App\StudentCourse;
 use Illuminate\Http\Request;
 
 class ResultItemController extends Controller
@@ -22,9 +24,22 @@ class ResultItemController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function create()
+    public function publish()
     {
         //
+        $currentSemester = Semester::latest()->first();
+        $studentCourses = StudentCourse::whereSemesterId($currentSemester->id);
+
+        $resultItem = new ResultItem();
+
+        // $table->foreignId('student_id');
+        //     $table->foreignId('semester_id');
+        //     $table->foreignId('course_id');
+        //     $table->unsignedInteger('exam_score')->nullable();
+        //     $table->unsignedInteger('ca_score')->nullable();
+        //     $table->unsignedInteger('total_weighted_score')->nullable();
+        //     $table->string('grade_score')->nullable();
+        //     $table->unsignedInteger('weighted_score')->nullable();
     }
 
     /**
