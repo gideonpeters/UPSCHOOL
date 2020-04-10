@@ -40,12 +40,14 @@ class EnrollmentController extends Controller
                 'data' => null
             ], 201);
 
-        $selectedCurriculumItemIds = json_decode($request->course_ids);
-        $selectedCurriculumItems = CurriculumItem::findMany($selectedCurriculumItemIds);
+        $selectedCurriculumItemIds = [1];
+        $selectedCurriculumItems = CurriculumItem::findMany($selectedCurriculumItemIds)->load('curriculumable');
 
-        $selectedCoursesIds = json_decode($request->course_ids);
+        // $selectedCoursesIds = json_decode($request->course_ids);
+        // $items = $selectedCurriculumItems->curriculumable();
+        // dd($selectedCurriculumItems);
 
-        $selectedCourses = Course::findMany($selectedCoursesIds);
+        // $selectedCourses = Course::findMany($selectedCoursesIds);
         // dd($selectedCourses);
 
 
@@ -60,12 +62,14 @@ class EnrollmentController extends Controller
         // $enrollment = Enrollment::find(1);
         // dd($enrollment, $student);
 
-        foreach ($selectedCourses as $v => $course) {
+        foreach ($selectedCurriculumItems as $v => $curriculum_item) {
             # code...
             $student_course = new StudentCourse();
             $student_course->semester_id = Semester::latest()->first()->id;
             $student_course->student_id = $request->student_id;
-            $student_course->course_id = $course->id;
+            $student_course->course_id = $curriculum_item->curriculumable()->id;
+            $student_course->curriculum_id = $curriculum_item->id;
+            // $student_course->credit_unit = ;
 
             $student_course->save();
         }

@@ -4,6 +4,7 @@ namespace App;
 
 use App\Exam;
 use App\ResultItem;
+use App\CurriculumItem;
 use App\ContinuousAssessment;
 use Illuminate\Database\Eloquent\Relations\Pivot;
 
@@ -25,5 +26,10 @@ class StudentCourse extends Pivot
     public function examinations()
     {
         return $this->hasMany(Exam::class);
+    }
+
+    public function curriculum_item()
+    {
+        return $this->belongsTo(CurriculumItem::class);
     }
 }

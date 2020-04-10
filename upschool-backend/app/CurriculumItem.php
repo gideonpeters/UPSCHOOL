@@ -7,6 +7,7 @@ use App\Program;
 use App\Curriculum;
 use App\Enrollment;
 use App\CourseStatus;
+use App\StudentCourse;
 use Illuminate\Database\Eloquent\Model;
 
 class CurriculumItem extends Model
@@ -32,6 +33,11 @@ class CurriculumItem extends Model
     public function programs()
     {
         return $this->belongsToMany(Program::class, 'programs_curriculum_items', 'curriculum_item_id', 'program_id');
+    }
+
+    public function student_courses()
+    {
+        return $this->hasMany(StudentCourse::class);
     }
 
     // public function curriculum()

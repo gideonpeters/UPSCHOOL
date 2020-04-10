@@ -14,7 +14,7 @@ class ResultItem extends Model
     //
     public function student()
     {
-        return $this->belongsTo(Student::class);
+        return $this->hasOneThrough(Student::class, StudentCourse::class);
     }
 
     public function semester()

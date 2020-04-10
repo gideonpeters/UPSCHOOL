@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Semester;
+use App\GradeScore;
 use App\ResultItem;
 use App\StudentCourse;
 use Illuminate\Http\Request;
@@ -35,15 +36,23 @@ class ResultItemController extends Controller
 
         if ($student_course) {
             $resultItem = new ResultItem();
+            $resultItem->semester_id = $currentSemester->id;
+            $resultItem->student_course_id = $student_course->id;
+            $resultItem->exam_score = 60;
+            $resultItem->ca_score = 15;
+            $score = 75;
 
-            // $table->foreignId('semester_id');
-            // $table->foreignId('student_course_id');
-            // $table->unsignedInteger('exam_score')->nullable();
-            // $table->unsignedInteger('ca_score')->nullable();
-            // $table->unsignedInteger('total_weighted_score')->nullable();
-            // $table->string('grade_score')->nullable();
-            // $table->unsignedInteger('weighted_score')->nullable();
-            // $table->timestamps();
+            $grade_scores = GradeScore::all();
+            foreach ($grade_scores as $v => $grade_score) {
+                # code...
+                if (($grade_score->min <= $score) && ($score <= $grade_score->max)) {
+                    $resultItem->grade_score = $grade_score->name;
+                    $resultItem->weighted_score = $student_course->curriculum_item()->credit_units * $grade_score->points;
+                    return;
+                };
+                // return $resultItem->grade_score = 'I/R';
+            }
+            $resultItem->save();
         }
     }
 
