@@ -309,26 +309,18 @@
 								<v-card flat v-if="item == 'Curriculum'" min-height="500">
 									<v-card flat>
 										<v-tabs v-model="curriculumTab" background-color="transparent">
-											<v-tab
-												v-for="item in student.program.curricula"
-												:key="item.id"
-												:href="'#tab-'+item.level"
-											>{{ item.level }}</v-tab>
+											<v-tab v-for="item in levels" :key="item" :href="'#tab-'+item">{{ item }}</v-tab>
 										</v-tabs>
 
 										<v-tabs-items v-model="curriculumTab">
-											<v-tab-item
-												v-for="item in student.program.curriculum_items"
-												:key="item.id"
-												:value="'tab-'+item.level"
-											>
+											<v-tab-item v-for="item in levels" :key="item" :value="'tab-'+item">
 												<v-card flat class="pa-3">
 													<curriculum-item
-														:level="item.level"
+														:level="item"
 														v-for="status in courseStatuses"
 														:status="status"
 														:key="status.id"
-														:curriculumItem="item.curriculum_items.filter(it => it.level == item.level)"
+														:curriculumItem="student.program.curriculum_items.filter(it => it.level == item)"
 													/>
 													<!-- <v-card-text>{{ item }}</v-card-text> -->
 												</v-card>
@@ -385,6 +377,7 @@ export default {
 				// "Flights",
 				// "Apps"
 			],
+			levels: ["100", "200", "300", "400", "500"],
 			issues: [
 				{
 					id: 1,
@@ -479,6 +472,10 @@ export default {
 	async mounted() {
 		try {
 			this.$store.dispatch("getCourseStatus");
+			// this.$store.dispatch(
+			// 	"getStudentCurriculum",
+			// 	this.student.program.id
+			// );
 		} catch (error) {
 			console.log(error);
 		}

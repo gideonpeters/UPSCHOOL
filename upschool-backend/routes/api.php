@@ -40,7 +40,7 @@ Route::group([], function ($router) {
 });
 
 Route::post('enroll', 'EnrollmentController@enrollCourses');
-Route::get('enroll', 'EnrollmentController@index');
+Route::post('enroll/student', 'EnrollmentController@index');
 Route::post('enroll/courses', 'EnrollmentController@getEnrolledCourses');
 
 Route::group([], function ($router) {

@@ -13,7 +13,7 @@ use Illuminate\Database\Eloquent\Model;
 class CurriculumItem extends Model
 {
     //status, course, prerequisite
-    protected $with = ['status', 'curriculumable:id,title,course_code,description'];
+    protected $with = ['status', 'curriculumable'];
 
     public function curriculumable()
     {
@@ -22,7 +22,7 @@ class CurriculumItem extends Model
 
     public function status()
     {
-        return $this->belongsTo(CourseStatus::class);
+        return $this->belongsTo(CourseStatus::class, 'course_status_id');
     }
 
     public function enrollments()

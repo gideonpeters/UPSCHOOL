@@ -53,6 +53,12 @@ class ResultItemController extends Controller
                 // return $resultItem->grade_score = 'I/R';
             }
             $resultItem->save();
+
+            return response()->json([
+                'status' => true,
+                'message' => 'result published successfully',
+                'data' => $resultItem
+            ], 201);
         }
     }
 

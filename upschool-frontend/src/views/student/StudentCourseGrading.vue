@@ -14,10 +14,10 @@
 							<template v-slot:item.total="{ item }">
 								<div>{{ item.ca1 + item.ca2 }}</div>
 							</template>
-							<template v-slot:item.action="{  }">
+							<!-- <template v-slot:item.action="{  }">
 								<v-icon small class="mr-2 pointer">mdi-eye</v-icon>
 								<v-icon small class="pointer">mdi-pencil</v-icon>
-							</template>
+							</template>-->
 						</v-data-table>
 					</v-card>
 				</v-col>
@@ -39,9 +39,9 @@ export default {
 			},
 			{ text: "CA 1 ", value: "ca1", sortable: false },
 			{ text: "CA 2 ", value: "ca2", sortable: false },
-			{ text: "TOTAL", value: "total", sortable: false },
-			{ text: "WEIGHT", value: "weight", sortable: false },
-			{ text: "ACTIONS", value: "action", sortable: false }
+			{ text: "TOTAL", value: "total", sortable: false }
+			// { text: "WEIGHT", value: "weight", sortable: false },
+			// { text: "ACTIONS", value: "action", sortable: false }
 		],
 		asgn: [
 			{

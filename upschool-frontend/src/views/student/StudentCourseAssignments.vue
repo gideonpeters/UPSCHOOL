@@ -4,7 +4,7 @@
 			<v-row>
 				<v-col cols="12">
 					<v-card flat class="pa-3">
-						<v-subheader class="pa-0">PENDING ASSIGNMENTS</v-subheader>
+						<v-subheader class="pa-0">ASSIGNMENTS</v-subheader>
 						<v-data-table :headers="asgnHeaders" :items="asgn" hide-default-footer>
 							<template v-slot:item.check="{ item }">
 								<v-icon size="15" :color="item.id == 1 ? 'blue accent-2 ' : 'grey'">mdi-circle</v-icon>
@@ -18,14 +18,12 @@
 						</v-data-table>
 					</v-card>
 				</v-col>
-				<v-col>
+				<!-- <v-col>
 					<v-card flat class="pa-3">
 						<v-subheader class="pa-0">SUBMITTED ASSIGNMENTS</v-subheader>
 						<v-data-table :headers="asgnHeaders" :items="asgn" hide-default-footer>
 							<template v-slot:item.check="{ item }">
 								<v-icon size="15" :color="item.id == 1 ? 'blue accent-2 ' : 'grey'">mdi-circle</v-icon>
-								<!-- <v-simple-checkbox v-model="item.check" disabled> -->
-								<!-- </v-simple-checkbox> -->
 							</template>
 							<template v-slot:item.action="{  }">
 								<v-icon small class="mr-2 pointer">mdi-eye</v-icon>
@@ -33,7 +31,7 @@
 							</template>
 						</v-data-table>
 					</v-card>
-				</v-col>
+				</v-col>-->
 			</v-row>
 		</v-container>
 	</v-app>
@@ -50,9 +48,9 @@ export default {
 				sortable: false,
 				value: "name"
 			},
-			{ text: "WEIGHT", value: "weight", sortable: false },
-			{ text: "DUE DATE", value: "time", sortable: false },
-			{ text: "ACTIONS", value: "action", sortable: false }
+			// { text: "WEIGHT", value: "weight", sortable: false },
+			{ text: "DUE DATE", value: "time", sortable: false }
+			// { text: "ACTIONS", value: "action", sortable: false }
 		],
 		asgn: [
 			{

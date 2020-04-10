@@ -3671,10 +3671,13 @@ export default new Vuex.Store({
 			return courses;
 		},
 		getCoursesFromEnrollments({ enrollments }) {
-			let enrolled = enrollments[0].curriculum_items;
-			let ans = enrolled.map(item => item.curriculumable);
-			// console.log(ans);
-			return ans;
+			if (enrollments.length > 0) {
+				let enrolled = enrollments[0].curriculum_items;
+				let ans = enrolled.map(item => item.curriculumable);
+				// console.log(ans);
+				return ans;
+			}
+			return [];
 		},
 		isAuthenticated: ({ token }) => !!token,
 		getEvent: ({ events }) => id => {

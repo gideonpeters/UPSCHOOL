@@ -14,7 +14,7 @@
 				<v-simple-checkbox :value="!!item" disabled></v-simple-checkbox>
 			</template>
 			<template v-slot:item.prerequisites="{item}">
-				<div class="py-1" v-for="(subItem, i) in item.course.prerequisites" :key="i">
+				<div class="py-1" v-for="(subItem, i) in item.curriculumable.prerequisites" :key="i">
 					<v-chip>{{ subItem.course_code }}</v-chip>
 				</div>
 			</template>
@@ -46,11 +46,14 @@ export default {
 					text: "Course Code",
 					align: "start",
 					sortable: false,
-					value: "course.course_code"
+					value: "curriculumable.course_code"
 				},
-				{ text: "Course Title", value: "course.title" },
+				{ text: "Course Title", value: "curriculumable.title" },
 				{ text: "Credit Unit", value: "credit_unit" },
-				{ text: "Semester", value: "course.semester_type.short_title" },
+				{
+					text: "Semester",
+					value: "curriculumable.semester_type.short_title"
+				},
 				{ text: "Prerequisite", value: "prerequisites" },
 				{ text: "Completed", value: "completed" }
 			]

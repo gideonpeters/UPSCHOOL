@@ -17,14 +17,14 @@ class EnrollmentController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function index()
+    public function index(Request $request)
     {
         //
-        $enrollments = Enrollment::all();
+        $enrollments = Enrollment::whereStudentId($request->student_id)->get();
 
         return response()->json([
             'status' => true,
-            'message' => 'all enrollments',
+            'message' => 'all enrollments for this student',
             'data' => $enrollments->load('curriculum_items')
         ], 201);
     }

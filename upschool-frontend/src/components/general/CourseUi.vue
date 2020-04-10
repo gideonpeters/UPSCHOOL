@@ -260,7 +260,8 @@ export default {
 			return this.$store.getters.getCoursesFromEnrollments;
 		},
 		courses() {
-			if (this.personal) return this.getCoursesFromEnrollments;
+			if (this.personal)
+				return this.$store.getters.getCoursesFromEnrollments;
 			return this.getCourses;
 		},
 		optionItems() {
@@ -295,7 +296,7 @@ export default {
 	},
 	async mounted() {
 		try {
-			this.$store.dispatch("getAllCourses");
+			await this.$store.dispatch("getAllCourses");
 		} catch (error) {
 			console.log(error);
 		}

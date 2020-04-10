@@ -2,6 +2,7 @@
 
 namespace App;
 
+use App\Course;
 use App\Result;
 use App\Student;
 use App\Semester;
@@ -15,6 +16,11 @@ class ResultItem extends Model
     public function student()
     {
         return $this->hasOneThrough(Student::class, StudentCourse::class);
+    }
+
+    public function course()
+    {
+        return $this->hasOneThrough(Course::class, StudentCourse::class);
     }
 
     public function semester()
