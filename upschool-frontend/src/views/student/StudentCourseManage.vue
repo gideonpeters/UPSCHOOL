@@ -48,133 +48,118 @@
 					<v-card class="pa-3" flat>
 						<v-tabs>
 							<v-tab>
-								<v-icon left>mdi-lock</v-icon>CURRENT CURRICULUM
+								<v-icon left>mdi-lock</v-icon>CURRENT ENROLLMENT
 							</v-tab>
 							<v-tab>
-								<v-icon left>mdi-lock</v-icon>HISTORY
+								<v-icon left>mdi-lock</v-icon>ENROLLMENT HISTORY
 							</v-tab>
 
 							<v-tab-item>
 								<v-card flat>
 									<div class="d-flex justify-space-between align-center">
 										<v-subheader class="ml-3 font-weight-bold">2018/2019 SESSION</v-subheader>
-										<v-subheader class="fs-5 font-weight-bold">MAX REGISTERABLE: 28</v-subheader>
-									</div>
-									<v-card-text>
-										<div class="d-flex justify-space-between">
-											<v-subheader>APPROVED COURSES</v-subheader>
-											<div class="d-flex align-center">
-												<v-subheader
-													class="pa-0 fs-5 font-weight-bold"
-												>TOTAL UNITS REGISTERED: {{courses.reduce((acc, val) => {return acc + val.credit_unit}, 0)}}</v-subheader>
-												<v-btn color="success" icon @click="editCourses">
-													<v-icon size="18" color="grey">mdi-pencil</v-icon>
-												</v-btn>
-											</div>
+										<div class="d-flex flex-lg-row flex-column align-center">
+											<v-subheader class="fs-5 font-weight-bold">MAX REGISTERABLE: 28</v-subheader>
+											<v-btn
+												color="primary"
+												outlined
+												@click="isEnrolling = !isEnrolling"
+											>{{ isEnrolling ? 'DONE' : 'ENROLL COURSES'}}</v-btn>
 										</div>
-
-										<v-data-table
-											v-model="selectedCourses"
-											:headers="headers"
-											:items="courses"
-											:show-select="showEdit"
-											:items-per-page="10"
-											hide-default-footer
-										></v-data-table>
-									</v-card-text>
-
-									<div>
-										<v-card-text>
-											<div class="d-flex justify-space-between">
-												<v-subheader>PENDING COURSES</v-subheader>
-												<div class="d-flex align-center">
-													<v-subheader
-														class="pa-0 fs-5 font-weight-bold"
-													>TOTAL UNITS PENDING: {{pendingCourses.reduce((acc, val) => {return acc + val.credit_unit}, 0)}}</v-subheader>
-													<v-btn color="success" icon @click="editPendingCourses">
-														<v-icon size="18" color="grey">mdi-pencil</v-icon>
-													</v-btn>
-												</div>
-											</div>
-
-											<v-data-table
-												v-model=" pendingCourses "
-												:headers="pendingHeaders"
-												:items="pendingCourses"
-												:show-select="showPendingSelect"
-												:items-per-page="10"
-												hide-default-footer
-											>
-												<template v-slot:item.status="{item}">
-													<!-- <div class="d-flex mt-4 justify-end">
-														<div class="fs-3 mr-4 font-weight-bold">GPA: 4.94</div>
-														<div class="fs-3 font-weight-bold">CGPA: 4.96</div>
-													</div>-->
-													<v-chip :color="getColor(item.status)" small>
-														<div
-															class="white--text px-3 fs-5 d-flex justify-center text-center text-uppercase"
-														>{{getStatus(item.status)}}</div>
-													</v-chip>
-												</template>
-											</v-data-table>
-										</v-card-text>
 									</div>
 
-									<div>
+									<div v-if="isEnrolling">
 										<v-card-text>
 											<div class="d-flex justify-space-between">
-												<div class="d-flex align-center">
-													<v-subheader>COURSES AWAITING APPROVAL</v-subheader>
-													<v-btn v-if="!showAwaiting" color="success" text>APPROVE</v-btn>
-												</div>
+												<v-subheader>APPROVAL STATUS: Approved</v-subheader>
 												<div class="d-flex align-center">
 													<v-subheader
 														class="pa-0 fs-5 font-weight-bold"
-													>TOTAL UNITS : {{pendingCourses.reduce((acc, val) => {return acc + val.credit_unit}, 0)}}</v-subheader>
-													<v-btn color="success" icon @click="editAwaitingCourses">
+													>TOTAL UNITS REGISTERED: {{courses.reduce((acc, val) => {return acc + val.credit_unit}, 0)}}</v-subheader>
+													<v-btn color="success" icon @click="editCourses">
 														<v-icon size="18" color="grey">mdi-pencil</v-icon>
 													</v-btn>
 												</div>
 											</div>
 
 											<v-data-table
-												v-model="awaitingApprovalCourses"
-												:headers="awaitingHeaders"
-												:items="awaitingCourses"
-												:show-select="showAwaiting && !isStudent"
+												v-model="selectedCourses"
+												:headers="headers"
+												:items="courses"
+												:show-select="showEdit"
 												:items-per-page="10"
 												hide-default-footer
-											>
-												<!-- <template v-slot:item.status="{item}"> -->
-												<!-- <div class="d-flex mt-4 justify-end">
+											></v-data-table>
+										</v-card-text>
+
+										<div>
+											<v-card-text>
+												<div class="d-flex justify-space-between">
+													<v-subheader>PENDING COURSES</v-subheader>
+													<div class="d-flex align-center">
+														<v-subheader
+															class="pa-0 fs-5 font-weight-bold"
+														>TOTAL UNITS PENDING: {{pendingCourses.reduce((acc, val) => {return acc + val.credit_unit}, 0)}}</v-subheader>
+														<v-btn color="success" icon @click="editPendingCourses">
+															<v-icon size="18" color="grey">mdi-pencil</v-icon>
+														</v-btn>
+													</div>
+												</div>
+
+												<v-data-table
+													v-model=" pendingCourses "
+													:headers="pendingHeaders"
+													:items="pendingCourses"
+													:show-select="showPendingSelect"
+													:items-per-page="10"
+													hide-default-footer
+												>
+													<template v-slot:item.status="{item}">
+														<!-- <div class="d-flex mt-4 justify-end">
 														<div class="fs-3 mr-4 font-weight-bold">GPA: 4.94</div>
 														<div class="fs-3 font-weight-bold">CGPA: 4.96</div>
+														</div>-->
+														<v-chip :color="getColor(item.status)" small>
+															<div
+																class="white--text px-3 fs-5 d-flex justify-center text-center text-uppercase"
+															>{{getStatus(item.status)}}</div>
+														</v-chip>
+													</template>
+												</v-data-table>
+											</v-card-text>
+										</div>
+									</div>
+									<div v-else>
+										<v-card-text>
+											<div class="d-flex justify-space-between">
+												<v-subheader>APPROVAL STATUS: {{currentEnrollment.approval_status ? 'Approved': 'Pending'}}</v-subheader>
+												<!-- <div class="d-flex align-center">
+													<v-subheader
+														class="pa-0 fs-5 font-weight-bold"
+													>TOTAL UNITS REGISTERED: {{courses.reduce((acc, val) => {return acc + val.credit_unit}, 0)}}</v-subheader>
+													<v-btn color="success" icon @click="editCourses">
+														<v-icon size="18" color="grey">mdi-pencil</v-icon>
+													</v-btn>
 												</div>-->
-												<!-- <v-chip :color="getColor(item.status)" small>
-														<div
-															class="white--text px-3 fs-5 d-flex justify-center text-center text-uppercase"
-														>{{getStatus(item.status)}}</div>
-													</v-chip>
-												</template>-->
-											</v-data-table>
+											</div>
+											<v-data-table
+												:headers="enrollmentHeaders"
+												:items="currentEnrollment.curriculum_items"
+												hide-default-footer
+											></v-data-table>
 										</v-card-text>
 									</div>
 								</v-card>
 							</v-tab-item>
 							<v-tab-item>
-								<v-card flat>
+								<v-card flat v-for="items in enrollments" :key="items.id">
 									<v-card-text>
-										<p>Morbi nec metus. Suspendisse faucibus, nunc et pellentesque egestas, lacus ante convallis tellus, vitae iaculis lacus elit id tortor. Sed mollis, eros et ultrices tempus, mauris ipsum aliquam libero, non adipiscing dolor urna a orci. Curabitur ligula sapien, tincidunt non, euismod vitae, posuere imperdiet, leo. Nunc sed turpis.</p>
-
-										<p>Suspendisse feugiat. Suspendisse faucibus, nunc et pellentesque egestas, lacus ante convallis tellus, vitae iaculis lacus elit id tortor. Proin viverra, ligula sit amet ultrices semper, ligula arcu tristique sapien, a accumsan nisi mauris ac eros. In hac habitasse platea dictumst. Fusce ac felis sit amet ligula pharetra condimentum.</p>
-
-										<p>Sed consequat, leo eget bibendum sodales, augue velit cursus nunc, quis gravida magna mi a libero. Nam commodo suscipit quam. In consectetuer turpis ut velit. Sed cursus turpis vitae tortor. Aliquam eu nunc.</p>
-
-										<p>Etiam ut purus mattis mauris sodales aliquam. Ut varius tincidunt libero. Aenean viverra rhoncus pede. Duis leo. Fusce fermentum odio nec arcu.</p>
-
-										<p
-											class="mb-0"
-										>Donec venenatis vulputate lorem. Aenean viverra rhoncus pede. In dui magna, posuere eget, vestibulum et, tempor auctor, justo. Fusce commodo aliquam arcu. Suspendisse enim turpis, dictum sed, iaculis a, condimentum nec, nisi.</p>
+										<div class="text-bold">{{ items.semester.name }}</div>
+										<v-data-table
+											:headers="enrollmentHeaders"
+											:items="items.curriculum_items"
+											hide-default-footer
+										></v-data-table>
 									</v-card-text>
 								</v-card>
 							</v-tab-item>
@@ -198,6 +183,7 @@ export default {
 			showPendingSelect: false,
 			showEdit: false,
 			showAwaiting: false,
+			isEnrolling: false,
 			items: [
 				{ id: 1, tab: "OVERVIEW" },
 				{ id: 2, tab: "EDIT" },
@@ -253,6 +239,7 @@ export default {
 				// { text: "GRADE SCORE", value: "carbs" },
 				// { text: "WEIGHTED SCORE", value: "protein" }
 			],
+			// currentEnrollment: [],
 			courses: [
 				{
 					name: "CST111",
@@ -519,8 +506,27 @@ export default {
 					status: 3,
 					iron: "0%"
 				}
+			],
+			enrollmentHeaders: [
+				{
+					text: "COURSE CODE",
+					align: "start",
+					sortable: false,
+					value: "curriculumable.course_code"
+				},
+				{ text: "COURSE TITLE", value: "curriculumable.title" },
+				{ text: "CREDIT UNIT", value: "credit_unit" },
+				{ text: "COURSE STATUS", value: "status.short_name" }
+			],
+			enrollments: [
+				// { text: " SEMESTER", value: "carbs" }
 			]
 		};
+	},
+	computed: {
+		currentEnrollment() {
+			return this.enrollments[0];
+		}
 	},
 	methods: {
 		getColor(val) {
@@ -549,6 +555,15 @@ export default {
 			this.showEdit = false;
 			this.showPendingSelect = false;
 			this.showAwaiting = true;
+		}
+	},
+	async mounted() {
+		try {
+			this.enrollments = await this.$store.dispatch(
+				"getStudentEnrollments"
+			);
+		} catch (error) {
+			console.log(error);
 		}
 	}
 };

@@ -19,6 +19,14 @@ class Semester extends Model
     ];
 
     // protected $with = ['semesterType', 'academicSession'];
+    protected $appends = ['name'];
+
+    public function getNameAttribute()
+    {
+        // dd(Semester::find($this->id)->semester_type_id);
+        $semester =  SemesterType::find(Semester::find($this->id)->semester_type_id);
+        return "$semester->title $semester->id";
+    }
 
     public function semester()
     {

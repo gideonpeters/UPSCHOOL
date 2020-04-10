@@ -18,6 +18,11 @@ class ResultItem extends Model
         return $this->hasOneThrough(Student::class, StudentCourse::class);
     }
 
+    public function result()
+    {
+        return $this->belongsTo(Result::class);
+    }
+
     public function course()
     {
         return $this->hasOneThrough(Course::class, StudentCourse::class);

@@ -10,6 +10,12 @@ use Illuminate\Database\Eloquent\Model;
 class Enrollment extends Model
 {
     //
+    protected $with = ['semester:id'];
+
+    protected $casts = [
+        'approval_status' => 'boolean',
+    ];
+
     public function student()
     {
         return $this->belongsTo(Student::class);

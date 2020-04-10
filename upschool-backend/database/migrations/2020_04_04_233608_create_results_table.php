@@ -20,6 +20,7 @@ class CreateResultsTable extends Migration
             $table->unsignedInteger('gpa')->nullable();
             $table->unsignedInteger('cgpa')->nullable();
             $table->unsignedInteger('total_units')->nullable();
+            $table->unsignedInteger('total_weighted_score')->nullable();
             $table->timestamps();
         });
     }
