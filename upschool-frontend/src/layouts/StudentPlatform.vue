@@ -275,6 +275,7 @@ export default {
 			else if (this.keyStat == 3) title = "COURSES";
 			else if (this.keyStat == 4) title = "RESULTS & GRADING";
 			else if (this.keyStat == 5) title = "FINANCIALS";
+			else if (this.keyStat == 6) title = "PLANNER";
 
 			return title;
 		},
@@ -391,9 +392,28 @@ export default {
 				}
 			];
 
+			let plannerItems = [
+				{
+					route: "student.calendar",
+					title: "CALENDAR",
+					icon: "mdi-calendar"
+				},
+				{
+					route: "student.schedule",
+					title: "Schedule",
+					icon: "mdi-watch"
+				},
+				{
+					route: "student.school-calendar",
+					title: "School Calendar",
+					icon: "mdi-clock-outline"
+				}
+			];
+
 			if (this.keyStat == 3) result = courseItems;
 			else if (this.keyStat == 4) result = resultItems;
 			else if (this.keyStat == 5) result = financialItems;
+			else if (this.keyStat == 6) result = plannerItems;
 			else if (!this.keyStat) result = generalItems;
 
 			return result;

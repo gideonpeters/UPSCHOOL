@@ -3531,7 +3531,140 @@ export default new Vuex.Store({
 			}
 		],
 		schoolEvents: [],
-		enrollments: []
+		enrollments: [],
+		messageList: [
+			{
+				id: 1,
+				icon: true,
+				title: "Prof. Jerry Amiah",
+				avatar: "https://cdn.vuetifyjs.com/images/lists/1.jpg",
+				isFavourite: false,
+				messages: [
+					{
+						id: 1,
+						sender_id: 1,
+						text: "Hi! It's Prof, what are you up to?",
+						time: "12:00AM"
+					},
+					{
+						id: 2,
+						sender_id: 2,
+						text: "Just working on the final assignment, you?",
+						time: "12:05AM"
+					},
+					{
+						id: 3,
+						sender_id: 2,
+						text: "so far so good",
+						time: "12:07AM"
+					},
+					{
+						id: 4,
+						sender_id: 1,
+						text: "LMAO. I haven't even started it",
+						time: "12:08AM"
+					}
+				]
+			},
+			{
+				id: 2,
+				title: "Chika Dim Cyril",
+				avatar: "https://cdn.vuetifyjs.com/images/lists/2.jpg",
+				isFavourite: false,
+				messages: [
+					{
+						id: 1,
+						sender_id: 1,
+						text: "Hi! It's Chika, what are you up to?",
+						time: "12:00AM"
+					},
+					{
+						id: 2,
+						sender_id: 3,
+						text: "Just working on the final assignment, you?",
+						time: "12:05AM"
+					},
+					{
+						id: 3,
+						sender_id: 3,
+						text: "so far so good",
+						time: "12:07AM"
+					},
+					{
+						id: 4,
+						sender_id: 1,
+						text:
+							"Hmmm. I ran into a bit of a hurdle myself, I think I just need to change my approach",
+						time: "12:08AM"
+					}
+				]
+			},
+			{
+				id: 3,
+				title: "Peters Gideon",
+				avatar: "https://cdn.vuetifyjs.com/images/lists/3.jpg",
+				isFavourite: false,
+				messages: [
+					{
+						id: 1,
+						sender_id: 1,
+						text: "Gideon here! what are you up to?",
+						time: "12:00AM"
+					},
+					{
+						id: 2,
+						sender_id: 4,
+						text: "Just working on the final assignment, you?",
+						time: "12:05AM"
+					},
+					{
+						id: 3,
+						sender_id: 4,
+						text: "so far so good",
+						time: "12:07AM"
+					},
+					{
+						id: 4,
+						sender_id: 1,
+						text: "I still have a long way to go :(",
+						time: "12:08AM"
+					}
+				]
+			},
+			{
+				id: 4,
+				title: "Ebube Donald",
+				avatar: "https://cdn.vuetifyjs.com/images/lists/4.jpg",
+				isFavourite: false,
+				messages: [
+					{
+						id: 1,
+						sender_id: 1,
+						text: "Hi! what are you up to?",
+						time: "12:00AM"
+					},
+					{
+						id: 2,
+						sender_id: 5,
+						text: "Just working on the final assignment, you?",
+						time: "12:05AM"
+					},
+					{
+						id: 3,
+						sender_id: 5,
+						text: "so far so good",
+						time: "12:07AM"
+					},
+					{
+						id: 4,
+						sender_id: 1,
+						text:
+							"LMAO. Can't believe it's due next week, where do I begin?",
+						time: "12:08AM"
+					}
+				]
+			}
+		]
 	},
 	getters: {
 		getCourses({ courses }) {

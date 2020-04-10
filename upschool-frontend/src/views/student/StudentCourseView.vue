@@ -1,6 +1,6 @@
 <template>
 	<v-app>
-		<course-view />
+		<course-view isStudent />
 	</v-app>
 </template>
 

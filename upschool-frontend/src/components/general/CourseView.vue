@@ -6,7 +6,7 @@
 			</div>
 			<v-spacer></v-spacer>
 			<!-- <div>
-				<div class="text-center" v-if="!student">
+				<div class="text-center" v-if="!isStudent">
 					<v-menu offset-y>
 						<template v-slot:activator="{ on }">
 							<v-btn outlined color="green accent-4" class="fs-5" v-on="on">ENROLL</v-btn>
@@ -81,7 +81,7 @@
 							<div class="mt-5 border-dashed pb-5" v-for="section in courseSections" :key="section.id">
 								<div class="d-flex justify-space-between align-center">
 									<h3>{{section.title}}</h3>
-									<div class="text-center" v-if="!student">
+									<div class="text-center" v-if="!isStudent">
 										<v-menu offset-y>
 											<template v-slot:activator="{ on }">
 												<v-btn v-on="on" depressed icon>
@@ -149,7 +149,7 @@ export default {
 		SectionItem
 	},
 	props: {
-		student: {
+		isStudent: {
 			type: Boolean,
 			default: false
 		}
@@ -162,11 +162,7 @@ export default {
 			// course: [],
 			items: [
 				{ id: 1, tab: "OVERVIEW" },
-				{ id: 2, tab: "COURSE MATERIAL" },
-				{ id: 3, tab: "PARTICIPANTS" },
-				{ id: 4, tab: "SUBMISSIONS" },
-				{ id: 5, tab: "GRADES" },
-				{ id: 6, tab: "SETTINGS" }
+				{ id: 2, tab: "COURSE MATERIAL" }
 			],
 			headers: [
 				{
@@ -206,6 +202,14 @@ export default {
 	},
 	async mounted() {
 		try {
+			if (!this.isStudent) {
+				this.items.push(
+					{ id: 3, tab: "PARTICIPANTS" },
+					{ id: 4, tab: "SUBMISSIONS" },
+					{ id: 5, tab: "GRADES" },
+					{ id: 6, tab: "SETTINGS" }
+				);
+			}
 			let id = this.$route.params.id;
 			this.courseSections = await this.$store.dispatch(
 				"getCourseSection",

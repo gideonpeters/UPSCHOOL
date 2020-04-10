@@ -12,7 +12,7 @@ export default {
 	data: () => ({}),
 	computed: {
 		messageList() {
-			return this.$store.state.loggedInUser.messageList;
+			return this.$store.state.messageList;
 		}
 	}
 };

@@ -66,12 +66,11 @@ export default [
 	{
 		path: "payment",
 		// name: "student.payments",
-		component: () => import("./../views/student/StudentPayment"),
-
+		component: () => import("./../views/apps/Payments"),
 		// meta: { title: "Payments" },
 		children: [
 			{
-				path: "fees",
+				path: "",
 				name: "student.payments",
 				meta: { key: 5 },
 				component: () => import("./../views/student/StudentPaymentFees")
@@ -83,13 +82,33 @@ export default [
 				component: () =>
 					import("./../views/student/StudentPaymentHistory")
 			}
+			// {
+			// 	path: "wallets",
+			// 	name: "student.payments",
+			// 	meta: { key: 5 },
+			// 	component: () => import("./../views/student/StudentPaymentFees")
+			// },
 		]
 	},
 	{
-		path: "calendar",
-		name: "student.calendar",
-		meta: { title: "Calendar" },
-		component: () => import("./../views/student/StudentCalendar")
+		path: "planner",
+		// name: "student.calendar",
+		// meta: { title: "Calendar" },
+		component: () => import("./../views/apps/Planner"),
+		children: [
+			{
+				path: "",
+				name: "student.calendar",
+				meta: { key: 6 },
+				component: () => import("./../views/student/StudentCalendar")
+			},
+			{
+				path: "schedule",
+				name: "student.schedule",
+				meta: { key: 6 },
+				component: () => import("./../views/student/StudentCalendar")
+			}
+		]
 	},
 	{
 		path: "results",

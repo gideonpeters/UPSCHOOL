@@ -106,6 +106,7 @@ export default {
 	async mounted() {
 		try {
 			this.$store.dispatch("getNews");
+			this.$store.dispatch("getSchoolEvents");
 		} catch (error) {
 			console.log(error);
 		}
