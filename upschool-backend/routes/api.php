@@ -156,6 +156,11 @@ Route::group([], function ($router) {
 });
 
 Route::group([], function ($router) {
+    Route::post('user-event', 'UserEventController@getUserEvents');
+});
+
+
+Route::group([], function ($router) {
     Route::get('school-event', 'SchoolEventController@index');
     Route::post('school-event', 'SchoolEventController@store');
     Route::get('school-event/{event_id}', 'SchoolEventController@show');

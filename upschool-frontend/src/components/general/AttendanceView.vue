@@ -27,14 +27,10 @@
 								<v-col cols="12" md="12">
 									<div v-if="indx == 0">
 										<v-expansion-panels multiple>
-											<v-expansion-panel v-for="(event, i) in student.events" :key="i">
-												<v-expansion-panel-header class="text-uppercase">{{event.name}}</v-expansion-panel-header>
+											<v-expansion-panel v-for="(schoolEvent, i) in studentEvents" :key="i">
+												<v-expansion-panel-header class="text-uppercase">{{schoolEvent.title}}</v-expansion-panel-header>
 												<v-expansion-panel-content>
-													<div
-														class="d-flex align-start h-100 mb-4"
-														v-for="(eventDate, i) in eventDates(event.id)"
-														:key="i"
-													>
+													<div class="d-flex align-start h-100 mb-4" v-for="i in 3" :key="i">
 														<div class="d-flex flex-column align-center mr-4 h-100">
 															<div>
 																<v-icon color="info" size="20">mdi-circle-slice-8</v-icon>
@@ -43,9 +39,9 @@
 														</div>
 
 														<div>
-															<div>{{ eventDate.date.toUTCString() }}</div>
-															<div class="fs-3">{{event.venue}}</div>
-															<div class="fs-4">{{event.time}}</div>
+															<!-- <div>{{ eventDate.date.toUTCString() }}</div> -->
+															<div class="fs-3">{{schoolEvent.event.venue}}</div>
+															<div class="fs-4">{{schoolEvent.event.start_time}}</div>
 														</div>
 
 														<div class="ml-auto">
@@ -64,12 +60,13 @@
 												<div class="px-4">
 													<div
 														class="d-flex justify-space-between fs-4 pb-4"
-														v-for="event in student.events"
+														v-for="event in studentEvents"
 														:key="event.id"
 													>
-														<div>Number of {{event.name}} defaults</div>
+														<div>Number of {{event.title}} defaults</div>
 														<div class="d-flex align-center">
-															{{ event.total_attendance - eventDates(event.id).length }}
+															15
+															<!-- {{ event.total_attendance - eventDates(event.id).length }} -->
 															<v-icon color="grey" size="15" class="pl-3">mdi-eye</v-icon>
 														</div>
 													</div>
@@ -139,6 +136,7 @@ export default {
 			{ id: 2, name: "TUESDAY SERVICE" },
 			{ id: 3, name: "SUNDAY SERVICE" }
 		],
+		studentEvents: [],
 		text:
 			"Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.",
 		courseAttendanceHeaders: [
@@ -346,10 +344,10 @@ export default {
 
 			return ans;
 		},
-		studentEvents() {
-			let id = this.studentInfo.matric_number;
-			return this.$store.getters.getStudentEvent(id);
-		},
+		// studentEvents() {
+		// 	let id = this.studentInfo.matric_number;
+		// 	return this.$store.getters.getStudentEvent(id);
+		// },
 		aggregateAttendanceScore() {
 			return Number(
 				(this.courseAttendance.reduce((acc, val) => {
@@ -367,12 +365,20 @@ export default {
 			return this.$store.getters.getStudent(id);
 		}
 	},
-	mounted() {
-		// let id = this.$route.params.id;
-		// if (!id) {
-		// 	id = this.$store.state.loggedInUser.matric_number;
-		// }
-		// this.student = this.$store.getters.getStudent(id);
+	async mounted() {
+		try {
+			let id = this.$route.params.id;
+			if (!id) {
+				id = this.$store.state.loggedInUser.id;
+			}
+			this.studentEvents = await this.$store.dispatch(
+				"getUserEvents",
+				id
+			);
+			// console.log(this.studentEvents);
+		} catch (error) {
+			console.log(error);
+		}
 	},
 	methods: {
 		dothis() {

@@ -7,77 +7,51 @@ use Illuminate\Http\Request;
 
 class UserEventController extends Controller
 {
-    /**
-     * Display a listing of the resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
     public function index()
     {
         //
     }
 
-    /**
-     * Show the form for creating a new resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
-    public function create()
+    public function getUserEvents(Request $request)
     {
         //
+        // dd('hi');
+        $events = UserEvent::whereUserId($request->user_id)->whereEventId(null)->get();
+
+        $values = [];
+
+        foreach ($events as $v => $event) {
+            # code...
+            array_push($values, $event->school_event());
+        }
+
+        return response()->json([
+            'status' => true,
+            'message' => 'these are all the school events for this user',
+            'data' => $values
+        ], 201);
     }
 
-    /**
-     * Store a newly created resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @return \Illuminate\Http\Response
-     */
     public function store(Request $request)
     {
         //
     }
 
-    /**
-     * Display the specified resource.
-     *
-     * @param  \App\UserEvent  $userEvent
-     * @return \Illuminate\Http\Response
-     */
     public function show(UserEvent $userEvent)
     {
         //
     }
 
-    /**
-     * Show the form for editing the specified resource.
-     *
-     * @param  \App\UserEvent  $userEvent
-     * @return \Illuminate\Http\Response
-     */
     public function edit(UserEvent $userEvent)
     {
         //
     }
 
-    /**
-     * Update the specified resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @param  \App\UserEvent  $userEvent
-     * @return \Illuminate\Http\Response
-     */
     public function update(Request $request, UserEvent $userEvent)
     {
         //
     }
 
-    /**
-     * Remove the specified resource from storage.
-     *
-     * @param  \App\UserEvent  $userEvent
-     * @return \Illuminate\Http\Response
-     */
     public function destroy(UserEvent $userEvent)
     {
         //

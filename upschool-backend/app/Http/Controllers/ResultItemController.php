@@ -24,22 +24,27 @@ class ResultItemController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function publish()
+    public function publish(Request $request)
     {
         //
         $currentSemester = Semester::latest()->first();
-        $studentCourses = StudentCourse::whereSemesterId($currentSemester->id);
+        // $studentCourses = StudentCourse::whereSemesterId($currentSemester->id);
+        $student_course = $request->student_course_id ? StudentCourse::whereSemesterId($currentSemester->id)
+            ->whereCourseId($request->course_id)
+            ->whereStudentId($request->student_id)->first() : StudentCourse::find($request->student_course_id);
 
-        $resultItem = new ResultItem();
+        if ($student_course) {
+            $resultItem = new ResultItem();
 
-        // $table->foreignId('student_id');
-        //     $table->foreignId('semester_id');
-        //     $table->foreignId('course_id');
-        //     $table->unsignedInteger('exam_score')->nullable();
-        //     $table->unsignedInteger('ca_score')->nullable();
-        //     $table->unsignedInteger('total_weighted_score')->nullable();
-        //     $table->string('grade_score')->nullable();
-        //     $table->unsignedInteger('weighted_score')->nullable();
+            // $table->foreignId('semester_id');
+            // $table->foreignId('student_course_id');
+            // $table->unsignedInteger('exam_score')->nullable();
+            // $table->unsignedInteger('ca_score')->nullable();
+            // $table->unsignedInteger('total_weighted_score')->nullable();
+            // $table->string('grade_score')->nullable();
+            // $table->unsignedInteger('weighted_score')->nullable();
+            // $table->timestamps();
+        }
     }
 
     /**

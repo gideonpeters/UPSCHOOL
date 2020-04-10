@@ -3734,6 +3734,12 @@ export default new Vuex.Store({
 
 			res.status ? (state.loggedInUser = res.data.user) : null;
 		},
+		async getUserEvents({}, id) {
+			let body = { user_id: id };
+			let res = await axios.post("user-event", body);
+			console.log(res.data);
+			return res.data.data;
+		},
 		async getColleges({ state }) {
 			let res = await axios.get("college");
 			console.log(res.data);

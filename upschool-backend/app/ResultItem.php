@@ -5,6 +5,7 @@ namespace App;
 use App\Result;
 use App\Student;
 use App\Semester;
+use App\StudentCourse;
 use App\CurriculumItem;
 use Illuminate\Database\Eloquent\Model;
 
@@ -21,8 +22,8 @@ class ResultItem extends Model
         return $this->belongsTo(Semester::class);
     }
 
-    public function course()
+    public function student_course()
     {
-        return $this->belongsTo(Course::class);
+        return $this->belongsTo(StudentCourse::class);
     }
 }
