@@ -61,11 +61,12 @@ class Course extends Model
 
     public function continuous_assessments()
     {
-        return $this->hasMany(ContinuousAssessment::whereCourseId($this->id)
-            ->whereContinuousAssessmentId(null)
-            ->whereStudentCourseId(null)
-            ->whereWeightedScore(null)
-            ->get());
+        return $this->hasMany(
+            ContinuousAssessment::whereCourseId($this->id)
+                ->whereContinuousAssessmentId(null)
+                ->whereStudentCourseId(null)
+                ->whereWeightedScore(null)
+        );
     }
 
     // public function curriculum_items()

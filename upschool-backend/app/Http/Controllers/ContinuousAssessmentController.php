@@ -2,52 +2,63 @@
 
 namespace App\Http\Controllers;
 
-use App\ContinuousAssessment;
+use App\Semester;
 use Illuminate\Http\Request;
+use App\ContinuousAssessment;
 
 class ContinuousAssessmentController extends Controller
 {
     public function index($id)
     {
         //
-        $continuous_assessments = ContinuousAssessment::whereCourseId($id);
+        $continuous_assessments = ContinuousAssessment::whereCourseId($id)->get();
 
         return response()->json([
             'status' => true,
             'message' => 'these are all the CAs for this course',
-            'data' => $continuous_assessments
+            'data' => $continuous_assessments->load('continuous_assessments')
         ], 201);
     }
 
     public function upload_scores(Request $request)
     {
         //
+        if ($request->student_course_id && $request->continuous_assessment_id) {
 
-        $continuous_assessment = new ContinuousAssessment();
+            $continuous_assessment = new ContinuousAssessment();
+            $continuous_assessment->continuous_assessment_id = $request->continuous_assessment_id;
+            // $continuous_assessment->student_id = $request->student_id;
+            $continuous_assessment->student_course_id = $request->student_course_id;
+            $continuous_assessment->weighted_score = $request->weighted_score;
+            $continuous_assessment->save();
 
-        $continuous_assessment->continuous_assessment_id = $request->continuous_assessment_id;
-        $continuous_assessment->student_id = $request->student_id;
-        $continuous_assessment->course_id = $request->course_id;
-        $continuous_assessment->weighted_score = $request->weighted_score;
-
-        $continuous_assessment->save();
-
-        return response()->json([
-            'status' => true,
-            'message' => 'CA uploded successfully',
-            'data' => $continuous_assessment
-        ], 201);
+            return response()->json([
+                'status' => true,
+                'message' => 'CA uploded successfully',
+                'data' => $continuous_assessment
+            ], 201);
+        }
     }
 
-    /**
-     * Store a newly created resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @return \Illuminate\Http\Response
-     */
     public function store(Request $request)
     {
         //
+        if ($request->course_id && $request->name) {
+            $currentSemester = Semester::latest()->first();
+
+            $continuous_assessment = new ContinuousAssessment();
+            $continuous_assessment->name = $request->name;
+            $continuous_assessment->course_id = $request->course_id;
+            $continuous_assessment->semester_id = $currentSemester->id;
+
+            $continuous_assessment->save();
+
+            return response()->json([
+                'status' => true,
+                'message' => 'CA created successfully',
+                'data' => $continuous_assessment
+            ], 201);
+        }
     }
 
     /**

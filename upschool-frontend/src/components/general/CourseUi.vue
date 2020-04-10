@@ -213,6 +213,10 @@ export default {
 		isStudent: {
 			type: Boolean,
 			default: false
+		},
+		personal: {
+			type: Boolean,
+			default: false
 		}
 	},
 	data() {
@@ -249,8 +253,15 @@ export default {
 		};
 	},
 	computed: {
-		courses() {
+		getCourses() {
 			return this.$store.state.courses;
+		},
+		getCoursesFromEnrollments() {
+			return this.$store.getters.getCoursesFromEnrollments;
+		},
+		courses() {
+			if (this.personal) return this.getCoursesFromEnrollments;
+			return this.getCourses;
 		},
 		optionItems() {
 			return this.$store.state.courseCategories;

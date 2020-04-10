@@ -15,7 +15,7 @@ Vue.use(lineClamp, {
 axios.defaults.baseURL = "http://127.0.0.1:8000/api/";
 
 // const token = localStorage.getItem("user-token");
-const token = `Bearer eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpc3MiOiJodHRwOlwvXC8xMjcuMC4wLjE6ODAwMFwvYXBpXC9hdXRoXC9sb2dpbiIsImlhdCI6MTU4NTc5NDkxNSwiZXhwIjoxNTg2Mzk5NzE2LCJuYmYiOjE1ODU3OTQ5MTYsImp0aSI6InU1M2dMWU9OSXRPdlhScHgiLCJzdWIiOjMsInBydiI6Ijg3ZTBhZjFlZjlmZDE1ODEyZmRlYzk3MTUzYTE0ZTBiMDQ3NTQ2YWEifQ.DahXrrizT0L-Np136mnSZJD7K6vI6dWjLqutdE8RePg`;
+const token = `Bearer eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpc3MiOiJodHRwOlwvXC8xMjcuMC4wLjE6ODAwMFwvYXBpXC9hdXRoXC9sb2dpbiIsImlhdCI6MTU4NjUxNTM4MCwiZXhwIjoxNTg3MTIwMTgwLCJuYmYiOjE1ODY1MTUzODAsImp0aSI6IldtVlNTeGhkTldTM0ptWTAiLCJzdWIiOjMsInBydiI6Ijg3ZTBhZjFlZjlmZDE1ODEyZmRlYzk3MTUzYTE0ZTBiMDQ3NTQ2YWEifQ.voe3T2MXIlMLHk7GmIGxyyn4Cg3luXoh7V9zY8izfcg`;
 
 if (token) {
 	axios.defaults.headers.common["Authorization"] = token;

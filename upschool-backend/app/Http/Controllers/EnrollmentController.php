@@ -96,26 +96,22 @@ class EnrollmentController extends Controller
         //
     }
 
-    /**
-     * Display the specified resource.
-     *
-     * @param  \App\Enrollment  $enrollment
-     * @return \Illuminate\Http\Response
-     */
     public function show(Enrollment $enrollment)
     {
         //
+
     }
 
-    /**
-     * Show the form for editing the specified resource.
-     *
-     * @param  \App\Enrollment  $enrollment
-     * @return \Illuminate\Http\Response
-     */
-    public function edit(Enrollment $enrollment)
+    public function getEnrolledCourses(Request $request)
     {
         //
+        $enrollments = Enrollment::whereStudentId($request->student_id)->get();
+
+        return response()->json([
+            'status' => true,
+            'message' => 'all enrollments',
+            'data' => $enrollments->load('curriculum_items')
+        ], 201);
     }
 
     /**

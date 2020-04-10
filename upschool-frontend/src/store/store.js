@@ -3530,11 +3530,18 @@ export default new Vuex.Store({
 					"https://whatsupnewp.com/wp-content/uploads/2020/03/banner.png"
 			}
 		],
-		schoolEvents: []
+		schoolEvents: [],
+		enrollments: []
 	},
 	getters: {
 		getCourses({ courses }) {
 			return courses;
+		},
+		getCoursesFromEnrollments({ enrollments }) {
+			let enrolled = enrollments[0].curriculum_items;
+			let ans = enrolled.map(item => item.curriculumable);
+			// console.log(ans);
+			return ans;
 		},
 		isAuthenticated: ({ token }) => !!token,
 		getEvent: ({ events }) => id => {
@@ -3633,6 +3640,15 @@ export default new Vuex.Store({
 			let res = await axios.get("course-status");
 
 			state.course_statuses = res.data.data;
+		},
+		async getEnrolledCourses({ state }) {
+			let body = {
+				student_id: state.loggedInUser.id
+			};
+
+			let res = await axios.post(`enroll/courses`, body);
+			console.log(res.data);
+			state.enrollments = res.data.data;
 		},
 		async getCourseSection({}, id) {
 			let res = await axios.get(`course-section/${id}`);

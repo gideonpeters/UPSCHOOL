@@ -7,21 +7,19 @@ use Illuminate\Http\Request;
 
 class StudentCourseController extends Controller
 {
-    /**
-     * Display a listing of the resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
-    public function index()
+
+    public function index($id)
     {
         //
+        $student_courses = StudentCourse::whereStudentId($id);
+
+        return response()->json([
+            'status' => true,
+            'message' => 'these are all the courses this student has/is offered',
+            'data' => $student_courses
+        ], 201);
     }
 
-    /**
-     * Show the form for creating a new resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
     public function create()
     {
         //

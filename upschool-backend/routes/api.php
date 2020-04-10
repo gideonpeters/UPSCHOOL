@@ -41,6 +41,7 @@ Route::group([], function ($router) {
 
 Route::post('enroll', 'EnrollmentController@enrollCourses');
 Route::get('enroll', 'EnrollmentController@index');
+Route::post('enroll/courses', 'EnrollmentController@getEnrolledCourses');
 
 Route::group([], function ($router) {
     Route::get('course-status', 'CourseStatusController@index');
@@ -64,10 +65,10 @@ Route::group([], function ($router) {
 });
 
 Route::group([], function ($router) {
-    // Route::get('course-ca', 'ContinuousAssessmentController@index');
+    Route::get('course-ca/{course_id}', 'ContinuousAssessmentController@index');
     Route::post('course-ca', 'ContinuousAssessmentController@store');
     // Route::get('course-ca/{ca_id}', 'ContinuousAssessmentController@index');
-    // Route::post('course-ca/{ca_id}', 'ContinuousAssessmentController@upload_scores');
+    Route::post('course-ca/upload', 'ContinuousAssessmentController@upload_scores');
 });
 
 Route::group([], function ($router) {

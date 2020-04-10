@@ -15,10 +15,11 @@ class CreateContinuousAssessmentsTable extends Migration
     {
         Schema::create('continuous_assessments', function (Blueprint $table) {
             $table->id();
-            $table->string('name');
+            $table->string('name')->nullable();
             $table->foreignId('continuous_assessment_id')->nullable();
-            $table->foreignId('course_id');
-            $table->foreignId('student_id')->nullable();
+            $table->foreignId('course_id')->nullable();
+            $table->foreignId('student_course_id')->nullable();
+            $table->foreignId('semester_id')->nullable();
             $table->unsignedInteger('weighted_score')->nullable();
             $table->timestamps();
         });

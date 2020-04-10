@@ -48,7 +48,10 @@
 
 							<v-card-text>
 								<v-chip-group v-model="selection" active-class="deep-purple accent-4 white--text" column>
-									<v-chip v-for="item in course.prerequisites" :key="item.id">{{ item.course_code }}</v-chip>
+									<v-chip
+										v-for="prerequisite in course.prerequisites"
+										:key="prerequisite.id"
+									>{{ prerequisite.course_code }}</v-chip>
 								</v-chip-group>
 							</v-card-text>
 
@@ -107,7 +110,7 @@
 								</div>
 							</div>
 						</v-card>
-						<!-- <v-card flat class="pa-3" v-if="ix == 2" min-height="500">
+						<v-card flat class="pa-3" v-if="ix == 2" min-height="500">
 							<v-data-table
 								:headers="headers"
 								:items="course.participants"
@@ -121,7 +124,7 @@
 									v-slot:item.name="{item}"
 								>{{`${item.first_name} ${item.middle_name} ${item.last_name}`}}</template>
 							</v-data-table>
-						</v-card>-->
+						</v-card>
 						<v-card flat class="pa-3" v-if="ix == 3" min-height="500">
 							<div class="fs-3">Currently under construction</div>
 						</v-card>
