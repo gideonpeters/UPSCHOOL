@@ -4,6 +4,7 @@ namespace App;
 
 use App\Event;
 // use Illuminate\Contracts\Auth\MustVerifyEmail;
+use App\UserEvent;
 use App\SchoolEvent;
 use App\ScheduleItem;
 use Tymon\JWTAuth\Contracts\JWTSubject;
@@ -70,7 +71,7 @@ class User extends Authenticatable implements JWTSubject
 
     public function events()
     {
-        return $this->belongsToMany(Event::class);
+        return $this->belongsToMany(Event::class)->using(UserEvent::class);
     }
 
     // public function image()

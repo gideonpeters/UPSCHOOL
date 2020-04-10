@@ -106,7 +106,14 @@ export default [
 				path: "schedule",
 				name: "student.schedule",
 				meta: { key: 6 },
-				component: () => import("./../views/student/StudentCalendar")
+				component: () => import("./../views/student/StudentSchedule")
+			},
+			{
+				path: "school-calendar",
+				name: "student.school-calendar",
+				meta: { key: 6 },
+				component: () =>
+					import("./../views/student/StudentSchoolCalendar")
 			}
 		]
 	},

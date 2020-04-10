@@ -294,12 +294,12 @@ export default {
 				},
 				{
 					route: "student.courses.register",
-					title: "Manage Courses",
+					title: "Enrollments",
 					icon: "mdi-book"
 				},
 				{
 					route: "student.courses.assignments",
-					title: "My Assignments",
+					title: "Assignments",
 					icon: "mdi-clipboard-text"
 				},
 				{

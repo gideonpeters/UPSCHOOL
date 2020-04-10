@@ -54,7 +54,7 @@
 
 				<v-col>
 					<div class="d-flex justify-space-between align-center">
-						<v-subheader class="pa-0">UPCOMING EVENTS</v-subheader>
+						<v-subheader class="pa-0">SCHOOL EVENTS</v-subheader>
 						<v-btn color="blue accent-4" text v-if="!isStudent">CREATE EVENT</v-btn>
 					</div>
 

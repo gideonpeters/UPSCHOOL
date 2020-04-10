@@ -1,6 +1,8 @@
 <template>
 	<v-app>
-		<school-calendar isStudent />
+		<v-container>
+			<school-calendar isStudent />
+		</v-container>
 	</v-app>
 </template>
 

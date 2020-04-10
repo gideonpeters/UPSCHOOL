@@ -15,8 +15,8 @@ class SchoolEvent extends Model
         return $this->morphOne(Event::class, 'eventable');
     }
 
-    // public function users()
-    // {
-    //     return $this->belongsToMany(User::class);
-    // }
+    public function attendees()
+    {
+        return $this->belongsToMany(User::class)->using(UserEvent::class);
+    }
 }
