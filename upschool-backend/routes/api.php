@@ -64,6 +64,13 @@ Route::group([], function ($router) {
 });
 
 Route::group([], function ($router) {
+    // Route::get('course-ca', 'ContinuousAssessmentController@index');
+    Route::post('course-ca', 'ContinuousAssessmentController@store');
+    // Route::get('course-ca/{ca_id}', 'ContinuousAssessmentController@index');
+    // Route::post('course-ca/{ca_id}', 'ContinuousAssessmentController@upload_scores');
+});
+
+Route::group([], function ($router) {
     Route::get('curriculum-item', 'CurriculumItemController@index');
     Route::post('curriculum-item', 'CurriculumItemController@store');
     Route::get('curriculum-item/{item_id}', 'CurriculumItemController@show');

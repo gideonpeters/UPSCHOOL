@@ -19,7 +19,9 @@ class StudentCourse extends Pivot
 
     public function continuous_assessments()
     {
-        return $this->hasMany(ContinuousAssessment::class);
+        return ContinuousAssessment::whereStudentId($this->student_id)
+            ->whereCourseId($this->course_id)
+            ->get();
     }
 
     public function examinations()

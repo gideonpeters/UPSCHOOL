@@ -7,24 +7,36 @@ use Illuminate\Http\Request;
 
 class ContinuousAssessmentController extends Controller
 {
-    /**
-     * Display a listing of the resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
-    public function index()
+    public function index($id)
     {
         //
+        $continuous_assessments = ContinuousAssessment::whereCourseId($id);
+
+        return response()->json([
+            'status' => true,
+            'message' => 'these are all the CAs for this course',
+            'data' => $continuous_assessments
+        ], 201);
     }
 
-    /**
-     * Show the form for creating a new resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
-    public function create()
+    public function upload_scores(Request $request)
     {
         //
+
+        $continuous_assessment = new ContinuousAssessment();
+
+        $continuous_assessment->continuous_assessment_id = $request->continuous_assessment_id;
+        $continuous_assessment->student_id = $request->student_id;
+        $continuous_assessment->course_id = $request->course_id;
+        $continuous_assessment->weighted_score = $request->weighted_score;
+
+        $continuous_assessment->save();
+
+        return response()->json([
+            'status' => true,
+            'message' => 'CA uploded successfully',
+            'data' => $continuous_assessment
+        ], 201);
     }
 
     /**
