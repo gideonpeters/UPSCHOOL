@@ -1,19 +1,19 @@
 <template>
 	<div>
-		<v-card flat>
-			<v-subheader>ALPHA SEMESTER</v-subheader>
+		<v-card flat v-for="result in results" :key="result.id">
+			<v-subheader>{{result.semester.name}}</v-subheader>
 			<v-card-text>
-				<v-data-table :headers="headers" :items="desserts" :items-per-page="10" hide-default-footer>
+				<v-data-table :headers="headers" :items="result.result_items" hide-default-footer>
 					<template slot="footer">
 						<div class="d-flex mt-4 justify-end">
-							<div class="fs-3 mr-4 font-weight-bold">GPA: 4.94</div>
-							<div class="fs-3 font-weight-bold">CGPA: 4.96</div>
+							<div class="fs-3 mr-4 font-weight-bold">GPA: {{result.gpa}}</div>
+							<div class="fs-3 font-weight-bold">CGPA: {{result.cgpa}}</div>
 						</div>
 					</template>
 				</v-data-table>
 			</v-card-text>
 
-			<div>
+			<!-- <div>
 				<v-subheader>OMEGA SEMESTER</v-subheader>
 				<v-card-text>
 					<v-data-table :headers="headers" :items="desserts" :items-per-page="10" hide-default-footer>
@@ -25,7 +25,7 @@
 						</template>
 					</v-data-table>
 				</v-card-text>
-			</div>
+			</div>-->
 		</v-card>
 	</div>
 </template>
@@ -40,12 +40,19 @@ export default {
 				text: "COURSE CODE",
 				align: "start",
 				sortable: false,
-				value: "name"
+				value:
+					"student_course.curriculum_item.curriculumable.course_code"
 			},
-			{ text: "COURSE TITLE", value: "calories" },
-			{ text: "CREDIT UNIT", value: "fat" },
-			{ text: "GRADE SCORE", value: "carbs" },
-			{ text: "WEIGHTED SCORE", value: "protein" }
+			{
+				text: "COURSE TITLE",
+				value: "student_course.curriculum_item.curriculumable.title"
+			},
+			{
+				text: "CREDIT UNIT",
+				value: "student_course.curriculum_item.credit_unit"
+			},
+			{ text: "GRADE SCORE", value: "grade_score" },
+			{ text: "WEIGHTED SCORE", value: "weighted_score" }
 		],
 		desserts: [
 			{
@@ -153,7 +160,15 @@ export default {
 				protein: 7,
 				iron: "6%"
 			}
-		]
-	})
+		],
+		results: []
+	}),
+	async mounted() {
+		try {
+			this.results = await this.$store.dispatch("getStudentResults");
+		} catch (error) {
+			console.log(error);
+		}
+	}
 };
 </script>

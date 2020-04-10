@@ -3800,6 +3800,14 @@ export default new Vuex.Store({
 
 			return res.data.data;
 		},
+		async getStudentResults({ state }, student_id) {
+			let id = state.loggedInUser ? state.loggedInUser.id : student_id;
+			let res = await axios.get(`result/${id}`);
+
+			console.log(res.data);
+
+			return res.data.data;
+		},
 		async getCourseSection({}, id) {
 			let res = await axios.get(`course-section/${id}`);
 

@@ -21,6 +21,11 @@ class Result extends Model
         return $this->belongsTo(Semester::class);
     }
 
+    public function student()
+    {
+        return $this->belongsTo(Student::class);
+    }
+
     public function result_items()
     {
         return $this->hasMany(ResultItem::class);

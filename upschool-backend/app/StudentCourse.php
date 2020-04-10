@@ -13,6 +13,8 @@ class StudentCourse extends Pivot
     //
     protected $table = 'student_courses';
 
+    protected $with = ['curriculum_item'];
+
     public function result_item()
     {
         return $this->hasOne(ResultItem::class);

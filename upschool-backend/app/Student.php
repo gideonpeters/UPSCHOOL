@@ -53,6 +53,11 @@ class Student extends Model
         return $this->hasMany(ResultItem::class);
     }
 
+    public function results()
+    {
+        return $this->hasMany(Result::class);
+    }
+
     // public function option()
     // {
     //     return $this->hasOneThrough(Option::class, Program::class);

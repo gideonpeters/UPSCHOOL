@@ -72,6 +72,14 @@ Route::group([], function ($router) {
 });
 
 Route::group([], function ($router) {
+    Route::get('result/{student_id}', 'ResultController@studentIndex');
+    Route::get('result', 'ResultController@index');
+    // Route::post('courses', 'CourseController@store');
+    // Route::get('courses/{id}', 'CourseController@show');
+    // Route::get('courses/{id}/participants', 'CourseController@indexParticipants');
+});
+
+Route::group([], function ($router) {
     Route::get('curriculum-item', 'CurriculumItemController@index');
     Route::post('curriculum-item', 'CurriculumItemController@store');
     Route::get('curriculum-item/{item_id}', 'CurriculumItemController@show');

@@ -13,6 +13,8 @@ use Illuminate\Database\Eloquent\Model;
 class ResultItem extends Model
 {
     //
+    protected $with = ['student_course'];
+
     public function student()
     {
         return $this->hasOneThrough(Student::class, StudentCourse::class);

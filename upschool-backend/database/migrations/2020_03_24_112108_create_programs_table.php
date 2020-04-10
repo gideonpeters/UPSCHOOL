@@ -24,7 +24,7 @@ class CreateProgramsTable extends Migration
             $table->foreignId('degree_id');
             $table->unsignedInteger('max_number_of_failed_units')->nullable();
             $table->unsignedInteger('min_graduation_units')->nullable();
-            $table->unsignedDecimal('min_cgpa')->nullable();
+            $table->unsignedDecimal('min_cgpa', 8, 2)->nullable();
             $table->timestamps();
         });
     }

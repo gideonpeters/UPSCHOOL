@@ -17,8 +17,8 @@ class CreateResultsTable extends Migration
             $table->id();
             $table->foreignId('student_id');
             $table->foreignId('semester_id');
-            $table->unsignedInteger('gpa')->nullable();
-            $table->unsignedInteger('cgpa')->nullable();
+            $table->unsignedDecimal('gpa', 8, 4)->nullable();
+            $table->unsignedDecimal('cgpa', 8, 4)->nullable();
             $table->unsignedInteger('total_units')->nullable();
             $table->unsignedInteger('total_weighted_score')->nullable();
             $table->timestamps();
