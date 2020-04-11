@@ -14,11 +14,15 @@ class Result extends Model
     // {
     //     return $this->belongsTo(Student::class);
     // }
-    protected $with = ['semester', 'result_items'];
+    protected $with = ['semester', 'result_items',];
 
     public function semester()
     {
         return $this->belongsTo(Semester::class);
+    }
+
+    public function credits_achieved()
+    {
     }
 
     public function student()

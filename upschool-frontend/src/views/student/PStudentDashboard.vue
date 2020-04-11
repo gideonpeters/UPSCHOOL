@@ -227,7 +227,7 @@
 											<div class="d-flex mt-3">
 												<div>Current credits achieved:</div>
 												<v-spacer></v-spacer>
-												<div class="font-weight-bold mr-5">58</div>
+												<div class="font-weight-bold mr-5">{{student.credits_achieved}}</div>
 											</div>
 										</div>
 									</v-col>
@@ -332,7 +332,7 @@ export default {
 			indeterminate: false,
 			rotate: 270,
 			size: 100,
-			value: 80,
+			// value: 80,
 			width: 4,
 			absolute: true,
 			overlay: false,
@@ -416,6 +416,17 @@ export default {
 		},
 		student() {
 			return this.$store.state.loggedInUser;
+		},
+		value() {
+			// if (this.student) {
+			let ans =
+				(this.student.credits_achieved /
+					this.student.program.min_graduation_units) *
+				100;
+			console.log(ans);
+
+			return ans;
+			// } else return 0;
 		}
 	},
 	methods: {

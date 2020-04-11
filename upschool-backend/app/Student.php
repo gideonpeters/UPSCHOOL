@@ -11,16 +11,24 @@ use App\Program;
 use App\Guardian;
 use App\ResultItem;
 use App\StudentCourse;
+use Illuminate\Support\Facades\DB;
 use Illuminate\Database\Eloquent\Model;
 
 class Student extends Model
 {
     //
-    protected $with = ['user', 'program'];
+    protected $with = ['user', 'program',];
+
+    protected $appends = ['credits_achieved'];
 
     public function user()
     {
         return $this->morphOne(User::class, 'userable');
+    }
+
+    public function getCreditsAchievedAttribute()
+    {
+        return (int) (DB::table('results')->whereStudentId($this->id)->sum('total_units'));
     }
 
     public function courses()
