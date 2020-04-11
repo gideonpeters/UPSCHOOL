@@ -202,3 +202,5 @@ Route::group([], function ($router) {
     Route::get('staff/{staff_id}', 'StaffController@show');
     Route::post('staff/{staff_id}', 'StaffController@update');
 });
+
+Route::post('/send', 'EmailController@send');

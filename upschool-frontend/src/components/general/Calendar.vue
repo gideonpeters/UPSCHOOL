@@ -57,7 +57,7 @@ export default {
 			{ text: "Mon, Wed, Fri", value: [1, 3, 5] }
 		],
 		value: "",
-		now: Date.now(),
+		now: new Date().toISOString().substr(0, 10),
 		colors: [
 			"blue",
 			"indigo",
