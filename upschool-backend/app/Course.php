@@ -5,6 +5,7 @@ namespace App;
 use App\Staff;
 use App\Student;
 use App\Category;
+use App\Gradelist;
 use App\CourseStatus;
 use App\Prerequisite;
 use App\SemesterType;
@@ -47,6 +48,11 @@ class Course extends Model
     public function categories()
     {
         return $this->belongsToMany(Category::class, 'courses_course_categories', 'course_id', 'course_category_id');
+    }
+
+    public function gradelists()
+    {
+        return $this->hasMany(Gradelist::class);
     }
 
     public function prerequisites()

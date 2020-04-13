@@ -1,5 +1,5 @@
 <template>
 	<v-app>
-		<h1>History</h1>
+		<h1>Payment History</h1>
 	</v-app>
 </template>

@@ -5,6 +5,7 @@ namespace App;
 use App\Event;
 use App\Course;
 use App\Result;
+use App\Gradelist;
 use App\ScheduleItem;
 use App\SemesterType;
 use App\AcademicSession;
@@ -41,6 +42,11 @@ class Semester extends Model
     public function academicSession()
     {
         return $this->belongsTo(AcademicSession::class, 'academic_session_id');
+    }
+
+    public function gradelists()
+    {
+        return $this->hasMany(Gradelist::class);
     }
 
     public function events()
