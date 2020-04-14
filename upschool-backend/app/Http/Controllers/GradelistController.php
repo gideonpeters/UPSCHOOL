@@ -2,71 +2,52 @@
 
 namespace App\Http\Controllers;
 
+use App\Semester;
 use App\Gradelist;
 use Illuminate\Http\Request;
 
 class GradelistController extends Controller
 {
-    /**
-     * Display a listing of the resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
-    public function index()
+
+    public function index($id)
     {
         //
+        $gradelists = Gradelist::whereCourseId($id)->get();
+
+        return response()->json([
+            'status' => true,
+            'message' => 'these are all the gradelists for this course',
+        ], 201);
     }
 
-    /**
-     * Show the form for creating a new resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
-    public function create()
-    {
-        //
-    }
-
-    /**
-     * Store a newly created resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @return \Illuminate\Http\Response
-     */
     public function store(Request $request)
     {
         //
+
+        $gradelist = new Gradelist();
+        $gradelist->name = $request->name;
+        $gradelist->total_score = $request->total_score;
+        $gradelist->course_id = $request->course_id;
+        $gradelist->semester_id =  Semester::latest()->first()->id;
+        $gradelist->save();
+
+        return response()->json([
+            'status' => true,
+            'message' => 'new gradelist created for this course',
+            'data' => $gradelist
+        ], 201);
     }
 
-    /**
-     * Display the specified resource.
-     *
-     * @param  \App\Gradelist  $gradelist
-     * @return \Illuminate\Http\Response
-     */
     public function show(Gradelist $gradelist)
     {
         //
     }
 
-    /**
-     * Show the form for editing the specified resource.
-     *
-     * @param  \App\Gradelist  $gradelist
-     * @return \Illuminate\Http\Response
-     */
     public function edit(Gradelist $gradelist)
     {
         //
     }
 
-    /**
-     * Update the specified resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @param  \App\Gradelist  $gradelist
-     * @return \Illuminate\Http\Response
-     */
     public function update(Request $request, Gradelist $gradelist)
     {
         //

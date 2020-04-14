@@ -72,6 +72,13 @@ Route::group([], function ($router) {
 });
 
 Route::group([], function ($router) {
+    Route::get('course-assessment/{course_id}', 'GradelistController@index');
+    Route::post('course-assessment', 'GradelistController@store');
+    // Route::get('course-assessment/{assessment_id}', 'ContinuousAssessmentController@index');
+    // Route::post('course-assessment/upload', 'ContinuousAssessmentController@upload_scores');
+});
+
+Route::group([], function ($router) {
     Route::get('result/{student_id}', 'ResultController@studentIndex');
     Route::get('result', 'ResultController@index');
     // Route::post('courses', 'CourseController@store');
