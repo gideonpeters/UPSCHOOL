@@ -78,6 +78,21 @@ Route::group([], function ($router) {
     // Route::post('course-assessment/upload', 'ContinuousAssessmentController@upload_scores');
 });
 
+Route::post('test', 'CurriculumItemController@test');
+
+Route::group([], function ($router) {
+    Route::get('course-assessment-student/{student_course_id}', 'GradeItemController@index');
+    Route::post('course-assessment-student/{student_course_id}', 'GradeItemController@store');
+});
+
+Route::group([], function ($router) {
+    Route::get('school-assessment', 'SchoolAssessmentController@index');
+    Route::post('school-assessment', 'SchoolAssessmentController@store');
+    Route::post('school-assessment-course', 'SchoolAssessmentItemController@store');
+    // Route::get('course-assessment/{assessment_id}', 'ContinuousAssessmentController@index');
+    // Route::post('course-assessment/upload', 'ContinuousAssessmentController@upload_scores');
+});
+
 Route::group([], function ($router) {
     Route::get('result/{student_id}', 'ResultController@studentIndex');
     Route::get('result', 'ResultController@index');
@@ -98,6 +113,13 @@ Route::group([], function ($router) {
     Route::post('curriculum', 'CurriculumController@store');
     Route::get('curriculum/{curriculum_id}', 'CurriculumController@show');
     Route::post('curriculum/{curriculum_id}', 'CurriculumController@update');
+});
+
+Route::group([], function ($router) {
+    Route::get('curriculum-block', 'CurriculumBlockController@index');
+    Route::post('curriculum-block', 'CurriculumBlockController@store');
+    Route::get('curriculum-block/{program_id}', 'CurriculumBlockController@show');
+    // Route::post('curriculum-block/{curriculum_id}', 'CurriculumBlockController@update');
 });
 
 Route::group([], function ($router) {

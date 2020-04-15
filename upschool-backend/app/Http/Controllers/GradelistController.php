@@ -17,6 +17,7 @@ class GradelistController extends Controller
         return response()->json([
             'status' => true,
             'message' => 'these are all the gradelists for this course',
+            'data' => $gradelists
         ], 201);
     }
 

@@ -7,35 +7,33 @@ use Illuminate\Http\Request;
 
 class SchoolAssessmentController extends Controller
 {
-    /**
-     * Display a listing of the resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
     public function index()
     {
         //
+        $school_assessments = SchoolAssessment::all();
+
+        return response()->json([
+            'status' => true,
+            'message' => 'these are all the school assessment items',
+            'data' => $school_assessments
+        ], 201);
     }
 
-    /**
-     * Show the form for creating a new resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
-    public function create()
-    {
-        //
-    }
-
-    /**
-     * Store a newly created resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @return \Illuminate\Http\Response
-     */
     public function store(Request $request)
     {
         //
+        $school_assessment = new SchoolAssessment();
+
+        $school_assessment->name = $request->name;
+        $school_assessment->total_score = $request->total_score;
+
+        $school_assessment->save();
+
+        return response()->json([
+            'status' => true,
+            'message' => 'school assessment created',
+            'data' => $school_assessment
+        ], 201);
     }
 
     /**

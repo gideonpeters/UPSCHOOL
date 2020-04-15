@@ -4,6 +4,7 @@ namespace App;
 
 use App\Course;
 use App\GraduationUnit;
+use App\CurriculumBlock;
 use Illuminate\Database\Eloquent\Model;
 
 class CourseStatus extends Model
@@ -19,8 +20,8 @@ class CourseStatus extends Model
         return $this->hasMany(GraduationUnit::class);
     }
 
-    public function curriculum_items()
+    public function curriculum_blocks()
     {
-        return $this->hasMany(CurriculumItem::class);
+        return $this->hasMany(CurriculumBlock::class);
     }
 }

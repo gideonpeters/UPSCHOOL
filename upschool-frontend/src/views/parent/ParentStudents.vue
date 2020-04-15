@@ -24,7 +24,7 @@ export default {
 				text: "Name",
 				align: "left",
 				// sortable: false,
-				value: "user.name"
+				value: "name"
 			},
 			{ text: "Matriculation Number", value: "matric_number" },
 			{ text: "Registration Number", value: "reg_number" },

@@ -15,6 +15,7 @@ class SemesterType extends Model
         return $this->hasMany(Semester::class);
     }
 
+
     public function courses()
     {
         return $this->hasMany(Course::class);

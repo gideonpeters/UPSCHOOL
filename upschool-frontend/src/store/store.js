@@ -3824,6 +3824,11 @@ export default new Vuex.Store({
 			let res = await axios.get(`courses/${id}`);
 			return res.data.data;
 		},
+		async getCurricula({}, id) {
+			let res = await axios.get(`curriculum-block/${id}`);
+			console.log(res.data);
+			return res.data.data;
+		},
 		setupDashboard({ dispatch }) {
 			dispatch("getStudents");
 			dispatch("getStaff");

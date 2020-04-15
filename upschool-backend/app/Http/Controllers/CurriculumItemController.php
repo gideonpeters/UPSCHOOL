@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Program;
 use App\CurriculumItem;
 use Illuminate\Http\Request;
+use phpDocumentor\Reflection\Types\Array_;
 
 class CurriculumItemController extends Controller
 {
@@ -32,10 +33,10 @@ class CurriculumItemController extends Controller
         $curriculum_item->credit_unit = $request->credit_unit;
         // $curriculum_item->curriculum_id = $request->curriculum_id;
         $curriculum_item->course_status_id = $request->course_status_id;
+        // $curriculum_item->semester_type_id = $request->semester_type_id;
 
         $curriculum_item->curriculumable_type = 'App\Course';
         $curriculum_item->curriculumable_id = $request->course_id;
-
 
         $curriculum_item->save();
 
@@ -71,6 +72,22 @@ class CurriculumItemController extends Controller
     public function update(Request $request, CurriculumItem $curriculumItem)
     {
         //
+    }
+
+    public function test(Request $request)
+    {
+        $data = $request->all();
+        $da = json_decode($data["data"]);
+        $arr = array();
+        foreach ($da as $v => $item) {
+            # code...
+            $item->curriculumable_type = 'App\Course';
+            $item->curriculumable_id = $item->course_id;
+
+            array_push($arr, $item);
+        }
+        dd($arr);
+        // printf($arr);
     }
 
     public function destroy(CurriculumItem $curriculumItem)

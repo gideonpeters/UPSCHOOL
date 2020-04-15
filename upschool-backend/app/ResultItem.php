@@ -15,20 +15,20 @@ class ResultItem extends Model
     //
     protected $with = ['student_course'];
 
-    public function student()
-    {
-        return $this->hasOneThrough(Student::class, StudentCourse::class);
-    }
+    // public function student()
+    // {
+    //     return $this->hasOneThrough(Student::class, StudentCourse::class);
+    // }
 
     public function result()
     {
         return $this->belongsTo(Result::class);
     }
 
-    public function course()
-    {
-        return $this->hasOneThrough(Course::class, StudentCourse::class);
-    }
+    // public function course()
+    // {
+    //     return $this->hasOneThrough(Course::class, StudentCourse::class);
+    // }
 
     public function semester()
     {

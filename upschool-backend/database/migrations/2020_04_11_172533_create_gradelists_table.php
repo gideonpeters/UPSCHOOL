@@ -19,6 +19,7 @@ class CreateGradelistsTable extends Migration
             $table->foreignId('semester_id');
             $table->string('name');
             $table->unsignedInteger('total_score');
+            $table->boolean('visible')->default(false);
             $table->timestamps();
         });
     }

@@ -10,12 +10,13 @@ use App\Curriculum;
 use App\Department;
 use App\CurriculumItem;
 use App\GraduationUnit;
+use App\CurriculumBlock;
 use Illuminate\Database\Eloquent\Model;
 
 class Program extends Model
 {
     //
-    protected $with = ['department', 'degree', 'curriculum_items'];
+    protected $with = ['department', 'degree'];
 
     public function department()
     {
@@ -57,8 +58,9 @@ class Program extends Model
     //     return $this->hasMany(Curriculum::class);
     // }
 
-    public function curriculum_items()
+    public function curriculum_blocks()
     {
-        return $this->belongsToMany(CurriculumItem::class, 'programs_curriculum_items', 'program_id', 'curriculum_item_id');
+        return $this->hasMany(CurriculumBlock::class);
+        // return $this->belongsToMany(CurriculumItem::class, 'programs_curriculum_items', 'program_id', 'curriculum_item_id');
     }
 }

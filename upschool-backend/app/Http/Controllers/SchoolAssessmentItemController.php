@@ -7,43 +7,32 @@ use Illuminate\Http\Request;
 
 class SchoolAssessmentItemController extends Controller
 {
-    /**
-     * Display a listing of the resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
     public function index()
     {
         //
     }
 
-    /**
-     * Show the form for creating a new resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
     public function create()
     {
         //
     }
 
-    /**
-     * Store a newly created resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @return \Illuminate\Http\Response
-     */
     public function store(Request $request)
     {
         //
+        $school_assessment_item = new SchoolAssessmentItem();
+        $school_assessment_item->student_course_id = $request->student_course_id;
+        $school_assessment_item->school_assessment_id = $request->school_assessment_id;
+        $school_assessment_item->score = $request->score;
+        $school_assessment_item->save();
+
+        return response()->json([
+            'status' => true,
+            'message' => 'uploaded school assessment successfully',
+            'data' => $school_assessment_item
+        ], 201);
     }
 
-    /**
-     * Display the specified resource.
-     *
-     * @param  \App\SchoolAssessmentItem  $schoolAssessmentItem
-     * @return \Illuminate\Http\Response
-     */
     public function show(SchoolAssessmentItem $schoolAssessmentItem)
     {
         //

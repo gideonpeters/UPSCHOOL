@@ -77,7 +77,8 @@ export default {
 			type: String
 		},
 		type: {
-			type: String
+			type: String,
+			default: "def"
 		}
 	},
 	data() {
@@ -87,11 +88,13 @@ export default {
 	},
 	methods: {
 		goToPage(v) {
-			// console.log(v);
+			// console.log(this.type.toLowercase());
 			let id;
-			if (this.type.toLowercase() == "students") {
+			let type = this.type;
+
+			if (type.toLowerCase() == "students") {
 				id = v.matric_number;
-			} else if (this.type.toLowercase() == "staff") {
+			} else if (type.toLowerCase() == "staff") {
 				id = v.staff_number;
 			} else {
 				id = v.id;

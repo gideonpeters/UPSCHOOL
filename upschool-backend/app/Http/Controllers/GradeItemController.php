@@ -7,35 +7,34 @@ use Illuminate\Http\Request;
 
 class GradeItemController extends Controller
 {
-    /**
-     * Display a listing of the resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
-    public function index()
+
+    public function index(Request $request)
     {
         //
+        $grade_items = GradeItem::whereStudentCourseId($request->student_course_id)->get();
+
+        return response()->json([
+            'status' => true,
+            'message' => 'these are all the grade items for this student in this course',
+            'data' => $grade_items->load('gradelist')
+        ], 201);
     }
 
-    /**
-     * Show the form for creating a new resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
-    public function create()
-    {
-        //
-    }
-
-    /**
-     * Store a newly created resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @return \Illuminate\Http\Response
-     */
     public function store(Request $request)
     {
         //
+        $grade_item = new GradeItem();
+
+        $grade_item->gradelist_id = $request->gradelist_id;
+        $grade_item->score = $request->score;
+        $grade_item->student_course_id = $request->student_course_id;
+        $grade_item->save();
+
+        return response()->json([
+            'status' => true,
+            'message' => 'student score uploaded successfully',
+            'data' => $grade_item
+        ], 201);
     }
 
     /**

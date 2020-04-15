@@ -19,7 +19,7 @@ class Student extends Model
     //
     protected $with = ['user', 'program',];
 
-    protected $appends = ['credits_achieved'];
+    protected $appends = ['credits_achieved', 'name'];
 
     public function user()
     {
@@ -29,6 +29,12 @@ class Student extends Model
     public function getCreditsAchievedAttribute()
     {
         return (int) (DB::table('results')->whereStudentId($this->id)->sum('total_units'));
+    }
+
+    public function getNameAttribute()
+    {
+        $student = Student::whereId($this->id)->first();
+        return "$student->first_name $student->middle_name $student->last_name";
     }
 
     public function courses()

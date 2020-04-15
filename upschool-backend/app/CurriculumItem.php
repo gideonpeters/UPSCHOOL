@@ -8,6 +8,7 @@ use App\Curriculum;
 use App\Enrollment;
 use App\CourseStatus;
 use App\StudentCourse;
+use App\CurriculumBlock;
 use Illuminate\Database\Eloquent\Model;
 
 class CurriculumItem extends Model
@@ -18,6 +19,11 @@ class CurriculumItem extends Model
     public function curriculumable()
     {
         return $this->morphTo();
+    }
+
+    public function curriculum_block()
+    {
+        return $this->belongsTo(CurriculumBlock::class);
     }
 
     public function status()
@@ -32,12 +38,18 @@ class CurriculumItem extends Model
 
     public function programs()
     {
-        return $this->belongsToMany(Program::class, 'programs_curriculum_items', 'curriculum_item_id', 'program_id');
+        return $this->belongsTo(Program::class);
+        // return $this->belongsToMany(Program::class, 'programs_curriculum_items', 'curriculum_item_id', 'program_id');
     }
 
     public function student_courses()
     {
         return $this->hasMany(StudentCourse::class);
+    }
+
+    public function semester()
+    {
+        return $this->belongsTo(SemesterType::class, 'semester_type_id');
     }
 
     // public function curriculum()

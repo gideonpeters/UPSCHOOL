@@ -18,8 +18,7 @@ class CreateResultItemsTable extends Migration
             $table->foreignId('result_id')->nullable();
             $table->foreignId('semester_id');
             $table->foreignId('student_course_id');
-            $table->unsignedInteger('exam_score')->nullable();
-            $table->unsignedInteger('ca_score')->nullable();
+            $table->unsignedInteger('score')->nullable();
             $table->string('grade_score')->nullable();
             $table->unsignedInteger('weighted_score')->nullable();
             $table->timestamps();
