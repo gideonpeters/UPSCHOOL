@@ -331,7 +331,7 @@ export default {
 			credits: null,
 			numberAdded: 1,
 			dialog: false,
-			dialog2: true,
+			dialog2: false,
 			isCompulsory: false,
 			headers: [
 				{

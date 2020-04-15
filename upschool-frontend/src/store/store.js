@@ -3829,6 +3829,15 @@ export default new Vuex.Store({
 			console.log(res.data);
 			return res.data.data;
 		},
+		async saveBulkCourses({ dispatch }, payload) {
+			let body = { data: JSON.stringify(payload) };
+			let res = await axios.post("bulk/courses", body);
+			if (res.data.status) {
+				dispatch("getAllCourses");
+			}
+			console.log(res.data);
+			return res.data;
+		},
 		setupDashboard({ dispatch }) {
 			dispatch("getStudents");
 			dispatch("getStaff");

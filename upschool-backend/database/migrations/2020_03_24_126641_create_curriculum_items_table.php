@@ -15,7 +15,7 @@ class CreateCurriculumItemsTable extends Migration
     {
         Schema::create('curriculum_items', function (Blueprint $table) {
             $table->id();
-            $table->unsignedBigInteger('credit_unit');
+            $table->unsignedInteger('credit_unit');
             $table->foreignId('curriculum_block_id');
             // $table->foreignId('semester_type_id');
             $table->unsignedBigInteger('curriculumable_id');

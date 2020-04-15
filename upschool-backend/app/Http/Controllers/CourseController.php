@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Staff;
 use App\Course;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\DB;
 
 class CourseController extends Controller
 {
@@ -12,11 +13,12 @@ class CourseController extends Controller
     {
         //
         $courses = Course::all();
+        // $courses->withPath('custom');
 
         return response()->json([
             'status' => true,
             'message' => 'these are all the courses',
-            'data' => $courses->load('facilitators', 'prerequisites', 'participants')
+            'data' => $courses->load('facilitators', 'prerequisites', 'participants',)
         ], 201);
     }
 
@@ -90,6 +92,20 @@ class CourseController extends Controller
             'message' => 'This is the retrieved course',
             'data' => $course->load('facilitators', 'participants')
         ], 201);
+    }
+
+    public function storeBulk(Request $request)
+    {
+        $data = json_decode($request->data, true);
+        // dd($data);
+        DB::table('courses')->insertOrIgnore($data);
+
+        return response()->json([
+            'status' => true,
+            'message' => 'Uploaded courses successfully',
+            'data' => $data
+        ]);
+        // dd($request->data);
     }
 
 

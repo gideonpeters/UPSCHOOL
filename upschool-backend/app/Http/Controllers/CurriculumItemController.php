@@ -24,15 +24,15 @@ class CurriculumItemController extends Controller
     public function store(Request $request)
     {
         //
-        $program = Program::find($request->program_id);
+        // $program = Program::find($request->program_id);
 
 
         $curriculum_item = new CurriculumItem();
 
-        $curriculum_item->level = $request->level;
+        // $curriculum_item->level = $request->level;
         $curriculum_item->credit_unit = $request->credit_unit;
-        // $curriculum_item->curriculum_id = $request->curriculum_id;
-        $curriculum_item->course_status_id = $request->course_status_id;
+        $curriculum_item->curriculum_block_id = $request->curriculum_block_id;
+        // $curriculum_item->course_status_id = $request->course_status_id;
         // $curriculum_item->semester_type_id = $request->semester_type_id;
 
         $curriculum_item->curriculumable_type = 'App\Course';
@@ -40,7 +40,7 @@ class CurriculumItemController extends Controller
 
         $curriculum_item->save();
 
-        $program->curriculum_items()->save($curriculum_item);
+        // $program->curriculum_items()->save($curriculum_item);
 
         return response()->json([
             'status' => true,
