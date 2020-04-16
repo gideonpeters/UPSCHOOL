@@ -1,9 +1,18 @@
 <template>
 	<div>
 		<v-container>
+			<v-row v-if="personal">
+				<v-col cols="4">
+					<metric-card
+						title="Number of enrolled courses"
+						:value="courses.length"
+					/>
+				</v-col>
+			</v-row>
 			<v-row align="center">
 				<v-col cols="12" md="4">
 					<v-text-field
+						v-model="search"
 						flat
 						label="Search courses"
 						solo
@@ -455,7 +464,9 @@
 						<div>
 							<v-pagination
 								v-model="page"
-								:length="Math.round(courses.length / perPage)"
+								:length="
+									Math.ceil(visibleCourses.length / perPage)
+								"
 							></v-pagination>
 						</div>
 					</div>
@@ -475,10 +486,11 @@
 
 <script>
 import DownloadCsv from "vue-json-csv";
+import MetricCard from "@/components/parent/Metric";
 // import VueCsvImport from "vue-csv-import";
 import Papa from "papaparse";
 export default {
-	components: { DownloadCsv },
+	components: { DownloadCsv, MetricCard },
 	props: {
 		isStudent: {
 			type: Boolean,
@@ -492,7 +504,8 @@ export default {
 	data() {
 		return {
 			page: 1,
-			perPage: 10,
+			perPage: 9,
+			search: "",
 			snackbar: {
 				isActive: false,
 				timeout: 3000,
@@ -539,10 +552,20 @@ export default {
 	},
 	computed: {
 		visibleCourses() {
-			return this.courses.slice(
+			let items = this.courses.filter(item => {
+				let search = this.search.toLowerCase();
+				let title = item.title.toLowerCase();
+				let code = item.course_code.toLowerCase();
+				if (title.search(search) > -1 || code.search(search) > -1)
+					return item;
+			});
+
+			return items.slice(
 				(this.page - 1) * this.perPage,
 				this.page * this.perPage
 			);
+
+			// return items;
 		},
 		getCourses() {
 			return this.$store.state.courses;
@@ -551,9 +574,12 @@ export default {
 			return this.$store.getters.getCoursesFromEnrollments;
 		},
 		courses() {
-			if (this.personal)
-				return this.$store.getters.getCoursesFromEnrollments;
-			return this.getCourses;
+			let items;
+			if (this.personal) {
+				return (items = this.$store.getters.getCoursesFromEnrollments);
+			}
+			items = this.getCourses;
+			return items;
 		},
 		optionItems() {
 			return this.$store.state.courseCategories;

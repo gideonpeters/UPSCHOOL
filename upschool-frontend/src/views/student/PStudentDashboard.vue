@@ -328,7 +328,9 @@
 												You need a total of
 												{{
 													student.program
-														.min_graduation_units
+														? student.program
+																.min_graduation_units
+														: ""
 												}}
 												units to graduate
 											</div>
@@ -556,13 +558,12 @@ export default {
 			return this.$store.state.loggedInUser;
 		},
 		value() {
-			// if (this.student) {
-			let ans =
-				(this.student.credits_achieved /
-					this.student.program.min_graduation_units) *
-				100;
+			let ans = this.student.program
+				? (this.student.credits_achieved /
+						this.student.program.min_graduation_units) *
+				  100
+				: 0;
 			return ans;
-			// } else return 0;
 		}
 	},
 	methods: {

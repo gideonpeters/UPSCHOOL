@@ -21,7 +21,7 @@ class CurriculumItemController extends Controller
         ], 201);
     }
 
-    public function store(Request $request)
+    public function store(Request $request, $id)
     {
         //
         // $program = Program::find($request->program_id);
@@ -31,7 +31,7 @@ class CurriculumItemController extends Controller
 
         // $curriculum_item->level = $request->level;
         $curriculum_item->credit_unit = $request->credit_unit;
-        $curriculum_item->curriculum_block_id = $request->curriculum_block_id;
+        $curriculum_item->curriculum_block_id = $id;
         // $curriculum_item->course_status_id = $request->course_status_id;
         // $curriculum_item->semester_type_id = $request->semester_type_id;
 

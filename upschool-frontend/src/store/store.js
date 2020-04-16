@@ -3838,6 +3838,24 @@ export default new Vuex.Store({
 			console.log(res.data);
 			return res.data;
 		},
+		async getCourseGradelist({}, id) {
+			let res = await axios.get(`course-assessment/${id}`);
+			console.log(res.data);
+			return res.data;
+		},
+		async saveCourseGradelist({}, body) {
+			let res = await axios.post(`course-assessment`, body);
+			console.log(res.data);
+			return res.data;
+		},
+		async addCourseToCurriculum({}, payload) {
+			let res = await axios.post(
+				`curriculum-item/${payload.blockId}`,
+				payload.body
+			);
+			console.log(res.data);
+			return res.data;
+		},
 		setupDashboard({ dispatch }) {
 			dispatch("getStudents");
 			dispatch("getStaff");

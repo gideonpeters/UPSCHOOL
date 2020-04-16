@@ -57,7 +57,7 @@ class CurriculumBlockController extends Controller
         return response()->json([
             'status' => true,
             'message' => 'this is the curriculum for this course',
-            'data' => $curriculum_blocks
+            'data' => $curriculum_blocks->load('curriculum_items')
         ], 201);
     }
 

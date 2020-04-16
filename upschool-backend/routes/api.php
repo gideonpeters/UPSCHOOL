@@ -104,9 +104,9 @@ Route::group([], function ($router) {
 
 Route::group([], function ($router) {
     Route::get('curriculum-item', 'CurriculumItemController@index');
-    Route::post('curriculum-item', 'CurriculumItemController@store');
+    Route::post('curriculum-item/{block_id}', 'CurriculumItemController@store');
     Route::get('curriculum-item/{item_id}', 'CurriculumItemController@show');
-    Route::post('curriculum-item/{item_id}', 'CurriculumItemController@update');
+    // Route::post('curriculum-item/{item_id}', 'CurriculumItemController@update');
 });
 
 Route::group([], function ($router) {

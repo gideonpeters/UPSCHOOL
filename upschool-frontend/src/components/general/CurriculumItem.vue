@@ -1,9 +1,26 @@
 <template>
 	<div class="mt-3">
 		<div class="d-flex justify-space-between">
-			<v-subheader class="pa-0 text-uppercase">{{
-				status.name
-			}}</v-subheader>
+			<div>
+				<v-subheader class="pa-0 mb-0 text-uppercase"
+					>{{ status.name }}
+				</v-subheader>
+				<div
+					class="fs-5 t-primary mb-3"
+					v-if="
+						curriculumItem.curriculum_items &&
+							curriculumItem.curriculum_items.length > 0
+					"
+				>
+					Students must register at least
+					{{
+						curriculumItem.max_required_units
+							? curriculumItem.max_required_units
+							: "All " + totalUnits
+					}}
+					units
+				</div>
+			</div>
 			<v-menu bottom left>
 				<template v-slot:activator="{ on }">
 					<v-btn icon v-on="on">
@@ -70,49 +87,6 @@
 											required
 										></v-text-field>
 									</v-col>
-
-									<!-- <v-col cols="12">
-										<v-text-field
-											label="Email*"
-											required
-										></v-text-field>
-									</v-col>
-									<v-col cols="12">
-										<v-text-field
-											label="Password*"
-											type="password"
-											required
-										></v-text-field>
-									</v-col>
-									<v-col cols="12" sm="6">
-										<v-select
-											:items="[
-												'0-17',
-												'18-29',
-												'30-54',
-												'54+'
-											]"
-											label="Age*"
-											required
-										></v-select>
-									</v-col>
-									<v-col cols="12" sm="6">
-										<v-autocomplete
-											:items="[
-												'Skiing',
-												'Ice hockey',
-												'Soccer',
-												'Basketball',
-												'Hockey',
-												'Reading',
-												'Writing',
-												'Coding',
-												'Basejump'
-											]"
-											label="Interests"
-											multiple
-										></v-autocomplete>
-									</v-col> -->
 								</v-row>
 							</v-container>
 							<!-- <small>*indicates required field</small> -->
@@ -139,11 +113,6 @@
 		<div>
 			<v-row justify="center">
 				<v-dialog v-model="dialog2" persistent max-width="600px">
-					<!-- <template v-slot:activator="{ on }">
-						<v-btn color="primary" dark v-on="on"
-							>Open Dialog</v-btn
-						>
-					</template> -->
 					<v-card>
 						<v-card-title>
 							<span class="headline"
@@ -187,6 +156,8 @@
 									<v-col cols="4" sm="4">
 										<v-autocomplete
 											outlined
+											item-text="course_code"
+											item-value="id"
 											:items="courses"
 											v-model="selectedCourse"
 											label="Course"
@@ -200,49 +171,6 @@
 											v-model="credits"
 										></v-text-field>
 									</v-col>
-
-									<!-- <v-col cols="12">
-										<v-text-field
-											label="Email*"
-											required
-										></v-text-field>
-									</v-col>
-									<v-col cols="12">
-										<v-text-field
-											label="Password*"
-											type="password"
-											required
-										></v-text-field>
-									</v-col>
-									<v-col cols="12" sm="6">
-										<v-select
-											:items="[
-												'0-17',
-												'18-29',
-												'30-54',
-												'54+'
-											]"
-											label="Age*"
-											required
-										></v-select>
-									</v-col>
-									<v-col cols="12" sm="6">
-										<v-autocomplete
-											:items="[
-												'Skiing',
-												'Ice hockey',
-												'Soccer',
-												'Basketball',
-												'Hockey',
-												'Reading',
-												'Writing',
-												'Coding',
-												'Basejump'
-											]"
-											label="Interests"
-											multiple
-										></v-autocomplete>
-									</v-col> -->
 								</v-row>
 							</v-container>
 							<!-- <small>*indicates required field</small> -->
@@ -308,7 +236,19 @@
 			<template v-slot:item.semester="{ item }">
 				<div class="py-1">{{ item }}</div>
 			</template>
+			<template v-slot:item.actions="{ item }">
+				<v-icon small @click="deleteItem(item)">mdi-delete</v-icon>
+				<v-icon small @click="openEdit(item)">mdi-pencil</v-icon>
+			</template>
 		</v-data-table>
+		<div>
+			<v-snackbar v-model="snackbar.isActive" :timeout="snackbar.timeout">
+				{{ snackbar.text }}
+				<v-btn color="blue" text @click="snackbar.isActive = false"
+					>Close</v-btn
+				>
+			</v-snackbar>
+		</div>
 	</div>
 </template>
 
@@ -332,7 +272,13 @@ export default {
 			numberAdded: 1,
 			dialog: false,
 			dialog2: false,
+			dialog3: false,
 			isCompulsory: false,
+			snackbar: {
+				isActive: false,
+				timeout: 3000,
+				text: ""
+			},
 			headers: [
 				{
 					text: "Course Code",
@@ -350,13 +296,13 @@ export default {
 					text: "Prerequisites",
 					value: "curriculumable.prerequisites"
 				},
-				{ text: "Completed", value: "completed" },
+				{ text: "Completed", value: "completed", align: "center" },
 				{ text: "Actions", value: "actions" }
 			],
 			items: [
 				{ title: "EDIT BLOCK", fn: () => (this.dialog = true) },
-				{ title: "DELETE BLOCK", fn: () => (this.dialog2 = true) },
-				{ title: "ADD COURSE", fn: () => {} }
+				{ title: "ADD COURSE", fn: () => (this.dialog2 = true) },
+				{ title: "DELETE BLOCK", fn: () => {} }
 				// { title: "Click Me 2" }
 			]
 		};
@@ -367,19 +313,19 @@ export default {
 		},
 		currentItem() {
 			let item = this.curriculumItem;
-			// .filter(
-			// 	item => item.course_status_id == status.id
-			// );
-			// console.log(curriculumItem);
+
 			return item;
-			// console.log(
-			// 	this.curriculumItem.filter(
-			// 		item => item.course_status_id == status.id
-			// 	)
-			// );
 		},
 		courses() {
-			return this.$store.state.courses.map(item => item.course_code);
+			return this.$store.state.courses;
+		},
+		totalUnits() {
+			return Number(
+				this.curriculumItem.curriculum_items.reduce((acc, val) => {
+					return acc + val.credit_unit;
+				}, 0)
+			);
+			// return 5;
 		}
 	},
 	methods: {
@@ -398,23 +344,46 @@ export default {
 			return true;
 		},
 		closeAdd() {
-			(this.selectedCourse = null), (this.credits = null);
+			this.selectedCourse = null;
+			this.credits = null;
 			return (this.dialog2 = false);
 		},
+		editItem() {},
+		deleteItem() {},
 		async save(add) {
 			try {
-				let body = {};
-				let res = await this.$store.dispatch("addCourseToCurriculum");
+				let payload = {
+					blockId: this.curriculumItem.id,
+					body: {
+						course_id: this.selectedCourse,
+						credit_unit: this.credits
+					}
+				};
+				let res = await this.$store.dispatch(
+					"addCourseToCurriculum",
+					payload
+				);
 				if (res.status) {
+					this.snackbar.isActive = true;
+					this.snackbar.text = res.message;
 					this.closeAdd();
-					if (add) {
+					this.$emit("updateItem");
+					if (add == true) {
 						this.dialog2 = true;
 					}
+				} else {
+					this.snackbar.isActive = true;
+					this.snackbar.text = "Something went wrong, try again!";
 				}
 			} catch (error) {
 				console.log(error);
 			}
 		}
+	},
+	watch: {
+		// selectedCourse(v) {
+		// 	console.log(v);
+		// }
 	},
 	mounted() {}
 };

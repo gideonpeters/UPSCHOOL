@@ -245,7 +245,7 @@
 										>
 											<v-card flat>
 												<v-card-text>
-													<curriculum-item
+													<curriculum-item @updateItem="getCurricula"
 														:level="`${level}`"
 														v-for="curriculumItem in curricula.filter(
 															it =>
@@ -349,13 +349,21 @@ export default {
 				this.currentItem = "tab-" + item;
 			});
 		},
-		commitAction() {}
+		commitAction() {},
+		async getCurricula() {
+			try {
+				let id = this.$route.params.id;
+				this.curricula = await this.$store.dispatch("getCurricula", id);
+			} catch (error) {
+				console.log(error);
+			}
+		}
 	},
 	async mounted() {
 		try {
 			await this.$store.dispatch("getCourseStatus");
-
-			this.curricula = await this.$store.dispatch("getCurricula", 1);
+			await this.$store.dispatch("getAllCourses");
+			this.getCurricula();
 		} catch (error) {
 			console.log(error);
 		}
