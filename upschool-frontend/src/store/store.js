@@ -7,6 +7,7 @@ Vue.use(Vuex);
 export default new Vuex.Store({
 	state: {
 		token: localStorage.getItem("upschool-token") || "tre",
+		selectedCourses: [],
 		courseCategories: [
 			{
 				id: 1,
@@ -3664,7 +3665,14 @@ export default new Vuex.Store({
 					}
 				]
 			}
-		]
+		],
+		settings: {
+			canEnroll: true,
+			canAddAndDrop: true,
+			enrollBySemester: false,
+			enrollBySession: true
+		},
+		currentAcademicSession: {}
 	},
 	getters: {
 		getCourses({ courses }) {
@@ -3792,6 +3800,24 @@ export default new Vuex.Store({
 			console.log(res.data);
 			state.enrollments = res.data.data;
 		},
+		async getCurrentEnrollment({ state }) {
+			let body = {
+				student_id: state.loggedInUser.id,
+				semester_id: state.currentAcademicSession.semester.id
+			};
+			let res = await axios.post("enroll/student-latest", body);
+			console.log(res.data);
+			return res.data.data;
+		},
+		async getEnrollableItems({ state }) {
+			let body = {
+				level: state.loggedInUser.level
+			};
+			let id = state.loggedInUser.program.id;
+			let res = await axios.post(`curriculum-block-student/${id}`, body);
+			console.log(res.data);
+			return res.data.data;
+		},
 		async getStudentEnrollments({ state }) {
 			let body = { student_id: state.loggedInUser.id };
 			let res = await axios.post("enroll/student", body);
@@ -3855,6 +3881,11 @@ export default new Vuex.Store({
 			);
 			console.log(res.data);
 			return res.data;
+		},
+		async getCurrentAcademicSession({ state }) {
+			let res = await axios.get("academic-session-current");
+			console.log(res.data);
+			state.currentAcademicSession = res.data.data;
 		},
 		setupDashboard({ dispatch }) {
 			dispatch("getStudents");

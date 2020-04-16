@@ -10,7 +10,7 @@ use Illuminate\Database\Eloquent\Model;
 class CurriculumBlock extends Model
 {
     //
-    protected $with = ['status:id,name', 'program:id,name'];
+    protected $with = ['status:id,name,short_name', 'program:id,name'];
 
     public function curriculum_items()
     {

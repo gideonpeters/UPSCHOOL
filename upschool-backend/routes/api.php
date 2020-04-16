@@ -42,6 +42,7 @@ Route::post('bulk/courses', 'CourseController@storeBulk');
 
 Route::post('enroll', 'EnrollmentController@enrollCourses');
 Route::post('enroll/student', 'EnrollmentController@index');
+Route::post('enroll/student-latest', 'EnrollmentController@getCurrentEnrollment');
 Route::post('enroll/courses', 'EnrollmentController@getEnrolledCourses');
 
 Route::group([], function ($router) {
@@ -120,12 +121,14 @@ Route::group([], function ($router) {
     Route::get('curriculum-block', 'CurriculumBlockController@index');
     Route::post('curriculum-block', 'CurriculumBlockController@store');
     Route::get('curriculum-block/{program_id}', 'CurriculumBlockController@show');
+    Route::post('curriculum-block-student/{program_id}', 'CurriculumBlockController@getEnrollableItems');
     // Route::post('curriculum-block/{curriculum_id}', 'CurriculumBlockController@update');
 });
 
 Route::group([], function ($router) {
     Route::get('academic-session', 'AcademicSessionController@index');
     Route::post('academic-session', 'AcademicSessionController@store');
+    Route::get('academic-session-current', 'AcademicSessionController@getCurrent');
     Route::get('academic-session/{session_id}', 'AcademicSessionController@show');
     Route::post('academic-session/{session_id}', 'AcademicSessionController@update');
 });

@@ -9,6 +9,7 @@ use App\Semester;
 use App\Enrollment;
 use App\StudentCourse;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Redis;
 
 class EnrollmentController extends Controller
 {
@@ -115,6 +116,25 @@ class EnrollmentController extends Controller
             'status' => true,
             'message' => 'all enrollments',
             'data' => $enrollments->load('curriculum_items')
+        ], 201);
+    }
+
+    public function getCurrentEnrollment(Request $request)
+    {
+        $enrollment = Enrollment::whereStudentId($request->student_id)->whereSemesterId($request->semester_id)->first();
+
+        if (!$enrollment) {
+            return response()->json([
+                'status' => false,
+                'message' => 'Student has not yet enrolled for this semester',
+                'data' => null
+            ], 201);
+        }
+
+        return response()->json([
+            'status' => true,
+            'message' => 'this is the student current enrollment',
+            'data' => $enrollment->load('curriculum_items')
         ], 201);
     }
 

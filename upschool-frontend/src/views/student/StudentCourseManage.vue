@@ -45,7 +45,7 @@
 					</v-card>
 				</v-col>-->
 				<v-col>
-					<v-card class="pa-3" flat>
+					<v-card class="pa-3" flat min-height="600px">
 						<v-tabs>
 							<v-tab>
 								<v-icon left>mdi-lock</v-icon>CURRENT ENROLLMENT
@@ -56,73 +56,210 @@
 
 							<v-tab-item>
 								<v-card flat>
-									<div class="d-flex justify-space-between align-center">
-										<v-subheader class="ml-3 font-weight-bold">2018/2019 SESSION</v-subheader>
-										<div class="d-flex flex-lg-row flex-column align-center">
-											<v-subheader class="fs-5 font-weight-bold">MAX REGISTERABLE: 28</v-subheader>
+									<div
+										class="d-flex flex-lg-row flex-column justify-space-between align-center"
+									>
+										<v-subheader
+											class="ml-3 font-weight-bold"
+											>{{
+												academicSession.title +
+													" | " +
+													semester.name
+											}}</v-subheader
+										>
+										<div
+											class="d-flex flex-lg-row flex-column align-center"
+										>
+											<div>
+												<v-subheader
+													class="fs-5 font-weight-bold"
+													>MAX REGISTERABLE:
+													28</v-subheader
+												>
+											</div>
+											<v-btn
+												class="mx-2"
+												color="primary"
+												v-if="settings.canEnroll"
+												outlined
+												@click="
+													isEnrolling = !isEnrolling
+												"
+												>{{
+													isEnrolling
+														? "DONE"
+														: "ENROLL COURSES"
+												}}</v-btn
+											>
 											<v-btn
 												color="primary"
+												v-if="settings.canAddAndDrop"
 												outlined
-												@click="isEnrolling = !isEnrolling"
-											>{{ isEnrolling ? 'DONE' : 'ENROLL COURSES'}}</v-btn>
+												@click="
+													isEnrolling = !isEnrolling
+												"
+												>{{
+													isEnrolling
+														? "DONE"
+														: "ADD/DROP"
+												}}</v-btn
+											>
 										</div>
 									</div>
 
 									<div v-if="isEnrolling">
 										<v-card-text>
-											<div class="d-flex justify-space-between">
-												<v-subheader>APPROVAL STATUS: Approved</v-subheader>
-												<div class="d-flex align-center">
+											<div
+												class="d-flex justify-space-between"
+											>
+												<v-subheader
+													>APPROVAL STATUS:
+													{{
+														currentEnrollment
+															? currentEnrollment.approval_status
+															: "Unapproved"
+													}}</v-subheader
+												>
+												<!-- <div
+													class="d-flex align-center"
+												>
 													<v-subheader
 														class="pa-0 fs-5 font-weight-bold"
-													>TOTAL UNITS REGISTERED: {{courses.reduce((acc, val) => {return acc + val.credit_unit}, 0)}}</v-subheader>
-													<v-btn color="success" icon @click="editCourses">
-														<v-icon size="18" color="grey">mdi-pencil</v-icon>
+														>TOTAL UNITS REGISTERED:
+														{{
+															courses.reduce(
+																(acc, val) => {
+																	return (
+																		acc +
+																		val.credit_unit
+																	);
+																},
+																0
+															)
+														}}</v-subheader
+													>
+													<v-btn
+														color="success"
+														icon
+														@click="editCourses"
+													>
+														<v-icon
+															size="18"
+															color="grey"
+															>mdi-pencil</v-icon
+														>
 													</v-btn>
-												</div>
+												</div> -->
 											</div>
+											<curriculum-table
+												:isEnrolling="isEnrolling"
+												:selectedCourses="
+													selectedCourses
+												"
+												:level="`${level}`"
+												v-for="curriculumItem in enrollableItems.filter(
+													it =>
+														it.level == level &&
+														it.curriculum_items
+															.length > 0
+												)"
+												:status="curriculumItem.status"
+												:key="curriculumItem.id"
+												:curriculumItem="curriculumItem"
+											/>
 
-											<v-data-table
+											<!-- <v-data-table
 												v-model="selectedCourses"
-												:headers="headers"
-												:items="courses"
-												:show-select="showEdit"
-												:items-per-page="10"
+												:headers="enrollableHeaders"
+												:items="enrollableItems"
+												:show-select="true"
 												hide-default-footer
-											></v-data-table>
+											></v-data-table> -->
 										</v-card-text>
 
 										<div>
 											<v-card-text>
-												<div class="d-flex justify-space-between">
-													<v-subheader>PENDING COURSES</v-subheader>
-													<div class="d-flex align-center">
+												<div
+													class="d-flex justify-space-between"
+												>
+													<v-subheader
+														>PENDING
+														COURSES</v-subheader
+													>
+													<div
+														class="d-flex align-center"
+													>
 														<v-subheader
 															class="pa-0 fs-5 font-weight-bold"
-														>TOTAL UNITS PENDING: {{pendingCourses.reduce((acc, val) => {return acc + val.credit_unit}, 0)}}</v-subheader>
-														<v-btn color="success" icon @click="editPendingCourses">
-															<v-icon size="18" color="grey">mdi-pencil</v-icon>
+															>TOTAL UNITS
+															PENDING:
+															{{
+																pendingCourses.reduce(
+																	(
+																		acc,
+																		val
+																	) => {
+																		return (
+																			acc +
+																			val.credit_unit
+																		);
+																	},
+																	0
+																)
+															}}</v-subheader
+														>
+														<v-btn
+															color="success"
+															icon
+															@click="
+																editPendingCourses
+															"
+														>
+															<v-icon
+																size="18"
+																color="grey"
+																>mdi-pencil</v-icon
+															>
 														</v-btn>
 													</div>
 												</div>
 
 												<v-data-table
-													v-model=" pendingCourses "
+													v-model="pendingCourses"
 													:headers="pendingHeaders"
 													:items="pendingCourses"
-													:show-select="showPendingSelect"
+													:show-select="
+														showPendingSelect
+													"
 													:items-per-page="10"
 													hide-default-footer
 												>
-													<template v-slot:item.status="{item}">
+													<template
+														v-slot:item.status="{
+															item
+														}"
+													>
 														<!-- <div class="d-flex mt-4 justify-end">
 														<div class="fs-3 mr-4 font-weight-bold">GPA: 4.94</div>
 														<div class="fs-3 font-weight-bold">CGPA: 4.96</div>
 														</div>-->
-														<v-chip :color="getColor(item.status)" small>
+														<v-chip
+															:color="
+																getColor(
+																	item.status
+																)
+															"
+															small
+														>
 															<div
 																class="white--text px-3 fs-5 d-flex justify-center text-center text-uppercase"
-															>{{getStatus(item.status)}}</div>
+															>
+																{{
+																	getStatus(
+																		item.status
+																	)
+																}}
+															</div>
 														</v-chip>
 													</template>
 												</v-data-table>
@@ -130,9 +267,18 @@
 										</div>
 									</div>
 									<div v-else>
-										<v-card-text>
-											<div class="d-flex justify-space-between">
-												<v-subheader>APPROVAL STATUS: {{currentEnrollment.approval_status ? 'Approved': 'Pending'}}</v-subheader>
+										<v-card-text v-if="currentEnrollment">
+											<div
+												class="d-flex justify-space-between"
+											>
+												<v-subheader
+													>APPROVAL STATUS:
+													{{
+														currentEnrollment.approval_status
+															? "Approved"
+															: "Pending"
+													}}</v-subheader
+												>
 												<!-- <div class="d-flex align-center">
 													<v-subheader
 														class="pa-0 fs-5 font-weight-bold"
@@ -144,17 +290,31 @@
 											</div>
 											<v-data-table
 												:headers="enrollmentHeaders"
-												:items="currentEnrollment.curriculum_items"
+												:items="
+													currentEnrollment.curriculum_items
+												"
 												hide-default-footer
 											></v-data-table>
+										</v-card-text>
+										<v-card-text class="text-center py-5">
+											<h2>
+												You are yet to enroll for this
+												semester
+											</h2>
 										</v-card-text>
 									</div>
 								</v-card>
 							</v-tab-item>
 							<v-tab-item>
-								<v-card flat v-for="items in enrollments" :key="items.id">
+								<v-card
+									flat
+									v-for="items in enrollments"
+									:key="items.id"
+								>
 									<v-card-text>
-										<div class="text-bold">{{ items.semester.name }}</div>
+										<div class="text-bold">
+											{{ items.semester.name }}
+										</div>
 										<v-data-table
 											:headers="enrollmentHeaders"
 											:items="items.curriculum_items"
@@ -172,7 +332,9 @@
 </template>
 
 <script>
+import CurriculumTable from "@/components/general/CurriculumItem";
 export default {
+	components: { CurriculumTable },
 	data() {
 		return {
 			tab: null,
@@ -345,6 +507,21 @@ export default {
 					carbs: "ALPHA",
 					protein: 7,
 					iron: "6%"
+				}
+			],
+			enrollableItems: [],
+			enrollableHeaders: [
+				{
+					text: "COURSE CODE",
+					align: "start",
+					sortable: false,
+					value: "curriculumable.course_code"
+				},
+				{ text: "COURSE TITLE", value: "curriculumable.title" },
+				{ text: "CREDIT UNIT", value: "credit_unit" },
+				{
+					text: "COURSE STATUS",
+					value: "curriculum_block.status.short_name"
 				}
 			],
 			pendingHeaders: [
@@ -520,12 +697,22 @@ export default {
 			],
 			enrollments: [
 				// { text: " SEMESTER", value: "carbs" }
-			]
+			],
+			currentEnrollment: {}
 		};
 	},
 	computed: {
-		currentEnrollment() {
-			return this.enrollments[0];
+		academicSession() {
+			return this.$store.state.currentAcademicSession.session;
+		},
+		semester() {
+			return this.$store.state.currentAcademicSession.semester;
+		},
+		settings() {
+			return this.$store.state.settings;
+		},
+		level() {
+			return this.$store.state.loggedInUser.level;
 		}
 	},
 	methods: {
@@ -556,9 +743,30 @@ export default {
 			this.showPendingSelect = false;
 			this.showAwaiting = true;
 		}
+		// async getCurricula() {
+		// 	try {
+		// 		let id = this.$store.loggedInUser.program.id;
+		// 		this.curricula = await this.$store.dispatch("getCurricula", id);
+		// 	} catch (error) {
+		// 		console.log(error);
+		// 	}
+		// }
+	},
+	watch: {
+		selectedCourses(v) {
+			console.log(v);
+		}
 	},
 	async mounted() {
 		try {
+			await this.$store.dispatch("getCurrentAcademicSession");
+			this.currentEnrollment = await this.$store.dispatch(
+				"getCurrentEnrollment",
+				this.semester.id
+			);
+			this.enrollableItems = await this.$store.dispatch(
+				"getEnrollableItems"
+			);
 			this.enrollments = await this.$store.dispatch(
 				"getStudentEnrollments"
 			);

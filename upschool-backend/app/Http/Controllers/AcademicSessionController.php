@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Semester;
 use App\AcademicSession;
 use Illuminate\Http\Request;
 
@@ -55,6 +56,19 @@ class AcademicSessionController extends Controller
             'status' => true,
             'message' => 'This is the retrieved academic session',
             'data' => $session
+        ], 201);
+    }
+
+    public function getCurrent()
+    {
+        $session = AcademicSession::latest()->first();
+        $semester = Semester::whereAcademicSessionId($session->id)->latest()->first();
+        $data = ['session' => $session, 'semester' => $semester];
+
+        return response()->json([
+            'status' => true,
+            'message' => 'This is the retrieved academic session',
+            'data' => $data
         ], 201);
     }
 

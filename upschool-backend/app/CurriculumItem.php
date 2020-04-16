@@ -14,7 +14,7 @@ use Illuminate\Database\Eloquent\Model;
 class CurriculumItem extends Model
 {
     //status, course, prerequisite
-    protected $with = ['status', 'curriculumable'];
+    protected $with = ['status', 'curriculumable', 'curriculum_block'];
 
     public function curriculumable()
     {

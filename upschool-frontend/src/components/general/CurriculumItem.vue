@@ -210,6 +210,9 @@
 		</div>
 		<v-data-table
 			:headers="headers"
+			:show-select="isEnrolling"
+			@toggle-select-all="selectItem('toggle')"
+			@item-selected="selectItem"
 			:items="curriculumItem.curriculum_items"
 			class="elevation-1"
 		>
@@ -263,11 +266,19 @@ export default {
 		},
 		status: {
 			type: Object
+		},
+		isEnrolling: {
+			type: Boolean,
+			default: false
 		}
+		// selectedCourses: {
+		// 	type: Array
+		// }
 	},
 	data() {
 		return {
 			selectedCourse: null,
+			// selectedCourses: [],
 			credits: null,
 			numberAdded: 1,
 			dialog: false,
@@ -319,6 +330,12 @@ export default {
 		courses() {
 			return this.$store.state.courses;
 		},
+		selectedCourses: {
+			get: function() {
+				return this.$store.state.selectedCourses;
+			}
+		},
+
 		totalUnits() {
 			return Number(
 				this.curriculumItem.curriculum_items.reduce((acc, val) => {
@@ -342,6 +359,17 @@ export default {
 		},
 		isCompleted() {
 			return true;
+		},
+		selectItem(v) {
+			if (v.value) {
+				this.$store.state.selectedCourses.push(v.item);
+			} else {
+				this.$store.state.selectedCourses.splice(
+					this.$store.state.selectedCourses.indexOf(v.item),
+					1
+				);
+			}
+			console.log(v);
 		},
 		closeAdd() {
 			this.selectedCourse = null;
@@ -381,9 +409,9 @@ export default {
 		}
 	},
 	watch: {
-		// selectedCourse(v) {
-		// 	console.log(v);
-		// }
+		selectedCourses(v) {
+			console.log(v);
+		}
 	},
 	mounted() {}
 };
