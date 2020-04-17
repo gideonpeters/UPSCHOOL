@@ -10,7 +10,9 @@ use App\Result;
 use App\Program;
 use App\Guardian;
 use App\ResultItem;
+use App\PendingCourse;
 use App\StudentCourse;
+use App\StudentEnrollmentItem;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Database\Eloquent\Model;
 
@@ -42,6 +44,11 @@ class Student extends Model
         return $this->belongsToMany(Course::class, 'student_courses')->using(StudentCourse::class);
     }
 
+    public function enrollment_items()
+    {
+        return $this->hasMany(StudentEnrollmentItem::class);
+    }
+
     public function program()
     {
         return $this->belongsTo(Program::class);
@@ -64,7 +71,7 @@ class Student extends Model
 
     public function result_items()
     {
-        return $this->hasMany(ResultItem::class);
+        return $this->hasManyThrough(ResultItem::class, StudentCourse::class, 'student_id', 'student_course_id');
     }
 
     public function results()

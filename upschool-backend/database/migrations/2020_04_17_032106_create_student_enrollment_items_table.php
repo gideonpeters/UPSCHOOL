@@ -4,7 +4,7 @@ use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
 
-class CreateGradeScoresTable extends Migration
+class CreateStudentEnrollmentItemsTable extends Migration
 {
     /**
      * Run the migrations.
@@ -13,13 +13,11 @@ class CreateGradeScoresTable extends Migration
      */
     public function up()
     {
-        Schema::create('grade_scores', function (Blueprint $table) {
+        Schema::create('student_enrollment_items', function (Blueprint $table) {
             $table->id();
-            $table->string('name');
-            $table->unsignedInteger('max');
-            $table->unsignedInteger('min');
-            $table->unsignedInteger('points');
-            $table->boolean('is_pass_grade')->default(false);
+            $table->foreignId('student_id');
+            $table->foreignId('curriculum_item_id');
+            $table->string('status'); //failed, dropped, pending, ''passed', ongoing
             $table->timestamps();
         });
     }
@@ -31,6 +29,6 @@ class CreateGradeScoresTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('grade_scores');
+        Schema::dropIfExists('student_enrollment_items');
     }
 }

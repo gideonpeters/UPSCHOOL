@@ -19,7 +19,7 @@ class StudentCourse extends Pivot
 
     public function result_item()
     {
-        return $this->hasOne(ResultItem::class);
+        return $this->hasOne(ResultItem::class, 'student_course_id');
     }
 
     public function school_assessments()

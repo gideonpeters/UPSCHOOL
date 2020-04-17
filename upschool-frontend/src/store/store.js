@@ -3826,6 +3826,22 @@ export default new Vuex.Store({
 
 			return res.data.data;
 		},
+		async enrollCourses({ state }) {
+			let arr = [];
+
+			state.selectedCourses.forEach(item => {
+				arr.push(item.id);
+			});
+
+			let body = {
+				ids: arr,
+				student_id: state.loggedInUser.id
+			};
+			let res = await axios.post("enroll", body);
+			console.log(res.data);
+
+			return res.data;
+		},
 		async getStudentResults({ state }, student_id) {
 			let id = state.loggedInUser ? state.loggedInUser.id : student_id;
 			let res = await axios.get(`result/${id}`);

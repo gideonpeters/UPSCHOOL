@@ -7,6 +7,7 @@ use App\Program;
 use App\Curriculum;
 use App\Enrollment;
 use App\CourseStatus;
+use App\PendingCourse;
 use App\StudentCourse;
 use App\CurriculumBlock;
 use Illuminate\Database\Eloquent\Model;
@@ -19,6 +20,11 @@ class CurriculumItem extends Model
     public function curriculumable()
     {
         return $this->morphTo();
+    }
+
+    public function student_enrollment_items()
+    {
+        return $this->hasMany(StudentEnrollmentItem::class);
     }
 
     public function curriculum_block()

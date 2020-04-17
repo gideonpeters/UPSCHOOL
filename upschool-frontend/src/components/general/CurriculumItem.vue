@@ -21,23 +21,30 @@
 					units
 				</div>
 			</div>
-			<v-menu bottom left>
-				<template v-slot:activator="{ on }">
-					<v-btn icon v-on="on">
-						<v-icon>mdi-dots-vertical</v-icon>
-					</v-btn>
-				</template>
+			<div class="d-flex flex-column align-end">
+				<v-menu bottom left>
+					<template v-slot:activator="{ on }">
+						<v-btn icon v-on="on">
+							<v-icon>mdi-dots-vertical</v-icon>
+						</v-btn>
+					</template>
 
-				<v-list>
-					<v-list-item
-						v-for="(item, i) in items"
-						:key="i"
-						@click="item.fn"
-					>
-						<div class="font-weight-light">{{ item.title }}</div>
-					</v-list-item>
-				</v-list>
-			</v-menu>
+					<v-list>
+						<v-list-item
+							v-for="(item, i) in items"
+							:key="i"
+							@click="item.fn"
+						>
+							<div class="font-weight-light">
+								{{ item.title }}
+							</div>
+						</v-list-item>
+					</v-list>
+				</v-menu>
+				<div class="fs-5 t-primary" v-if="isEnrolling">
+					{{ itemsSelected }} Units selected from this block
+				</div>
+			</div>
 		</div>
 		<div>
 			<v-row justify="center">
@@ -209,9 +216,9 @@
 			</v-row>
 		</div>
 		<v-data-table
-			:headers="headers"
+			v-model="selectedCourses"
+			:headers="isEnrolling ? enrollingHeaders : headers"
 			:show-select="isEnrolling"
-			@toggle-select-all="selectItem('toggle')"
 			@item-selected="selectItem"
 			:items="curriculumItem.curriculum_items"
 			class="elevation-1"
@@ -225,6 +232,10 @@
 			<template v-slot:no-data="{}">
 				<div>No data to display</div>
 			</template>
+			<template v-slot:header.data-table-select>
+				<div></div>
+			</template>
+
 			<template v-slot:item.prerequisites="{ item }">
 				<!-- <div v-if="item.curriculumable.prerequisites.length > 0"> -->
 				<div
@@ -270,7 +281,8 @@ export default {
 		isEnrolling: {
 			type: Boolean,
 			default: false
-		}
+		},
+		bus: {}
 		// selectedCourses: {
 		// 	type: Array
 		// }
@@ -278,7 +290,7 @@ export default {
 	data() {
 		return {
 			selectedCourse: null,
-			// selectedCourses: [],
+			selectedCourses: [],
 			credits: null,
 			numberAdded: 1,
 			dialog: false,
@@ -290,6 +302,24 @@ export default {
 				timeout: 3000,
 				text: ""
 			},
+			enrollingHeaders: [
+				{
+					text: "Course Code",
+					align: "start",
+					sortable: false,
+					value: "curriculumable.course_code"
+				},
+				{ text: "Course Title", value: "curriculumable.title" },
+				{ text: "Credit Unit(s)", value: "credit_unit" },
+				{
+					text: "Semester",
+					value: "curriculumable.semester_type.short_title"
+				},
+				{
+					text: "Prerequisites",
+					value: "curriculumable.prerequisites"
+				}
+			],
 			headers: [
 				{
 					text: "Course Code",
@@ -330,11 +360,9 @@ export default {
 		courses() {
 			return this.$store.state.courses;
 		},
-		selectedCourses: {
-			get: function() {
-				return this.$store.state.selectedCourses;
-			}
-		},
+		// 	selectedCourses() {
+		// 			return this.$store.state.selectedCourses;
+		// },
 
 		totalUnits() {
 			return Number(
@@ -343,6 +371,19 @@ export default {
 				}, 0)
 			);
 			// return 5;
+		},
+		itemsSelected() {
+			return this.selectedCourses.reduce((acc, val) => {
+				return acc + val.credit_unit;
+			}, 0);
+		},
+		totalUnitsSelected() {
+			return this.$store.state.selectedCourses.reduce((acc, val) => {
+				return acc + val.credit_unit;
+			}, 0);
+		},
+		settings() {
+			return this.$store.state.settings;
 		}
 	},
 	methods: {
@@ -361,16 +402,51 @@ export default {
 			return true;
 		},
 		selectItem(v) {
+			let totalRegisterable = 7;
+			// let minRequired = this.totalUnits || 0;
+
 			if (v.value) {
-				this.$store.state.selectedCourses.push(v.item);
+				if (
+					this.totalUnitsSelected + v.item.credit_unit >
+					totalRegisterable
+				) {
+					v.value = false;
+					this.selectedCourses.splice(
+						this.selectedCourses.indexOf(v.item),
+						-1
+					);
+					alert("You have exceeded the maximum registrable units");
+
+					return;
+				}
+				if (
+					this.totalUnitsSelected + v.item.credit_unit <=
+					totalRegisterable
+				) {
+					if (
+						!(
+							this.$store.state.selectedCourses.filter(
+								el => el.id == v.item.id
+							).length > 0
+						)
+					) {
+						this.$store.state.selectedCourses.push(v.item);
+					}
+				}
 			} else {
-				this.$store.state.selectedCourses.splice(
-					this.$store.state.selectedCourses.indexOf(v.item),
-					1
-				);
+				if (
+					this.$store.state.selectedCourses.filter(
+						el => el.id == v.item.id
+					).length > 0
+				) {
+					this.$store.state.selectedCourses.splice(
+						this.$store.state.selectedCourses.indexOf(v.item),
+						1
+					);
+				}
 			}
-			console.log(v);
 		},
+
 		closeAdd() {
 			this.selectedCourse = null;
 			this.credits = null;
@@ -413,6 +489,9 @@ export default {
 			console.log(v);
 		}
 	},
-	mounted() {}
+	mounted() {},
+	beforeDestroy() {
+		this.$store.state.selectedCourses = [];
+	}
 };
 </script>

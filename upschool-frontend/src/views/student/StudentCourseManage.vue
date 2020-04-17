@@ -80,11 +80,12 @@
 											<v-btn
 												class="mx-2"
 												color="primary"
-												v-if="settings.canEnroll"
-												outlined
-												@click="
-													isEnrolling = !isEnrolling
+												v-if="
+													settings.canEnroll &&
+														!isAddingAndDropping
 												"
+												outlined
+												@click="enroll"
 												>{{
 													isEnrolling
 														? "DONE"
@@ -93,13 +94,14 @@
 											>
 											<v-btn
 												color="primary"
-												v-if="settings.canAddAndDrop"
-												outlined
-												@click="
-													isEnrolling = !isEnrolling
+												v-if="
+													settings.canAddAndDrop &&
+														!isEnrolling
 												"
+												outlined
+												@click="addAndDrop"
 												>{{
-													isEnrolling
+													isAddingAndDropping
 														? "DONE"
 														: "ADD/DROP"
 												}}</v-btn
@@ -120,6 +122,12 @@
 															: "Unapproved"
 													}}</v-subheader
 												>
+												<div
+													class="fs-2 font-italic font-weight-light"
+												>
+													{{ totalUnitsSelected }}
+													units selected
+												</div>
 												<!-- <div
 													class="d-flex align-center"
 												>
@@ -151,22 +159,31 @@
 													</v-btn>
 												</div> -->
 											</div>
-											<curriculum-table
-												:isEnrolling="isEnrolling"
-												:selectedCourses="
-													selectedCourses
-												"
-												:level="`${level}`"
+											<div
 												v-for="curriculumItem in enrollableItems.filter(
 													it =>
 														it.level == level &&
 														it.curriculum_items
 															.length > 0
 												)"
-												:status="curriculumItem.status"
 												:key="curriculumItem.id"
-												:curriculumItem="curriculumItem"
-											/>
+											>
+												<curriculum-table
+													:bus="bus"
+													ref="tableItem"
+													:isEnrolling="isEnrolling"
+													:selectedCourses="
+														selectedCourses
+													"
+													:level="`${level}`"
+													:status="
+														curriculumItem.status
+													"
+													:curriculumItem="
+														curriculumItem
+													"
+												/>
+											</div>
 
 											<!-- <v-data-table
 												v-model="selectedCourses"
@@ -266,7 +283,11 @@
 											</v-card-text>
 										</div>
 									</div>
-									<div v-else>
+									<div
+										v-if="
+											!isEnrolling && !isAddingAndDropping
+										"
+									>
 										<v-card-text v-if="currentEnrollment">
 											<div
 												class="d-flex justify-space-between"
@@ -296,7 +317,10 @@
 												hide-default-footer
 											></v-data-table>
 										</v-card-text>
-										<v-card-text class="text-center py-5">
+										<v-card-text
+											v-if="!currentEnrollment"
+											class="text-center py-5"
+										>
 											<h2>
 												You are yet to enroll for this
 												semester
@@ -333,10 +357,13 @@
 
 <script>
 import CurriculumTable from "@/components/general/CurriculumItem";
+import Vue from "vue";
+
 export default {
 	components: { CurriculumTable },
 	data() {
 		return {
+			bus: new Vue(),
 			tab: null,
 			isStudent: false,
 			selectedCourses: [],
@@ -345,7 +372,8 @@ export default {
 			showPendingSelect: false,
 			showEdit: false,
 			showAwaiting: false,
-			isEnrolling: false,
+			isEnrolling: true,
+			isAddingAndDropping: false,
 			items: [
 				{ id: 1, tab: "OVERVIEW" },
 				{ id: 2, tab: "EDIT" },
@@ -698,7 +726,7 @@ export default {
 			enrollments: [
 				// { text: " SEMESTER", value: "carbs" }
 			],
-			currentEnrollment: {}
+			currentEnrollment: null
 		};
 	},
 	computed: {
@@ -713,9 +741,28 @@ export default {
 		},
 		level() {
 			return this.$store.state.loggedInUser.level;
+		},
+		totalUnitsSelected() {
+			return this.$store.state.selectedCourses.reduce((acc, val) => {
+				return acc + val.credit_unit;
+			}, 0);
 		}
 	},
 	methods: {
+		saveEnrolled() {
+			// this.bus.$emit("sendItems");
+			// this.$refs.tableItem.sendItems();
+			console.log(this.$store.state.selectedCourses);
+		},
+		enroll() {
+			if (this.isEnrolling) {
+				this.saveEnrolled();
+			}
+			this.isEnrolling = !this.isEnrolling;
+		},
+		addAndDrop() {
+			this.isAddingAndDropping = !this.isAddingAndDropping;
+		},
 		getColor(val) {
 			if (val == 1) return "green accent-3";
 			else if (val == 2) return "blue accent-4";

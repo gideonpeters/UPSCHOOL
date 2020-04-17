@@ -76,18 +76,19 @@ class CurriculumItemController extends Controller
 
     public function test(Request $request)
     {
-        $data = $request->all();
-        $da = json_decode($data["data"]);
-        $arr = array();
-        foreach ($da as $v => $item) {
-            # code...
-            $item->curriculumable_type = 'App\Course';
-            $item->curriculumable_id = $item->course_id;
+        // $data = $request->all();
+        // $da = json_decode($data["data"]);
+        // $arr = array();
+        // foreach ($da as $v => $item) {
+        //     # code...
+        //     $item->curriculumable_type = 'App\Course';
+        //     $item->curriculumable_id = $item->course_id;
 
-            array_push($arr, $item);
-        }
-        dd($arr);
-        // printf($arr);
+        //     array_push($arr, $item);
+        // }
+        // dd($arr);
+        // // printf($arr);
+
     }
 
     public function destroy(CurriculumItem $curriculumItem)
