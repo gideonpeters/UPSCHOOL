@@ -13,6 +13,14 @@ class Staff extends Model
     //
     protected $with = ['user'];
 
+    protected $appends = ['name'];
+
+    public function getNameAttribute()
+    {
+        $staff = Staff::whereId($this->id)->first();
+        return "$staff->first_name $staff->middle_name $staff->last_name";
+    }
+
     public function user()
     {
         return $this->morphOne(User::class, 'userable');

@@ -3735,6 +3735,9 @@ export default new Vuex.Store({
 		getStudent: ({ students }) => id => {
 			return students.find(student => student.matric_number == id);
 		},
+		getStaffById: ({ staff }) => id => {
+			return staff.find(staf => staf.staff_number == id);
+		},
 		getStudentEvent: ({ studentEvents }) => id => {
 			return studentEvents.filter(
 				studentEvent => studentEvent.student.matric_number == id
@@ -3811,6 +3814,7 @@ export default new Vuex.Store({
 			let res = await axios.get("student");
 			console.log(res.data);
 			state.students = res.data.data;
+			return res.data;
 		},
 		async getStaff({ state }) {
 			let res = await axios.get("staff");

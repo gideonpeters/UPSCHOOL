@@ -3,10 +3,7 @@
 		<v-container>
 			<v-row v-if="personal">
 				<v-col cols="4">
-					<metric-card
-						title="Number of enrolled courses"
-						:value="courses.length"
-					/>
+					<metric-card title="Number of enrolled courses" :value="courses.length" />
 				</v-col>
 			</v-row>
 			<v-row align="center">
@@ -35,43 +32,23 @@
 					<div class="text-lg-right">
 						<v-menu offset-y close-on-click close-on-content-click>
 							<template v-slot:activator="{ on }">
-								<v-btn color="primary" depressed dark v-on="on"
-									>ACTIONS</v-btn
-								>
+								<v-btn color="primary" depressed dark v-on="on">ACTIONS</v-btn>
 							</template>
 							<v-list>
-								<v-list-item
-									v-for="(item, index) in items"
-									:key="index"
-								>
-									<v-list-item-title
-										class="pointer"
-										@click="item.fn"
-										>{{ item.title }}</v-list-item-title
-									>
+								<v-list-item v-for="(item, index) in items" :key="index">
+									<v-list-item-title class="pointer" @click="item.fn">{{ item.title }}</v-list-item-title>
 								</v-list-item>
 							</v-list>
 						</v-menu>
 					</div>
-					<div class="">
-						<v-dialog
-							v-model="dialogFull"
-							fullscreen
-							hide-overlay
-							transition="dialog-bottom-transition"
-						>
+					<div class>
+						<v-dialog v-model="dialogFull" fullscreen hide-overlay transition="dialog-bottom-transition">
 							<v-card>
 								<v-toolbar dark color="primary">
-									<v-btn
-										icon
-										dark
-										@click="dialogFull = false"
-									>
+									<v-btn icon dark @click="dialogFull = false">
 										<v-icon>mdi-close</v-icon>
 									</v-btn>
-									<v-toolbar-title
-										>CREATE COURSE(S)</v-toolbar-title
-									>
+									<v-toolbar-title>CREATE COURSE(S)</v-toolbar-title>
 									<v-spacer></v-spacer>
 									<v-toolbar-items>
 										<v-btn
@@ -83,22 +60,18 @@
 													: null
 											"
 											@click="saveBulk"
-											>Save</v-btn
-										>
+										>Save</v-btn>
 									</v-toolbar-items>
 								</v-toolbar>
-								<v-checkbox
-									label="Bulk Addition"
-									v-model="isBulk"
-								></v-checkbox>
+								<v-checkbox label="Bulk Addition" v-model="isBulk"></v-checkbox>
 								<v-list three-line subheader v-if="!isBulk">
 									<v-list-item>
 										<v-list-item-content>
 											<v-container>
-												<v-list-item-title
-													>Create
-													Course</v-list-item-title
-												>
+												<v-list-item-title>
+													Create
+													Course
+												</v-list-item-title>
 												<v-row align="center">
 													<v-col cols="6">
 														<v-text-field
@@ -110,24 +83,12 @@
 														></v-text-field>
 													</v-col>
 													<v-col cols="6">
-														<v-text-field
-															outlined
-															label="Course Code"
-															v-model="courseCode"
-														></v-text-field>
+														<v-text-field outlined label="Course Code" v-model="courseCode"></v-text-field>
 													</v-col>
 													<v-col cols="6">
-														<v-text-field
-															outlined
-															label="Credit Unit(s)"
-															v-model="creditUnit"
-														></v-text-field>
+														<v-text-field outlined label="Credit Unit(s)" v-model="creditUnit"></v-text-field>
 													</v-col>
-													<v-col
-														class="d-flex"
-														cols="12"
-														sm="6"
-													>
+													<v-col class="d-flex" cols="12" sm="6">
 														<v-select
 															:items="
 																semesterTypes
@@ -135,41 +96,32 @@
 															label="Semester Type"
 															outlined
 														>
-															<template
-																v-slot:item="{
+															<template v-slot:item="{
 																	item
-																}"
-																>{{
-																	item.title
-																}}</template
-															>
-															<template
-																v-slot:selection="{
+																}">
+																{{
+																item.title
+																}}
+															</template>
+															<template v-slot:selection="{
 																	item
-																}"
-																>{{
-																	item.title
-																}},</template
-															>
+																}">
+																{{
+																item.title
+																}},
+															</template>
 														</v-select>
 													</v-col>
 													<v-col cols="12">
 														<div class="d-flex">
 															<v-spacer></v-spacer>
-															<v-btn
-																color="success"
-																depressed
-																>SAVE</v-btn
-															>
+															<v-btn color="success" depressed>SAVE</v-btn>
 														</div>
 													</v-col>
 												</v-row>
 												<v-row align="center">
 													<v-col cols="12">
-														<v-subheader
-															class="pa-0"
-															>CATEGORIES</v-subheader
-														>
+														<v-subheader class="pa-0">CATEGORIES</v-subheader>
 													</v-col>
 													<v-col cols="6">
 														<v-combobox
@@ -179,22 +131,20 @@
 															multiple
 															outlined
 														>
-															<template
-																v-slot:item="{
+															<template v-slot:item="{
 																	item
-																}"
-																>{{
-																	item.title
-																}}</template
-															>
-															<template
-																v-slot:selection="{
+																}">
+																{{
+																item.title
+																}}
+															</template>
+															<template v-slot:selection="{
 																	item
-																}"
-																>{{
-																	item.title
-																}},</template
-															>
+																}">
+																{{
+																item.title
+																}},
+															</template>
 														</v-combobox>
 													</v-col>
 													<v-col
@@ -214,41 +164,32 @@
 															"
 															outlined
 														>
-															<template
-																v-slot:item="{
+															<template v-slot:item="{
 																	item
-																}"
-																>{{
-																	item.title
-																}}</template
-															>
-															<template
-																v-slot:selection="{
+																}">
+																{{
+																item.title
+																}}
+															</template>
+															<template v-slot:selection="{
 																	item
-																}"
-																>{{
-																	item.title
-																}},</template
-															>
+																}">
+																{{
+																item.title
+																}},
+															</template>
 														</v-select>
 													</v-col>
 													<v-col cols="12">
 														<div class="d-flex">
 															<v-spacer></v-spacer>
-															<v-btn
-																color="success"
-																depressed
-																>SAVE</v-btn
-															>
+															<v-btn color="success" depressed>SAVE</v-btn>
 														</div>
 													</v-col>
 												</v-row>
 												<v-row align="center">
 													<v-col cols="12">
-														<v-subheader
-															class="pa-0"
-															>FACILITATORS</v-subheader
-														>
+														<v-subheader class="pa-0">FACILITATORS</v-subheader>
 													</v-col>
 													<v-col cols="6">
 														<v-combobox
@@ -260,22 +201,20 @@
 															multiple
 															outlined
 														>
-															<template
-																v-slot:item="{
+															<template v-slot:item="{
 																	item
-																}"
-																>{{
-																	item.name
-																}}</template
-															>
-															<template
-																v-slot:selection="{
+																}">
+																{{
+																item.name
+																}}
+															</template>
+															<template v-slot:selection="{
 																	item
-																}"
-																>{{
-																	item.name
-																}},</template
-															>
+																}">
+																{{
+																item.name
+																}},
+															</template>
 														</v-combobox>
 													</v-col>
 													<v-col
@@ -295,32 +234,26 @@
 															"
 															outlined
 														>
-															<template
-																v-slot:item="{
+															<template v-slot:item="{
 																	item
-																}"
-																>{{
-																	item.title
-																}}</template
-															>
-															<template
-																v-slot:selection="{
+																}">
+																{{
+																item.title
+																}}
+															</template>
+															<template v-slot:selection="{
 																	item
-																}"
-																>{{
-																	item.title
-																}},</template
-															>
+																}">
+																{{
+																item.title
+																}},
+															</template>
 														</v-select>
 													</v-col>
 													<v-col cols="12">
 														<div class="d-flex">
 															<v-spacer></v-spacer>
-															<v-btn
-																color="success"
-																depressed
-																>SAVE</v-btn
-															>
+															<v-btn color="success" depressed>SAVE</v-btn>
 														</div>
 													</v-col>
 												</v-row>
@@ -332,48 +265,31 @@
 									<v-list-item>
 										<v-list-item-content>
 											<v-container>
-												<v-list-item-title
-													>Add Courses
-													(Bulk)</v-list-item-title
-												>
+												<v-list-item-title>
+													Add Courses
+													(Bulk)
+												</v-list-item-title>
 												<v-row>
 													<v-col>
-														<download-csv
-															:data="csvData"
-														>
-															<v-btn
-																color="primary"
-																text
-																>Download
-																format</v-btn
-															>
+														<download-csv :data="csvData">
+															<v-btn color="primary" text>
+																Download
+																format
+															</v-btn>
 														</download-csv>
 													</v-col>
 													<v-col>
-														<v-file-input
-															accept=".csv"
-															@change="showCsv"
-															label="Select csv file"
-														></v-file-input>
+														<v-file-input accept=".csv" @change="showCsv" label="Select csv file"></v-file-input>
 
-														<v-btn
-															color="primary"
-															text
-															@click="csvImport"
-															>Preview imported
-															CSV</v-btn
-														>
+														<v-btn color="primary" text @click="csvImport">
+															Preview imported
+															CSV
+														</v-btn>
 													</v-col>
-													<v-col
-														cols="12"
-														v-if="dummy"
-													>
-														<v-data-table
-															:headers="
+													<v-col cols="12" v-if="dummy">
+														<v-data-table :headers="
 																bulkHeaders
-															"
-															:items="dummy"
-														></v-data-table>
+															" :items="dummy"></v-data-table>
 													</v-col>
 												</v-row>
 											</v-container>
@@ -390,74 +306,44 @@
 					</div>
 				</v-col>
 				<v-col cols="12" md="12">
-					<v-row
-						:justify="
+					<v-card flat color="transparent" min-height="300px">
+						<v-row :justify="
 							$vuetify.breakpoint.mdAndUp ? 'start' : 'center'
-						"
-					>
-						<v-col
-							cols="10"
-							md="4"
-							sm="5"
-							v-for="(course, index) in visibleCourses"
-							:key="index"
-						>
-							<v-card
-								flat
-								class="d-flex flex-column pa-4 pointer"
-								@click="goToPage(course.id)"
-								min-height="180"
-								max-height="300"
-							>
-								<div
-									class="d-flex justify-space-between align-center"
+						">
+							<v-col cols="10" md="4" sm="5" v-for="(course, index) in visibleCourses" :key="index">
+								<v-card
+									flat
+									class="d-flex flex-column pa-4 pointer"
+									@click="goToPage(course.id)"
+									min-height="180"
+									max-height="300"
 								>
-									<div class="font-weight-bold">
-										{{ course.course_code }}
-									</div>
-									<div
-										class="d-flex align center"
-										v-if="!isStudent"
-									>
-										<v-icon
-											size="18"
-											class="mr-1"
-											color="grey"
-											>mdi-pencil</v-icon
-										>
-										<v-icon size="18" color="grey"
-											>mdi-delete</v-icon
-										>
-									</div>
-								</div>
-								<div class="fs-3 mt-2 mb-5">
-									{{ course.title }}
-								</div>
-								<v-spacer></v-spacer>
-								<v-divider></v-divider>
-								<div
-									class="d-flex justify-space-between align-center mt-2"
-								>
-									<div class="d-flex align-center">
-										<div>
-											<v-icon
-												size="10"
-												color="yellow accent-4"
-												>mdi-circle</v-icon
-											>
-										</div>
-										<div class="fs-4 ml-2">
-											Departmental Course
+									<div class="d-flex justify-space-between align-center">
+										<div class="font-weight-bold">{{ course.course_code }}</div>
+										<div class="d-flex align center" v-if="!isStudent">
+											<v-icon size="18" class="mr-1" color="grey">mdi-pencil</v-icon>
+											<v-icon size="18" color="grey">mdi-delete</v-icon>
 										</div>
 									</div>
-									<div class="fs-4 d-flex">
-										<div class="mr-3">2 Units</div>
-										<div class="font-italic">Alpha</div>
+									<div class="fs-3 mt-2 mb-5">{{ course.title }}</div>
+									<v-spacer></v-spacer>
+									<v-divider></v-divider>
+									<div class="d-flex justify-space-between align-center mt-2">
+										<div class="d-flex align-center">
+											<div>
+												<v-icon size="10" color="yellow accent-4">mdi-circle</v-icon>
+											</div>
+											<!-- <div class="fs-4 ml-2">Departmental Course</div> -->
+										</div>
+										<div class="fs-4 d-flex">
+											<div class="mr-3" v-if="personal">{{2 +' Units'}}</div>
+											<div class="font-italic">{{course.semester_type.short_title}}</div>
+										</div>
 									</div>
-								</div>
-							</v-card>
-						</v-col>
-					</v-row>
+								</v-card>
+							</v-col>
+						</v-row>
+					</v-card>
 				</v-col>
 				<v-col>
 					<div class="d-flex justify-end">
@@ -465,7 +351,7 @@
 							<v-pagination
 								v-model="page"
 								:length="
-									Math.ceil(visibleCourses.length / perPage)
+									Math.ceil(courses.length / perPage)
 								"
 							></v-pagination>
 						</div>
@@ -476,9 +362,7 @@
 		<div>
 			<v-snackbar v-model="snackbar.isActive" :timeout="snackbar.timeout">
 				{{ snackbar.text }}
-				<v-btn color="blue" text @click="snackbar.isActive = false"
-					>Close</v-btn
-				>
+				<v-btn color="blue" text @click="snackbar.isActive = false">Close</v-btn>
 			</v-snackbar>
 		</div>
 	</div>
@@ -496,6 +380,9 @@ export default {
 			type: Boolean,
 			default: false
 		},
+		noOfUnits: {
+			type: Number
+		},
 		personal: {
 			type: Boolean,
 			default: false
@@ -504,7 +391,7 @@ export default {
 	data() {
 		return {
 			page: 1,
-			perPage: 9,
+			perPage: 6,
 			search: "",
 			snackbar: {
 				isActive: false,
@@ -546,7 +433,8 @@ export default {
 				{ id: 3, title: "Omega Courses" },
 				{ id: 4, title: "Departmental Courses" }
 			],
-			dummy: null
+			dummy: null,
+			pageLength: 0
 			// subItems: []
 		};
 	},

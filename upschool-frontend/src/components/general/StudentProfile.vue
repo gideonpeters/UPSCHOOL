@@ -11,8 +11,8 @@
 
 						<v-list class="grey lighten-3">
 							<v-list-item
-								v-for="item in studentActions"
-								:key="item"
+								v-for="(item, indx) in studentActions"
+								:key="indx"
 								@click="item.function"
 							>{{ item.name }}</v-list-item>
 						</v-list>
@@ -22,7 +22,7 @@
 			<v-col cols="12" md="9">
 				<div>
 					<v-tabs v-model="currentItem" fixed-tabs slider-color="white">
-						<v-tab v-for="item in items" :key="item" :href="'#tab-' + item">{{ item }}</v-tab>
+						<v-tab v-for="(item, indx) in items" :key="indx" :href="'#tab-' + item">{{ item }}</v-tab>
 
 						<v-menu v-if="more.length" bottom left>
 							<template v-slot:activator="{ on }">
@@ -33,7 +33,7 @@
 							</template>
 
 							<v-list class="grey lighten-3">
-								<v-list-item v-for="item in more" :key="item" @click="addItem(item)">{{ item }}</v-list-item>
+								<v-list-item v-for="(item, indx) in more" :key="indx" @click="addItem(item)">{{ item }}</v-list-item>
 							</v-list>
 						</v-menu>
 					</v-tabs>
@@ -41,7 +41,7 @@
 
 				<div>
 					<v-tabs-items v-model="currentItem">
-						<v-tab-item v-for="item in items.concat(more)" :key="item" :value="'tab-' + item">
+						<v-tab-item v-for="(item, indx) in items.concat(more)" :key="indx" :value="'tab-' + item">
 							<v-card flat>
 								<v-card-text>
 									<h2>{{ item }}</h2>
@@ -309,19 +309,34 @@
 								<v-card flat v-if="item == 'Curriculum'" min-height="500">
 									<v-card flat>
 										<v-tabs v-model="curriculumTab" background-color="transparent">
-											<v-tab v-for="item in levels" :key="item" :href="'#tab-'+item">{{ item }}</v-tab>
+											<v-tab v-for="(level, ix) in levels" :key="ix" :href="'#tab-'+level">{{ level }}</v-tab>
 										</v-tabs>
 
 										<v-tabs-items v-model="curriculumTab">
-											<v-tab-item v-for="item in levels" :key="item" :value="'tab-'+item">
+											<v-tab-item v-for="(level, ix) in levels" :key="ix" :value="'tab-'+level">
 												<v-card flat class="pa-3">
 													<curriculum-item
-														:level="item"
+														:level="`${level}`"
+														v-for="curriculumItem in curricula.filter(
+															it =>
+																it.level ==
+																level && it.curriculum_items.length > 0
+														)"
+														:status="
+															curriculumItem.status
+														"
+														:key="curriculumItem.id"
+														:curriculumItem="
+															curriculumItem
+														"
+													/>
+													<!-- <curriculum-item
+														:level="level"
 														v-for="status in courseStatuses"
 														:status="status"
 														:key="status.id"
-														:curriculumItem="student.program.curriculum_items.filter(it => it.level == item)"
-													/>
+														:curriculumItem="student.program.curriculum_items.filter(it => it.level == level)"
+													/>-->
 													<!-- <v-card-text>{{ item }}</v-card-text> -->
 												</v-card>
 											</v-tab-item>
@@ -334,7 +349,7 @@
 								</v-card>
 
 								<v-card flat v-if="item == 'Issues'" min-height="500">
-									<div></div>
+									<v-btn color="error" text>CREATE ISSUE</v-btn>
 								</v-card>
 							</div>
 						</v-tab-item>
@@ -422,6 +437,7 @@ export default {
 					}
 				}
 			],
+			curricula: [],
 			text:
 				"Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat."
 		};
@@ -467,11 +483,20 @@ export default {
 				this.currentItem = "tab-" + item;
 			});
 		},
-		commitAction() {}
+		commitAction() {},
+		async getCurricula() {
+			try {
+				let id = this.student.program_id;
+				this.curricula = await this.$store.dispatch("getCurricula", id);
+			} catch (error) {
+				console.log(error);
+			}
+		}
 	},
 	async mounted() {
 		try {
 			this.$store.dispatch("getCourseStatus");
+			this.getCurricula();
 			// this.$store.dispatch(
 			// 	"getStudentCurriculum",
 			// 	this.student.program.id

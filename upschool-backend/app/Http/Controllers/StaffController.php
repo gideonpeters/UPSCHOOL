@@ -13,7 +13,7 @@ class StaffController extends Controller
     public function index()
     {
         //
-        $staff = Staff::with('user')->get();
+        $staff = Staff::with('user', 'department')->get();
 
         return response()->json([
             'status' => true,

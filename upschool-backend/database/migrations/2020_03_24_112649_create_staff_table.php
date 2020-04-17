@@ -16,8 +16,9 @@ class CreateStaffTable extends Migration
         Schema::create('staff', function (Blueprint $table) {
             $table->id();
             $table->string('first_name');
-            $table->string('middle_name');
+            $table->string('middle_name')->nullable();
             $table->string('last_name');
+            $table->date('dob')->nullable();
             $table->string('staff_number')->unique();
             $table->year('year_of_entry')->nullable();
             $table->foreignId('department_id')->nullable();

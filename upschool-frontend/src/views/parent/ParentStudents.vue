@@ -65,7 +65,8 @@ export default {
 
 	async mounted() {
 		try {
-			await this.$store.dispatch("getStudents");
+			let res = await this.$store.dispatch("getStudents");
+			this.students = res.data;
 		} catch (error) {
 			console.log(error);
 		}

@@ -19,7 +19,7 @@ export default {
 				text: "NAME",
 				align: "left",
 				sortable: false,
-				value: "user.name"
+				value: "name"
 			},
 			{ text: "STAFF NO.", value: "staff_number" },
 			{ text: "RANK", value: "rank" },
