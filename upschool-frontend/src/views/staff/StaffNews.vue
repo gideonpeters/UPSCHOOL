@@ -1,5 +1,14 @@
 <template>
 	<v-app>
-		<h2>News</h2>
+		<news-view isStaff />
 	</v-app>
 </template>
+
+<script>
+import NewsView from "@/components/general/NewsView";
+export default {
+	components: {
+		NewsView
+	}
+};
+</script>

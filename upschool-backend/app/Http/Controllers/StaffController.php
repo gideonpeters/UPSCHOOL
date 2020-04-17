@@ -95,7 +95,7 @@ class StaffController extends Controller
         return response()->json([
             'status' => true,
             'message' => 'This is the retrieved staff',
-            'data' => $staff->load('user')
+            'data' => $staff->load('user', 'department')
         ], 201);
     }
 

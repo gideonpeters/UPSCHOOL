@@ -41,17 +41,16 @@ class EnrollmentController extends Controller
         //
         $student = Student::find($request->student_id);
 
-        if (!$student)
+        if (!$student) {
             return response()->json([
                 'status' => false,
                 'message' => 'No such student',
                 'data' => null
             ], 201);
+        }
 
-        $selectedCurriculumItemIds = json_decode($request->ids);
+        $selectedCurriculumItemIds = json_decode($request->ids, true);
         $selectedCurriculumItems = CurriculumItem::findMany($selectedCurriculumItemIds)->load('curriculumable');
-
-        $allCurriculumItems = CurriculumItem::all();
 
         $currentSemester = Semester::latest()->first();
         $existingEnrollment = Enrollment::whereStudentId($student->id)->whereSemesterId($currentSemester->id)->first();
@@ -64,6 +63,13 @@ class EnrollmentController extends Controller
 
             $enrollment->save();
         } else {
+            if ($existingEnrollment->approval_status) {
+                return response()->json([
+                    'status' => false,
+                    'message' => 'Your courses have already been approved, you can\'t enroll again',
+                    'data' => null
+                ], 201);
+            }
             $enrollment = $existingEnrollment;
         }
 
@@ -87,7 +93,7 @@ class EnrollmentController extends Controller
 
             $student_course = new StudentCourse();
             $student_course->student_id = $request->student_id;
-            $student_course->course_id = $curriculum_item->curriculumable()->id;
+            $student_course->course_id = $curriculum_item->curriculumable->id;
             $student_course->curriculum_item_id = $curriculum_item->id;
             $student_course->semester_id = $currentSemester->id;
 
@@ -111,7 +117,7 @@ class EnrollmentController extends Controller
 
         return response()->json([
             'status' => true,
-            'message' => 'successfully enrolled courses',
+            'message' => 'successfully enrolled courses and unselected courses are now pending',
             'data' => $enrollment->load('curriculum_items')
         ], 201);
     }

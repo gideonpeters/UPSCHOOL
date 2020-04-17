@@ -5,6 +5,7 @@ namespace App;
 use App\File;
 use App\User;
 use App\Course;
+use App\Department;
 use Illuminate\Database\Eloquent\Model;
 
 class Staff extends Model
@@ -15,6 +16,11 @@ class Staff extends Model
     public function user()
     {
         return $this->morphOne(User::class, 'userable');
+    }
+
+    public function department()
+    {
+        return $this->belongsTo(Department::class);
     }
 
     public function advisee()

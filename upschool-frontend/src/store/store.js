@@ -2405,6 +2405,46 @@ export default new Vuex.Store({
 				}
 			]
 		},
+		loggedInStaff: {
+			id: 1,
+			first_name: "Buba",
+			middle_name: "Machido",
+			last_name: "Solomon",
+			staff_number: "12CU04568",
+			year_of_entry: 2012,
+			department_id: 1,
+			rank: "Senior Lecturer",
+			phone_number: "07035050175",
+			home_number: "09069439661",
+			address: "no 9 css street kaduna",
+			nationality: "Nigerian",
+			state_of_origin: "Kogi State",
+			created_at: "2020-03-28T00:51:56.000000Z",
+			updated_at: "2020-03-28T00:51:56.000000Z",
+			user: {
+				id: 1,
+				name: "Buba M. Solomon",
+				email: "buba@test.com",
+				created_at: "2020-03-28T00:51:57.000000Z",
+				updated_at: "2020-03-28T00:51:57.000000Z"
+			},
+			department: {
+				id: 1,
+				name: "Department of Electrical and Information Engineering",
+				short_name: "EIE",
+				college_id: 2,
+				school_id: null,
+				created_at: "2020-03-26T22:48:12.000000Z",
+				updated_at: "2020-03-26T22:48:12.000000Z",
+				college: {
+					id: 2,
+					name: "College of Engineering",
+					short_name: "COE",
+					created_at: "2020-03-26T22:33:42.000000Z",
+					updated_at: "2020-03-26T22:33:42.000000Z"
+				}
+			}
+		},
 		curriculum_types: [
 			{ id: 1, name: "Core/Compulsory Courses", short_form: "C" },
 			{ id: 2, name: "Electives", short_form: "E" },
@@ -3672,7 +3712,8 @@ export default new Vuex.Store({
 			enrollBySemester: false,
 			enrollBySession: true
 		},
-		currentAcademicSession: {}
+		currentAcademicSession: {},
+		selectedPendingCourses: []
 	},
 	getters: {
 		getCourses({ courses }) {
@@ -3810,13 +3851,10 @@ export default new Vuex.Store({
 			return res.data.data;
 		},
 		async getEnrollableItems({ state }) {
-			let body = {
-				level: state.loggedInUser.level
-			};
-			let id = state.loggedInUser.program.id;
-			let res = await axios.post(`curriculum-block-student/${id}`, body);
+			let id = state.loggedInUser.id;
+			let res = await axios.get(`curriculum-block-student/${id}`);
 			console.log(res.data);
-			return res.data.data;
+			return res.data;
 		},
 		async getStudentEnrollments({ state }) {
 			let body = { student_id: state.loggedInUser.id };
@@ -3834,10 +3872,12 @@ export default new Vuex.Store({
 			});
 
 			let body = {
-				ids: arr,
+				ids: JSON.stringify(arr),
 				student_id: state.loggedInUser.id
 			};
+
 			let res = await axios.post("enroll", body);
+
 			console.log(res.data);
 
 			return res.data;

@@ -2,10 +2,12 @@
 
 namespace App\Http\Controllers;
 
+use App\Student;
 use App\ResultItem;
 use App\CourseStatus;
 use App\CurriculumBlock;
 use Illuminate\Http\Request;
+use App\StudentEnrollmentItem;
 use Illuminate\Support\Facades\DB;
 
 class CurriculumBlockController extends Controller
@@ -62,33 +64,20 @@ class CurriculumBlockController extends Controller
         ], 201);
     }
 
-    public function getEnrollableItems(Request $request, $program_id)
+    public function getEnrollableItems($student_id)
     {
-        $curriculum_blocks = CurriculumBlock::whereProgramId($program_id)->whereLevel($request->level)->get();
+        $student = Student::find($student_id);
+
+        $curriculum_blocks = CurriculumBlock::whereProgramId($student->program->id)->whereLevel($student->level)->get();
         $curriculum_blocks->load('curriculum_items');
-        // $rea = array_merge($curriculum_blocks->curriculum_items());
-        // $res = array();
-        // foreach ($curriculum_blocks->load('curriculum_items') as $key => $item) {
-        //     # code...
-        //     // array_merge($item->curriculum_items);
-        //     if (count($item->curriculum_items) > 0)
-        //         array_push($res, $item->curriculum_items);
-        // }
-        // $roo = array();
-        // for ($i = 0; $i < count($res); $i++) {
-        //     foreach ($res[$i] as $j => $item) {
-        //         # code...
-        //         array_push($roo, $item);
-        //     }
-        // }
 
-
-
+        $pending_items = StudentEnrollmentItem::whereStudentId($student->id)->whereNotIn('status', ['passed', 'ongoing'])->get();
 
         return response()->json([
             'status' => true,
             'message' => 'these are all the enrollable curriculum items',
             'data' => $curriculum_blocks,
+            'pending' => $pending_items
         ]);
     }
 

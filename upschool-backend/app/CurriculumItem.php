@@ -10,6 +10,7 @@ use App\CourseStatus;
 use App\PendingCourse;
 use App\StudentCourse;
 use App\CurriculumBlock;
+use App\StudentEnrollmentItem;
 use Illuminate\Database\Eloquent\Model;
 
 class CurriculumItem extends Model

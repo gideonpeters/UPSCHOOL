@@ -123,7 +123,7 @@ Route::group([], function ($router) {
     Route::get('curriculum-block', 'CurriculumBlockController@index');
     Route::post('curriculum-block', 'CurriculumBlockController@store');
     Route::get('curriculum-block/{program_id}', 'CurriculumBlockController@show');
-    Route::post('curriculum-block-student/{program_id}', 'CurriculumBlockController@getEnrollableItems');
+    Route::get('curriculum-block-student/{student_id}', 'CurriculumBlockController@getEnrollableItems');
     // Route::post('curriculum-block/{curriculum_id}', 'CurriculumBlockController@update');
 });
 

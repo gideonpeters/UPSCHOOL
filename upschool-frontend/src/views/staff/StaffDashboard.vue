@@ -1,7 +1,15 @@
 <template>
-  <v-app>
-    <div>
-      <h1>Staff Dash</h1>
-    </div>
-  </v-app>
+	<v-app>
+		<dashboard isStaff />
+	</v-app>
 </template>
+
+<script>
+import Dashboard from "@/components/general/Dashboard";
+
+export default {
+	components: {
+		Dashboard
+	}
+};
+</script>
