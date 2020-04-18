@@ -11,9 +11,7 @@
 			>
 				<v-list-item class="px-2 py-4">
 					<v-list-item-avatar>
-						<v-img
-							src="https://randomuser.me/api/portraits/women/85.jpg"
-						></v-img>
+						<v-img src="https://randomuser.me/api/portraits/women/85.jpg"></v-img>
 					</v-list-item-avatar>
 
 					<v-list-item-title>
@@ -48,9 +46,11 @@
 						</v-list-item-icon>
 
 						<v-list-item-content>
-							<v-list-item-title class="text-uppercase">{{
+							<v-list-item-title class="text-uppercase">
+								{{
 								dash.title
-							}}</v-list-item-title>
+								}}
+							</v-list-item-title>
 						</v-list-item-content>
 					</v-list-item>
 				</v-list>
@@ -73,21 +73,17 @@
 						</v-list-item-icon>
 
 						<v-list-item-content>
-							<v-list-item-title class="text-uppercase">{{
+							<v-list-item-title class="text-uppercase">
+								{{
 								item.title
-							}}</v-list-item-title>
+								}}
+							</v-list-item-title>
 						</v-list-item-content>
 					</v-list-item>
 				</v-list>
 
 				<v-footer absolute>
-					<div
-						class="py-2 pointer"
-						v-if="!mini"
-						@click="goToPage('main.login')"
-					>
-						LOGOUT
-					</div>
+					<div class="py-2 pointer" v-if="!mini" @click="goToPage('main.login')">LOGOUT</div>
 				</v-footer>
 			</v-navigation-drawer>
 			<v-app-bar app class="primary disable-dbl-tap-zoom">
@@ -108,43 +104,22 @@
 							? (mini = !mini)
 							: (drawer = !drawer)
 					"
-					>mdi-menu</v-icon
-				>
+				>mdi-menu</v-icon>
 
 				<v-spacer />
 
 				<v-menu offset-y close-on-content-click>
 					<template v-slot:activator="{ on }">
-						<v-btn
-							depressed
-							color="primary"
-							dark
-							v-on="on"
-							v-if="keyStat"
-						>
-							<v-icon color="white" class="pointer"
-								>mdi-apps</v-icon
-							>
+						<v-btn depressed color="primary" dark v-on="on" v-if="keyStat">
+							<v-icon color="white" class="pointer">mdi-apps</v-icon>
 						</v-btn>
 					</template>
 
-					<v-card
-						class="pa-4 primary-box-shadow"
-						min-width="150px"
-						max-height="350px"
-						flat
-					>
+					<v-card class="pa-4 primary-box-shadow" min-width="150px" max-height="350px" flat>
 						<v-container>
 							<v-row>
-								<v-col
-									cols="4"
-									v-for="(item, index) in apps"
-									:key="index"
-								>
-									<div
-										class="d-flex flex-column align-center"
-										@click="goToPage(item.route)"
-									>
+								<v-col cols="4" v-for="(item, index) in apps" :key="index">
+									<div class="d-flex flex-column align-center" @click="goToPage(item.route)">
 										<div>
 											<v-icon>{{ item.icon }}</v-icon>
 										</div>
@@ -166,9 +141,11 @@
 					</template>
 					<v-list>
 						<v-list-item v-for="(item, i) in itemsx" :key="i">
-							<v-list-item-title>{{
+							<v-list-item-title>
+								{{
 								item.title
-							}}</v-list-item-title>
+								}}
+							</v-list-item-title>
 						</v-list-item>
 					</v-list>
 				</v-menu>
@@ -184,12 +161,7 @@
 					<v-list style="max-height: 200px; z-index: 99999">
 						<div class="t-primary pa-3">View All notifications</div>
 						<v-list-item v-for="(item, i) in itemsx" :key="i">
-							<v-card
-								color="white"
-								flat
-								class="pa-3"
-								style="width:400px; z-index: 99999999999999999"
-							>
+							<v-card color="white" flat class="pa-3" style="width:400px; z-index: 99999999999999999">
 								<v-layout align-start>
 									<v-flex xs2>
 										<v-icon>mdi-bell-outline</v-icon>
@@ -322,12 +294,12 @@ export default {
 				},
 				{
 					route: "staff.courses.register",
-					title: "Manage Courses",
+					title: "Manage Enrollments",
 					icon: "mdi-book"
 				},
 				{
 					route: "staff.courses.assignments",
-					title: "My Assignments",
+					title: "Submissions",
 					icon: "mdi-clipboard-text"
 				},
 				{

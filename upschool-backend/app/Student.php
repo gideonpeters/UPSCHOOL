@@ -9,6 +9,7 @@ use App\Option;
 use App\Result;
 use App\Program;
 use App\Guardian;
+use App\Enrollment;
 use App\ResultItem;
 use App\PendingCourse;
 use App\StudentCourse;
@@ -29,7 +30,7 @@ class Student extends Model
     }
 
     public function getCreditsAchievedAttribute()
-    {
+
         return (int) (DB::table('results')->whereStudentId($this->id)->sum('total_units'));
     }
 
@@ -52,6 +53,11 @@ class Student extends Model
     public function enrollment_items()
     {
         return $this->hasMany(StudentEnrollmentItem::class);
+    }
+
+    public function enrollments()
+    {
+        return $this->hasMany(Enrollment::class);
     }
 
     public function program()

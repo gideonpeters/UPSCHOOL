@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\File;
 use App\User;
 use App\Staff;
+use App\Student;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Storage;
 
@@ -96,6 +97,18 @@ class StaffController extends Controller
             'status' => true,
             'message' => 'This is the retrieved staff',
             'data' => $staff->load('user', 'department')
+        ], 201);
+    }
+
+    public function getAdvisees()
+    {
+        $staff = Staff::find(1);
+        $students = Student::whereAdviserId($staff->id);
+
+        return response()->json([
+            'status' => true,
+            'message' => 'these are all the students under this level adviser',
+            'data' => $students
         ], 201);
     }
 

@@ -3,7 +3,10 @@
 		<v-container>
 			<v-row v-if="personal">
 				<v-col cols="4">
-					<metric-card title="Number of enrolled courses" :value="courses.length" />
+					<metric-card
+						:title="isStudent ?'Number of enrolled courses':'Number of facilitated courses'"
+						:value="courses.length"
+					/>
 				</v-col>
 			</v-row>
 			<v-row align="center">
@@ -463,7 +466,7 @@ export default {
 		},
 		courses() {
 			let items;
-			if (this.personal) {
+			if (this.personal && this.isStudent) {
 				return (items = this.$store.getters.getCoursesFromEnrollments);
 			}
 			items = this.getCourses;
