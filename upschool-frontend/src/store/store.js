@@ -6,7 +6,7 @@ Vue.use(Vuex);
 
 export default new Vuex.Store({
 	state: {
-		token: localStorage.getItem("upschool-token") || "tre",
+		token: localStorage.getItem("upschool-token"),
 		selectedCourses: [],
 		courseCategories: [
 			{
@@ -2108,303 +2108,7 @@ export default new Vuex.Store({
 			text: "Welcome to Upschool!",
 			isActive: false
 		},
-		loggedInUser: {
-			id: 1,
-			type: "",
-			matric_number: "15CJ02873",
-			program_id: 1,
-			messageList: [
-				{
-					id: 1,
-					icon: true,
-					title: "Prof. Jerry Amiah",
-					avatar: "https://cdn.vuetifyjs.com/images/lists/1.jpg",
-					isFavourite: false,
-					messages: [
-						{
-							id: 1,
-							sender_id: 1,
-							text: "Hi! It's Prof, what are you up to?",
-							time: "12:00AM"
-						},
-						{
-							id: 2,
-							sender_id: 2,
-							text: "Just working on the final assignment, you?",
-							time: "12:05AM"
-						},
-						{
-							id: 3,
-							sender_id: 2,
-							text: "so far so good",
-							time: "12:07AM"
-						},
-						{
-							id: 4,
-							sender_id: 1,
-							text: "LMAO. I haven't even started it",
-							time: "12:08AM"
-						}
-					]
-				},
-				{
-					id: 2,
-					title: "Chika Dim Cyril",
-					avatar: "https://cdn.vuetifyjs.com/images/lists/2.jpg",
-					isFavourite: false,
-					messages: [
-						{
-							id: 1,
-							sender_id: 1,
-							text: "Hi! It's Chika, what are you up to?",
-							time: "12:00AM"
-						},
-						{
-							id: 2,
-							sender_id: 3,
-							text: "Just working on the final assignment, you?",
-							time: "12:05AM"
-						},
-						{
-							id: 3,
-							sender_id: 3,
-							text: "so far so good",
-							time: "12:07AM"
-						},
-						{
-							id: 4,
-							sender_id: 1,
-							text:
-								"Hmmm. I ran into a bit of a hurdle myself, I think I just need to change my approach",
-							time: "12:08AM"
-						}
-					]
-				},
-				{
-					id: 3,
-					title: "Peters Gideon",
-					avatar: "https://cdn.vuetifyjs.com/images/lists/3.jpg",
-					isFavourite: false,
-					messages: [
-						{
-							id: 1,
-							sender_id: 1,
-							text: "Gideon here! what are you up to?",
-							time: "12:00AM"
-						},
-						{
-							id: 2,
-							sender_id: 4,
-							text: "Just working on the final assignment, you?",
-							time: "12:05AM"
-						},
-						{
-							id: 3,
-							sender_id: 4,
-							text: "so far so good",
-							time: "12:07AM"
-						},
-						{
-							id: 4,
-							sender_id: 1,
-							text: "I still have a long way to go :(",
-							time: "12:08AM"
-						}
-					]
-				},
-				{
-					id: 4,
-					title: "Ebube Donald",
-					avatar: "https://cdn.vuetifyjs.com/images/lists/4.jpg",
-					isFavourite: false,
-					messages: [
-						{
-							id: 1,
-							sender_id: 1,
-							text: "Hi! what are you up to?",
-							time: "12:00AM"
-						},
-						{
-							id: 2,
-							sender_id: 5,
-							text: "Just working on the final assignment, you?",
-							time: "12:05AM"
-						},
-						{
-							id: 3,
-							sender_id: 5,
-							text: "so far so good",
-							time: "12:07AM"
-						},
-						{
-							id: 4,
-							sender_id: 1,
-							text:
-								"LMAO. Can't believe it's due next week, where do I begin?",
-							time: "12:08AM"
-						}
-					]
-				}
-			],
-			// schedule: [{ id: 1, name: "EIE517 class", semester_id: 1 }],
-			courseList: [
-				{
-					id: 1,
-					semester_id: 1,
-					courses: [
-						{
-							id: 1,
-							title: "Real Analysis",
-							course_code: "GEC411",
-							credit_unit: 2,
-							status: "registered",
-							semester: { id: 1, name: "Alpha Semester" },
-							prerequisites: [
-								{ id: 1, course_id: 5 },
-								{ id: 2, course_id: 2 }
-							],
-							categories: [
-								{
-									id: 1,
-									title: "Departmental Courses",
-									subCategories: [
-										{ id: 1, title: "EIE Courses" }
-									]
-								},
-								{
-									id: 1,
-									title: "College Wide Courses Course",
-									subCategories: [
-										{ id: 2, title: "COE Courses" }
-									]
-								}
-							]
-						},
-						{
-							id: 2,
-							title: "Real Analysis II",
-							course_code: "MAT412",
-							credit_unit: 2,
-							status: "registered",
-							semester: { id: 1, name: "Alpha Semester" },
-							prerequisites: [{ id: 1, course_id: 3 }],
-							categories: [
-								{
-									id: 1,
-									title: "Departmental Courses",
-									subCategories: [
-										{ id: 1, title: "EIE Courses" }
-									]
-								},
-								{
-									id: 1,
-									title: "College Wide Courses Course",
-									subCategories: [
-										{ id: 2, title: "COE Courses" }
-									]
-								}
-							]
-						},
-						{
-							id: 3,
-							title: "Logisitics & Statistics",
-							course_code: "MAT411",
-							credit_unit: 2,
-							status: "registered",
-							semester: { id: 1, name: "Alpha Semester" },
-							prerequisites: [{ id: 1, course_id: 4 }],
-							categories: [
-								{
-									id: 1,
-									title: "Departmental Courses",
-									subCategories: [
-										{ id: 2, title: "Mech Courses" }
-									]
-								},
-								{
-									id: 1,
-									title: "College Wide Courses Course",
-									subCategories: [
-										{ id: 2, title: "COE Courses" }
-									]
-								}
-							]
-						},
-						{
-							id: 4,
-							title: "Numerical Analysis",
-							course_code: "MAT411",
-							credit_unit: 2,
-							status: "Pending",
-							semester: { id: 1, name: "Alpha Semester" },
-							prerequisites: [{ id: 1, course_id: 2 }],
-							categories: [
-								{
-									id: 1,
-									title: "Departmental Courses",
-									subCategories: [
-										{ id: 1, title: "EIE Courses" }
-									]
-								},
-								{
-									id: 1,
-									title: "College Wide Courses Course",
-									subCategories: [
-										{ id: 2, title: "COE Courses" }
-									]
-								}
-							]
-						},
-						{
-							id: 5,
-							title:
-								"Introduction to Embedded Systems and VHDL design patterns",
-							course_code: "MAT411",
-							credit_unit: 2,
-							status: "Pending",
-							semester: { id: 1, name: "Alpha Semester" },
-							prerequisites: [{ id: 1, course_id: 1 }],
-							categories: [
-								{
-									id: 1,
-									title: "Departmental Courses",
-									subCategories: [
-										{ id: 2, title: "Mech Courses" }
-									]
-								},
-								{
-									id: 1,
-									title: "College Wide Courses Course",
-									subCategories: [
-										{ id: 1, title: "CST Courses" }
-									]
-								}
-							]
-						}
-					]
-				}
-			],
-			schedule: [
-				{
-					id: 1,
-					name: "Return to Japan",
-					description: "Get keys to Japan",
-					time: "1:00PM - 3:00PM",
-					course_id: "",
-					venue: "Daniel Hall",
-					semester_id: 1
-				},
-				{
-					id: 2,
-					name: "...",
-					description: "Pst psst",
-					time: "4:00PM - 5:00PM",
-					course_id: 1,
-					venue: "Daniel Hall",
-					semester_id: 1
-				}
-			]
-		},
+		loggedInUser: null,
 		loggedInStaff: {
 			id: 1,
 			first_name: "Buba",
@@ -3761,26 +3465,51 @@ export default new Vuex.Store({
 			snackbar.text = payload;
 			return (snackbar.isActive = true);
 		},
+		auth_success({ loggedInUser }, payload) {
+			loggedInUser = payload;
+			return;
+		},
 		closeSnackbar({ snackbar }) {
 			return (snackbar.isActive = false);
 		}
 	},
 	actions: {
-		async login({ commit }, user) {
+		async login({ commit }, payload) {
 			try {
 				// commit("auth_request");
-				let res = await axios.post("login", user);
+				let res = await axios.post("auth/login", payload);
 
 				const token = res.data.token;
 				const userInfo = res.data.user;
 
 				localStorage.setItem("upschool-token", token);
-				axios.defaults.headers.common["Authorization"] = token;
+				axios.defaults.headers.common[
+					"Authorization"
+				] = `Bearer ${token}`;
 
-				// commit("auth_success", token, userInfo);
+				if (token) {
+					commit("auth_success", userInfo);
+					commit(
+						"openSnackbar",
+						`Welcome to Upschool ${userInfo.name}`
+					);
+				} else {
+					commit("openSnackbar", `Something went wrong`);
+				}
+
+				return { data: res.data, type: userInfo.type };
 			} catch (error) {
 				// commit("auth_eror");
 				localStorage.removeItem("upschool-token");
+			}
+		},
+		async logout({ commit }) {
+			try {
+				await axios.post("auth/logout");
+				localStorage.removeItem("upshool-token");
+				commit("openSnackbar", "Logged out successfully!");
+			} catch (error) {
+				console.log(error);
 			}
 		},
 		async getUser({ state }) {
@@ -3794,6 +3523,12 @@ export default new Vuex.Store({
 			let res = await axios.post("user-event", body);
 			console.log(res.data);
 			return res.data.data;
+		},
+		async getUserSchedule() {
+			let res = await axios.get("schedule");
+			console.log(res.data);
+
+			return res.data;
 		},
 		async getColleges({ state }) {
 			let res = await axios.get("college");

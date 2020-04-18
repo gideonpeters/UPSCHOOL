@@ -183,75 +183,77 @@
 						</div>
 					</div>
 				</v-col>
-				<v-col cols="12" sm="8" md="4">
-					<div class="d-flex flex-column">
+				<v-col cols="12" sm="12" md="4">
+					<div class="d-flex flex-column justify-center align-center">
 						<div>
 							<v-card class="pa-3 mb-5" flat v-if="isStudent">
-								<v-row>
-									<v-col cols="12">
-										<custom-header title="ACADEMIC PROGRESS" ctaText="View" route="student.profile"></custom-header>
-									</v-col>
-									<v-col cols="4" class="px-5">
-										<v-progress-circular
-											:indeterminate="indeterminate"
-											:rotate="rotate"
-											:size="size"
-											:value="value"
-											:width="width"
-											color="light-blue"
-										>
-											<v-icon size="25" color="light-blue">mdi-school-outline</v-icon>
-										</v-progress-circular>
-									</v-col>
-									<v-col class="px-5">
-										<div>
-											<div class="d-flex flex-column">
-												<div class="font-weight-bold fs-4">PROGRAM</div>
-												<div class="fs-4">
-													{{ student.program.name }}
-													({{
-													student.program.degree
-													.short_name
-													}})
-												</div>
-											</div>
-											<div class="d-flex flex-column mt-4">
-												<div class="font-weight-bold fs-4">STATUS</div>
-												<div class="fs-4">
-													PROMOTED:
-													{{ student.level }} Level
-												</div>
-											</div>
-										</div>
-									</v-col>
-								</v-row>
-								<v-divider></v-divider>
-								<v-row>
-									<v-col cols="12">
-										<custom-header title="CREDITS TO GRADUATE"></custom-header>
-										<div class="fs-3">
+								<v-container fluid>
+									<v-row justify="center">
+										<v-col cols="12">
+											<custom-header title="ACADEMIC PROGRESS" ctaText="View" route="student.profile"></custom-header>
+										</v-col>
+										<v-col cols="4" sm="6" class="px-5">
+											<v-progress-circular
+												:indeterminate="indeterminate"
+												:rotate="rotate"
+												:size="size"
+												:value="value"
+												:width="width"
+												color="light-blue"
+											>
+												<v-icon size="25" color="light-blue">mdi-school-outline</v-icon>
+											</v-progress-circular>
+										</v-col>
+										<v-col class="px-5">
 											<div>
-												You need a total of
-												{{
-												student.program
-												? student.program
-												.min_graduation_units
-												: ""
-												}}
-												units to graduate
-											</div>
-											<div class="d-flex mt-3">
-												<div>Current credits achieved:</div>
-												<v-spacer></v-spacer>
-												<div class="font-weight-bold mr-5">
-													{{
-													student.credits_achieved
-													}}
+												<div class="d-flex flex-column">
+													<div class="font-weight-bold fs-4">PROGRAM</div>
+													<div class="fs-4">
+														{{ student.program.name }}
+														({{
+														student.program.degree
+														.short_name
+														}})
+													</div>
+												</div>
+												<div class="d-flex flex-column mt-4">
+													<div class="font-weight-bold fs-4">STATUS</div>
+													<div class="fs-4">
+														PROMOTED:
+														{{ student.level }} Level
+													</div>
 												</div>
 											</div>
-										</div>
-									</v-col>
-								</v-row>
+										</v-col>
+									</v-row>
+									<v-divider></v-divider>
+									<v-row>
+										<v-col cols="12">
+											<custom-header title="CREDITS TO GRADUATE"></custom-header>
+											<div class="fs-3">
+												<div>
+													You need a total of
+													{{
+													student.program
+													? student.program
+													.min_graduation_units
+													: ""
+													}}
+													units to graduate
+												</div>
+												<div class="d-flex mt-3">
+													<div>Current credits achieved:</div>
+													<v-spacer></v-spacer>
+													<div class="font-weight-bold mr-5">
+														{{
+														student.credits_achieved
+														}}
+													</div>
+												</div>
+											</div>
+										</v-col>
+									</v-row>
+								</v-container>
 							</v-card>
 						</div>
 						<div>
@@ -322,10 +324,13 @@
 							</v-card>
 						</div>
 						<div>
-							<v-card class="pa-3" flat>
+							<v-card class="pa-3 mb-5" flat>
 								<v-container fluid class="pa-0">
 									<v-row no-gutters>
 										<v-col cols="12">
+											<custom-header title="CALENDAR" cta-text="View" route="student.calendar" />
+										</v-col>
+										<v-col>
 											<dashboard-calendar />
 										</v-col>
 									</v-row>
@@ -341,7 +346,7 @@
 
 <script>
 import QuizCard from "@/components/general/QuizCard";
-import DashboardCalendar from "@/components/student/dashboard/Calendar";
+import DashboardCalendar from "@/components/general/Calendar";
 
 export default {
 	components: {
@@ -414,7 +419,8 @@ export default {
 					time: "Mar 31, 2020",
 					weight: "20%"
 				}
-			]
+			],
+			schedule: []
 		};
 	},
 	computed: {
@@ -424,9 +430,9 @@ export default {
 		latestEvent() {
 			return this.$store.state.events[0];
 		},
-		schedule() {
-			return this.$store.state.loggedInUser.schedule;
-		},
+		// schedule() {
+		// 	return this.$store.state.loggedInUser.schedule;
+		// },
 		student_user() {
 			return this.$store.state.loggedInUser;
 		},
@@ -461,13 +467,20 @@ export default {
 		}
 	},
 	async mounted() {
-		this.$store.dispatch("getNews");
-		if (this.isStaff) {
-			this.asgnHeaders.push({
-				text: "ACTIONS",
-				value: "action",
-				sortable: false
-			});
+		try {
+			this.$store.dispatch("getNews");
+			let res = this.$store.dispatch("getUserSchedule");
+
+			this.schedule = res.data.data;
+			if (this.isStaff) {
+				this.asgnHeaders.push({
+					text: "ACTIONS",
+					value: "action",
+					sortable: false
+				});
+			}
+		} catch (error) {
+			console.log(error);
 		}
 	}
 };

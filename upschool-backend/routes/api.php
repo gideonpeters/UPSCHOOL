@@ -199,6 +199,13 @@ Route::group([], function ($router) {
 });
 
 Route::group([], function ($router) {
+    Route::get('schedule', 'ScheduleItemController@show');
+    // Route::post('event', 'EventController@store');
+    // Route::get('event/{event_id}', 'EventController@show');
+    // Route::post('event/{event_id}', 'EventController@update');
+});
+
+Route::group([], function ($router) {
     Route::post('user-event', 'UserEventController@getUserEvents');
 });
 

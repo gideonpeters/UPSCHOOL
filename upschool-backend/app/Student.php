@@ -19,9 +19,9 @@ use Illuminate\Database\Eloquent\Model;
 class Student extends Model
 {
     //
-    protected $with = ['user', 'program',];
+    protected $with = ['user', 'program'];
 
-    protected $appends = ['credits_achieved', 'name'];
+    protected $appends = ['credits_achieved', 'name', 'type'];
 
     public function user()
     {
@@ -31,6 +31,11 @@ class Student extends Model
     public function getCreditsAchievedAttribute()
     {
         return (int) (DB::table('results')->whereStudentId($this->id)->sum('total_units'));
+    }
+
+    public function getTypeAttribute()
+    {
+        return 'student';
     }
 
     public function getNameAttribute()

@@ -1,9 +1,9 @@
 <template>
 	<div>
-		<v-card flat round class>
-			<custom-header title="CALENDAR" cta-text="View" route="student.calendar" />
-			<calendar />
-		</v-card>
+		<!-- <v-card flat width="100%"> -->
+		<!-- <custom-header title="CALENDAR" cta-text="View" route="student.calendar" /> -->
+		<calendar />
+		<!-- </v-card> -->
 	</div>
 </template>
 

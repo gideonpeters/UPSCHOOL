@@ -13,12 +13,17 @@ class Staff extends Model
     //
     protected $with = ['user'];
 
-    protected $appends = ['name'];
+    protected $appends = ['name', 'type'];
 
     public function getNameAttribute()
     {
         $staff = Staff::whereId($this->id)->first();
         return "$staff->first_name $staff->middle_name $staff->last_name";
+    }
+
+    public function getTypeAttribute()
+    {
+        return 'staff';
     }
 
     public function user()

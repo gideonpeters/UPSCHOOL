@@ -16,8 +16,47 @@ export default [
 	},
 	{
 		path: "courses",
-		name: "staff.courses",
-		component: () => import("./../views/staff/StaffCourses")
+		component: () => import("./../views/apps/Courses"),
+		children: [
+			{
+				path: "",
+				name: "staff.courses",
+				meta: { key: 3 },
+				component: () => import("./../views/staff/StaffCourses")
+			},
+			{
+				path: "plan",
+				name: "staff.courses.plan",
+				meta: { title: "My Courses", key: 3 },
+				component: () => import("./../views/staff/StaffCoursePlan")
+			},
+			{
+				path: "assignments",
+				name: "staff.courses.assignments",
+				meta: { title: "My Assignments", key: 3 },
+				component: () =>
+					import("./../views/staff/StaffCourseAssignments")
+			},
+			{
+				path: "grading",
+				name: "staff.courses.grading",
+				meta: { title: "My Assignments", key: 3 },
+				component: () => import("./../views/staff/StaffCourseGrading")
+			},
+			{
+				path: "view/:id",
+				name: "staff.courses.view",
+				meta: { title: "My Courses", key: 3 },
+				component: () => import("./../views/staff/StaffCourseView")
+			},
+			{
+				path: "register",
+				name: "staff.courses.register",
+				meta: { title: "Manage Courses", key: 3 },
+				component: () =>
+					import("./../views/staff/StaffCourseManage.vue")
+			}
+		]
 	},
 	{
 		path: "finances",

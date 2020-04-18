@@ -11,16 +11,12 @@
 			>
 				<v-list-item class="px-2 py-4">
 					<v-list-item-avatar>
-						<v-img
-							src="https://randomuser.me/api/portraits/women/80.jpg"
-						></v-img>
+						<v-img src="https://randomuser.me/api/portraits/women/80.jpg"></v-img>
 					</v-list-item-avatar>
 
 					<v-list-item-title>
 						<div>{{ user.user ? user.user.name : "" }}</div>
-						<div class="fs-4 my-3">
-							Student #: {{ user.matric_number }}
-						</div>
+						<div class="fs-4 my-3">Student #: {{ user.matric_number }}</div>
 						<div class="fs-4">Covenant University</div>
 					</v-list-item-title>
 
@@ -49,9 +45,7 @@
 						</v-list-item-icon>
 
 						<v-list-item-content>
-							<v-list-item-title class="text-uppercase">
-								{{ dash.title }}
-							</v-list-item-title>
+							<v-list-item-title class="text-uppercase">{{ dash.title }}</v-list-item-title>
 						</v-list-item-content>
 					</v-list-item>
 				</v-list>
@@ -74,24 +68,16 @@
 						</v-list-item-icon>
 
 						<v-list-item-content>
-							<v-list-item-title class="text-uppercase">
-								{{ item.title }}
-							</v-list-item-title>
+							<v-list-item-title class="text-uppercase">{{ item.title }}</v-list-item-title>
 						</v-list-item-content>
 					</v-list-item>
 				</v-list>
 
 				<v-footer absolute>
-					<div
-						class="py-2 pointer"
-						v-if="!mini"
-						@click="
-							goToPage('main.login'),
-								$store.commit('openSnackbar', 'Visit again!')
-						"
-					>
-						LOGOUT
-					</div>
+					<div class="py-2 pointer" v-if="!mini" @click="
+							logoutUser
+								
+						">LOGOUT</div>
 				</v-footer>
 			</v-navigation-drawer>
 			<!-- <v-card :ripple="false" color="grey lighten-4" flat height="100%" tile> -->
@@ -103,43 +89,22 @@
 							? (mini = !mini)
 							: (drawer = !drawer)
 					"
-					>mdi-menu</v-icon
-				>
+				>mdi-menu</v-icon>
 
 				<v-spacer />
 
 				<v-menu offset-y :close-on-content-click="closeOnContentClick">
 					<template v-slot:activator="{ on }">
-						<v-btn
-							depressed
-							color="primary"
-							dark
-							v-on="on"
-							v-if="keyStat"
-						>
-							<v-icon color="white" class="pointer"
-								>mdi-apps</v-icon
-							>
+						<v-btn depressed color="primary" dark v-on="on" v-if="keyStat">
+							<v-icon color="white" class="pointer">mdi-apps</v-icon>
 						</v-btn>
 					</template>
 
-					<v-card
-						class="pa-4 primary-box-shadow"
-						min-width="150px"
-						max-height="350px"
-						flat
-					>
+					<v-card class="pa-4 primary-box-shadow" min-width="150px" max-height="350px" flat>
 						<v-container>
 							<v-row>
-								<v-col
-									cols="4"
-									v-for="(item, index) in apps"
-									:key="index"
-								>
-									<div
-										class="d-flex flex-column align-center"
-										@click="goToPage(item.route)"
-									>
+								<v-col cols="4" v-for="(item, index) in apps" :key="index">
+									<div class="d-flex flex-column align-center" @click="goToPage(item.route)">
 										<div>
 											<v-icon>{{ item.icon }}</v-icon>
 										</div>
@@ -161,9 +126,7 @@
 					</template>
 					<v-list>
 						<v-list-item v-for="(item, i) in itemsx" :key="i">
-							<v-list-item-title>
-								{{ item.title }}
-							</v-list-item-title>
+							<v-list-item-title>{{ item.title }}</v-list-item-title>
 						</v-list-item>
 					</v-list>
 				</v-menu>
@@ -446,11 +409,17 @@ export default {
 	methods: {
 		goToPage(routeName) {
 			this.$router.push({ name: routeName });
+		},
+		async logoutUser() {
+			await this.$store.dispatch("logout");
+			this.goToPage("main.login");
 		}
 	},
 	async created() {
 		try {
-			this.$store.dispatch("getUser");
+			if (!this.$store.state.loggedInUser) {
+				this.$store.dispatch("getUser");
+			}
 			this.$store.dispatch("getNews");
 		} catch (err) {
 			console.log(err);

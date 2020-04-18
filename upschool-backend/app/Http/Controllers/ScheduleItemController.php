@@ -47,6 +47,19 @@ class ScheduleItemController extends Controller
     public function show(ScheduleItem $scheduleItem)
     {
         //
+        $userId = auth()->user()->id;
+
+        if (!$userId) {
+            return;
+        }
+
+        $schedule = ScheduleItem::whereUserId($userId)->get();
+
+        return response()->json([
+            'status' => true,
+            'message' => 'this is your schedule',
+            'data' => $schedule
+        ], 201);
     }
 
     /**

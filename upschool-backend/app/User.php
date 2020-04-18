@@ -64,7 +64,7 @@ class User extends Authenticatable implements JWTSubject
         return $this->morphTo();
     }
 
-    public function schedule_items()
+    public function schedule()
     {
         return $this->hasMany(ScheduleItem::class);
     }

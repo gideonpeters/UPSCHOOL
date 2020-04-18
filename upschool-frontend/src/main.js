@@ -15,10 +15,10 @@ Vue.use(lineClamp, {
 axios.defaults.baseURL = "http://127.0.0.1:8000/api/";
 
 // const token = localStorage.getItem("user-token");
-const token = `Bearer eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpc3MiOiJodHRwOlwvXC8xMjcuMC4wLjE6ODAwMFwvYXBpXC9hdXRoXC9sb2dpbiIsImlhdCI6MTU4NjUxNTM4MCwiZXhwIjoxNTg3MTIwMTgwLCJuYmYiOjE1ODY1MTUzODAsImp0aSI6IldtVlNTeGhkTldTM0ptWTAiLCJzdWIiOjMsInBydiI6Ijg3ZTBhZjFlZjlmZDE1ODEyZmRlYzk3MTUzYTE0ZTBiMDQ3NTQ2YWEifQ.voe3T2MXIlMLHk7GmIGxyyn4Cg3luXoh7V9zY8izfcg`;
+const token = store.state.token;
 
 if (token) {
-	axios.defaults.headers.common["Authorization"] = token;
+	axios.defaults.headers.common["Authorization"] = `Bearer ${token}`;
 }
 
 import "@mdi/font/css/materialdesignicons.css";

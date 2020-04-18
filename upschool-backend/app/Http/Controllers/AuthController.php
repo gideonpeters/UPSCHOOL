@@ -28,10 +28,21 @@ class AuthController extends Controller
         $credentials = request(['email', 'password']);
 
         if (!$token = auth()->attempt($credentials)) {
-            return response()->json(['error' => 'Unauthorized'], 401);
+            return response()->json(['status' => false, 'error' => 'Unauthorized', 'message' => 'User ID or password is incorrect'], 401);
         }
 
-        return $this->respondWithToken($token);
+        return response()->json(
+            [
+                'status' => true,
+                'message' => 'Logged in successfully',
+                'user' =>  auth()->user()->userable,
+                'token' => $token
+                // 'userable' => auth()->user()->userable
+            ],
+            201
+        );
+
+        // return $this->respondWithToken($token);
     }
 
     /**
@@ -45,7 +56,7 @@ class AuthController extends Controller
             [
                 'status' => true,
                 'message' => 'this is the authenticated user information',
-                'user' =>  auth()->user()->userable,
+                'user' =>  auth()->user()->load('schedule')->userable,
                 // 'userable' => auth()->user()->userable
             ],
             201
