@@ -30,6 +30,7 @@ class Student extends Model
     }
 
     public function getCreditsAchievedAttribute()
+    {
 
         return (int) (DB::table('results')->whereStudentId($this->id)->sum('total_units'));
     }

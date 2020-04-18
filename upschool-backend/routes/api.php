@@ -239,6 +239,7 @@ Route::group([], function ($router) {
 });
 
 Route::group([], function ($router) {
+    Route::get('staff-advisees', 'StaffController@getAdvisees');
     Route::get('staff', 'StaffController@index');
     Route::post('staff', 'StaffController@store');
     Route::get('staff/{staff_id}', 'StaffController@show');

@@ -3682,6 +3682,13 @@ export default new Vuex.Store({
 			console.log(res.data);
 			state.currentAcademicSession = res.data.data;
 		},
+		async getAdvisees({ state }) {
+			let res = await axios.get(
+				`staff-advisees?staff_id=${state.loggedInStaff.id}`
+			);
+			console.log(res.data);
+			return res.data.data;
+		},
 		setupDashboard({ dispatch }) {
 			dispatch("getStudents");
 			dispatch("getStaff");

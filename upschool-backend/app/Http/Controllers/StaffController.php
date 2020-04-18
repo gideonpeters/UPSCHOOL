@@ -100,10 +100,19 @@ class StaffController extends Controller
         ], 201);
     }
 
-    public function getAdvisees()
+    public function getAdvisees(Request $request)
     {
-        $staff = Staff::find(1);
-        $students = Student::whereAdviserId($staff->id);
+        $staff = Staff::find($request->staff_id);
+
+        if (!$staff) {
+            return response()->json([
+                'status' => false,
+                'message' => 'This staff does not exist',
+                'data' => []
+            ], 201);
+        }
+
+        $students = Student::whereAdviserId($staff->id)->get();
 
         return response()->json([
             'status' => true,
