@@ -469,7 +469,7 @@ export default {
 			if (this.personal && this.isStudent) {
 				return (items = this.$store.getters.getCoursesFromEnrollments);
 			}
-			items = this.getCourses;
+			items = [...this.getCourses];
 			return items;
 		},
 		optionItems() {

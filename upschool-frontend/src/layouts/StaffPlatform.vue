@@ -83,7 +83,7 @@
 				</v-list>
 
 				<v-footer absolute>
-					<div class="py-2 pointer" v-if="!mini" @click="goToPage('main.login')">LOGOUT</div>
+					<div class="py-2 pointer" v-if="!mini" @click="logoutUser">LOGOUT</div>
 				</v-footer>
 			</v-navigation-drawer>
 			<v-app-bar app class="primary disable-dbl-tap-zoom">
@@ -119,7 +119,7 @@
 						<v-container>
 							<v-row>
 								<v-col cols="4" v-for="(item, index) in apps" :key="index">
-									<div class="d-flex flex-column align-center" @click="goToPage(item.route)">
+									<div class="d-flex flex-column align-center pointer" @click="goToPage(item.route)">
 										<div>
 											<v-icon>{{ item.icon }}</v-icon>
 										</div>
@@ -384,6 +384,10 @@ export default {
 	methods: {
 		goToPage(routeName) {
 			this.$router.push({ name: routeName });
+		},
+		async logoutUser() {
+			await this.$store.dispatch("logout");
+			this.goToPage("main.login");
 		}
 	}
 };

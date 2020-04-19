@@ -27,7 +27,17 @@ class EnrollmentController extends Controller
     public function index(Request $request)
     {
         //
-        $enrollments = Enrollment::whereStudentId($request->student_id)->get();
+        $student = Student::whereMatricNumber($request->student_id)->first();
+
+        if (!$student) {
+            return response()->json([
+                'status' => false,
+                'message' => 'Student does not exist',
+                'data' => null
+            ], 201);
+        }
+
+        $enrollments = Enrollment::whereStudentId($student->id)->get();
 
         return response()->json([
             'status' => true,
@@ -122,16 +132,101 @@ class EnrollmentController extends Controller
         ], 201);
     }
 
-    public function approveenrollCourses()
+    public function approveCourses(Request $request)
     {
         //
+        $enrollment = Enrollment::find($request->enrollment_id);
 
+        if (!$enrollment) {
+            return response()->json([
+                'status' => false,
+                'message' => 'enrollment does not exist',
+                'data' => null
+            ], 201);
+        }
+
+        $enrollment->approval_status = true;
+        $enrollment->save();
+
+        return response()->json([
+            'status' => true,
+            'message' => 'enrollment approved successfully',
+        ], 201);
     }
 
-    public function addOrDropCourses()
+    public function addAndDropCourses(Request $request)
     {
         //
+        $student = Student::find($request->student_id);
 
+        if (!$student) {
+            return response()->json([
+                'status' => false,
+                'message' => 'No such student',
+                'data' => null
+            ], 201);
+        }
+
+        $selectedCurriculumItemIds = json_decode($request->ids, true);
+        $selectedCurriculumItems = CurriculumItem::findMany($selectedCurriculumItemIds)->load('curriculumable');
+
+        $currentSemester = Semester::latest()->first();
+        $existingEnrollment = Enrollment::whereStudentId($student->id)->whereSemesterId($currentSemester->id)->first();
+
+        if (!$existingEnrollment) {
+            return response()->json([
+                'status' => false,
+                'message' => 'You have to have enrolled before adding or dropping a course',
+                'data' => null
+            ], 201);
+        }
+
+        foreach ($selectedCurriculumItems as $key => $curriculum_item) {
+            # code...
+            $student_enrollment_item = StudentEnrollmentItem::whereStudentId($student->id)->whereCurriculumItemId($curriculum_item->id)->first();
+
+            if ($student_enrollment_item) {
+                if ($student_enrollment_item->status == 'failed' || $student_enrollment_item->status == 'pending') {
+                    $student_course = new StudentCourse();
+                    $student_course->student_id = $student->id;
+                    $student_course->course_id = $curriculum_item->curriculumable->id;
+                    $student_course->curriculum_item_id = $curriculum_item->id;
+                    $student_course->semester_id = $currentSemester->id;
+
+                    $student_course->save();
+                }
+
+                $student_enrollment_item->status = 'ongoing';
+                $student_enrollment_item->save();
+            }
+        }
+
+        $former_items = $existingEnrollment->curriculum_items();
+
+        $unselected = $former_items->whereNotIn('curriculum_item_id', $selectedCurriculumItemIds)->get();
+        // dd($unselected);
+
+        foreach ($unselected as $key => $curriculum_item) {
+            # code...
+            $student_enrollment_item = StudentEnrollmentItem::whereStudentId($student->id)->whereCurriculumItemId($curriculum_item->id)->first();
+
+            if ($student_enrollment_item) {
+                $student_course  = StudentCourse::whereStudentId($student->id)->whereCourseId($curriculum_item->curriculumable->id)->whereSemesterId($currentSemester->id)->first();
+                if ($student_course) {
+                    $student_course->delete();
+                }
+                $student_enrollment_item->status = 'dropped';
+                $student_enrollment_item->save();
+            }
+        }
+
+        $existingEnrollment->curriculum_items()->sync($selectedCurriculumItemIds);
+
+        return response()->json([
+            'status' => true,
+            'message' => 'Add and drop performed successfully',
+            'data' => []
+        ], 201);
     }
 
     public function pendingCourses(Request $request)
@@ -230,18 +325,39 @@ class EnrollmentController extends Controller
     public function getEnrolledCourses(Request $request)
     {
         //
-        $enrollments = Enrollment::whereStudentId($request->student_id)->get();
+        $student = Student::whereMatricNumber($request->student_id)->first();
+
+        if (!$student) {
+            return response()->json([
+                'status' => false,
+                'message' => 'Student does not exist',
+                'data' => null
+            ], 201);
+        }
+
+        $enrollments = Enrollment::whereStudentId($student->id)->get();
 
         return response()->json([
             'status' => true,
-            'message' => 'all enrollments',
+            'message' => 'all enrolled courses',
             'data' => $enrollments->load('curriculum_items')
         ], 201);
     }
 
     public function getCurrentEnrollment(Request $request)
     {
-        $enrollment = Enrollment::whereStudentId($request->student_id)->whereSemesterId($request->semester_id)->first();
+
+        $student = Student::whereMatricNumber($request->student_id)->first();
+
+        if (!$student) {
+            return response()->json([
+                'status' => false,
+                'message' => 'Student does not exist',
+                'data' => null
+            ], 201);
+        }
+
+        $enrollment = Enrollment::whereStudentId($student->id)->whereSemesterId($request->semester_id)->first();
 
         if (!$enrollment) {
             return response()->json([

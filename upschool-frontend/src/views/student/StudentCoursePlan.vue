@@ -14,7 +14,7 @@ export default {
 	},
 	async mounted() {
 		try {
-			this.$store.dispatch("getEnrolledCourses");
+			await this.$store.dispatch("getEnrolledCourses");
 		} catch (error) {
 			console.log(error);
 		}

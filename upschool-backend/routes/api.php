@@ -44,7 +44,9 @@ Route::post('enroll', 'EnrollmentController@enrollCourses');
 Route::post('enroll/student', 'EnrollmentController@index');
 Route::post('enroll/student-latest', 'EnrollmentController@getCurrentEnrollment');
 Route::post('enroll/courses', 'EnrollmentController@getEnrolledCourses');
+Route::post('add-and-drop', 'EnrollmentController@addAndDropCourses');
 Route::post('pending', 'EnrollmentController@pendingCourses');
+Route::patch('enroll', 'EnrollmentController@approveCourses');
 
 
 Route::group([], function ($router) {

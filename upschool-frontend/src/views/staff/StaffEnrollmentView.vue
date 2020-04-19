@@ -1,6 +1,6 @@
 <template>
 	<v-app>
-		<enrollment-ui isStudent />
+		<enrollment-ui isStaff />
 	</v-app>
 </template>
 

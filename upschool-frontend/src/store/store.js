@@ -3573,30 +3573,29 @@ export default new Vuex.Store({
 		},
 		async getEnrolledCourses({ state }) {
 			let body = {
-				student_id: state.loggedInUser.id
+				student_id: state.loggedInUser.matric_number
 			};
 
 			let res = await axios.post(`enroll/courses`, body);
 			console.log(res.data);
 			state.enrollments = res.data.data;
 		},
-		async getCurrentEnrollment({ state }) {
+		async getCurrentEnrollment({ state }, id) {
 			let body = {
-				student_id: state.loggedInUser.id,
+				student_id: id,
 				semester_id: state.currentAcademicSession.semester.id
 			};
 			let res = await axios.post("enroll/student-latest", body);
 			console.log(res.data);
 			return res.data.data;
 		},
-		async getEnrollableItems({ state }) {
-			let id = state.loggedInUser.id;
+		async getEnrollableItems({}, id) {
 			let res = await axios.get(`curriculum-block-student/${id}`);
 			console.log(res.data);
 			return res.data;
 		},
-		async getStudentEnrollments({ state }) {
-			let body = { student_id: state.loggedInUser.id };
+		async getStudentEnrollments({}, id) {
+			let body = { student_id: id };
 			let res = await axios.post("enroll/student", body);
 
 			console.log(res.data);
@@ -3620,6 +3619,27 @@ export default new Vuex.Store({
 			console.log(res.data);
 
 			return res.data;
+		},
+		async addAndDrop({}, payload) {
+			let body = {
+				ids: JSON.stringify(payload),
+				// student_id: 1
+				student_id: this.state.loggedInUser.id
+			};
+
+			let res = await axios.post("add-and-drop", body);
+
+			return res.data;
+		},
+		async approveEnrollment({}, id) {
+			try {
+				let body = { enrollment_id: id };
+				let res = await axios.patch("enroll", body);
+
+				return res.data;
+			} catch (error) {
+				console.log(error);
+			}
 		},
 		async getStudentResults({ state }, student_id) {
 			let id = state.loggedInUser ? state.loggedInUser.id : student_id;
@@ -3687,7 +3707,7 @@ export default new Vuex.Store({
 				`staff-advisees?staff_id=${state.loggedInStaff.id}`
 			);
 			console.log(res.data);
-			return res.data.data;
+			return res.data;
 		},
 		setupDashboard({ dispatch }) {
 			dispatch("getStudents");

@@ -66,7 +66,15 @@ class CurriculumBlockController extends Controller
 
     public function getEnrollableItems($student_id)
     {
-        $student = Student::find($student_id);
+        $student = Student::whereMatricNumber($student_id)->first();
+
+        if (!$student) {
+            return response()->json([
+                'status' => false,
+                'message' => 'student not found',
+                'data' => null
+            ], 201);
+        }
 
         $curriculum_blocks = CurriculumBlock::whereProgramId($student->program->id)->whereLevel($student->level)->get();
         $curriculum_blocks->load('curriculum_items');

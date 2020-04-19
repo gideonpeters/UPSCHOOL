@@ -15,8 +15,8 @@
 					</v-list-item-avatar>
 
 					<v-list-item-title>
-						<div>{{ user.user ? user.user.name : "" }}</div>
-						<div class="fs-4 my-3">Student #: {{ user.matric_number }}</div>
+						<div>{{ user.user ? user.name : "" }}</div>
+						<div class="fs-4 my-3">Student #: {{ user ? user.matric_number : '' }}</div>
 						<div class="fs-4">Covenant University</div>
 					</v-list-item-title>
 
@@ -104,7 +104,7 @@
 						<v-container>
 							<v-row>
 								<v-col cols="4" v-for="(item, index) in apps" :key="index">
-									<div class="d-flex flex-column align-center" @click="goToPage(item.route)">
+									<div class="d-flex flex-column align-center pointer" @click="goToPage(item.route)">
 										<div>
 											<v-icon>{{ item.icon }}</v-icon>
 										</div>

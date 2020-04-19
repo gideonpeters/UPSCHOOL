@@ -1,7 +1,7 @@
 <template>
 	<div>
 		<div class="d-flex align-center">
-			<v-btn flat icon color="black" @click="$router.go(-1)">
+			<v-btn icon color="black" @click="$router.go(-1)">
 				<v-icon>mdi-arrow-left</v-icon>
 			</v-btn>
 			<div v-if="course">

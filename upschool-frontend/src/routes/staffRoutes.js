@@ -55,6 +55,13 @@ export default [
 				meta: { title: "Manage Courses", key: 3 },
 				component: () =>
 					import("./../views/staff/StaffCourseManage.vue")
+			},
+			{
+				path: "advisees/:id",
+				name: "staff.courses.approve",
+				meta: { title: "Approve Courses", key: 3 },
+				component: () =>
+					import("./../views/staff/StaffEnrollmentView.vue")
 			}
 		]
 	},
