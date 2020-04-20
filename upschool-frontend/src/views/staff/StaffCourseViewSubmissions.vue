@@ -1,5 +1,14 @@
 <template>
-	<v-card flat class="pa-3" min-height="500">
-		<div class="fs-3">Currently under construction</div>
-	</v-card>
+	<div>
+		<course-view-submissions isStaff />
+	</div>
 </template>
+
+<script>
+import CourseViewSubmissions from "@/components/general/course-view/Submissions";
+export default {
+	components: {
+		CourseViewSubmissions
+	}
+};
+</script>

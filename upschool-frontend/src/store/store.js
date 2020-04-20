@@ -3706,13 +3706,14 @@ export default new Vuex.Store({
 			return res.data;
 		},
 		async getCourseGradelist({}, id) {
-			let res = await axios.get(`course-assessment/${id}`);
+			let res = await axios.get(`gradelist?course_id=${id}`);
 			console.log(res.data);
 			return res.data;
 		},
-		async saveCourseGradelist({}, body) {
-			let res = await axios.post(`course-assessment`, body);
+		async saveCourseGradelist({ commit }, body) {
+			let res = await axios.post(`gradelist`, body);
 			console.log(res.data);
+			commit("openSnackbar", res.data.message);
 			return res.data;
 		},
 		async saveCourseSection({ commit }, body) {

@@ -48,7 +48,7 @@ export default [
 				component: () => import("./../views/staff/StaffCourseView"),
 				children: [
 					{
-						path: "",
+						path: "overview",
 						name: "staff.courses.view",
 						meta: { title: "My Courses", key: 3 },
 						component: () =>
@@ -81,17 +81,36 @@ export default [
 					},
 					{
 						path: "grades",
-						name: "staff.courses.view.grades",
-						meta: { title: "Course Grades", key: 3 },
 						component: () =>
-							import("./../views/staff/StaffCourseViewGrades")
+							import("./../views/staff/StaffCourseViewGradeView"),
+
+						children: [
+							{
+								path: "",
+								name: "staff.courses.view.grades",
+								meta: { title: "Course Grades", key: 3 },
+								component: () =>
+									import(
+										"./../views/staff/StaffCourseViewGrades"
+									)
+							},
+							{
+								path: ":grade_id/view",
+								name: "staff.courses.view.grades.view",
+								meta: { title: "Course Grade Details", key: 3 },
+								component: () =>
+									import(
+										"./../views/staff/StaffCourseViewGradeDetail"
+									)
+							}
+						]
 					},
 					{
 						path: "settings",
 						name: "staff.courses.view.settings",
 						meta: { title: "Course Settings", key: 3 },
 						component: () =>
-							import("./../views/staff/StaffCourseViewMaterials")
+							import("./../views/staff/StaffCourseViewSettings")
 					}
 				]
 			},

@@ -177,7 +177,13 @@ export default {
 		};
 	},
 	methods: {
-		openItem() {},
+		openItem(v) {
+			// console.log(v);
+			this.$router.push({
+				name: "staff.courses.view.grades.view",
+				params: { grade_id: v.id }
+			});
+		},
 		closeAdd() {
 			this.listName = null;
 			this.totalScore = null;
