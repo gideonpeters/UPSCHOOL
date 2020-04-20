@@ -17,7 +17,7 @@ class CreateCourseSectionsTable extends Migration
             $table->id();
             $table->string('title');
             $table->foreignId('course_id');
-            $table->longText('body');
+            $table->longText('body')->nullable();
             $table->timestamps();
         });
     }

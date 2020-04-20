@@ -6,6 +6,7 @@ import store from "./store/store";
 // import TrixEditor from "@dymantic/vue-trix-editor";
 import router from "./routes/router";
 import lineClamp from "vue-line-clamp";
+import moment from "moment";
 import "./includes";
 
 Vue.use(lineClamp, {
@@ -25,6 +26,8 @@ import "@mdi/font/css/materialdesignicons.css";
 
 import "./assets/styles/main.scss";
 // import { createProvider } from './vue-apollo'
+
+Vue.prototype.moment = moment;
 
 Vue.config.productionTip = false;
 // Vue.config.ignoredElements = ["trix-vue"];

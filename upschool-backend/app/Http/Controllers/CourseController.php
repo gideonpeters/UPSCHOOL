@@ -89,8 +89,8 @@ class CourseController extends Controller
 
         return response()->json([
             'status' => true,
-            'message' => 'This is the retrieved course',
-            'data' => $course->load('facilitators', 'participants')
+            'message' => 'This is the retrieved participants for this course',
+            'data' => $course->participants
         ], 201);
     }
 
@@ -106,6 +106,27 @@ class CourseController extends Controller
             'data' => $data
         ]);
         // dd($request->data);
+    }
+
+    public function getFacilitatedCourses(Request $request)
+    {
+        $staff = Staff::find($request->staff_id);
+
+        if (!$staff) {
+            return response()->json([
+                'status' => false,
+                'message' => 'This staff does not exist',
+                'data' => null
+            ], 201);
+        }
+
+        $courses = $staff->courses_facilitating;
+
+        return response()->json([
+            'status' => true,
+            'message' => 'These are all the courses you\'re facilitating',
+            'data' => $courses
+        ], 201);
     }
 
 

@@ -383,6 +383,10 @@ export default {
 			type: Boolean,
 			default: false
 		},
+		isStaff: {
+			type: Boolean,
+			default: false
+		},
 		noOfUnits: {
 			type: Number
 		},
@@ -419,6 +423,7 @@ export default {
 			// optionItems: ["Programming", "Design", "Vue", "Vuetify"],
 			selectCategory: null,
 			dialogFull: null,
+			dialogSection: null,
 			items: [
 				{
 					title: "Create Course",
@@ -467,9 +472,12 @@ export default {
 		courses() {
 			let items;
 			if (this.personal && this.isStudent) {
-				return (items = this.$store.getters.getCoursesFromEnrollments);
+				items = [...this.$store.getters.getCoursesFromEnrollments];
+			} else if (this.personal && this.isStaff) {
+				items = [...this.$store.getters.getFacilitatedCourses];
+			} else {
+				items = [...this.getCourses];
 			}
-			items = [...this.getCourses];
 			return items;
 		},
 		optionItems() {
@@ -497,6 +505,11 @@ export default {
 			if (this.isStudent) {
 				return this.$router.push({
 					name: "student.courses.view",
+					params: { id: v }
+				});
+			} else if (this.isStaff) {
+				return this.$router.push({
+					name: "staff.courses.view",
 					params: { id: v }
 				});
 			}
@@ -570,7 +583,7 @@ export default {
 			// console.log(v);
 		}
 	},
-	async mounted() {
+	async created() {
 		try {
 			await this.$store.dispatch("getAllCourses");
 		} catch (error) {

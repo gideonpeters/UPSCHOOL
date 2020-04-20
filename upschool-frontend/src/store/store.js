@@ -3417,7 +3417,8 @@ export default new Vuex.Store({
 			enrollBySession: true
 		},
 		currentAcademicSession: {},
-		selectedPendingCourses: []
+		selectedPendingCourses: [],
+		facilitated: []
 	},
 	getters: {
 		getCourses({ courses }) {
@@ -3431,6 +3432,9 @@ export default new Vuex.Store({
 				return ans;
 			}
 			return [];
+		},
+		getFacilitatedCourses({ facilitated }) {
+			return facilitated;
 		},
 		isAuthenticated: ({ token }) => !!token,
 		getEvent: ({ events }) => id => {
@@ -3556,6 +3560,27 @@ export default new Vuex.Store({
 			console.log(res.data);
 			state.staff = res.data.data;
 		},
+		async getFacilitatedCourses({ state }, id) {
+			try {
+				let res = await axios.get(
+					`courses-facilitators?staff_id=${id}`
+				);
+				console.log(res.data);
+
+				state.facilitated = res.data.data;
+			} catch (error) {
+				console.log(eror);
+			}
+		},
+		async getCourseParticipants({}, id) {
+			try {
+				let res = await axios.get(`courses/${id}/participants`);
+				console.log(res.data);
+				return res.data;
+			} catch (error) {
+				console.log(error);
+			}
+		},
 		async getNews({ state }) {
 			let res = await axios.get("news");
 			console.log(res.data);
@@ -3566,6 +3591,7 @@ export default new Vuex.Store({
 			console.log(res.data);
 			state.schoolEvents = res.data.data;
 		},
+
 		async getCourseStatus({ state }) {
 			let res = await axios.get("course-status");
 
@@ -3687,6 +3713,15 @@ export default new Vuex.Store({
 		async saveCourseGradelist({}, body) {
 			let res = await axios.post(`course-assessment`, body);
 			console.log(res.data);
+			return res.data;
+		},
+		async saveCourseSection({ commit }, body) {
+			let res = await axios.post("course-section", body);
+
+			if (res.data.status) {
+				commit("openSnackbar", res.data.message);
+			}
+
 			return res.data;
 		},
 		async addCourseToCurriculum({}, payload) {

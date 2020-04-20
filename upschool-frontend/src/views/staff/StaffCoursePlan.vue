@@ -1,6 +1,6 @@
 <template>
 	<v-app>
-		<div>MY COURSES</div>
+		<!-- <div>MY COURSES</div> -->
 		<course-ui isStaff personal />
 	</v-app>
 </template>
@@ -14,7 +14,7 @@ export default {
 	},
 	async mounted() {
 		try {
-			// this.$store.dispatch("getFacilitatedCourses");
+			await this.$store.dispatch("getFacilitatedCourses", 1);
 		} catch (error) {
 			console.log(error);
 		}

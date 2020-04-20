@@ -45,9 +45,55 @@ export default [
 			},
 			{
 				path: "view/:id",
-				name: "staff.courses.view",
-				meta: { title: "My Courses", key: 3 },
-				component: () => import("./../views/staff/StaffCourseView")
+				component: () => import("./../views/staff/StaffCourseView"),
+				children: [
+					{
+						path: "",
+						name: "staff.courses.view",
+						meta: { title: "My Courses", key: 3 },
+						component: () =>
+							import("./../views/staff/StaffCourseViewOverview")
+					},
+					{
+						path: "materials",
+						name: "staff.courses.view.materials",
+						meta: { title: "Course Materials", key: 3 },
+						component: () =>
+							import("./../views/staff/StaffCourseViewMaterials")
+					},
+					{
+						path: "participants",
+						name: "staff.courses.view.participants",
+						meta: { title: "Course Participants", key: 3 },
+						component: () =>
+							import(
+								"./../views/staff/StaffCourseViewParticipants"
+							)
+					},
+					{
+						path: "submissions",
+						name: "staff.courses.view.submissions",
+						meta: { title: "Course Submissions", key: 3 },
+						component: () =>
+							import(
+								"./../views/staff/StaffCourseViewSubmissions"
+							)
+					},
+					{
+						path: "grades",
+						name: "staff.courses.view.grades",
+						meta: { title: "Course Grades", key: 3 },
+						component: () =>
+							import("./../views/staff/StaffCourseViewGrades")
+					},
+					{
+						path: "settings",
+						name: "staff.courses.view.settings",
+						meta: { title: "Course Settings", key: 3 },
+						component: () =>
+							import("./../views/staff/StaffCourseViewMaterials")
+					}
+				]
 			},
 			{
 				path: "register",
