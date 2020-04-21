@@ -23,7 +23,7 @@
 				</div>
 				<v-spacer></v-spacer>
 				<div class="d-flex align-center justify-end">
-					<v-btn color icon>
+					<v-btn color text>
 						<v-icon color="grey" size="18">mdi-filter</v-icon>
 						<div>Filter</div>
 					</v-btn>
@@ -51,6 +51,9 @@
 				<!-- <template v-slot:item.program="{ item }">{{item.program.name}}</template> -->
 				<template v-slot:item.duration="{ item }">{{item.no_of_years}}</template>
 				<!-- <template v-slot:item.name="{ item }">{{item.user.name}}</template> -->
+				<template v-slot:item.visible="{ item }">
+					<v-checkbox v-model="item.visible" disabled></v-checkbox>
+				</template>
 
 				<template v-slot:no-data>
 					<div>No data available yet</div>

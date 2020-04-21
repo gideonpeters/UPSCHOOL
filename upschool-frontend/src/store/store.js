@@ -3418,7 +3418,8 @@ export default new Vuex.Store({
 		},
 		currentAcademicSession: {},
 		selectedPendingCourses: [],
-		facilitated: []
+		facilitated: [],
+		schoolAssessments: []
 	},
 	getters: {
 		getCourses({ courses }) {
@@ -3553,6 +3554,12 @@ export default new Vuex.Store({
 			let res = await axios.get("student");
 			console.log(res.data);
 			state.students = res.data.data;
+			return res.data;
+		},
+		async getSchoolAssessments({ state }) {
+			let res = await axios.get("school-assessment");
+			console.log(res.data);
+			state.schoolAssessments = res.data.data;
 			return res.data;
 		},
 		async getStaff({ state }) {

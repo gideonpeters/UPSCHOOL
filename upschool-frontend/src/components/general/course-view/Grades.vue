@@ -156,6 +156,16 @@ export default {
 	components: {
 		MetricCard
 	},
+	props: {
+		isStaff: {
+			type: Boolean,
+			default: false
+		},
+		isAdmin: {
+			type: Boolean,
+			default: false
+		}
+	},
 	data() {
 		return {
 			course: {},
@@ -179,10 +189,17 @@ export default {
 	methods: {
 		openItem(v) {
 			// console.log(v);
-			this.$router.push({
-				name: "staff.courses.view.grades.view",
-				params: { grade_id: v.id }
-			});
+			if (this.isAdmin) {
+				this.$router.push({
+					name: "parent.courses.view.grades.view",
+					params: { grade_id: v.id }
+				});
+			} else if (this.isStaff) {
+				this.$router.push({
+					name: "parent.courses.view.grades.view",
+					params: { grade_id: v.id }
+				});
+			}
 		},
 		closeAdd() {
 			this.listName = null;

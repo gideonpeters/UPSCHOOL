@@ -3,7 +3,7 @@
 		<!-- <div> -->
 		<v-btn x-small text color="black" @click="$router.go(-1)">Go Back</v-btn>
 		<div class="d-flex justify-space-between align-center">
-			<h3>{{ 'Pop Quiz 1' }}</h3>
+			<h3>{{ gradeList.name }}</h3>
 
 			<v-menu offset-y>
 				<template v-slot:activator="{ on }">
@@ -36,7 +36,7 @@
 
 		<div>
 			<v-card flat class="pa-3" min-height="500">
-				<v-data-table :headers="headers" :items="participants" hide-default-footer>
+				<v-data-table :headers="headers" :items="gradeList.grade_items" hide-default-footer>
 					<template v-slot:item.action="{}">
 						<v-btn depressed tile>Action</v-btn>
 					</template>
@@ -45,9 +45,6 @@
 		</div>
 
 		<v-dialog v-model="dialogUpload" persistent max-width="600px">
-			<!-- <template v-slot:activator="{ on }">
-				<v-btn color="primary" v-on="on" depressed text v-if="!isStudent">Add Section</v-btn>
-			</template>-->
 			<v-card>
 				<v-card-title>
 					<span class="headline">Upload Scores</span>
@@ -65,6 +62,7 @@
 									prepend-icon
 									prepend-inner-icon="mdi-paperclip"
 									accept=".csv"
+									@change="showCsv"
 									label="Select CSV File"
 									persistent-hint
 									hint="make sure you use template you exported!"
@@ -77,7 +75,7 @@
 				<v-card-actions>
 					<v-spacer></v-spacer>
 					<v-btn color="blue darken-1" text @click="dialogUpload = false">Close</v-btn>
-					<v-btn color="blue darken-1" text @click="dialogUpload = false">Save</v-btn>
+					<v-btn color="blue darken-1" text @click="uploadScores">Save</v-btn>
 				</v-card-actions>
 			</v-card>
 		</v-dialog>
@@ -110,6 +108,7 @@
 <script>
 import DownloadCsv from "vue-json-csv";
 import axios from "axios";
+import Papa from "papaparse";
 
 export default {
 	components: {
@@ -124,11 +123,14 @@ export default {
 					text: "Name",
 					align: "left",
 					sortable: false,
-					value: "name"
+					value: "student.name"
 				},
-				{ text: "Matriculation Number", value: "matric_number" },
-				{ text: "Registration Number", value: "reg_number" },
-				{ text: "Program", value: "program.name" },
+				{
+					text: "Matriculation Number",
+					value: "student.matric_number"
+				},
+				{ text: "Registration Number", value: "student.reg_number" },
+				{ text: "Program", value: "student.program.name" },
 				// { text: "Residence", value: "residence" },
 				{ text: "Score", value: "score", sortable: false }
 			],
@@ -153,13 +155,16 @@ export default {
 					score: ""
 				}
 			],
-			dialogDelete: null
+			dialogDelete: null,
+			gradeList: []
 		};
 	},
 	computed: {
 		csvData() {
-			return this.participants.map(item => ({
-				...item
+			return this.gradeList.grade_items.map(item => ({
+				// ...item
+				matric_number: item.student.matric_number,
+				score: item.score
 				// semester: item.semester.name, //item.address.city,
 				// category: item.category.name //item.company.name
 			}));
@@ -208,12 +213,42 @@ export default {
 			} catch (error) {
 				console.log(error);
 			}
+		},
+		async showCsv(ent) {
+			var reader = new FileReader();
+
+			reader.readAsText(ent);
+			reader.onload = async evt => {
+				let res = await Papa.parse(evt.target.result, {
+					header: true,
+					skipEmptyLines: true
+				});
+
+				this.dummy = res.data;
+			};
+		},
+		async uploadScores() {
+			this.dialogUpload = false;
+			if (this.dummy.length > 0) {
+				let id = this.$route.params.grade_id;
+				let body = { data: JSON.stringify(this.dummy) };
+				// console.log(body);
+				let res = await axios.post(`gradelist-upload/${id}`, body);
+				// if (res.data.status) {
+				this.$store.commit("openSnackbar", res.data.message);
+				if (res.data.status) {
+					this.getGradeList();
+				}
+				// }
+			} else {
+				this.$store.commit("openSnakbar", "No records uploaded");
+			}
 		}
 	},
 	async mounted() {
 		try {
 			this.getGradeList();
-			this.getCourseParticipants();
+			// this.getCourseParticipants();
 		} catch (error) {
 			console.log(error);
 		}

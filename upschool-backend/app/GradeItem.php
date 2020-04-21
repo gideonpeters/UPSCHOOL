@@ -21,7 +21,7 @@ class GradeItem extends Model
     public function getStudentAttribute()
     {
         $student_course = DB::table('student_courses')->whereId($this->student_course_id)->first();
-        $student = DB::table('students')->whereId($student_course->student_id)->first();
+        $student = Student::find($student_course->student_id);
         // dd($student);
         return $student;
         // return $this->hasOneThrough(Student::class, StudentCourse::class, 'student_id', 'id', 'id', 'id');

@@ -514,7 +514,7 @@ export default {
 				});
 			}
 			return this.$router.push({
-				name: "parent.courses-view",
+				name: "parent.courses.view",
 				params: { id: v }
 			});
 		},

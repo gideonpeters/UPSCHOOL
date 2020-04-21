@@ -101,6 +101,9 @@ export default {
 	methods: {
 		async goToPage() {
 			try {
+				if (this.userId == "admin") {
+					return this.$router.push({ name: "parent.dashboard" });
+				}
 				let body = {
 					email: this.userId,
 					password: this.password

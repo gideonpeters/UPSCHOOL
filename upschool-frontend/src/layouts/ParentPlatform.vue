@@ -240,6 +240,12 @@ export default {
 							icon: "mdi-golf",
 							route: "parent.programs",
 							subItems: []
+						},
+						{
+							title: "School Assessments",
+							icon: "mdi-golf",
+							route: "parent.school-assessments",
+							subItems: []
 						}
 					]
 				},

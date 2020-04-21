@@ -11,8 +11,68 @@ export default [
 	},
 	{
 		path: "courses/:id",
-		name: "parent.courses-view",
-		component: () => import("./../views/parent/ParentCourseView")
+		component: () => import("./../views/parent/ParentCourseView"),
+		children: [
+			{
+				path: "overview",
+				name: "parent.courses.view",
+				meta: { title: "My Courses", key: 3 },
+				component: () =>
+					import("./../views/parent/ParentCourseViewOverview")
+			},
+			{
+				path: "materials",
+				name: "parent.courses.view.materials",
+				meta: { title: "Course Materials", key: 3 },
+				component: () =>
+					import("./../views/parent/ParentCourseViewMaterials")
+			},
+			{
+				path: "participants",
+				name: "parent.courses.view.participants",
+				meta: { title: "Course Participants", key: 3 },
+				component: () =>
+					import("./../views/parent/ParentCourseViewParticipants")
+			},
+			{
+				path: "submissions",
+				name: "parent.courses.view.submissions",
+				meta: { title: "Course Submissions", key: 3 },
+				component: () =>
+					import("./../views/parent/ParentCourseViewSubmissions")
+			},
+			{
+				path: "grades",
+				component: () =>
+					import("./../views/parent/ParentCourseViewGradeView"),
+
+				children: [
+					{
+						path: "",
+						name: "parent.courses.view.grades",
+						meta: { title: "Course Grades", key: 3 },
+						component: () =>
+							import("./../views/parent/ParentCourseViewGrades")
+					},
+					{
+						path: ":grade_id/view",
+						name: "parent.courses.view.grades.view",
+						meta: { title: "Course Grade Details", key: 3 },
+						component: () =>
+							import(
+								"./../views/parent/ParentCourseViewGradeDetail"
+							)
+					}
+				]
+			},
+			{
+				path: "settings",
+				name: "parent.courses.view.settings",
+				meta: { title: "Course Settings", key: 3 },
+				component: () =>
+					import("./../views/parent/ParentCourseViewSettings")
+			}
+		]
 	},
 	{
 		path: "students",
@@ -133,6 +193,17 @@ export default [
 		path: "college/:id",
 		name: "parent.colleges.details",
 		component: () => import("./../views/parent/ParentCollegeDetails")
+	},
+	{
+		path: "school-assessment",
+		name: "parent.school-assessments",
+		component: () => import("./../views/parent/ParentSchoolAssessment")
+	},
+	{
+		path: "school-assessment/:id",
+		name: "parent.school-assessments.view",
+		component: () =>
+			import("./../views/parent/ParentSchoolAssessmentDetail")
 	},
 	{
 		path: "department",

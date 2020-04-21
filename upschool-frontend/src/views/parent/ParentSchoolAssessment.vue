@@ -2,10 +2,10 @@
 	<v-app>
 		<div>
 			<resource-view
-				type="Colleges"
+				type="School Assessments"
 				:headers="headers"
-				:items="colleges"
-				viewRoute="parent.colleges.details"
+				:items="schoolAssessments"
+				viewRoute="parent.school-assessments.view"
 			/>
 		</div>
 	</v-app>
@@ -27,19 +27,21 @@ export default {
 				sortable: false,
 				value: "name"
 			},
-			{ text: "CREDENTIALS", value: "short_name" },
+			{ text: "TOTAL SCORE", value: "total_score" },
+			{ text: "ACTIVE", value: "visible" },
+
 			{ text: "ACTIONS", value: "action", sortable: false }
 		]
 	}),
 
 	computed: {
-		colleges() {
-			return this.$store.state.colleges;
+		schoolAssessments() {
+			return this.$store.state.schoolAssessments;
 		}
 	},
 	async mounted() {
 		try {
-			await this.$store.dispatch("getColleges");
+			await this.$store.dispatch("getSchoolAssessments");
 		} catch (error) {
 			console.log(error);
 		}

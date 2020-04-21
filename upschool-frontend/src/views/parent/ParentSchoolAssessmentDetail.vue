@@ -1,5 +1,5 @@
 <template>
 	<v-app>
-		<h2>Register</h2>
+		<h1>Assessment</h1>
 	</v-app>
 </template>

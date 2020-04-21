@@ -101,7 +101,13 @@ export default {
 	}),
 	computed: {
 		userId() {
-			return this.$store.state.loggedInUser.id;
+			let res;
+			if (this.$store.state.loggedInUser.id) {
+				res = this.$store.state.loggedInUser.id;
+			} else {
+				res = 1;
+			}
+			return res;
 		}
 	},
 	methods: {

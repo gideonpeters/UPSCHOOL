@@ -82,6 +82,7 @@ Route::group([], function ($router) {
     Route::get('gradelist', 'GradelistController@index');
     Route::get('gradelist/{id}', 'GradelistController@show');
     Route::post('gradelist', 'GradelistController@store');
+    Route::post('gradelist-upload/{id}', 'GradelistController@upload');
     Route::delete('gradelist/{id}', 'GradelistController@destroy');
     // Route::get('course-assessment/{assessment_id}', 'ContinuousAssessmentController@index');
     // Route::post('course-assessment/upload', 'ContinuousAssessmentController@upload_scores');

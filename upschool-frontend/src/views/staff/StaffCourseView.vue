@@ -1,6 +1,6 @@
 <template>
 	<v-app>
-		<course-view />
+		<course-view isStaff />
 	</v-app>
 </template>
 

@@ -1,7 +1,7 @@
 <template>
 	<div>
 		<div class="d-flex align-center">
-			<v-btn icon color="black" @click="$router.go(-1)">
+			<v-btn icon color="black" @click="goBack">
 				<v-icon>mdi-arrow-left</v-icon>
 			</v-btn>
 			<div v-if="course">
@@ -13,7 +13,7 @@
 		<div>
 			<v-card flat class="pa-3 mt-5">
 				<v-tabs v-model="tab" background-color="transparent">
-					<v-tab :to="{name: item.route}" v-for="item in items" :key="item.id">
+					<v-tab :to="{name: getRoute(item.route)}" v-for="item in items" :key="item.id">
 						{{
 						item.tab
 						}}
@@ -36,6 +36,14 @@ export default {
 		isStudent: {
 			type: Boolean,
 			default: false
+		},
+		isStaff: {
+			type: Boolean,
+			default: false
+		},
+		isAdmin: {
+			type: Boolean,
+			default: false
 		}
 	},
 	data() {
@@ -46,11 +54,11 @@ export default {
 			dialog2: null,
 			course: {},
 			items: [
-				{ id: 1, tab: "OVERVIEW", route: "staff.courses.view" },
+				{ id: 1, tab: "OVERVIEW", route: "courses.view" },
 				{
 					id: 2,
 					tab: "COURSE MATERIAL",
-					route: "staff.courses.view.materials"
+					route: "courses.view.materials"
 				}
 			],
 			attachSubsection: false,
@@ -64,7 +72,24 @@ export default {
 	computed: {},
 	methods: {
 		reserve() {},
-		openItem() {}
+		openItem() {},
+		getRoute(route) {
+			let res;
+			if (this.isAdmin) {
+				res = "parent." + route;
+			}
+
+			return res;
+		},
+		goBack() {
+			if (this.isAdmin) {
+				this.$router.push({ name: "parent.courses" });
+			} else if (this.isStaff) {
+				this.$router.push({ name: "staff.courses" });
+			} else if (this.isStudent) {
+				this.$router.push({ name: "student.courses" });
+			}
+		}
 	},
 	async mounted() {
 		try {
@@ -73,22 +98,22 @@ export default {
 					{
 						id: 3,
 						tab: "PARTICIPANTS",
-						route: "staff.courses.view.participants"
+						route: "courses.view.participants"
 					},
 					{
 						id: 4,
 						tab: "SUBMISSIONS",
-						route: "staff.courses.view.submissions"
+						route: "courses.view.submissions"
 					},
 					{
 						id: 5,
 						tab: "GRADES",
-						route: "staff.courses.view.grades"
+						route: "courses.view.grades"
 					},
 					{
 						id: 6,
 						tab: "SETTINGS",
-						route: "staff.courses.view.settings"
+						route: "courses.view.settings"
 					}
 				);
 			}
