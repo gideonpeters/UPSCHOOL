@@ -4,7 +4,7 @@ use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
 
-class CreateSchoolAssessmentsTable extends Migration
+class CreateSubmissionListsTable extends Migration
 {
     /**
      * Run the migrations.
@@ -13,14 +13,14 @@ class CreateSchoolAssessmentsTable extends Migration
      */
     public function up()
     {
-        Schema::create('school_assessments', function (Blueprint $table) {
+        Schema::create('submission_lists', function (Blueprint $table) {
             $table->id();
-            $table->string('name');
+            $table->foreignId('subsection_id');
+            $table->foreignId('course_id');
+            $table->dateTime('due_date')->nullable();
             $table->unsignedInteger('total_score');
-            $table->foreignId('course_id')->nullable();
-            $table->unsignedInteger('percentage')->nullable();
-            $table->boolean('active')->default(false);
-            $table->boolean('visible')->default(false);
+            $table->foreignId('gradelist_id')->nullable();
+
             $table->timestamps();
         });
     }
@@ -32,6 +32,6 @@ class CreateSchoolAssessmentsTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('school_assessments');
+        Schema::dropIfExists('submission_lists');
     }
 }

@@ -41,7 +41,7 @@ export default {
 	},
 	async mounted() {
 		try {
-			await this.$store.dispatch("getSchoolAssessments");
+			await this.$store.dispatch("getAllSchoolAssessments");
 		} catch (error) {
 			console.log(error);
 		}

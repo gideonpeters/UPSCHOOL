@@ -2,8 +2,11 @@
 
 namespace App\Http\Controllers;
 
-use App\SchoolAssessmentItem;
+use App\Course;
+use App\Semester;
+use App\StudentCourse;
 use Illuminate\Http\Request;
+use App\SchoolAssessmentItem;
 
 class SchoolAssessmentItemController extends Controller
 {
@@ -33,9 +36,23 @@ class SchoolAssessmentItemController extends Controller
         ], 201);
     }
 
-    public function show(SchoolAssessmentItem $schoolAssessmentItem)
+    public function show(Request $request)
     {
         //
+        $currentSemester = Semester::latest()->first();
+        $course = Course::find($request->course_id);
+        $student_courses = StudentCourse::whereCourseId($course->id)->whereSemesterId($currentSemester->id)->get()->load('school_assessment_items', 'student')->map(function ($item, $key) {
+            return $item->only(['student', 'school_assessment_items']);
+        });
+
+        return response()->json([
+            'status' => true,
+            'message' => 'these are all the student assessments sumitted',
+            'data' => $student_courses
+        ], 201);
+
+        // dd($student_courses->toArray());
+        // $school_assessment_items = SchoolAssessmentItem::all();
     }
 
     /**

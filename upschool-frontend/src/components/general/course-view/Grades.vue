@@ -127,7 +127,7 @@
 			<v-col cols="4">
 				<v-card class="pa-3 mt-4">
 					<small class="fs-6">Click to view your submission</small>
-					<v-subheader class="pa-0">ONGOING SCHOOL SUBMISSIONS</v-subheader>
+					<v-subheader class="pa-0">GENERAL SCHOOL ASSESSMENTS</v-subheader>
 
 					<div
 						class="d-flex fs-4 mb-3 align-center"
@@ -135,9 +135,130 @@
 						:key="assessment.id"
 					>
 						<div class="pr-4">
-							<v-icon size="15" color="info lighten-3">mdi-circle-slice-8</v-icon>
+							<v-btn icon color="info lighten-3" @click="viewAssessment(assessment.id)">
+								<v-icon
+									size="15"
+									:color="assessment.course_id ? 'info lighten-3': 'primary lighten-3'"
+								>mdi-eye</v-icon>
+							</v-btn>
 						</div>
 						<div>{{assessment.name}} ({{assessment.total_score}} Marks)</div>
+						<v-spacer></v-spacer>
+						<div>
+							<v-btn
+								color="primary"
+								small
+								text
+								:disabled="!assessment.visible"
+								@click="openSubmitAssessment(assessment)"
+							>submit</v-btn>
+						</div>
+					</div>
+				</v-card>
+
+				<v-card class="pa-3 mt-4">
+					<small class="fs-6">Click to view your submission</small>
+					<v-subheader class="pa-0">SCHOOL ASSESSMENTS FOR THIS COURSE</v-subheader>
+					<v-row justify="center">
+						<v-dialog v-model="dialogAssessment" persistent max-width="600px">
+							<template v-slot:activator="{on}">
+								<v-btn
+									v-if="courseSchoolAssessments.length ==  0"
+									color="success"
+									v-on="on"
+									x-small
+									depressed
+								>Create School Submission for course</v-btn>
+							</template>
+							<v-card>
+								<v-card-title>
+									<span class="headline">CREATE COURSE SCHOOL ASSESSMENT</span>
+								</v-card-title>
+								<v-card-text>
+									<v-container>
+										<v-row>
+											<v-col cols="12">
+												<v-text-field
+													outlined
+													disabled
+													label="Course"
+													:value="
+																				`${course.course_code}: ${course.title}`
+																			"
+													required
+												></v-text-field>
+											</v-col>
+											<v-col cols="6">
+												<v-text-field
+													outlined
+													label="Name of Assessment"
+													v-model="
+																				assessmentName
+																			"
+													required
+												></v-text-field>
+											</v-col>
+
+											<v-col cols="6">
+												<v-text-field
+													outlined
+													label="Total Score"
+													required
+													v-model="
+																				totalAssessmentScore
+																			"
+												></v-text-field>
+											</v-col>
+											<v-col cols="6">
+												<v-text-field
+													outlined
+													label="Percentage in final result"
+													required
+													v-model="
+																				totalAssessmentPercentage
+																			"
+												></v-text-field>
+											</v-col>
+										</v-row>
+									</v-container>
+									<!-- <small>*indicates required field</small> -->
+								</v-card-text>
+								<v-card-actions>
+									<v-spacer></v-spacer>
+									<v-btn
+										color="blue darken-1"
+										text
+										@click="
+																	closeAdd
+																"
+									>Close</v-btn>
+									<v-btn
+										color="blue darken-1"
+										text
+										:disabled="
+																	!(
+																		assessmentName &&
+																		totalAssessmentPercentage && totalAssessmentScore
+																	)
+																"
+										@click="createNewCourseAssessment"
+									>Save</v-btn>
+								</v-card-actions>
+							</v-card>
+						</v-dialog>
+					</v-row>
+
+					<div
+						class="d-flex fs-4 mb-3 align-center"
+						v-for="assessment in courseSchoolAssessments"
+						:key="assessment.id"
+					>
+						<div class="pr-4">
+							<v-btn icon color="info lighten-3" @click="viewAssessment(assessment.id)">
+								<v-icon size="15" color="info lighten-3">mdi-eye</v-icon>
+							</v-btn>
+						</div>
+						<div>{{assessment.name}} ({{assessment.total_score}} Marks) [{{$assessment.percentage}}]</div>
 						<v-spacer></v-spacer>
 						<div>
 							<v-btn
@@ -198,6 +319,7 @@
 
 <script>
 import MetricCard from "@/components/parent/Metric";
+import Axios from "axios";
 
 export default {
 	components: {
@@ -222,9 +344,14 @@ export default {
 			dialog2: null,
 			showGradeList: false,
 			dialogSubmitAssessment: null,
+			dialogAssessment: null,
 			selectedAssessment: {},
 			selectedGradeAction: "",
 			selectedGrades: [],
+			courseSchoolAssessments: [],
+			assessmentName: "",
+			totalAssessmentScore: "",
+			totalAssessmentPercentage: "",
 			gradelistHeaders: [
 				{
 					text: "Name",
@@ -245,9 +372,45 @@ export default {
 		}
 	},
 	methods: {
+		viewAssessment() {
+			this.$router.push({ name: "parent.courses.view.assessments" });
+		},
 		openSubmitAssessment(item) {
 			this.selectedAssessment = item;
 			this.dialogSubmitAssessment = true;
+		},
+		async createNewCourseAssessment() {
+			try {
+				if (
+					!this.course.id ||
+					!this.totalAssessmentScore ||
+					!this.totalAssessmentPercentage ||
+					!this.assessmentName
+				) {
+					return this.$store.commit(
+						"openSnackbar",
+						"Make sure you filled all fields"
+					);
+				}
+
+				let body = {
+					course_id: this.course.id,
+					name: this.assessmentName,
+					percentage: this.totalAssessmentPercentage,
+					total_score: this.totalAssessmentScore
+				};
+
+				let res = await Axios.post("school-assessment-course", body);
+
+				this.$store.commit("openSnackbar", res.data.message);
+				this.assessmentName = "";
+				this.totalAssessmentScore = "";
+				this.totalAssessmentPercentage = "";
+				this.dialogAssessment = false;
+				this.getSchoolAssessments();
+			} catch (error) {
+				console.log(error);
+			}
 		},
 		submitAssessment() {
 			if (this.selectedGrades.length == 0) {
@@ -289,7 +452,7 @@ export default {
 				});
 			} else if (this.isStaff) {
 				this.$router.push({
-					name: "parent.courses.view.grades.view",
+					name: "staff.courses.view.grades.view",
 					params: { grade_id: v.id }
 				});
 			}
@@ -331,6 +494,11 @@ export default {
 			} catch (error) {
 				console.log(error);
 			}
+		},
+		async getSchoolAssessments() {
+			let id = this.$route.params.id;
+
+			await this.$store.dispatch("getSchoolAssessments", id);
 		}
 	},
 	async mounted() {
@@ -342,7 +510,7 @@ export default {
 			this.getGradelists();
 
 			if (this.schoolAssessments.length == 0) {
-				await this.$store.dispatch("getSchoolAssessments");
+				this.getSchoolAssessments();
 			}
 		} catch (error) {
 			console.log(error);

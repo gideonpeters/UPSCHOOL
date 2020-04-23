@@ -147,10 +147,8 @@
 														{{
 														currentEnrollment.curriculum_items.reduce(
 														(acc, val) => {
-														return (
 														acc +
 														val.credit_unit
-														);
 														},
 														0
 														)

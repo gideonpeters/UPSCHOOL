@@ -17,7 +17,7 @@ class CreateSchoolAssessmentItemsTable extends Migration
             $table->id();
             $table->foreignId('school_assessment_id');
             $table->foreignId('student_course_id');
-            $table->unsignedInteger('score');
+            $table->unsignedInteger('score')->default(0);
             $table->timestamps();
         });
     }

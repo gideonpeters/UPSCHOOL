@@ -3556,9 +3556,19 @@ export default new Vuex.Store({
 			state.students = res.data.data;
 			return res.data;
 		},
-		async getSchoolAssessments({ state }) {
-			let res = await axios.get("school-assessment");
+		async getSchoolAssessments({ state }, course_id) {
+			let res = await axios.get(
+				`school-assessment?course_id=${course_id}`
+			);
 			console.log(res.data);
+			state.schoolAssessments = res.data.data;
+			return res.data;
+		},
+		async getAllSchoolAssessments({ state }) {
+			let res = await axios.get(`school-assessment`);
+
+			console.log(res.data);
+
 			state.schoolAssessments = res.data.data;
 			return res.data;
 		},

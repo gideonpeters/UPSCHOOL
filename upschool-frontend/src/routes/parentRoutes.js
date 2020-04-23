@@ -42,6 +42,13 @@ export default [
 					import("./../views/parent/ParentCourseViewSubmissions")
 			},
 			{
+				path: "assessments",
+				name: "parent.courses.view.assessments",
+				meta: { title: "Course Assessments", key: 3 },
+				component: () =>
+					import("./../views/parent/ParentCourseViewAssessments")
+			},
+			{
 				path: "grades",
 				component: () =>
 					import("./../views/parent/ParentCourseViewGradeView"),

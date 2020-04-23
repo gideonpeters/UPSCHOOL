@@ -3,6 +3,7 @@
 namespace App;
 
 use App\Exam;
+use App\Student;
 use App\GradeItem;
 use App\ResultItem;
 use App\CurriculumItem;
@@ -22,9 +23,9 @@ class StudentCourse extends Pivot
         return $this->hasOne(ResultItem::class, 'student_course_id');
     }
 
-    public function school_assessments()
+    public function school_assessment_items()
     {
-        return $this->hasMany(SchoolAssessmentItem::class);
+        return $this->hasMany(SchoolAssessmentItem::class, 'student_course_id');
     }
 
     public function grade_items()
@@ -45,5 +46,10 @@ class StudentCourse extends Pivot
     public function curriculum_item()
     {
         return $this->belongsTo(CurriculumItem::class);
+    }
+
+    public function student()
+    {
+        return $this->belongsTo(Student::class);
     }
 }

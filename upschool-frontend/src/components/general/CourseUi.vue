@@ -550,9 +550,9 @@ export default {
 	},
 	async created() {
 		try {
-			if (this.courses.length == 0) {
-				await this.$store.dispatch("getAllCourses");
-			}
+			// if (this.courses.length == 0) {
+			await this.$store.dispatch("getAllCourses");
+			// }
 		} catch (error) {
 			console.log(error);
 		}
