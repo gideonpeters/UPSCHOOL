@@ -118,7 +118,7 @@
 							:items-per-page="5"
 						>
 							<template v-slot:item.visible="{ item }">
-								<v-checkbox disabled :value="!!item.visible" />
+								<v-simple-checkbox disabled :value="!!item.visible" />
 							</template>
 						</v-data-table>
 					</v-card>
@@ -126,26 +126,73 @@
 			</v-col>
 			<v-col cols="4">
 				<v-card class="pa-3 mt-4">
+					<small class="fs-6">Click to view your submission</small>
 					<v-subheader class="pa-0">ONGOING SCHOOL SUBMISSIONS</v-subheader>
 
-					<div class="d-flex fs-4 mb-3 align-center">
+					<div
+						class="d-flex fs-4 mb-3 align-center"
+						v-for="assessment in schoolAssessments"
+						:key="assessment.id"
+					>
 						<div class="pr-4">
 							<v-icon size="15" color="info lighten-3">mdi-circle-slice-8</v-icon>
 						</div>
-						<div>TEST 1</div>
+						<div>{{assessment.name}} ({{assessment.total_score}} Marks)</div>
 						<v-spacer></v-spacer>
 						<div>
-							<v-btn color="primary" small text>submit</v-btn>
+							<v-btn
+								color="primary"
+								small
+								text
+								:disabled="!assessment.visible"
+								@click="openSubmitAssessment(assessment)"
+							>submit</v-btn>
 						</div>
 					</div>
 				</v-card>
 			</v-col>
 		</v-row>
+
 		<v-row v-else>
 			<v-col>
 				<h1>item</h1>
 			</v-col>
 		</v-row>
+		<v-dialog v-model="dialogSubmitAssessment" persistent max-width="600px">
+			<v-card>
+				<v-card-title>
+					<span class="headline">Submit Assessment Score</span>
+				</v-card-title>
+				<v-card-text>
+					<v-container>
+						<v-row>
+							<v-col cols="12">
+								<div class="fs-3">{{selectedAssessment.name}} ({{selectedAssessment.total_score}} Marks)</div>
+							</v-col>
+							<v-col cols="12" sm="12">
+								<v-autocomplete
+									v-model="selectedGrades"
+									item-text="name"
+									return-object
+									chips
+									:items="gradelist"
+									label="Select Grade(s) you want to submit"
+									multiple
+								></v-autocomplete>
+							</v-col>
+							<v-col cols="12" sm="6" v-if="selectedGrades.length > 1">
+								<v-autocomplete v-model="selectedGradeAction" :items="gradeActions" label="Math Operation"></v-autocomplete>
+							</v-col>
+						</v-row>
+					</v-container>
+				</v-card-text>
+				<v-card-actions>
+					<v-spacer></v-spacer>
+					<v-btn color="blue darken-1" text @click="closeAssessment">Cancel</v-btn>
+					<v-btn color="blue darken-1" text @click="submitAssessment">Proceed</v-btn>
+				</v-card-actions>
+			</v-card>
+		</v-dialog>
 	</v-card>
 </template>
 
@@ -174,6 +221,10 @@ export default {
 			listName: null,
 			dialog2: null,
 			showGradeList: false,
+			dialogSubmitAssessment: null,
+			selectedAssessment: {},
+			selectedGradeAction: "",
+			selectedGrades: [],
 			gradelistHeaders: [
 				{
 					text: "Name",
@@ -183,10 +234,52 @@ export default {
 				},
 				{ text: "Total Score", value: "total_score" },
 				{ text: "Visible", value: "visible" }
-			]
+			],
+			gradeActions: ["SUM", "AVERAGE", "MAX", "MIN"]
+			// schoolAssessments: []
 		};
 	},
+	computed: {
+		schoolAssessments() {
+			return this.$store.state.schoolAssessments;
+		}
+	},
 	methods: {
+		openSubmitAssessment(item) {
+			this.selectedAssessment = item;
+			this.dialogSubmitAssessment = true;
+		},
+		submitAssessment() {
+			if (this.selectedGrades.length == 0) {
+				return this.$store.commit(
+					"openSnackbar",
+					"You did not select a grade item"
+				);
+			}
+
+			if (this.selectedGrades.length > 1 && !this.selectedGradeAction) {
+				return this.$store.commit(
+					"openSnackbar",
+					"You have to select a math operation for two or more gradelist submission"
+				);
+			}
+			let ids = this.selectedGrades.map(item => item.id);
+
+			let body = {
+				ids: JSON.stringify(ids),
+				school_assessment_id: this.selectedAssessment.id,
+				action: this.selectedGradeAction
+			};
+
+			this.$store.dispatch("uploadSchoolAssessment", body);
+			this.dialogSubmitAssessment = false;
+		},
+		closeAssessment() {
+			this.dialogSubmitAssessment = false;
+			this.selectedAssessment = {};
+			this.selectedGradeAction = "";
+			this.selectedGrades = [];
+		},
 		openItem(v) {
 			// console.log(v);
 			if (this.isAdmin) {
@@ -247,6 +340,10 @@ export default {
 			this.course = await this.$store.dispatch("getCourseById", id);
 
 			this.getGradelists();
+
+			if (this.schoolAssessments.length == 0) {
+				await this.$store.dispatch("getSchoolAssessments");
+			}
 		} catch (error) {
 			console.log(error);
 		}

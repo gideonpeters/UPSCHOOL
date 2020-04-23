@@ -72,12 +72,12 @@ class GradelistController extends Controller
             ], 201);
         }
 
-        $course = Course::find($gradelist->course_id);
+        // $course = Course::find($gradelist->course_id);
 
         foreach ($data as $key => $datum) {
             # code...
             $student = Student::whereMatricNumber($datum['matric_number'])->first();
-            $student_course = StudentCourse::whereCourseId($course->id)->whereSemesterId($gradelist->semester_id)->whereStudentId($student->id)->first();
+            $student_course = StudentCourse::whereCourseId($gradelist->course_id)->whereSemesterId($gradelist->semester_id)->whereStudentId($student->id)->first();
             $grade_item = GradeItem::whereStudentCourseId($student_course->id)->first();
 
             if ($datum['score'] <= $gradelist->total_score) {
@@ -90,7 +90,7 @@ class GradelistController extends Controller
         }
 
         return response()->json([
-            'status' => false,
+            'status' => true,
             'message' => 'scores uploaded successfully',
             'data' => []
         ], 201);

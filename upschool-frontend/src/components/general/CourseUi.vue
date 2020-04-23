@@ -314,36 +314,13 @@
 							$vuetify.breakpoint.mdAndUp ? 'start' : 'center'
 						">
 							<v-col cols="10" md="4" sm="5" v-for="(course, index) in visibleCourses" :key="index">
-								<v-card
-									flat
-									class="d-flex flex-column pa-4 pointer"
-									@click="goToPage(course.id)"
-									min-height="180"
-									max-height="300"
-								>
-									<div class="d-flex justify-space-between align-center">
-										<div class="font-weight-bold">{{ course.course_code }}</div>
-										<div class="d-flex align center" v-if="!isStudent">
-											<v-icon size="18" class="mr-1" color="grey">mdi-pencil</v-icon>
-											<v-icon size="18" color="grey">mdi-delete</v-icon>
-										</div>
-									</div>
-									<div class="fs-3 mt-2 mb-5">{{ course.title }}</div>
-									<v-spacer></v-spacer>
-									<v-divider></v-divider>
-									<div class="d-flex justify-space-between align-center mt-2">
-										<div class="d-flex align-center">
-											<div>
-												<v-icon size="10" color="yellow accent-4">mdi-circle</v-icon>
-											</div>
-											<!-- <div class="fs-4 ml-2">Departmental Course</div> -->
-										</div>
-										<div class="fs-4 d-flex">
-											<div class="mr-3" v-if="personal">{{2 +' Units'}}</div>
-											<div class="font-italic">{{course.semester_type.short_title}}</div>
-										</div>
-									</div>
-								</v-card>
+								<course-item
+									:course="course"
+									:personal="personal"
+									:isStaff="isStaff"
+									:isAdmin="isAdmin"
+									:isStudent="isStudent"
+								/>
 							</v-col>
 						</v-row>
 					</v-card>
@@ -374,16 +351,21 @@
 <script>
 import DownloadCsv from "vue-json-csv";
 import MetricCard from "@/components/parent/Metric";
+import CourseItem from "@/components/general/CourseItem";
 // import VueCsvImport from "vue-csv-import";
 import Papa from "papaparse";
 export default {
-	components: { DownloadCsv, MetricCard },
+	components: { DownloadCsv, MetricCard, CourseItem },
 	props: {
 		isStudent: {
 			type: Boolean,
 			default: false
 		},
 		isStaff: {
+			type: Boolean,
+			default: false
+		},
+		isAdmin: {
 			type: Boolean,
 			default: false
 		},
@@ -501,23 +483,6 @@ export default {
 		}
 	},
 	methods: {
-		goToPage(v) {
-			if (this.isStudent) {
-				return this.$router.push({
-					name: "student.courses.view",
-					params: { id: v }
-				});
-			} else if (this.isStaff) {
-				return this.$router.push({
-					name: "staff.courses.view",
-					params: { id: v }
-				});
-			}
-			return this.$router.push({
-				name: "parent.courses.view",
-				params: { id: v }
-			});
-		},
 		openDialog() {
 			this.dialogFull = true;
 		},
@@ -585,7 +550,9 @@ export default {
 	},
 	async created() {
 		try {
-			await this.$store.dispatch("getAllCourses");
+			if (this.courses.length == 0) {
+				await this.$store.dispatch("getAllCourses");
+			}
 		} catch (error) {
 			console.log(error);
 		}

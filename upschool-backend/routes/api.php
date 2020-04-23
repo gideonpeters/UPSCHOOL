@@ -98,7 +98,8 @@ Route::group([], function ($router) {
 Route::group([], function ($router) {
     Route::get('school-assessment', 'SchoolAssessmentController@index');
     Route::post('school-assessment', 'SchoolAssessmentController@store');
-    Route::post('school-assessment-course', 'SchoolAssessmentItemController@store');
+    // Route::post('school-assessment-course', 'SchoolAssessmentItemController@store');
+    Route::post('school-assessment-upload', 'SchoolAssessmentController@upload');
     // Route::get('course-assessment/{assessment_id}', 'ContinuousAssessmentController@index');
     // Route::post('course-assessment/upload', 'ContinuousAssessmentController@upload_scores');
 });

@@ -3712,6 +3712,11 @@ export default new Vuex.Store({
 			console.log(res.data);
 			return res.data;
 		},
+		async uploadSchoolAssessment({ commit }, payload) {
+			let res = await axios.post("school-assessment-upload", payload);
+			commit("openSnackbar", res.data.message);
+			return res.data;
+		},
 		async getCourseGradelist({}, id) {
 			let res = await axios.get(`gradelist?course_id=${id}`);
 			console.log(res.data);

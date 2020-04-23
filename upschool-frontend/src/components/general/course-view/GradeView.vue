@@ -1,9 +1,9 @@
 <template>
 	<v-card flat class="pa-3" min-height="500">
 		<!-- <div> -->
-		<v-btn x-small text color="black" @click="$router.go(-1)">Go Back</v-btn>
+		<v-btn x-small text color="black" @click="goBack">Go Back</v-btn>
 		<div class="d-flex justify-space-between align-center">
-			<h3>{{ gradeList.name }}</h3>
+			<h3>{{ gradeList.name }} ({{gradeList.total_score }} Marks)</h3>
 
 			<v-menu offset-y>
 				<template v-slot:activator="{ on }">
@@ -14,7 +14,7 @@
 				<v-list>
 					<v-list-item v-for="(item,index) in gradeActions" :key="index" @click="item.fn">
 						<v-list-item-title>
-							<download-csv :name="'GEC117_Pop_Quiz_1.csv'" v-if="index == 0" :data="csvData">
+							<download-csv :name="fileTitle" v-if="index == 0" :data="csvData">
 								<!-- <v-btn color="primary" text> -->
 								{{
 								item.title
@@ -31,6 +31,7 @@
 				</v-list>
 			</v-menu>
 		</div>
+		<small class="fs-6 blue--text">Scores higher than the total score will not be uploaded</small>
 		<!-- <v-spacer></v-spacer> -->
 		<!-- </div> -->
 
@@ -39,6 +40,27 @@
 				<v-data-table :headers="headers" :items="gradeList.grade_items" hide-default-footer>
 					<template v-slot:item.action="{}">
 						<v-btn depressed tile>Action</v-btn>
+					</template>
+					<template v-slot:item.score="{item}">
+						<v-edit-dialog
+							:return-value.sync="item.score"
+							@save="saveScore(item.score)"
+							@cancel="cancel"
+							@open="openScoreEdit"
+							@close="closeScoreEdit"
+						>
+							{{ item.score }}
+							<template v-slot:input>
+								<v-text-field
+									ref="score"
+									v-model="item.score"
+									:rules="[maxScore]"
+									label="Edit Score"
+									single-line
+									counter
+								></v-text-field>
+							</template>
+						</v-edit-dialog>
 					</template>
 				</v-data-table>
 			</v-card>
@@ -102,6 +124,8 @@
 				</v-card-actions>
 			</v-card>
 		</v-dialog>
+
+		
 	</v-card>
 </template>
 
@@ -118,6 +142,10 @@ export default {
 		return {
 			participants: [],
 			dialogUpload: null,
+			maxScore: v =>
+				v <= this.gradeList.total_score ||
+				"Has to be within total score value",
+			dialogSubmitAssessment: null,
 			headers: [
 				{
 					text: "Name",
@@ -156,33 +184,45 @@ export default {
 				}
 			],
 			dialogDelete: null,
-			gradeList: []
+			gradeList: [],
+			
 		};
 	},
 	computed: {
 		csvData() {
-			return this.gradeList.grade_items.map(item => ({
-				// ...item
-				matric_number: item.student.matric_number,
-				score: item.score
-				// semester: item.semester.name, //item.address.city,
-				// category: item.category.name //item.company.name
-			}));
+			let res;
+			if (this.gradeList.grade_items) {
+				res = this.gradeList.grade_items.map(item => ({
+					// ...item
+					matric_number: item.student.matric_number,
+					score: item.score
+					// semester: item.semester.name, //item.address.city,
+					// category: item.category.name //item.company.name
+				}));
+			}
+			return res;
+		},
+		fileTitle() {
+			let res;
+			if (this.gradeList.course) {
+				res = `${this.gradeList.course.course_code}_${this.gradeList.name}.csv`;
+			}
+			return res;
 		}
 	},
 	methods: {
-		async getCourseParticipants() {
-			try {
-				let id = this.$route.params.id;
-				let res = await this.$store.dispatch(
-					"getCourseParticipants",
-					id
-				);
+		openSubmitAssessment(item) {
+			this.selectedAssessment = item;
+			this.dialogSubmitAssessment = true;
+		},
+		submitAssessment() {
+			this.dialogSubmitAssessment = false;
+		},
+		goBack() {
+			let id = this.$route.params.grade_id;
+			let route = "parent.courses.view.grades";
 
-				this.participants = [...res.data];
-			} catch (error) {
-				console.log(error);
-			}
+			this.$router.push({ name: route, params: { grade_id: id } });
 		},
 		async deleteGrade() {
 			try {
@@ -235,14 +275,23 @@ export default {
 				// console.log(body);
 				let res = await axios.post(`gradelist-upload/${id}`, body);
 				// if (res.data.status) {
-				this.$store.commit("openSnackbar", res.data.message);
 				if (res.data.status) {
 					this.getGradeList();
 				}
+				this.$store.commit("openSnackbar", res.data.message);
 				// }
 			} else {
-				this.$store.commit("openSnakbar", "No records uploaded");
+				this.$store.commit("openSnackbar", "No records uploaded");
 			}
+		},
+		saveScore(v) {
+			console.log(this.$refs.score.value);
+			this.$store.commit("openSnackbar", "Score saved!");
+		},
+		cancel() {},
+		openScoreEdit() {},
+		closeScoreEdit() {
+			// console.log('Dialog closed')
 		}
 	},
 	async mounted() {

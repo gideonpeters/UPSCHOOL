@@ -10,6 +10,8 @@ use Illuminate\Database\Eloquent\Model;
 class Gradelist extends Model
 {
     //
+    protected $with = ['course'];
+
     public function course()
     {
         return $this->belongsTo(Course::class);
