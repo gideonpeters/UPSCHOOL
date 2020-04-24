@@ -1,8 +1,6 @@
 <template>
 	<v-app>
-		<!-- <h1>Admin News</h1> -->
-
-		<news-view />
+		<news-view isAdmin />
 	</v-app>
 </template>
 

@@ -20,10 +20,6 @@ class SubsectionController extends Controller
     {
         //
         $subsection = new Subsection();
-        // $table->string('name');
-        //     $table->string('type'); //file/task
-        //     $table->foreignId('course_section_id');
-        //     $table->longText('body');
 
         $subsection->name = $request->name;
         $subsection->type = $request->type;
@@ -69,23 +65,11 @@ class SubsectionController extends Controller
         }
     }
 
-    /**
-     * Display the specified resource.
-     *
-     * @param  \App\Subsection  $subsection
-     * @return \Illuminate\Http\Response
-     */
     public function show(Subsection $subsection)
     {
         //
     }
 
-    /**
-     * Show the form for editing the specified resource.
-     *
-     * @param  \App\Subsection  $subsection
-     * @return \Illuminate\Http\Response
-     */
     public function edit(Subsection $subsection)
     {
         //

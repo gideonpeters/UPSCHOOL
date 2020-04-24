@@ -9,6 +9,8 @@ use Illuminate\Database\Eloquent\Model;
 class Subsection extends Model
 {
     //
+    protected $with = ['file'];
+
     public function section()
     {
         return $this->belongsTo(CourseSection::class);

@@ -1,6 +1,6 @@
 <template>
 	<v-app>
-		<news-details isAdmin />
+		<news-details isStaff />
 	</v-app>
 </template>
 

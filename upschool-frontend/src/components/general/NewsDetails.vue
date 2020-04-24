@@ -13,7 +13,7 @@
 				contain
 			></v-img>
 			<h2 class="mt-2">{{ news.title }}</h2>
-			<div class="fs-5 mb-3 mt-2">Uploaded 5 mins ago</div>
+			<div class="fs-5 mb-3 mt-2">Uploaded {{moment(news.created_at).fromNow()}}</div>
 			<v-divider></v-divider>
 			<div v-html="news.body" class="mt-3"></div>
 		</div>

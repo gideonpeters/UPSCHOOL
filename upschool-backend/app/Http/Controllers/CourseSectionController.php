@@ -11,7 +11,7 @@ class CourseSectionController extends Controller
     public function index($id)
     {
         //
-        $sections = CourseSection::whereCourseId($id)->get();
+        $sections = CourseSection::whereCourseId($id)->get()->load('subsections');
 
         return response()->json([
             'status' => true,

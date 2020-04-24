@@ -35,15 +35,67 @@
 						<v-card-actions>
 							<v-spacer></v-spacer>
 							<v-btn color="blue darken-1" text @click="cancelSectionSave">Close</v-btn>
-							<v-btn color="blue darken-1" text @click="saveSection">Save</v-btn>
+							<v-btn
+								color="blue darken-1"
+								text
+								:disabled="!(sectionTitle && editorContent2)"
+								@click="saveSection"
+							>Save</v-btn>
+						</v-card-actions>
+					</v-card>
+				</v-dialog>
+
+				<v-dialog v-model="dialogUpload" persistent max-width="600px">
+					<v-card>
+						<v-card-title>
+							<span class="headline">Upload Document</span>
+						</v-card-title>
+						<v-card-text>
+							<v-container>
+								<v-row>
+									<v-col cols="12" sm="6" md="12">
+										<v-text-field outlined label="Section" :value="selectedSection.title" disabled></v-text-field>
+									</v-col>
+									<v-col cols="12" sm="6" md="12">
+										<v-text-field outlined label="Name" v-model="fileName"></v-text-field>
+									</v-col>
+									<v-col cols="12" sm="6" md="12">
+										<v-file-input
+											show-size
+											outlined
+											prepend-icon
+											prepend-inner-icon="mdi-paperclip"
+											accept=".doc, .docx, .pdf, .xlsx, .xml, application/msword, application/vnd.openxmlformats-officedocument.wordprocessingml.document"
+											@change="changeDoc"
+											label="Select Document"
+											persistent-hint
+											hint="make sure you select .pdf, .doc or .docx files"
+										></v-file-input>
+									</v-col>
+									<v-col cols="12" sm="6" md="12">
+										<vue-editor :editorToolbar="customToolbar" v-model="editorContent3"></vue-editor>
+									</v-col>
+								</v-row>
+							</v-container>
+							<small>*indicates required field</small>
+						</v-card-text>
+						<v-card-actions>
+							<v-spacer></v-spacer>
+							<v-btn color="blue darken-1" text @click="dialogUpload = false">Close</v-btn>
+							<v-btn
+								color="blue darken-1"
+								text
+								:disabled="!(this.file && this.fileName)"
+								@click="uploadDoc"
+							>Save</v-btn>
 						</v-card-actions>
 					</v-card>
 				</v-dialog>
 			</v-row>
 
-			<div class="mt-5 border-dashed pb-5" v-for="section in courseSections" :key="section.id">
+			<div class="mt-2 border-dashed pb-2" v-for="section in courseSections" :key="section.id">
 				<div class="d-flex justify-space-between align-center">
-					<h3>{{ section.title }}</h3>
+					<h3 class="blue-grey--text c">{{ section.title }}</h3>
 
 					<div class="text-center" v-if="!isStudent">
 						<v-menu offset-y>
@@ -57,7 +109,7 @@
 									v-for="(item,
 													index) in sectionActions"
 									:key="index"
-									@click="item.fn"
+									@click="item.fn(section.id)"
 								>
 									<v-list-item-title>
 										{{
@@ -71,18 +123,20 @@
 				</div>
 				<div v-html="section.body"></div>
 				<div
-					class="fs-3 mt-3 align-center d-flex pointer"
+					class="fs-3 align-center d-flex pointer"
 					v-for="(subsection,
 									idx) in section.subsections"
 					:key="idx"
 				>
 					<section-item :subsection="subsection" />
+					<!-- <div v-for="subsection in ">{{}}</div> -->
 				</div>
-				<div class="d-flex mt-4 align-baseline">
+				<div class="d-flex mt-4 align-baseline justify-end pb-3">
 					<div class="fs-5 font-weight-light">Uploaded {{moment(section.created_at).fromNow()}}</div>
 					<div class="px-2"></div>
 					<div class="fs-5 font-weight-light">Updated {{ moment(section.updated_at).fromNow() }}</div>
 				</div>
+				<v-divider></v-divider>
 			</div>
 		</v-card>
 	</div>
@@ -91,6 +145,7 @@
 <script>
 import SectionItem from "@/components/general/SectionItem";
 import { VueEditor } from "vue2-editor";
+import Axios from "axios";
 
 export default {
 	components: {
@@ -114,11 +169,37 @@ export default {
 			subsectionType: "",
 			subsectionTitle: "",
 			editorContent2: "",
+			editorContent3: "",
 			courseSections: [],
 			dialogSection: null,
+			dialogUpload: null,
+			file: "",
+			fileName: "",
+			dialogUploadSubmission: null,
+			selectedSection: "",
 			sectionActions: [
-				{ id: 1, title: "Add Document", fn: () => {} },
-				{ id: 2, title: "Add Submission", fn: () => {} },
+				{
+					id: 1,
+					title: "Add Document",
+					fn: section_id => {
+						this.dialogUpload = true;
+						let res = this.courseSections.find(
+							it => it.id == section_id
+						);
+						this.selectedSection = res;
+					}
+				},
+				{
+					id: 2,
+					title: "Add Submission",
+					fn: section_id => {
+						this.dialogUploadSubmission = true;
+						let res = this.courseSections.find(
+							it => it.id == section_id
+						);
+						this.selectedSection = res;
+					}
+				},
 				{ id: 3, title: "Edit Section", fn: () => {} },
 				{ id: 4, title: "Delete Section", fn: () => {} }
 			],
@@ -134,6 +215,33 @@ export default {
 		};
 	},
 	methods: {
+		async uploadDoc() {
+			try {
+				const body = new FormData();
+				body.append("section_id", this.selectedSection.id);
+				body.append("file", this.file);
+				body.append("type", "file");
+				body.append("name", this.fileName);
+				body.append("body", this.editorContent3);
+
+				let res = await Axios.post("subsection", body);
+
+				this.$store.commit("openSnackbar", res.data.message);
+				if (res.data.status) {
+					this.getCourseSections();
+				}
+				this.dialogUpload = false;
+				this.fileName = "";
+				this.file = "";
+				this.editorContent3 = "";
+				this.selectedSection = "";
+			} catch (error) {
+				console.log(error);
+			}
+		},
+		changeDoc(ent) {
+			this.file = ent;
+		},
 		cancelSectionSave() {
 			this.sectionTitle = "";
 			this.editorContent2 = "";

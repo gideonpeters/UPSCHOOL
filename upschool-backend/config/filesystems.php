@@ -80,6 +80,16 @@ return [
     'links' => [
         public_path('storage') => storage_path('app/public'),
         public_path('storage/images') => storage_path('app/images'),
+        public_path('storage/documents') => storage_path('app/documents'),
     ],
 
 ];
+
+
+//seamless. exhortation 15 mins. 2 hours. 
+//6 people 20 mins each. 
+//worship and praying in tongues. 
+//Everyone leading should chnnel the prayers success of the ministry and our prayers.
+//test run.
+//basically.
+//you 

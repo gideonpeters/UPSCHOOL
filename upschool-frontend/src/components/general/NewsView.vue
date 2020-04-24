@@ -7,6 +7,23 @@
 						<div>
 							<v-card class="pa-3 mb-5" flat>
 								<custom-header title="FEATURED POST" ctaText="View" route="student.news"></custom-header>
+
+								<v-img
+									:src="
+										`http://127.0.0.1:8000${latestNews.image.url}`
+									"
+									class="white--text align-end"
+									gradient="to bottom, rgba(0,0,0,.1), rgba(0,0,0,.8)"
+									height="200px"
+								>
+									<v-card-title class="py-0" v-text="latestNews.title"></v-card-title>
+									<v-card-title class="fs-4 py-0" v-html="latestNews.body" v-line-clamp:20="1"></v-card-title>
+									<v-card-actions class="py-0">
+										<v-spacer></v-spacer>
+
+										<v-btn text color="white" @click="goToNews(latestNews.id)">READ MORE</v-btn>
+									</v-card-actions>
+								</v-img>
 							</v-card>
 						</div>
 
@@ -29,14 +46,11 @@
 											</v-btn>
 											<v-toolbar-title>Create News Post</v-toolbar-title>
 											<v-spacer></v-spacer>
-											<v-toolbar-items>
-												<v-btn dark text @click="dialogFull = false">Save</v-btn>
-											</v-toolbar-items>
 										</v-toolbar>
 										<v-container>
 											<v-row justify="center">
 												<v-col cols="12">
-													<editor />
+													<editor @save-item="dialogFull = false" />
 												</v-col>
 											</v-row>
 										</v-container>
@@ -46,7 +60,12 @@
 						</div>
 						<div>
 							<v-card flat class="pa-3 mb-4" v-for="newsItem in news" :key="newsItem.id">
-								<news-item :newsItem="newsItem" :isStudent="isStudent" />
+								<news-item
+									:newsItem="newsItem"
+									:isStudent="isStudent"
+									:isStaff="isStaff"
+									:isAdmin="isAdmin"
+								/>
 							</v-card>
 						</div>
 					</div>
@@ -78,6 +97,14 @@ export default {
 		isStudent: {
 			type: Boolean,
 			default: false
+		},
+		isStaff: {
+			type: Boolean,
+			default: false
+		},
+		isAdmin: {
+			type: Boolean,
+			default: false
 		}
 	},
 	components: {
@@ -94,6 +121,9 @@ export default {
 		news() {
 			return this.$store.state.news;
 		},
+		latestNews() {
+			return this.$store.state.news[0];
+		},
 		events() {
 			return this.$store.state.schoolEvents;
 		}
@@ -101,6 +131,28 @@ export default {
 	methods: {
 		goToPage(name) {
 			this.$router.push({ name: name });
+		},
+		goToNews(id) {
+			if (this.isStudent) {
+				return this.$router.push({
+					name: "student.news.details",
+					params: { id: id }
+				});
+			} else if (this.isStaff) {
+				return this.$router.push({
+					name: "staff.news.details",
+					params: { id: id }
+				});
+			} else if (this.isAdmin) {
+				return this.$router.push({
+					name: "parent.news.details",
+					params: { id: id }
+				});
+			}
+			// this.$router.push({
+			// 	name: "parent.news.details",
+			// 	params: { id: id }
+			// });
 		}
 	},
 	async mounted() {

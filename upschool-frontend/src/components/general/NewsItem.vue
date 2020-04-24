@@ -1,23 +1,12 @@
 <template>
-	<!-- <div>
-    <div class="d-flex flex-column ma-3 news-item">
-      <div class>
-        <v-img
-          class="profile-img"
-          cover
-          height="100"
-          :src="newsItem.image"
-        />
-      </div>
-      <div class="mt-2 news-body">
-        {{ newsItem.body }}
-      </div>
-    </div>
-	</div>-->
 	<v-row align="start">
 		<v-col cols="4" md="3">
 			<div>
-				<v-img :src="`http://127.0.0.1:8000${newsItem.image.url}`" height="150"></v-img>
+				<v-img
+					v-if="newsItem.image.url"
+					:src="`http://127.0.0.1:8000${newsItem.image.url}`"
+					height="150"
+				></v-img>
 			</div>
 		</v-col>
 		<v-col cols="8" md="9">
@@ -36,7 +25,7 @@
 									</v-btn>
 								</template>
 								<v-list>
-									<v-list-item v-for="(item, index) in newsActions" :key="index" @click="alert(item)">
+									<v-list-item v-for="(item, index) in newsActions" :key="index" @click="fn(newsItem.id)">
 										<v-list-item-title>
 											{{
 											item.title
@@ -62,6 +51,7 @@
 </template>
 
 <script>
+import Axios from "axios";
 export default {
 	props: {
 		newsItem: {
@@ -70,12 +60,20 @@ export default {
 		isStudent: {
 			type: Boolean,
 			default: false
+		},
+		isStaff: {
+			type: Boolean,
+			default: false
+		},
+		isAdmin: {
+			type: Boolean,
+			default: false
 		}
 	},
 	data: () => ({
 		newsActions: [
-			{ id: 1, title: "Edit" },
-			{ id: 2, title: "Delete" }
+			{ id: 1, title: "Edit", fn: () => {} },
+			{ id: 2, title: "Delete", fn: id => this.deleteItem(id) }
 		]
 		// 	img:
 		// 		"https://static.wixstatic.com/media/415a35bc6e1642e2a0f53f9a1963eb1d.jpg"
@@ -87,31 +85,34 @@ export default {
 					name: "student.news.details",
 					params: { id: id }
 				});
+			} else if (this.isStaff) {
+				return this.$router.push({
+					name: "staff.news.details",
+					params: { id: id }
+				});
+			} else if (this.isAdmin) {
+				return this.$router.push({
+					name: "parent.news.details",
+					params: { id: id }
+				});
 			}
-			this.$router.push({
-				name: "parent.news.details",
-				params: { id: id }
-			});
+			// this.$router.push({
+			// 	name: "parent.news.details",
+			// 	params: { id: id }
+			// });
+		},
+		async deleteItem(id) {
+			try {
+				let res = await Axios.delete("news", id);
+
+				this.$store.commit("openSnackbar", res.data.message);
+				if (res.data.status) {
+					this.$store.dispatch("getNews");
+				}
+			} catch (error) {
+				console.log(error);
+			}
 		}
 	}
 };
 </script>
-
-<style lang="scss" scoped>
-// .profile-img {
-// 	border-radius: 10px;
-// }
-
-// .news-item {
-// 	height: 190px;
-// 	overflow: hidden;
-
-// 	.news-body {
-// 		font-size: 0.8rem;
-// 		display: -webkit-box;
-// 		-webkit-line-clamp: 3;
-// 		-webkit-box-orient: vertical;
-// 		overflow: hidden;
-// 	}
-// }
-</style>

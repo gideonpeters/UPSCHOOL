@@ -65,6 +65,13 @@ Route::group([], function ($router) {
 });
 
 Route::group([], function ($router) {
+    Route::get('subsection', 'SubsectionController@index');
+    Route::post('subsection', 'SubsectionController@store');
+    Route::get('subsection/{section_id}', 'SubsectionController@show');
+    Route::post('subsection/{section_id}', 'SubsectionController@update');
+});
+
+Route::group([], function ($router) {
     // Route::get('course-section', 'SubsectionController@index');
     Route::post('course-material', 'SubsectionController@store');
     // Route::get('course-material/{material_id}', 'SubsectionController@index');
@@ -200,6 +207,7 @@ Route::group([], function ($router) {
     Route::post('news', 'NewsController@store');
     Route::get('news/{news_id}', 'NewsController@show');
     Route::post('news/{news_id}', 'NewsController@update');
+    Route::delete('news/{news_id}', 'NewsController@destroy');
 });
 
 Route::group([], function ($router) {
