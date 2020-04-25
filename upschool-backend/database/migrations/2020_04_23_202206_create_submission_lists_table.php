@@ -18,7 +18,9 @@ class CreateSubmissionListsTable extends Migration
             $table->foreignId('subsection_id');
             $table->foreignId('course_id');
             $table->dateTime('due_date')->nullable();
+            $table->dateTime('open_date')->nullable();
             $table->unsignedInteger('total_score');
+            $table->longText('body')->nullable();
             $table->foreignId('gradelist_id')->nullable();
 
             $table->timestamps();

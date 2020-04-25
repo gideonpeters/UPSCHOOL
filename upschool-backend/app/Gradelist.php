@@ -5,6 +5,7 @@ namespace App;
 use App\Course;
 use App\Semester;
 use App\GradeItem;
+use App\SubmissionList;
 use Illuminate\Database\Eloquent\Model;
 
 class Gradelist extends Model
@@ -15,6 +16,11 @@ class Gradelist extends Model
     public function course()
     {
         return $this->belongsTo(Course::class);
+    }
+
+    public function submission_list()
+    {
+        return $this->hasOne(SubmissionList::class);
     }
 
     public function grade_items()

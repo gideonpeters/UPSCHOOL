@@ -37,17 +37,6 @@ class GradelistController extends Controller
         $gradelist->semester_id =  $currentSemester->id;
         $gradelist->save();
 
-        $student_courses = StudentCourse::whereCourseId($request->course_id)->whereSemesterId($currentSemester->id)->get();
-
-        foreach ($student_courses as $key => $student_course) {
-            # code...
-            $grade_item = new GradeItem();
-            $grade_item->gradelist_id = $gradelist->id;
-            $grade_item->score = null;
-            $grade_item->student_course_id = $student_course->id;
-            $grade_item->save();
-        }
-
         return response()->json([
             'status' => true,
             'message' => 'new gradelist created for this course',

@@ -7,14 +7,16 @@ use Illuminate\Http\Request;
 
 class SubmissionListController extends Controller
 {
-    /**
-     * Display a listing of the resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
-    public function index()
+    public function index(Request $request)
     {
         //
+        $submission_lists = SubmissionList::whereCourseId($request->course_id)->get();
+
+        return response()->json([
+            'status' => true,
+            'message' => 'these are all the submission lists for this course',
+            'data' => $submission_lists->load('subsection')
+        ], 201);
     }
 
     /**

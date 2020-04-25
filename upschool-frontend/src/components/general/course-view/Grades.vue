@@ -154,19 +154,16 @@
 							>submit</v-btn>
 						</div>
 					</div>
-				</v-card>
-
-				<v-card class="pa-3 mt-4">
-					<small class="fs-6">Click to view your submission</small>
-					<v-subheader class="pa-0">SCHOOL ASSESSMENTS FOR THIS COURSE</v-subheader>
 					<v-row justify="center">
 						<v-dialog v-model="dialogAssessment" persistent max-width="600px">
 							<template v-slot:activator="{on}">
 								<v-btn
 									v-if="courseSchoolAssessments.length ==  0"
-									color="success"
+									color="info"
 									v-on="on"
-									x-small
+									small
+									text
+									outlined
 									depressed
 								>Create School Submission for course</v-btn>
 							</template>
@@ -247,29 +244,6 @@
 							</v-card>
 						</v-dialog>
 					</v-row>
-
-					<div
-						class="d-flex fs-4 mb-3 align-center"
-						v-for="assessment in courseSchoolAssessments"
-						:key="assessment.id"
-					>
-						<div class="pr-4">
-							<v-btn icon color="info lighten-3" @click="viewAssessment(assessment.id)">
-								<v-icon size="15" color="info lighten-3">mdi-eye</v-icon>
-							</v-btn>
-						</div>
-						<div>{{assessment.name}} ({{assessment.total_score}} Marks) [{{$assessment.percentage}}]</div>
-						<v-spacer></v-spacer>
-						<div>
-							<v-btn
-								color="primary"
-								small
-								text
-								:disabled="!assessment.visible"
-								@click="openSubmitAssessment(assessment)"
-							>submit</v-btn>
-						</div>
-					</div>
 				</v-card>
 			</v-col>
 		</v-row>

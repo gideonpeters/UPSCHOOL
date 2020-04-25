@@ -72,6 +72,13 @@ Route::group([], function ($router) {
 });
 
 Route::group([], function ($router) {
+    Route::get('submission-list', 'SubmissionListController@index');
+    Route::post('submission-list', 'SubmissionListController@store');
+    Route::get('submission-list/{submission_id}', 'SubmissionListController@show');
+    Route::post('submission-list/{submission_id}', 'SubmissionListController@update');
+});
+
+Route::group([], function ($router) {
     // Route::get('course-section', 'SubsectionController@index');
     Route::post('course-material', 'SubsectionController@store');
     // Route::get('course-material/{material_id}', 'SubsectionController@index');

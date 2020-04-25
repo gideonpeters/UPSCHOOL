@@ -97,14 +97,14 @@
 						: (drawer = !drawer)
 				"
 			>mdi-menu</v-icon>
-			<v-text-field
+			<!-- <v-text-field
 				v-if="$vuetify.breakpoint.mdAndUp"
 				v-model="search"
 				prepend-inner-icon="mdi-magnify"
 				label="Search"
 				single-line
 				hide-details
-			></v-text-field>
+			></v-text-field>-->
 			<!-- </v-cols> -->
 
 			<!-- <v-toolbar-title>Page title</v-toolbar-title> -->

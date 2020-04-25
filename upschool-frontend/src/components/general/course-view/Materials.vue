@@ -82,11 +82,171 @@
 						<v-card-actions>
 							<v-spacer></v-spacer>
 							<v-btn color="blue darken-1" text @click="dialogUpload = false">Close</v-btn>
+							<v-btn color="blue darken-1" text :disabled="!(file && fileName)" @click="uploadDoc">Save</v-btn>
+						</v-card-actions>
+					</v-card>
+				</v-dialog>
+
+				<v-dialog v-model="dialogUploadSubmission" persistent max-width="600px">
+					<v-card>
+						<v-card-title>
+							<span class="headline">Upload Submission</span>
+						</v-card-title>
+						<v-card-text>
+							<v-container>
+								<v-row>
+									<v-col cols="12" sm="6" md="12">
+										<v-text-field outlined label="Section" :value="selectedSection.title" disabled></v-text-field>
+									</v-col>
+									<v-col cols="12" sm="6" md="12">
+										<v-text-field outlined label="Name" v-model="submissionName"></v-text-field>
+									</v-col>
+									<v-col cols="12" sm="6" md="12">
+										<v-text-field outlined label="Total Score" v-model="submissionScore"></v-text-field>
+									</v-col>
+									<v-col cols="11" sm="6">
+										<v-menu
+											ref="menuTimeOpen"
+											v-model="menuTimeOpen"
+											:close-on-content-click="false"
+											:nudge-right="40"
+											:return-value.sync="timeOpen"
+											transition="scale-transition"
+											offset-y
+											max-width="290px"
+											min-width="290px"
+										>
+											<template v-slot:activator="{ on }">
+												<v-text-field
+													outlined
+													v-model="timeOpen"
+													label="Select Time Open"
+													prepend-inner-icon="mdi-clock"
+													readonly
+													v-on="on"
+												></v-text-field>
+											</template>
+											<v-time-picker
+												v-if="menuTimeOpen"
+												v-model="timeOpen"
+												full-width
+												@click:minute="$refs.menuTimeOpen.save(timeOpen)"
+											></v-time-picker>
+										</v-menu>
+									</v-col>
+									<v-col cols="12" sm="6" md="6">
+										<v-dialog
+											ref="dialogDateOpen"
+											v-model="modalDateOpen"
+											:return-value.sync="dateOpen"
+											persistent
+											width="290px"
+										>
+											<template v-slot:activator="{ on }">
+												<v-text-field
+													outlined
+													v-model="dateOpen"
+													label="Select Open Date"
+													prepend-inner-icon="mdi-calendar"
+													readonly
+													v-on="on"
+												></v-text-field>
+											</template>
+											<v-date-picker v-model="dateOpen" scrollable>
+												<v-spacer></v-spacer>
+												<v-btn text color="primary" @click="modalDateOpen = false">Cancel</v-btn>
+												<v-btn text color="primary" @click="$refs.dialogDateOpen.save(dateOpen)">OK</v-btn>
+											</v-date-picker>
+										</v-dialog>
+									</v-col>
+									<v-col cols="11" sm="6">
+										<v-menu
+											ref="menuTimeDue"
+											v-model="menuTimeDue"
+											:close-on-content-click="false"
+											:nudge-right="40"
+											:return-value.sync="timeDue"
+											transition="scale-transition"
+											offset-y
+											max-width="290px"
+											min-width="290px"
+										>
+											<template v-slot:activator="{ on }">
+												<v-text-field
+													outlined
+													v-model="timeDue"
+													label="Select Time Due"
+													prepend-inner-icon="mdi-clock"
+													readonly
+													v-on="on"
+												></v-text-field>
+											</template>
+											<v-time-picker
+												v-if="menuTimeDue"
+												v-model="timeDue"
+												full-width
+												@click:minute="$refs.menuTimeDue.save(timeDue)"
+											></v-time-picker>
+										</v-menu>
+									</v-col>
+									<v-col cols="12" sm="6" md="6">
+										<v-dialog
+											ref="dialogDateDue"
+											v-model="modalDateDue"
+											:return-value.sync="dateDue"
+											persistent
+											width="290px"
+										>
+											<template v-slot:activator="{ on }">
+												<v-text-field
+													outlined
+													v-model="dateDue"
+													label="Select Due Date"
+													prepend-inner-icon="mdi-calendar"
+													readonly
+													v-on="on"
+												></v-text-field>
+											</template>
+											<v-date-picker v-model="dateDue" scrollable>
+												<v-spacer></v-spacer>
+												<v-btn text color="primary" @click="modalDateDue = false">Cancel</v-btn>
+												<v-btn text color="primary" @click="$refs.dialogDateDue.save(dateDue)">OK</v-btn>
+											</v-date-picker>
+										</v-dialog>
+									</v-col>
+
+									<v-col cols="12" sm="6" md="12">
+										<v-file-input
+											show-size
+											outlined
+											prepend-icon
+											prepend-inner-icon="mdi-paperclip"
+											accept=".doc, .docx, .pdf, .xlsx, .xml, application/msword, application/vnd.openxmlformats-officedocument.wordprocessingml.document"
+											@change="changeDocSubmission"
+											label="Add Document"
+											persistent-hint
+											hint="make sure you select .pdf, .doc or .docx files"
+										></v-file-input>
+									</v-col>
+									<v-col cols="12" sm="6" md="12">
+										<vue-editor :editorToolbar="customToolbar" v-model="editorContent4"></vue-editor>
+									</v-col>
+								</v-row>
+							</v-container>
+							<small>*indicates required field</small>
+						</v-card-text>
+						<v-card-actions>
+							<v-spacer></v-spacer>
 							<v-btn
 								color="blue darken-1"
 								text
-								:disabled="!(this.file && this.fileName)"
-								@click="uploadDoc"
+								@click="dialogUploadSubmission = false, submissionFile = '', submissionName = '', editorContent4 = ''"
+							>Close</v-btn>
+							<v-btn
+								color="blue darken-1"
+								text
+								:disabled="!(submissionName )"
+								@click="uploadDocSubmission"
 							>Save</v-btn>
 						</v-card-actions>
 					</v-card>
@@ -170,13 +330,33 @@ export default {
 			subsectionTitle: "",
 			editorContent2: "",
 			editorContent3: "",
+			editorContent4: "",
 			courseSections: [],
 			dialogSection: null,
 			dialogUpload: null,
 			file: "",
+			submissionFile: "",
 			fileName: "",
+			dueDate: "",
 			dialogUploadSubmission: null,
+			submissionName: "",
 			selectedSection: "",
+			submissionScore: "",
+			time: null,
+			timeOpen: null,
+			timeDue: "",
+			menu2: false,
+			menuTimeDue: "",
+			menuTimeOpen: "",
+			modal2: false,
+			modalDateOpen: "",
+			modalDateDue: "",
+			dateOpen: "",
+			dateDue: "",
+			date: new Date().toISOString().substr(0, 10),
+			menu: false,
+			modal: false,
+			menu3: false,
 			sectionActions: [
 				{
 					id: 1,
@@ -239,8 +419,46 @@ export default {
 				console.log(error);
 			}
 		},
+		async uploadDocSubmission() {
+			try {
+				const body = new FormData();
+				body.append("section_id", this.selectedSection.id);
+				body.append("file", this.submissionFile);
+				body.append("type", "submission");
+				body.append(
+					"open_date",
+					`${this.dateOpen} ${this.timeOpen}:00`
+				);
+				body.append("due_date", `${this.dateDue} ${this.timeDue}:00`);
+				body.append("total_score", this.submissionScore);
+				body.append("name", this.submissionName);
+				body.append("body", this.editorContent4);
+
+				let res = await Axios.post("subsection", body);
+
+				this.$store.commit("openSnackbar", res.data.message);
+				if (res.data.status) {
+					this.getCourseSections();
+				}
+				this.dialogUploadSubmission = false;
+				this.submissionName = "";
+				this.submissionScore = "";
+				this.dateOpen = "";
+				this.timeOpen = "";
+				(this.dateDue = ""), (this.timeDue = "");
+				this.submissionFile = "";
+				this.editorContent4 = "";
+				this.selectedSection = "";
+				// console.log(`${this.date} ${this.time}:00`);
+			} catch (error) {
+				console.log(error);
+			}
+		},
 		changeDoc(ent) {
 			this.file = ent;
+		},
+		changeDocSubmission(ent) {
+			this.submissionFile = ent;
 		},
 		cancelSectionSave() {
 			this.sectionTitle = "";
