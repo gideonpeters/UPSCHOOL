@@ -209,7 +209,7 @@ export default {
 				{
 					title: "Resources",
 					icon: "mdi-semantic-web",
-					route: "parent.courses",
+					// route: "parent.courses",
 					subItems: [
 						{
 							title: "Students",
@@ -253,7 +253,32 @@ export default {
 					title: "Residence",
 					icon: "mdi-home",
 					route: "parent.residence",
-					subItems: []
+					subItems: [
+						{
+							title: "Halls",
+							icon: "mdi-domain",
+							route: "parent.halls",
+							subItems: []
+						},
+						{
+							title: "Room Types",
+							icon: "mdi-domain",
+							route: "parent.rooms.types",
+							subItems: []
+						},
+						{
+							title: "Rooms",
+							icon: "mdi-domain",
+							route: "parent.rooms",
+							subItems: []
+						},
+						{
+							title: "Allocation Settings",
+							icon: "mdi-domain",
+							route: "parent.rooms.settings",
+							subItems: []
+						}
+					]
 				},
 
 				{

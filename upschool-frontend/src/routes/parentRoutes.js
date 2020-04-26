@@ -131,6 +131,41 @@ export default [
 		component: () => import("./../views/parent/ParentResidence"),
 	},
 	{
+		path: "halls",
+		name: "parent.halls",
+		component: () => import("./../views/parent/ParentHalls"),
+	},
+	{
+		path: "halls/:id",
+		name: "parent.halls.details",
+		component: () => import("./../views/parent/ParentHallsDetails"),
+	},
+	{
+		path: "rooms",
+		name: "parent.rooms",
+		component: () => import("./../views/parent/ParentRooms"),
+	},
+	{
+		path: "rooms/:id",
+		name: "parent.rooms.details",
+		component: () => import("./../views/parent/ParentRoomsDetails"),
+	},
+	{
+		path: "room/types",
+		name: "parent.rooms.types",
+		component: () => import("./../views/parent/ParentRoomTypes"),
+	},
+	{
+		path: "room/types/:id",
+		name: "parent.rooms.types.details",
+		component: () => import("./../views/parent/ParentRoomTypesDetails"),
+	},
+	{
+		path: "room/allocation",
+		name: "parent.rooms.settings",
+		component: () => import("./../views/parent/ParentAllocationSettings"),
+	},
+	{
 		path: "fees",
 		name: "parent.fees",
 		component: () => import("./../views/parent/ParentFees"),

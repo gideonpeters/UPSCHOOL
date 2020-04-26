@@ -11,9 +11,9 @@
 				<v-col cols="12">
 					<v-card flat class="pa-3">
 						<v-data-table :headers="headers" :items="items">
-							<template v-slot:item.actions="{}">
+							<template v-slot:item.actions="{item}">
 								<div class="d-flex align-center justify-center">
-									<v-btn color="grey" icon>
+									<v-btn color="grey" icon @click="goToPage('parent.rooms.details', item.id)">
 										<v-icon small>mdi-eye</v-icon>
 									</v-btn>
 									<v-btn color="grey" icon>
@@ -90,6 +90,11 @@ export default {
 				}
 			]
 		};
+	},
+	methods: {
+		goToPage(routeName, id) {
+			this.$router.push({ name: routeName, params: { id: id } });
+		}
 	}
 };
 </script>
