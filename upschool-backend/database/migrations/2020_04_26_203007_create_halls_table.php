@@ -15,6 +15,12 @@ class CreateHallsTable extends Migration
     {
         Schema::create('halls', function (Blueprint $table) {
             $table->id();
+            $table->string('name');
+            $table->text('description')->nullable();
+            $table->unsignedInteger('capacity')->nullable();
+            $table->string('preferred_sex');
+            $table->string('preferred_level');
+            $table->string('preferred_student_type');
             $table->timestamps();
         });
     }
