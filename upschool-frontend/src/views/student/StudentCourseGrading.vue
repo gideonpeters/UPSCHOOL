@@ -2,34 +2,40 @@
 	<v-app>
 		<v-container fluid class="pa-0">
 			<v-row>
-				<v-col>
+				<v-col cols="12">
 					<v-card flat class="pa-3">
-						<v-subheader class="pa-0">C.A. SCORES</v-subheader>
-						<v-data-table
-							:headers="asgnHeaders"
-							:items="asgn"
-							hide-default-footer
-						>
+						<v-subheader class="pa-0">SCHOOL ASSESSMENT SCORES</v-subheader>
+						<v-data-table :headers="asgnHeaders" :items="assessments" hide-default-footer>
 							<template v-slot:item.check="{ item }">
 								<v-icon
 									size="15"
 									:color="
 										item.id == 1 ? 'blue accent-2 ' : 'grey'
 									"
-									>mdi-circle</v-icon
-								>
-								<!-- <v-simple-checkbox v-model="item.check" disabled> -->
-								<!-- </v-simple-checkbox> -->
+								>mdi-circle</v-icon>
 							</template>
 							<template v-slot:item.total="{ item }">
-								<div v-for="i in 3" :key="i">
-									<div>{{ item.ca1 + item.ca2 }}</div>
-								</div>
+								<div>{{ item.school_assessment_items.reduce((acc, val) => acc + val.score, 0) }}</div>
 							</template>
-							<!-- <template v-slot:item.action="{  }">
-								<v-icon small class="mr-2 pointer">mdi-eye</v-icon>
-								<v-icon small class="pointer">mdi-pencil</v-icon>
+							<template v-slot:item.score="props">
+								<div>{{itemScore(props)}}</div>
+							</template>
+						</v-data-table>
+					</v-card>
+				</v-col>
+				<!-- <v-col cols="12">
+					<div>COURSE ASSESSMENTS</div>
+				</v-col>-->
+				<v-col cols="12">
+					<v-card flat class="pa-3">
+						<v-subheader class="pa-0">COURSE ASSESSMENTS</v-subheader>
+						<v-data-table :headers="headers" :items="items" hide-default-footer>
+							<!-- <template v-slot:item.total="{ item }">
+								<div>{{ item.school_assessment_items.reduce((acc, val) => acc + val.score, 0) }}</div>
 							</template>-->
+							<template v-slot:item.score="{item}">
+								<div>{{item.score ? item.score : 0}}</div>
+							</template>
 						</v-data-table>
 					</v-card>
 				</v-col>
@@ -39,128 +45,102 @@
 </template>
 
 <script>
+import Axios from "axios";
 export default {
 	data: () => ({
 		asgnHeaders: [
-			{ text: "COURSE CODE ", value: "course_code", sortable: false },
 			{
-				text: "TOPIC",
+				text: "COURSE CODE ",
+				value: "course.course_code",
+				sortable: false
+			},
+			{
+				text: "TITLE",
 				align: "start",
 				sortable: false,
-				value: "name"
-			},
-			{ text: "CA 1 ", value: "ca1", sortable: false },
-			{ text: "CA 2 ", value: "ca2", sortable: false },
-			{ text: "TOTAL", value: "total", sortable: false }
+				value: "course.title"
+			}
+			// { text: "CA 1 ", value: "ca1", sortable: false },
 			// { text: "WEIGHT", value: "weight", sortable: false },
 			// { text: "ACTIONS", value: "action", sortable: false }
 		],
-		asgn: [
+		headers: [
 			{
-				id: 1,
-				course_code: "GST411",
-				name: "GST111: Communications in English Language",
-				ca1: 12,
-				ca2: 13,
-				weight: "30%"
+				text: "COURSE CODE ",
+				value: "gradelist.course.course_code",
+				sortable: false
 			},
 			{
-				id: 2,
-				course_code: "EIE411",
-				name: "EIE517: applied Electronics",
-				ca1: 12,
-				ca2: 13,
-				weight: "30%"
+				text: "TITLE",
+				align: "start",
+				sortable: false,
+				value: "gradelist.course.title"
 			},
 			{
-				id: 3,
-				course_code: "CEN411",
-				name: "Report on the 8051 micro controller",
-				ca1: 12,
-				ca2: 13,
-				weight: "30%"
+				text: "NAME ",
+				value: "gradelist.name",
+				sortable: false
 			},
 			{
-				id: 6,
-				course_code: "GST411",
-				name: "GST111: Communications in English Language",
-				ca1: 12,
-				ca2: 13,
-				weight: "30%"
+				text: "TOTAL SCORE",
+				align: "start",
+				sortable: false,
+				value: "gradelist.total_score"
 			},
 			{
-				id: 4,
-				course_code: "EIE411",
-				name: "EIE517: applied Electronics",
-				ca1: 12,
-				ca2: 13,
-				weight: "30%"
-			},
-			{
-				id: 5,
-				course_code: "CEN411",
-				name: "Report on the 8051 micro controller",
-				ca1: 12,
-				ca2: 13,
-				weight: "30%"
-			},
-			{
-				id: 7,
-				course_code: "GST411",
-				name: "GST111: Communications in English Language",
-				ca1: 12,
-				ca2: 13,
-				weight: "30%"
-			},
-			{
-				id: 8,
-				course_code: "EIE411",
-				name: "EIE517: applied Electronics",
-				ca1: 12,
-				ca2: 13,
-				weight: "30%"
-			},
-			{
-				id: 9,
-				course_code: "CEN411",
-				name: "Report on the 8051 micro controller",
-				ca1: 12,
-				ca2: 13,
-				weight: "30%"
-			},
-			{
-				id: 10,
-				course_code: "GST411",
-				name: "GST111: Communications in English Language",
-				ca1: 12,
-				ca2: 13,
-				weight: "30%"
-			},
-			{
-				id: 11,
-				course_code: "EIE411",
-				name: "EIE517: applied Electronics",
-				ca1: 12,
-				ca2: 13,
-				weight: "30%"
-			},
-			{
-				id: 12,
-				course_code: "CEN411",
-				name: "Report on the 8051 micro controller",
-				ca1: 12,
-				ca2: 13,
-				weight: "30%"
+				text: "WEIGHTED SCORE",
+				align: "start",
+				sortable: false,
+				value: "score"
 			}
-		]
+		],
+		assessments: [],
+		items: []
 	}),
+	methods: {
+		itemScore(props, isJustId) {
+			let res;
+			if (isJustId == true) {
+				res = this.items.find(it => it.school_assessment_id == props);
+			} else {
+				res = props.item.school_assessment_items.find(
+					it => it.school_assessment_id == props.header.assessment_id
+				);
+			}
+
+			res ? (res = res.score) : (res = 0);
+			return res;
+		}
+	},
 	async mounted() {
-		// let res = [
-		// 	{ id: 1, name: "CA1", score: 13 },
-		// 	{ id: 1, name: "CA2", score: 10 }
-		// ];
-		// res;
-		// this.asgnHeaders.push();
+		try {
+			let res = await Axios.get(
+				`school-assessment-student?student_id=${1}`
+			);
+
+			res.data.headers.forEach(item => {
+				return this.asgnHeaders.push({
+					assessment_id: item.id,
+					text: `${item.name} (${item.total_score} Marks)`,
+					value: "score",
+					align: "center"
+				});
+			});
+
+			this.asgnHeaders.push({
+				text: "TOTAL",
+				value: "total",
+				sortable: false
+			});
+
+			this.items = res.data.course;
+
+			this.assessments = res.data.data;
+			console.log(res.data);
+			// console.log(headers);
+		} catch (error) {
+			console.log(error);
+		}
 	}
 };
 </script>

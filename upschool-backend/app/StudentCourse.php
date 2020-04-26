@@ -3,6 +3,7 @@
 namespace App;
 
 use App\Exam;
+use App\Course;
 use App\Student;
 use App\GradeItem;
 use App\ResultItem;
@@ -51,5 +52,10 @@ class StudentCourse extends Pivot
     public function student()
     {
         return $this->belongsTo(Student::class);
+    }
+
+    public function course()
+    {
+        return $this->belongsTo(Course::class);
     }
 }

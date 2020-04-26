@@ -1,15 +1,28 @@
 <template>
-	<v-card flat class="pa-3" min-height="500">
-		<v-data-table :headers="headers" :items="participants" hide-default-footer>
-			<template v-slot:item.action="{}">
-				<v-btn depressed tile>Action</v-btn>
-			</template>
-		</v-data-table>
-	</v-card>
+	<v-row>
+		<v-col cols="12">
+			<metric-card title="Number of Participants" :value="participants.length" />
+		</v-col>
+		<v-col cols="12">
+			<v-card flat class="pa-3" min-height="500">
+				<v-data-table :headers="headers" :items="participants" hide-default-footer>
+					<template v-slot:item.action="{}">
+						<v-btn depressed icon>
+							<v-icon small>mdi-eye</v-icon>
+						</v-btn>
+					</template>
+				</v-data-table>
+			</v-card>
+		</v-col>
+	</v-row>
 </template>
 
 <script>
+import MetricCard from "@/components/parent/Metric";
 export default {
+	components: {
+		MetricCard
+	},
 	data() {
 		return {
 			headers: [

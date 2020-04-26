@@ -11,6 +11,7 @@ use App\Prerequisite;
 use App\SemesterType;
 use App\CourseSection;
 use App\CurriculumItem;
+use App\SubmissionList;
 use App\SchoolAssessment;
 use App\ContinuousAssessment;
 use Illuminate\Database\Eloquent\Model;
@@ -54,6 +55,11 @@ class Course extends Model
     public function gradelists()
     {
         return $this->hasMany(Gradelist::class);
+    }
+
+    public function submission_lists()
+    {
+        return $this->hasMany(SubmissionList::class);
     }
 
     public function school_assessments()

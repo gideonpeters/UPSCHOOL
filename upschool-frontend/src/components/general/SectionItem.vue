@@ -16,15 +16,12 @@
 		<div class="pl-5 mt-1" v-html="subsection.body"></div>
 		<v-row justify="center">
 			<v-dialog v-model="dialog" width="600px">
-				<!-- <template v-slot:activator="{ on }">
-        <v-btn color="primary" dark v-on="on">Open Dialog</v-btn>
-				</template>-->
 				<v-card>
 					<v-card-title>
 						<span class="headline">{{subsection.name}}</span>
 					</v-card-title>
 					<v-card-text v-html="subsection.body"></v-card-text>
-					<v-card class="mx-5 pa-3 mb-5">
+					<v-card class="mx-5 pa-3 mb-5" v-if="subsection.type == 'submission'">
 						<v-data-table
 							hide-default-header
 							:headers="[{text: 'type', value: 'type'}, {text: 'value', value: 'value'}]"
@@ -39,17 +36,52 @@
 									color="success"
 									text
 									@click="goTo(subsection.file.url)"
-								>{{item.value}}</v-btn>
+								>{{item.value}} to view</v-btn>
 								<div v-else>{{item.value}}</div>
-								<!-- {{item.type == 'File:' ? 'Click Here to Download' : item.type}} -->
-								<!-- <v-checkbox v-model="item.visible" disabled></v-checkbox> -->
 							</template>
 						</v-data-table>
 					</v-card>
 					<v-card-actions>
 						<v-spacer></v-spacer>
 						<v-btn color="red darken-1" text @click="dialog = false">Remove Submission</v-btn>
-						<v-btn color="blue darken-1" text @click="dialog = false">Add Submission</v-btn>
+						<v-btn color="blue darken-1" text @click="dialog = false, dialogSubmit = true">Add Submission</v-btn>
+					</v-card-actions>
+				</v-card>
+			</v-dialog>
+			<v-dialog v-model="dialogSubmit" persistent max-width="600px">
+				<v-card>
+					<v-card-title>
+						<span class="headline">Make Submission</span>
+					</v-card-title>
+					<v-card-text>
+						<v-container>
+							<v-row>
+								<v-col cols="12">
+									<v-text-field :value="this.subsection.name" outlined disabled></v-text-field>
+								</v-col>
+								<v-col cols="12">
+									<v-file-input
+										show-size
+										outlined
+										prepend-icon
+										prepend-inner-icon="mdi-paperclip"
+										accept=".doc, .docx, .pdf, .xlsx, .xml, application/msword, application/vnd.openxmlformats-officedocument.wordprocessingml.document"
+										@change="changeDoc"
+										label="Add Document"
+										persistent-hint
+										hint="make sure you select .pdf, .doc or .docx files"
+									></v-file-input>
+								</v-col>
+								<v-col cols="12">
+									<vue-editor :editorToolbar="customToolbar" v-model="submissionBody"></vue-editor>
+								</v-col>
+							</v-row>
+						</v-container>
+					</v-card-text>
+					<v-card-actions>
+						<v-spacer></v-spacer>
+						<v-btn color="blue darken-1" text @click="dialogSubmit = false">Cancel</v-btn>
+						<v-btn color="blue darken-1" text @click="submit">Proceed</v-btn>
 					</v-card-actions>
 				</v-card>
 			</v-dialog>
@@ -58,7 +90,13 @@
 </template>
 
 <script>
+import { VueEditor } from "vue2-editor";
+import Axios from "axios";
+
 export default {
+	components: {
+		VueEditor
+	},
 	props: {
 		subsection: {
 			type: Object
@@ -66,12 +104,22 @@ export default {
 	},
 	data: () => ({
 		isHovered: false,
-		dialog: null
+		dialog: null,
+		dialogSubmit: null,
+		submissionBody: "",
+		submissionFile: "",
+		customToolbar: [
+			["bold", "italic", "underline", "strike"],
+			[{ list: "ordered" }, { list: "bullet" }, { list: "check" }],
+			[{ align: "" }, { align: "justify" }, { align: "right" }],
+			[{ indent: "-1" }, { indent: "+1" }],
+			[{ script: "sub" }, { script: "super" }],
+			[{ size: ["small", false, "large", "huge"] }],
+			["code-block", "link"]
+		]
 	}),
 	computed: {
 		items() {
-			// let dueDate = '' ;
-			// let openDate = ''
 			let res = [
 				{
 					type: "File:",
@@ -79,7 +127,7 @@ export default {
 				},
 				{
 					type: "Total Marks",
-					value: `${this.subsection.submission_list.total_score}`
+					value: `${this.subsection.submission_list.total_score} Marks`
 				},
 				{
 					type: "Opens in:",
@@ -105,7 +153,11 @@ export default {
 				},
 				{
 					type: "Submission Status:",
-					value: "6 days"
+					value: `${
+						this.subsection.submission_list.submission_status
+							? "Submitted"
+							: "Not Submitted"
+					}`
 				}
 			];
 
@@ -129,6 +181,32 @@ export default {
 				this.goTo(this.subsection.file.url);
 			} else if (this.subsection.type == "submission") {
 				this.dialog = true;
+			}
+		},
+		changeDoc(ent) {
+			this.submissionFile = ent;
+		},
+		async submit() {
+			try {
+				const body = new FormData();
+				body.append(
+					"submission_list_id",
+					this.subsection.submission_list.id
+				);
+				body.append("file", this.submissionFile);
+				body.append("body", this.submissionBody);
+				body.append("student_id", 1);
+
+				let res = await Axios.post("submission-create", body);
+
+				console.log(res.data);
+				this.$store.commit("openSnackbar", res.data.message);
+				this.dialogSubmit = false;
+				this.$emit("submitted");
+				this.submissionFile = "";
+				this.submissionBody = "";
+			} catch (error) {
+				console.log(error);
 			}
 		}
 	}

@@ -43,6 +43,10 @@ Route::post('bulk/courses', 'CourseController@storeBulk');
 
 Route::post('enroll', 'EnrollmentController@enrollCourses');
 Route::post('enroll/student', 'EnrollmentController@index');
+
+Route::post('enroll/staff', 'StaffController@enrollFacilitator');
+Route::post('unenroll/staff', 'StaffController@unEnrollFacilitator');
+
 Route::post('enroll/student-latest', 'EnrollmentController@getCurrentEnrollment');
 Route::post('enroll/courses', 'EnrollmentController@getEnrolledCourses');
 Route::post('add-and-drop', 'EnrollmentController@addAndDropCourses');
@@ -76,6 +80,13 @@ Route::group([], function ($router) {
     Route::post('submission-list', 'SubmissionListController@store');
     Route::get('submission-list/{submission_id}', 'SubmissionListController@show');
     Route::post('submission-list/{submission_id}', 'SubmissionListController@update');
+
+    Route::get('submissions/{submission_id}', 'SubmissionItemController@show');
+
+    Route::post('submission-create', 'SubmissionItemController@submit');
+    Route::post('submission-grade', 'SubmissionItemController@grade');
+
+    Route::get('submission-user', 'SubmissionListController@getUserSubmission');
 });
 
 Route::group([], function ($router) {
@@ -118,6 +129,7 @@ Route::group([], function ($router) {
     Route::get('school-assessment-course', 'SchoolAssessmentController@getCourse');
 
     Route::get('school-assessment-items', 'SchoolAssessmentItemController@show');
+    Route::get('school-assessment-student', 'SchoolAssessmentItemController@getStudentAssessments');
     // Route::get('course-assessment/{assessment_id}', 'ContinuousAssessmentController@index');
     // Route::post('course-assessment/upload', 'ContinuousAssessmentController@upload_scores');
 });

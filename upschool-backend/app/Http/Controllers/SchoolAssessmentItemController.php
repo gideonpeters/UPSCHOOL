@@ -3,6 +3,8 @@
 namespace App\Http\Controllers;
 
 use App\Course;
+use App\GradeItem;
+use App\SchoolAssessment;
 use App\Semester;
 use App\StudentCourse;
 use Illuminate\Http\Request;
@@ -50,20 +52,34 @@ class SchoolAssessmentItemController extends Controller
             'message' => 'these are all the student assessments sumitted',
             'data' => $student_courses
         ], 201);
-
-        // dd($student_courses->toArray());
-        // $school_assessment_items = SchoolAssessmentItem::all();
     }
 
-    /**
-     * Show the form for editing the specified resource.
-     *
-     * @param  \App\SchoolAssessmentItem  $schoolAssessmentItem
-     * @return \Illuminate\Http\Response
-     */
-    public function edit(SchoolAssessmentItem $schoolAssessmentItem)
+    public function getStudentAssessments(Request $request)
     {
         //
+        $currentSemester = Semester::latest()->first();
+        $student = Course::find($request->student_id);
+        $student_courses = StudentCourse::whereStudentId($student->id)->whereSemesterId($currentSemester->id)->get();
+
+        $ids = $student_courses->flatten()->map(function ($item, $key) {
+            return $item->id;
+        })->unique();
+
+        $courses = StudentCourse::whereStudentId($student->id)->whereSemesterId($currentSemester->id)->get()->load('school_assessment_items', 'course:id,title,course_code');
+        // dd($ids);
+
+
+        $school_assessments = SchoolAssessment::whereNull('course_id')->where('visible', true)->get();
+        $grade_items = GradeItem::whereIn('student_course_id', $ids)->get();
+        // $school_assessment_items = $courses->school_assessment_items;
+
+        return response()->json([
+            'status' => true,
+            'message' => 'these are all the student assessments sumitted',
+            'data' => $courses,
+            'course' => $grade_items->load('gradelist'),
+            'headers' => $school_assessments
+        ], 201);
     }
 
     /**

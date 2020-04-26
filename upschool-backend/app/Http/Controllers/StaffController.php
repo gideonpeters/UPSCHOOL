@@ -5,9 +5,11 @@ namespace App\Http\Controllers;
 use App\File;
 use App\User;
 use App\Staff;
+use App\Course;
 use App\Student;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Storage;
+use Illuminate\Database\Eloquent\Builder;
 
 class StaffController extends Controller
 {
@@ -120,6 +122,101 @@ class StaffController extends Controller
             'data' => $students
         ], 201);
     }
+
+    public function enrollFacilitator(Request $request)
+    {
+        $staff  = Staff::find($request->staff_id);
+
+        if (!$staff) {
+            return response()->json([
+                'status' => false,
+                'message' => 'This staff does not exist',
+                'data' => []
+            ], 201);
+        }
+
+
+        $course  = Course::find($request->course_id);
+
+        if (!$course) {
+            return response()->json([
+                'status' => false,
+                'message' => 'This course does not exist',
+                'data' => []
+            ], 201);
+        }
+
+        $existing_facilitator = $course->facilitators->contains($staff);
+
+        if ($existing_facilitator) {
+            return response()->json([
+                'status' => false,
+                'message' => 'Already a facilitator',
+                'data' => []
+            ], 201);
+        }
+
+        if (strtolower($course->staff_key) == strtolower($request->staff_key)) {
+
+            $course->facilitators()->attach($staff);
+
+            return response()->json([
+                'status' => true,
+                'message' => 'Enrolled successfully',
+                'data' => []
+            ], 201);
+        } else {
+            return response()->json([
+                'status' => false,
+                'message' => 'Something went wrong',
+                'data' => []
+            ], 201);
+        }
+    }
+
+    public function unEnrollFacilitator(Request $request)
+    {
+        $staff  = Staff::find($request->staff_id);
+
+        if (!$staff) {
+            return response()->json([
+                'status' => false,
+                'message' => 'This staff does not exist',
+                'data' => []
+            ], 201);
+        }
+
+
+        $course  = Course::find($request->course_id);
+
+        if (!$course) {
+            return response()->json([
+                'status' => false,
+                'message' => 'This course does not exist',
+                'data' => []
+            ], 201);
+        }
+
+        $existing_facilitator = $course->facilitators->contains($staff);
+
+        if ($existing_facilitator) {
+            $course->facilitators()->detach($staff);
+
+            return response()->json([
+                'status' => true,
+                'message' => 'unnrolled successfully',
+                'data' => []
+            ], 201);
+        }
+
+        return response()->json([
+            'status' => false,
+            'message' => 'Something went wrong',
+            'data' => []
+        ], 201);
+    }
+
+
 
     public function update(Request $request, Staff $staff)
     {

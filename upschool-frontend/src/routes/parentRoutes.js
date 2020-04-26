@@ -2,12 +2,12 @@ export default [
 	{
 		path: "/",
 		name: "parent.dashboard",
-		component: () => import("./../views/parent/ParentDashboard")
+		component: () => import("./../views/parent/ParentDashboard"),
 	},
 	{
 		path: "courses",
 		name: "parent.courses",
-		component: () => import("./../views/parent/ParentCourses")
+		component: () => import("./../views/parent/ParentCourses"),
 	},
 	{
 		path: "courses/:id",
@@ -18,35 +18,44 @@ export default [
 				name: "parent.courses.view",
 				meta: { title: "My Courses", key: 3 },
 				component: () =>
-					import("./../views/parent/ParentCourseViewOverview")
+					import("./../views/parent/ParentCourseViewOverview"),
 			},
 			{
 				path: "materials",
 				name: "parent.courses.view.materials",
 				meta: { title: "Course Materials", key: 3 },
 				component: () =>
-					import("./../views/parent/ParentCourseViewMaterials")
+					import("./../views/parent/ParentCourseViewMaterials"),
 			},
 			{
 				path: "participants",
 				name: "parent.courses.view.participants",
 				meta: { title: "Course Participants", key: 3 },
 				component: () =>
-					import("./../views/parent/ParentCourseViewParticipants")
+					import("./../views/parent/ParentCourseViewParticipants"),
 			},
 			{
 				path: "submissions",
 				name: "parent.courses.view.submissions",
 				meta: { title: "Course Submissions", key: 3 },
 				component: () =>
-					import("./../views/parent/ParentCourseViewSubmissions")
+					import("./../views/parent/ParentCourseViewSubmissions"),
+			},
+			{
+				path: "submissions/:submission_id",
+				name: "parent.courses.view.submissions.details",
+				meta: { title: "Course Submissions Details", key: 3 },
+				component: () =>
+					import(
+						"./../views/parent/ParentCourseViewSubmissionsDetails"
+					),
 			},
 			{
 				path: "assessments",
 				name: "parent.courses.view.assessments",
 				meta: { title: "Course Assessments", key: 3 },
 				component: () =>
-					import("./../views/parent/ParentCourseViewAssessments")
+					import("./../views/parent/ParentCourseViewAssessments"),
 			},
 			{
 				path: "grades",
@@ -59,7 +68,7 @@ export default [
 						name: "parent.courses.view.grades",
 						meta: { title: "Course Grades", key: 3 },
 						component: () =>
-							import("./../views/parent/ParentCourseViewGrades")
+							import("./../views/parent/ParentCourseViewGrades"),
 					},
 					{
 						path: ":grade_id/view",
@@ -68,170 +77,170 @@ export default [
 						component: () =>
 							import(
 								"./../views/parent/ParentCourseViewGradeDetail"
-							)
-					}
-				]
+							),
+					},
+				],
 			},
 			{
 				path: "settings",
 				name: "parent.courses.view.settings",
 				meta: { title: "Course Settings", key: 3 },
 				component: () =>
-					import("./../views/parent/ParentCourseViewSettings")
-			}
-		]
+					import("./../views/parent/ParentCourseViewSettings"),
+			},
+		],
 	},
 	{
 		path: "students",
 		name: "parent.students",
-		component: () => import("./../views/parent/ParentStudents")
+		component: () => import("./../views/parent/ParentStudents"),
 	},
 	{
 		path: "students/:id",
 		name: "parent.students.view",
-		component: () => import("./../views/parent/ParentStudentView")
+		component: () => import("./../views/parent/ParentStudentView"),
 	},
 	{
 		path: "staff",
 		name: "parent.staff",
-		component: () => import("./../views/parent/ParentStaff")
+		component: () => import("./../views/parent/ParentStaff"),
 	},
 	{
 		path: "staff/:id",
 		name: "parent.staff.view",
-		component: () => import("./../views/parent/ParentStaffView")
+		component: () => import("./../views/parent/ParentStaffView"),
 	},
 	{
 		path: "inbox",
 		name: "parent.inbox",
-		component: () => import("./../views/parent/ParentInbox")
+		component: () => import("./../views/parent/ParentInbox"),
 	},
 	{
 		path: "leave",
 		name: "parent.leave",
-		component: () => import("./../views/parent/ParentLeave")
+		component: () => import("./../views/parent/ParentLeave"),
 	},
 	{
 		path: "leave/:id",
 		name: "parent.leave-details",
-		component: () => import("./../views/parent/ParentLeaveDetails")
+		component: () => import("./../views/parent/ParentLeaveDetails"),
 	},
 	{
 		path: "residence",
 		name: "parent.residence",
-		component: () => import("./../views/parent/ParentResidence")
+		component: () => import("./../views/parent/ParentResidence"),
 	},
 	{
 		path: "fees",
 		name: "parent.fees",
-		component: () => import("./../views/parent/ParentFees")
+		component: () => import("./../views/parent/ParentFees"),
 	},
 	{
 		path: "financials",
 		name: "parent.financials",
-		component: () => import("./../views/parent/ParentFinancials")
+		component: () => import("./../views/parent/ParentFinancials"),
 	},
 	{
 		path: "calendar",
 		name: "parent.calendar",
-		component: () => import("./../views/parent/ParentCalendar")
+		component: () => import("./../views/parent/ParentCalendar"),
 	},
 	{
 		path: "attendance",
 		name: "parent.attendance",
-		component: () => import("./../views/parent/ParentAttendance")
+		component: () => import("./../views/parent/ParentAttendance"),
 	},
 	{
 		path: "attendance/:id",
 		name: "parent.attendance.details",
-		component: () => import("./../views/parent/ParentAttendanceDetails")
+		component: () => import("./../views/parent/ParentAttendanceDetails"),
 	},
 	{
 		path: "attendance/view/:id",
 		name: "parent.attendance-view",
-		component: () => import("./../views/parent/ParentAttendanceView")
+		component: () => import("./../views/parent/ParentAttendanceView"),
 	},
 	{
 		path: "reports",
 		name: "parent.reports",
-		component: () => import("./../views/parent/ParentReports")
+		component: () => import("./../views/parent/ParentReports"),
 	},
 	{
 		path: "home",
 		name: "parent.home",
-		component: () => import("./../views/parent/ParentHome")
+		component: () => import("./../views/parent/ParentHome"),
 	},
 	{
 		path: "settings",
 		name: "parent.settings",
-		component: () => import("./../views/parent/ParentSettings")
+		component: () => import("./../views/parent/ParentSettings"),
 	},
 	{
 		path: "help",
 		name: "parent.help",
-		component: () => import("./../views/parent/ParentHelp")
+		component: () => import("./../views/parent/ParentHelp"),
 	},
 	{
 		path: "applications",
 		name: "parent.applications",
-		component: () => import("./../views/parent/ParentApplications")
+		component: () => import("./../views/parent/ParentApplications"),
 	},
 	{
 		path: "news",
 		name: "parent.news",
-		component: () => import("./../views/parent/ParentNews")
+		component: () => import("./../views/parent/ParentNews"),
 	},
 	{
 		path: "news/:id",
 		name: "parent.news.details",
-		component: () => import("./../views/parent/ParentNewsDetails")
+		component: () => import("./../views/parent/ParentNewsDetails"),
 	},
 	{
 		path: "setup",
 		name: "parent.setup",
-		component: () => import("./../views/parent/ParentSetup")
+		component: () => import("./../views/parent/ParentSetup"),
 	},
 	{
 		path: "college",
 		name: "parent.colleges",
-		component: () => import("./../views/parent/ParentCollege")
+		component: () => import("./../views/parent/ParentCollege"),
 	},
 	{
 		path: "college/:id",
 		name: "parent.colleges.details",
-		component: () => import("./../views/parent/ParentCollegeDetails")
+		component: () => import("./../views/parent/ParentCollegeDetails"),
 	},
 	{
 		path: "school-assessment",
 		name: "parent.school-assessments",
-		component: () => import("./../views/parent/ParentSchoolAssessment")
+		component: () => import("./../views/parent/ParentSchoolAssessment"),
 	},
 	{
 		path: "school-assessment/:id",
 		name: "parent.school-assessments.view",
 		component: () =>
-			import("./../views/parent/ParentSchoolAssessmentDetail")
+			import("./../views/parent/ParentSchoolAssessmentDetail"),
 	},
 	{
 		path: "department",
 		name: "parent.departments",
-		component: () => import("./../views/parent/ParentDepartment")
+		component: () => import("./../views/parent/ParentDepartment"),
 	},
 	{
 		path: "department/:id",
 		name: "parent.departments.details",
-		component: () => import("./../views/parent/ParentDepartmentDetails")
+		component: () => import("./../views/parent/ParentDepartmentDetails"),
 	},
 	{
 		path: "program",
 		name: "parent.programs",
-		component: () => import("./../views/parent/ParentProgram")
+		component: () => import("./../views/parent/ParentProgram"),
 	},
 	{
 		path: "program/:id",
 		name: "parent.programs.details",
-		component: () => import("./../views/parent/ParentProgramDetails")
-	}
+		component: () => import("./../views/parent/ParentProgramDetails"),
+	},
 	// {
 	// 	path: "/finances",
 	// 	name: "parent.finances",

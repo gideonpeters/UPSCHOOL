@@ -2,6 +2,10 @@
 
 namespace App\Http\Controllers;
 
+use App\Course;
+use App\Student;
+use App\Semester;
+use App\StudentCourse;
 use App\SubmissionList;
 use Illuminate\Http\Request;
 
@@ -19,22 +23,48 @@ class SubmissionListController extends Controller
         ], 201);
     }
 
-    /**
-     * Show the form for creating a new resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
-    public function create()
+    public function getUserSubmission()
     {
         //
+        $user = auth()->user();
+
+        if (!$user) {
+            return response()->json([
+                'status' => false,
+                'message' => 'user does not exist',
+                'data' => []
+            ], 201);
+        }
+
+        if ($user && $user->userable_type == 'App\Student') {
+
+            $student = Student::find($user->userable_id);
+
+            if (!$student) {
+                return response()->json([
+                    'status' => false,
+                    'message' => 'student does not exist',
+                    'data' => []
+                ], 201);
+            }
+
+            $currentSemester = Semester::latest()->first();
+            $student_courses = StudentCourse::whereStudentId($student->id)->whereSemesterId($currentSemester->id)->get();
+
+            $course_ids = $student_courses->pluck('course_id')->all();
+
+            $submission_lists = SubmissionList::whereIn('course_id', $course_ids)->get();
+
+            return response()->json([
+                'status' => true,
+                'message' => 'these are all the submission lists for this user',
+                'data' => $submission_lists->load('course', 'gradelist')
+            ], 201);
+        }
+
+        // dd($submission_lists);
     }
 
-    /**
-     * Store a newly created resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @return \Illuminate\Http\Response
-     */
     public function store(Request $request)
     {
         //

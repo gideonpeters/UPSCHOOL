@@ -17,7 +17,9 @@
 								<custom-header
 									title="FEATURED POST"
 									ctaText="View more"
-									:route="isStaff ? 'staff.news': 'student.news'"
+									:route="
+										isStaff ? 'staff.news' : 'student.news'
+									"
 								></custom-header>
 								<v-img
 									:src="
@@ -114,7 +116,7 @@
 													:key="n"
 													v-slot:default="{
 														active,
-														toggle
+														toggle,
 													}"
 												>
 													<quiz-card class :input-value="active" @click="toggle" />
@@ -130,27 +132,14 @@
 								<v-container fluid class="pa-0">
 									<v-row no-gutters>
 										<v-col cols="12">
-											<custom-header title="PENDING SUBMISSIONS" ctaText="View all" route="student.news"></custom-header>
+											<custom-header
+												title="PENDING SUBMISSIONS"
+												ctaText="View all"
+												:route="routeName('courses.assignments')"
+											></custom-header>
 										</v-col>
 										<v-col cols="12">
-											<v-data-table :headers="asgnHeaders" :items="asgn" hide-default-footer>
-												<template v-slot:item.check="{ item }">
-													<v-icon
-														size="15"
-														:color="
-															item.id == 1
-																? 'blue accent-2 '
-																: 'grey'
-														"
-													>mdi-circle</v-icon>
-													<!-- <v-simple-checkbox v-model="item.check" disabled> -->
-													<!-- </v-simple-checkbox> -->
-												</template>
-												<template v-slot:item.action="{}">
-													<v-icon small class="mr-2 pointer">mdi-eye</v-icon>
-													<v-icon small class="pointer">mdi-pencil</v-icon>
-												</template>
-											</v-data-table>
+											<assignment-table isDashboard :isStudent="isStudent" :isStaff="isStaff" />
 										</v-col>
 									</v-row>
 								</v-container>
@@ -170,7 +159,7 @@
 													:key="n"
 													v-slot:default="{
 														active,
-														toggle
+														toggle,
 													}"
 												>
 													<quiz-card class :input-value="active" @click="toggle" />
@@ -208,10 +197,13 @@
 											<div>
 												<div class="d-flex flex-column">
 													<div class="font-weight-bold fs-4">PROGRAM</div>
-													<div class="fs-4">
-														{{ student.program.name }}
+													<div class="fs-4" v-if="student.program">
+														{{
+														student.program.name
+														}}
 														({{
-														student.program.degree
+														student.program
+														.degree
 														.short_name
 														}})
 													</div>
@@ -220,7 +212,10 @@
 													<div class="font-weight-bold fs-4">STATUS</div>
 													<div class="fs-4">
 														PROMOTED:
-														{{ student.level }} Level
+														{{
+														student.level
+														}}
+														Level
 													</div>
 												</div>
 											</div>
@@ -242,7 +237,10 @@
 													units to graduate
 												</div>
 												<div class="d-flex mt-3">
-													<div>Current credits achieved:</div>
+													<div>
+														Current credits
+														achieved:
+													</div>
 													<v-spacer></v-spacer>
 													<div class="font-weight-bold mr-5">
 														{{
@@ -264,7 +262,11 @@
 											<custom-header
 												title="NEWS"
 												ctaText="View more"
-												:route="isStudent ? 'student.news': 'staff.news'"
+												:route="
+													isStudent
+														? 'student.news'
+														: 'staff.news'
+												"
 											></custom-header>
 										</v-col>
 										<v-col>
@@ -347,11 +349,13 @@
 <script>
 import QuizCard from "@/components/general/QuizCard";
 import DashboardCalendar from "@/components/general/Calendar";
+import AssignmentTable from "@/components/general/AssignmentTable";
 
 export default {
 	components: {
 		QuizCard,
-		DashboardCalendar
+		DashboardCalendar,
+		AssignmentTable
 	},
 	props: {
 		isStaff: {
@@ -446,7 +450,11 @@ export default {
 			} else if (this.isStudent) {
 				res = this.student_user;
 			}
-			return res;
+
+			if (res) {
+				return res;
+			}
+			return {};
 		},
 
 		value() {
@@ -464,6 +472,14 @@ export default {
 		},
 		getCourse(id) {
 			return this.$store.getters.getCourseById(id);
+		},
+		routeName(route) {
+			if (this.isStudent) {
+				route = "student." + route;
+			} else if (this.isStaff) {
+				route = "staff." + route;
+			}
+			return route;
 		}
 	},
 	async mounted() {
@@ -471,7 +487,7 @@ export default {
 			this.$store.dispatch("getNews");
 			let res = this.$store.dispatch("getUserSchedule");
 
-			this.schedule = res.data.data;
+			this.schedule = res.data;
 			if (this.isStaff) {
 				this.asgnHeaders.push({
 					text: "ACTIONS",

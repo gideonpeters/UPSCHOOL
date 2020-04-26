@@ -59,6 +59,16 @@ export default {
 					id: 2,
 					tab: "COURSE MATERIAL",
 					route: "courses.view.materials"
+				},
+				{
+					id: 4,
+					tab: "SUBMISSIONS",
+					route: "courses.view.submissions"
+				},
+				{
+					id: 5,
+					tab: "GRADES",
+					route: "courses.view.grades"
 				}
 			],
 			attachSubsection: false,
@@ -77,6 +87,10 @@ export default {
 			let res;
 			if (this.isAdmin) {
 				res = "parent." + route;
+			} else if (this.isStudent) {
+				res = "student." + route;
+			} else if (this.isStaff) {
+				res = "staff." + route;
 			}
 
 			return res;
@@ -87,7 +101,7 @@ export default {
 			} else if (this.isStaff) {
 				this.$router.push({ name: "staff.courses" });
 			} else if (this.isStudent) {
-				this.$router.push({ name: "student.courses" });
+				this.$router.push({ name: "student.courses.plan" });
 			}
 		}
 	},
@@ -99,16 +113,6 @@ export default {
 						id: 3,
 						tab: "PARTICIPANTS",
 						route: "courses.view.participants"
-					},
-					{
-						id: 4,
-						tab: "SUBMISSIONS",
-						route: "courses.view.submissions"
-					},
-					{
-						id: 5,
-						tab: "GRADES",
-						route: "courses.view.grades"
 					},
 					{
 						id: 6,

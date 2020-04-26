@@ -1,15 +1,23 @@
 <template>
 	<v-app>
-		<div>
-			<div class="my-5">Residence</div>
-			<div>
-				<div class="d-flex mb-4">
-					<metric title="Number of Halls" :value="10" />
-					<metric title="Number of Residents" :value="15" />
-					<!-- <metric title="Number of Rooms" :value="events.length" /> -->
-					<!-- <metric title="Num" :value="events.length" /> -->
-				</div>
-			</div>
-		</div>
+		<v-container>
+			<v-row>
+				<v-col cols="3">
+					<metric-card title="Number of Halls" :value="10" />
+				</v-col>
+				<v-col cols="3">
+					<metric-card title="Total Capacity" :value="1500" />
+				</v-col>
+			</v-row>
+		</v-container>
 	</v-app>
 </template>
+
+<script>
+import MetricCard from "@/components/parent/Metric";
+export default {
+	components: {
+		MetricCard
+	}
+};
+</script>

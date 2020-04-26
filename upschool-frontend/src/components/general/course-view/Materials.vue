@@ -252,6 +252,10 @@
 					</v-card>
 				</v-dialog>
 			</v-row>
+			<div
+				class="d-flex text-center justify-center"
+				v-if="courseSections.length == 0"
+			>No materials uploaded by facilitator yet</div>
 
 			<div class="mt-2 border-dashed pb-2" v-for="section in courseSections" :key="section.id">
 				<div class="d-flex justify-space-between align-center">
@@ -288,7 +292,7 @@
 									idx) in section.subsections"
 					:key="idx"
 				>
-					<section-item :subsection="subsection" />
+					<section-item @submitted="getCourseSections" :subsection="subsection" />
 					<!-- <div v-for="subsection in ">{{}}</div> -->
 				</div>
 				<div class="d-flex mt-4 align-baseline justify-end pb-3">

@@ -83,7 +83,9 @@ export default {
 
 	methods: {
 		viewAssessment() {
-			this.$router.push({ name: "parent.courses.view.assessments" });
+			this.$router.push({
+				name: "parent.courses.view.submissions.details"
+			});
 		},
 		openSubmitAssessment(item) {
 			this.selectedAssessment = item;
@@ -157,8 +159,8 @@ export default {
 			// console.log(v);
 			if (this.isAdmin) {
 				this.$router.push({
-					name: "parent.courses.view.grades.view",
-					params: { grade_id: v.id }
+					name: "parent.courses.view.submissions.details",
+					params: { submission_id: v.id }
 				});
 			} else if (this.isStaff) {
 				this.$router.push({

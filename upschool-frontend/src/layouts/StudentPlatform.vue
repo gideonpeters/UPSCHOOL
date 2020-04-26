@@ -403,7 +403,12 @@ export default {
 			return result;
 		},
 		user() {
-			return this.$store.state.loggedInUser;
+			let ans = this.$store.state.loggedInUser;
+			if (ans) {
+				return ans;
+			}
+
+			return {};
 		}
 	},
 	methods: {

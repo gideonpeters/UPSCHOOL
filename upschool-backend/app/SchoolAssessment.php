@@ -3,6 +3,7 @@
 namespace App;
 
 use App\Course;
+use App\SchoolAssessmentItem;
 use Illuminate\Database\Eloquent\Model;
 
 class SchoolAssessment extends Model
@@ -15,5 +16,10 @@ class SchoolAssessment extends Model
     public function course()
     {
         return $this->belongsTo(Course::class);
+    }
+
+    public function school_assessment_items()
+    {
+        return $this->hasMany(SchoolAssessmentItem::class);
     }
 }
