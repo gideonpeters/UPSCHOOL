@@ -285,3 +285,26 @@ Route::group([], function ($router) {
 });
 
 Route::post('/send', 'EmailController@send');
+
+Route::group([], function ($router) {
+    Route::get('roomtype', 'RoomTypeController@index');
+    Route::post('roomtype', 'RoomTypeController@store');
+    Route::get('roomtype/{roomtype_id}', 'RoomTypeController@show');
+    Route::post('roomtype/{roomtype_id}', 'RoomTypeController@update');
+});
+
+Route::group([], function ($router) {
+    Route::get('room', 'RoomController@index');
+    Route::post('room', 'RoomController@store');
+    Route::get('room/{room_id}', 'RoomController@show');
+    Route::post('room/{room_id}', 'RoomController@update');
+});
+
+Route::group([], function ($router) {
+    Route::get('hall', 'HallController@index');
+    Route::post('hall', 'HallController@store');
+    Route::get('hall/{hall_id}', 'HallController@show');
+    Route::post('hall/{hall_id}', 'HallController@update');
+
+    Route::post('halls-bulk', 'HallController@storeBulk');
+});

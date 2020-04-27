@@ -15,15 +15,15 @@ class CreateRoomsTable extends Migration
     {
         Schema::create('rooms', function (Blueprint $table) {
             $table->id();
-            $table->string('name');
+            $table->string('room_id');
             $table->text('description')->nullable();
             $table->unsignedInteger('capacity')->nullable(); //number of beds
             $table->string('wing')->nullable();
-            $table->string('preferred_sex')->nullable();
-            $table->string('preferred_level')->nullable();
+            $table->json('preferred_sex')->nullable();
+            $table->json('preferred_level')->nullable();
             $table->boolean('status')->nullable(); //available or not
-            $table->string('preferred_student_type')->nullable();
-            $table->string('preferred_nationality')->nullable();
+            $table->json('preferred_student_type')->nullable();
+            $table->json('preferred_nationality')->nullable();
             $table->foreignId('room_type_id');
             $table->foreignId('hall_id');
             // $table->foreignId('key_possessor_id')->nullable();

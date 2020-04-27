@@ -25,6 +25,7 @@ class CreateAllocationSettingsTable extends Migration
             $table->boolean('allocate_by_program')->default(true);
             $table->boolean('allocate_by_student_type')->default(true);
             $table->boolean('allocate_by_nationality')->default(true);
+            $table->boolean('allocate_reservable')->default(false);
             $table->timestamps();
         });
     }

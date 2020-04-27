@@ -18,9 +18,11 @@ class CreateHallsTable extends Migration
             $table->string('name');
             $table->text('description')->nullable();
             $table->unsignedInteger('capacity')->nullable();
-            $table->string('preferred_sex');
-            $table->string('preferred_level');
-            $table->string('preferred_student_type');
+            $table->json('preferred_sex')->nullable();
+            $table->json('preferred_nationality')->nullable();
+            $table->json('preferred_level')->nullable();
+            $table->json('preferred_program')->nullable();
+            $table->json('preferred_student_type')->nullable(); //degree types
             $table->timestamps();
         });
     }
