@@ -3,6 +3,7 @@
 namespace App;
 
 use App\File;
+use App\Room;
 use App\User;
 use App\Course;
 use App\Option;
@@ -11,6 +12,7 @@ use App\Program;
 use App\Guardian;
 use App\Enrollment;
 use App\ResultItem;
+use App\StudentRoom;
 use App\PendingCourse;
 use App\StudentCourse;
 use App\StudentEnrollmentItem;
@@ -49,6 +51,11 @@ class Student extends Model
     public function courses()
     {
         return $this->belongsToMany(Course::class, 'student_courses')->using(StudentCourse::class);
+    }
+
+    public function rooms()
+    {
+        return $this->belongsToMany(Room::class, 'student_rooms')->using(StudentRoom::class);
     }
 
     public function enrollment_items()

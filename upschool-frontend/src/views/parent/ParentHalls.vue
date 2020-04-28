@@ -684,10 +684,8 @@ export default {
 		},
 		async downloadFormat() {
 			// let array = ["name", "id"];
-			var csv = await Papa.unparse(this.csvData, {
-				// header: false,
-			});
-			console.log(csv);
+			var csv = await Papa.unparse(this.csvData);
+			// console.log(csv);
 
 			var csvData = new File([csv], "hall_template.csv", {
 				type: "text/csv;charset=utf-8",

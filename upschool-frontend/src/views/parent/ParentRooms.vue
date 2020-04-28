@@ -3,10 +3,18 @@
 		<v-container>
 			<v-row>
 				<v-col cols="3">
-					<metric-card title="Number of Halls" :value="10" />
+					<metric-card
+						title="Number of Halls"
+						:value="rooms.length"
+					/>
 				</v-col>
 				<v-col cols="3">
-					<metric-card title="Total Capacity" :value="1500" />
+					<metric-card
+						title="Total Capacity"
+						:value="
+							rooms.reduce((acc, val) => acc + val.capacity, 0)
+						"
+					/>
 				</v-col>
 				<v-col cols="12">
 					<div class="d-flex">
@@ -289,6 +297,79 @@
 															@change="showCsv"
 															label="Select csv file"
 														></v-file-input>
+														<div>
+															<div
+																class="fs-4 mt-5"
+																v-if="
+																	roomTypes.length >
+																		0
+																"
+															>
+																The Available
+																Room Types are :
+																<ul
+																	class="pt-2"
+																>
+																	<li
+																		v-for="it in roomTypes"
+																		:key="
+																			it.id
+																		"
+																	>
+																		{{
+																			it.name
+																		}}
+																	</li>
+																</ul>
+															</div>
+															<div
+																class="fs-4 mt-5"
+																v-else
+															>
+																You have no room
+																types specified;
+																kindly leave
+																that portion
+																blank when
+																uploading.
+															</div>
+														</div>
+														<div>
+															<div
+																class="fs-4 mt-5"
+																v-if="
+																	roomTypes.length >
+																		0
+																"
+															>
+																The Available
+																Halls are :
+																<ul
+																	class="pt-2"
+																>
+																	<li
+																		v-for="it in halls"
+																		:key="
+																			it.id
+																		"
+																	>
+																		{{
+																			it.name
+																		}}
+																	</li>
+																</ul>
+															</div>
+															<div
+																class="fs-4 mt-5"
+																v-else
+															>
+																You have no
+																halls specified;
+																kindly provide a
+																hall to
+																continue.
+															</div>
+														</div>
 													</v-col>
 													<v-col cols="12" md="6">
 														<div>
@@ -296,13 +377,17 @@
 															are:
 															<ul class="mt-2">
 																<li>
-																	Name
+																	Room ID
 																</li>
+																<li>
+																	Capacity
+																</li>
+																<li>Hall</li>
 															</ul>
 														</div>
 														<div class="my-2">
 															Fields beginning
-															with preferred can
+															with "preferred" can
 															take more than one
 															value seperated by
 															commas unless where
@@ -321,7 +406,7 @@
 																	any level
 																	can be
 																	allocated
-																	the hall
+																	the room
 																</li>
 																<li>
 																	Preferred
@@ -330,11 +415,10 @@
 																	male,female;
 																	leaving it
 																	empty means
-																	room
-																	allocation
-																	for this
-																	hall will be
-																	mixed
+																	students of
+																	any sex can
+																	be allocated
+																	this room
 																</li>
 																<li>
 																	Preferred
@@ -355,7 +439,7 @@
 																	leaving this
 																	field empty
 																	means this
-																	hall can be
+																	room can be
 																	allocated to
 																	students of
 																	any
@@ -380,7 +464,7 @@
 																	students of
 																	any type can
 																	be allocated
-																	this hall
+																	this room
 																</li>
 																<li>
 																	Preferred
@@ -400,7 +484,7 @@
 																	Science;
 																	leaving it
 																	blank means
-																	this hall
+																	this room
 																	can be
 																	assigned to
 																	students
@@ -442,7 +526,21 @@
 				</v-col>
 				<v-col cols="12">
 					<v-card flat class="pa-3">
-						<v-data-table :headers="headers" :items="items">
+						<v-data-table :headers="headers" :items="rooms">
+							<template v-slot:item.status="{ item: { status } }">
+								<v-chip
+									small
+									class=" white--text"
+									:color="
+										status
+											? 'green accent-2'
+											: ' red accent-2'
+									"
+									>{{
+										!status ? "Unavailable" : "Available"
+									}}</v-chip
+								>
+							</template>
 							<template v-slot:item.actions="{ item }">
 								<div class="d-flex align-center justify-center">
 									<v-btn
@@ -472,7 +570,10 @@
 
 <script>
 import MetricCard from "@/components/parent/Metric";
+import Papa from "papaparse";
 import Axios from "axios";
+import { saveAs } from "file-saver";
+
 export default {
 	components: {
 		MetricCard,
@@ -480,7 +581,7 @@ export default {
 	data() {
 		return {
 			dialogFull: true,
-			isBulk: false,
+			isBulk: true,
 			roomId: "",
 			roomCapacity: "",
 			roomStudentType: "",
@@ -491,14 +592,42 @@ export default {
 			roomLevel: "",
 			roomType: "",
 			roomWing: "",
-			bulkHeaders: [],
+			bulkHeaders: [
+				{ text: "ROOM ID", value: "room_id" },
+				{ text: "CAPACITY", value: "capacity" },
+				{ text: "HALL", value: "hall" },
+				{ text: "ROOM TYPE", value: "room_type" },
+				{ text: "WING", value: "wing" },
+				{ text: "DESCRIPTION", value: "description" },
+				{ text: "PREFERRED SEX", value: "preferred_sex" },
+				{ text: "PREFERRED PROGRAM(S)", value: "preferred_program" },
+				{
+					text: "PREFERRED NATIONALITIES",
+					value: "preferred_nationality",
+				},
+				{
+					text: "PREFERRED STUDENT TYPE(S)",
+					value: "preferred_student_type",
+				},
+				{ text: "PREFERRED LEVEL(S)", value: "preferred_level" },
+			],
 			headers: [
 				{ text: "ROOM ID", value: "room_id", sortable: true },
-				{ text: "WING/BLOCK", value: "wing.name", sortable: true },
+				{ text: "WING/BLOCK", value: "wing", sortable: true },
 				{ text: "HALL", value: "hall.name", sortable: true },
-				{ text: "CAPACITY", value: "capacity", sortable: true },
-				{ text: "STATUS", value: "status", sortable: true },
-				{ text: "OCCUPANTS", value: "occupants", sortable: true },
+				{
+					text: "CAPACITY",
+					value: "capacity",
+					sortable: true,
+					align: "center",
+				},
+				{
+					text: "STATUS",
+					value: "status",
+					sortable: true,
+					align: "center",
+				},
+				{ text: "OCCUPANTS", value: "occupants_count", sortable: true },
 				{
 					text: "ACTIONS",
 					value: "actions",
@@ -544,6 +673,7 @@ export default {
 					sex: "male",
 				},
 			],
+			rooms: [],
 			dummy: [],
 			roomTypes: [],
 			halls: [],
@@ -554,16 +684,104 @@ export default {
 	},
 	computed: {
 		csvData() {
-			return [];
+			return [
+				{
+					room_id: "",
+					room_type: "",
+					capacity: "",
+					wing: "",
+					hall: "",
+					description: "",
+					preferred_sex: "",
+					preferred_program: "",
+					preferred_nationality: "",
+					preferred_student_type: "",
+					preferred_level: "",
+				},
+			];
 		},
 	},
 	methods: {
 		goToPage(routeName, id) {
 			this.$router.push({ name: routeName, params: { id: id } });
 		},
-		showCsv() {},
-		saveBulk() {},
-		downloadFormat() {},
+		showCsv(ent) {
+			if (ent) {
+				var reader = new FileReader();
+
+				reader.readAsText(ent);
+				reader.onload = async (evt) => {
+					this.dummy = await Papa.parse(evt.target.result, {
+						header: true,
+						skipEmptyLines: true,
+					}).data;
+					// console.log(this.dummy);
+				};
+			}
+		},
+		findItem(name, type) {
+			name = name.trim().toLowerCase();
+			let res = null;
+
+			if (type == "hall") {
+				res = this.halls.find((item) => {
+					let hallName = item.name.trim().toLowerCase();
+					return name == hallName;
+				});
+			} else if (type == "room-type") {
+				res = this.roomTypes.find((item) => {
+					let hallName = item.name.trim().toLowerCase();
+					return name == hallName;
+				});
+			}
+
+			return res ? res : null;
+		},
+		async saveBulk() {
+			try {
+				// console.log(this.findItem("danieel hall ", "hall"));
+				if (this.dummy.length > 0) {
+					let res = this.dummy.map((item) => ({
+						...item,
+						capacity: item.capacity ? item.capacity : 0,
+						hall_id: this.findItem(item.hall, "hall").id,
+						room_type_id: this.findItem(item.room_type, "room-type")
+							.id,
+						preferred_sex: item.preferred_sex
+							? JSON.stringify(item.preferred_sex.split(","))
+							: null,
+						preferred_program: item.preferred_program
+							? JSON.stringify(item.preferred_program.split(","))
+							: null,
+						preferred_nationality: item.preferred_nationality
+							? JSON.stringify(
+									item.preferred_nationality.split(",")
+							  )
+							: null,
+						preferred_student_type: item.preferred_student_type
+							? JSON.stringify(
+									item.preferred_student_type.split(",")
+							  )
+							: null,
+						preferred_level: item.preferred_level
+							? JSON.stringify(item.preferred_level.split(","))
+							: null,
+					}));
+					console.log(res);
+				}
+			} catch (error) {
+				console.log(error);
+			}
+		},
+		async downloadFormat() {
+			var csv = await Papa.unparse(this.csvData);
+
+			var csvData = new File([csv], "room_template.csv", {
+				type: "text/csv;charset=utf-8",
+			});
+
+			saveAs(csvData);
+		},
 		async getHalls() {
 			try {
 				let res = await Axios.get("hall");
@@ -601,7 +819,7 @@ export default {
 				};
 				// console.log(body);
 				let res = await Axios.post("room", body);
-
+				this.getRooms();
 				this.$store.commit("openSnackbar", res.data.message);
 
 				console.log(res.data);
@@ -630,9 +848,22 @@ export default {
 				console.log(error);
 			}
 		},
+		async getRooms() {
+			try {
+				let res = await Axios.get("room");
+
+				console.log(res.data);
+				this.rooms = res.data.data;
+
+				// this.$store.commit("openSnackbar", res.data.message);
+			} catch (error) {
+				console.log(error);
+			}
+		},
 	},
 	async mounted() {
 		try {
+			this.getRooms();
 			this.getRoomTypes();
 			this.getHalls();
 		} catch (error) {

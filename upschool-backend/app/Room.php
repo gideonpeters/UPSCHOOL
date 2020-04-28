@@ -4,6 +4,7 @@ namespace App;
 
 use App\Hall;
 use App\RoomType;
+use App\StudentRoom;
 use Illuminate\Database\Eloquent\Model;
 
 class Room extends Model
@@ -26,5 +27,10 @@ class Room extends Model
     public function room_type()
     {
         return $this->belongsTo(RoomType::class);
+    }
+
+    public function occupants()
+    {
+        return $this->belongsToMany(Student::class, 'student_rooms')->using(StudentRoom::class);
     }
 }

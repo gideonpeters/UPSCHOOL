@@ -6,12 +6,20 @@ use App\Hall;
 use App\Room;
 use App\RoomType;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\DB;
 
 class RoomController extends Controller
 {
     public function index()
     {
         //
+        $rooms = Room::withCount('occupants')->get()->load('hall');
+
+        return response()->json([
+            'status' => true,
+            'message' => 'these are all the rooms',
+            'data' => $rooms
+        ], 201);
     }
 
     public function store(Request $request)
@@ -57,9 +65,37 @@ class RoomController extends Controller
         ], 201);
     }
 
-    public function show(Room $room)
+    public function storeBulk(Request $request)
+    {
+        $data = json_decode($request->data, true);
+
+        DB::table('rooms')->insertOrIgnore($data);
+
+        return response()->json([
+            'status' => true,
+            'message' => 'Uploaded rooms successfully',
+            'data' => []
+        ]);
+    }
+
+    public function show($id)
     {
         //
+        $room = Room::find($id);
+
+        if (!$room) {
+            return response()->json([
+                'status' => false,
+                'message' => 'room not found',
+                'data' => []
+            ], 201);
+        }
+
+        return response()->json([
+            'status' => true,
+            'message' => 'this is the room',
+            'data' => $room
+        ], 201);
     }
 
     public function edit(Room $room)
