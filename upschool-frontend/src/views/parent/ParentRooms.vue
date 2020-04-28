@@ -4,7 +4,7 @@
 			<v-row>
 				<v-col cols="3">
 					<metric-card
-						title="Number of Halls"
+						title="Number of Rooms"
 						:value="rooms.length"
 					/>
 				</v-col>
@@ -555,7 +555,15 @@
 									>
 										<v-icon small>mdi-eye</v-icon>
 									</v-btn>
-									<v-btn color="grey" icon>
+									<v-btn
+										color="grey"
+										icon
+										@click="
+											(selectedRoom = item),
+												(dialogDelete = true)
+										"
+										v-if="isAdmin"
+									>
 										<v-icon small>mdi-delete</v-icon>
 									</v-btn>
 								</div>
@@ -563,6 +571,41 @@
 						</v-data-table>
 					</v-card>
 				</v-col>
+			</v-row>
+			<v-row>
+				<v-dialog v-model="dialogDelete" persistent max-width="600px">
+					<v-card>
+						<v-card-title>
+							<span class="headline">Confirm</span>
+						</v-card-title>
+						<v-card-text>
+							<v-container>
+								<v-row>
+									<div class="fs-3" v-if="selectedRoom">
+										Are you sure you want to delete this
+										room ({{ selectedRoom.room_id }}:
+										{{ selectedRoom.hall.name }})?
+									</div>
+								</v-row>
+							</v-container>
+						</v-card-text>
+						<v-card-actions>
+							<v-spacer></v-spacer>
+							<v-btn
+								color="blue darken-1"
+								text
+								@click="dialogDelete = false"
+								>Cancel</v-btn
+							>
+							<v-btn
+								color="blue darken-1"
+								text
+								@click="deleteRoom(selectedRoom.id)"
+								>Proceed</v-btn
+							>
+						</v-card-actions>
+					</v-card>
+				</v-dialog>
 			</v-row>
 		</v-container>
 	</v-app>
@@ -580,9 +623,12 @@ export default {
 	},
 	data() {
 		return {
-			dialogFull: true,
-			isBulk: true,
+			dialogFull: null,
+			dialogDelete: null,
+			isAdmin: true,
+			isBulk: false,
 			roomId: "",
+			selectedRoom: null,
 			roomCapacity: "",
 			roomStudentType: "",
 			roomNationality: "",
@@ -741,12 +787,16 @@ export default {
 			try {
 				// console.log(this.findItem("danieel hall ", "hall"));
 				if (this.dummy.length > 0) {
-					let res = this.dummy.map((item) => ({
-						...item,
+					let items = this.dummy.map((item) => ({
+						// ...item,
+						room_id: item.room_id,
+						description: item.description,
+						wing: item.wing,
 						capacity: item.capacity ? item.capacity : 0,
-						hall_id: this.findItem(item.hall, "hall").id,
-						room_type_id: this.findItem(item.room_type, "room-type")
-							.id,
+						hall_id: this.findItem(item.hall, "hall").id || null,
+						room_type_id:
+							this.findItem(item.room_type, "room-type").id ||
+							null,
 						preferred_sex: item.preferred_sex
 							? JSON.stringify(item.preferred_sex.split(","))
 							: null,
@@ -767,8 +817,28 @@ export default {
 							? JSON.stringify(item.preferred_level.split(","))
 							: null,
 					}));
-					console.log(res);
+
+					let res = await Axios.post("room-bulk", {
+						data: JSON.stringify(items),
+					});
+					console.log(res.data);
+					this.$store.commit("openSnackbar", res.data.message);
+					this.getRooms();
+					this.dummy = [];
+					this.isBulk = false;
+					this.dialogFull = false;
 				}
+			} catch (error) {
+				console.log(error);
+			}
+		},
+		async deleteRoom(id) {
+			try {
+				let res = await Axios.delete(`room/${id}`);
+				this.$store.commit("openSnackbar", res.data.message);
+				this.getRooms();
+				this.dialogDelete = false;
+				this.selectedRoom = null;
 			} catch (error) {
 				console.log(error);
 			}

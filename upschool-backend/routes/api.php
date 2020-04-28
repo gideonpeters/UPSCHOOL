@@ -298,6 +298,9 @@ Route::group([], function ($router) {
     Route::post('room', 'RoomController@store');
     Route::get('room/{room_id}', 'RoomController@show');
     Route::post('room/{room_id}', 'RoomController@update');
+    Route::delete('room/{room_id}', 'RoomController@destroy');
+
+    Route::post('room-bulk', 'RoomController@storeBulk');
 });
 
 Route::group([], function ($router) {
@@ -305,6 +308,7 @@ Route::group([], function ($router) {
     Route::post('hall', 'HallController@store');
     Route::get('hall/{hall_id}', 'HallController@show');
     Route::post('hall/{hall_id}', 'HallController@update');
+    Route::delete('hall/{hall_id}', 'HallController@destroy');
 
     Route::post('halls-bulk', 'HallController@storeBulk');
 });

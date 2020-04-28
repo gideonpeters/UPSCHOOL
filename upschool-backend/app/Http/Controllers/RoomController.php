@@ -81,7 +81,7 @@ class RoomController extends Controller
     public function show($id)
     {
         //
-        $room = Room::find($id);
+        $room = Room::with('hall')->find($id);
 
         if (!$room) {
             return response()->json([
@@ -108,8 +108,25 @@ class RoomController extends Controller
         //
     }
 
-    public function destroy(Room $room)
+    public function destroy($id)
     {
         //
+        $room = Room::find($id);
+
+        if (!$room) {
+            return response()->json([
+                'status' => false,
+                'message' => 'room not found',
+                'data' => []
+            ], 201);
+        }
+
+        $room->delete();
+
+        return response()->json([
+            'status' => true,
+            'message' => 'room deleted successfully',
+            'data' => []
+        ], 201);
     }
 }
