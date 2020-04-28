@@ -7,14 +7,22 @@ use Illuminate\Http\Request;
 
 class AllocationSettingController extends Controller
 {
-    /**
-     * Display a listing of the resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
+
     public function index()
     {
         //
+        $settings = AllocationSetting::latest()->first();
+
+        if (!$settings) {
+            $settings = new AllocationSetting();
+            $settings->save();
+        }
+
+        return response()->json([
+            'status' => true,
+            'message' => 'these are all the allocation settings',
+            'data' => $settings
+        ], 201);
     }
 
     /**

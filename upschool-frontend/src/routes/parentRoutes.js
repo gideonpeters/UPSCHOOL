@@ -147,8 +147,26 @@ export default [
 	},
 	{
 		path: "rooms/:id",
-		name: "parent.rooms.details",
+		// name: "parent.rooms.details",
 		component: () => import("./../views/parent/ParentRoomsDetails"),
+		children: [
+			{
+				path: "overview",
+				name: "parent.rooms.details",
+				component: () => import("./../views/parent/room-view/Overview"),
+			},
+			{
+				path: "occupancy",
+				name: "parent.rooms.details.occupancy",
+				component: () =>
+					import("./../views/parent/room-view/Occupancy"),
+			},
+			{
+				path: "issues",
+				name: "parent.rooms.details.issues",
+				component: () => import("./../views/parent/room-view/Issues"),
+			},
+		],
 	},
 	{
 		path: "room/types",

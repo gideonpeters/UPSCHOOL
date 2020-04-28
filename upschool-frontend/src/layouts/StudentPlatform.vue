@@ -95,7 +95,7 @@
 
 				<v-menu offset-y :close-on-content-click="closeOnContentClick">
 					<template v-slot:activator="{ on }">
-						<v-btn depressed color="primary" dark v-on="on" v-if="keyStat">
+						<v-btn depressed color="primary" dark v-on="on" v-if="!(keyStat > 2)">
 							<v-icon color="white" class="pointer">mdi-apps</v-icon>
 						</v-btn>
 					</template>
@@ -251,7 +251,7 @@ export default {
 			return title;
 		},
 		keyStat() {
-			return this.$route.meta.key;
+			return this.$route.meta.key || null;
 		},
 		keyTitle() {
 			let title;
@@ -260,6 +260,7 @@ export default {
 			else if (this.keyStat == 4) title = "RESULTS & GRADING";
 			else if (this.keyStat == 5) title = "FINANCIALS";
 			else if (this.keyStat == 6) title = "PLANNER";
+			else if (this.keyStat == 7) title = "RESIDENCY";
 
 			return title;
 		},
@@ -394,10 +395,29 @@ export default {
 				}
 			];
 
+			let residenceItems = [
+				{
+					route: "student.residence",
+					title: "Allocation",
+					icon: "mdi-stairs"
+				},
+				{
+					route: "student.residence.history",
+					title: "History",
+					icon: "mdi-history"
+				},
+				{
+					route: "student.residence.issues",
+					title: "Issues",
+					icon: "mdi-file"
+				}
+			];
+
 			if (this.keyStat == 3) result = courseItems;
 			else if (this.keyStat == 4) result = resultItems;
 			else if (this.keyStat == 5) result = financialItems;
 			else if (this.keyStat == 6) result = plannerItems;
+			else if (this.keyStat == 7) result = residenceItems;
 			else if (!this.keyStat) result = generalItems;
 
 			return result;

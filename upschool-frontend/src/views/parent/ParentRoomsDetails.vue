@@ -14,15 +14,10 @@
 				<v-col cols="12">
 					<div>
 						<v-card flat class="pa-3 mt-5">
-							<v-tabs
-								v-model="tab"
-								background-color="transparent"
-							>
-								<v-tab v-for="tab in tabs" :key="tab.id">
-									{{ tab.title }}
-								</v-tab>
+							<v-tabs v-model="tab" background-color="transparent">
+								<v-tab :to="{name: tab.route}" v-for="tab in tabs" :key="tab.id">{{ tab.title }}</v-tab>
 							</v-tabs>
-							<!-- <router-view></router-view> -->
+							<router-view></router-view>
 						</v-card>
 					</div>
 				</v-col>
@@ -39,10 +34,18 @@ export default {
 			tab: null,
 			room: {},
 			tabs: [
-				{ id: 1, title: "Overview", route: "" },
-				{ id: 2, title: "Occupancy", route: "" },
-				{ id: 3, title: "Issues", route: "" },
-			],
+				{
+					id: 1,
+					title: "Overview",
+					route: "parent.rooms.details"
+				},
+				{
+					id: 2,
+					title: "Occupancy",
+					route: "parent.rooms.details.occupancy"
+				},
+				{ id: 3, title: "Issues", route: "parent.rooms.details.issues" }
+			]
 		};
 	},
 	computed: {
@@ -51,12 +54,12 @@ export default {
 				return this.room.hall.name || "";
 			}
 			return "";
-		},
+		}
 	},
 	methods: {
 		goBack() {
 			this.$router.push({ name: "parent.rooms" });
-		},
+		}
 	},
 	async mounted() {
 		try {
@@ -69,6 +72,6 @@ export default {
 		} catch (error) {
 			console.log(error);
 		}
-	},
+	}
 };
 </script>

@@ -312,3 +312,5 @@ Route::group([], function ($router) {
 
     Route::post('halls-bulk', 'HallController@storeBulk');
 });
+
+Route::get('allocation-settings', 'AllocationSettingController@index');

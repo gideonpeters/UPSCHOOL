@@ -248,9 +248,37 @@ export default [
 	},
 	{
 		path: "residence",
-		name: "student.residence",
-		meta: { title: "Residence" },
-		component: () => import("./../views/student/StudentResidence"),
+		// name: "student.residence",
+		component: () => import("./../views/student/layouts/Residence"),
+		children: [
+			{
+				path: "",
+				name: "student.residence",
+				meta: { title: "Residence", key: 7 },
+				component: () =>
+					import(
+						"./../views/student/components/residence/ResidenceView"
+					),
+			},
+			{
+				path: "history",
+				name: "student.residence.history",
+				meta: { title: "Residence History", key: 7 },
+				component: () =>
+					import(
+						"./../views/student/components/residence/ResidenceHistory"
+					),
+			},
+			{
+				path: "issues",
+				name: "student.residence.issues",
+				meta: { title: "Residence Issues", key: 7 },
+				component: () =>
+					import(
+						"./../views/student/components/residence/ResidenceIssues"
+					),
+			},
+		],
 	},
 	{
 		path: "settings",

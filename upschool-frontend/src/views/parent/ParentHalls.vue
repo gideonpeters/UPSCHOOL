@@ -3,10 +3,7 @@
 		<v-container>
 			<v-row>
 				<v-col cols="3">
-					<metric-card
-						title="Number of Halls"
-						:value="halls.length"
-					/>
+					<metric-card title="Number of Halls" :value="halls.length" />
 				</v-col>
 				<v-col cols="3">
 					<metric-card
@@ -19,54 +16,26 @@
 				<v-col cols="12">
 					<v-col cols="12" md="12">
 						<div class="text-lg-right">
-							<v-menu
-								offset-y
-								close-on-click
-								close-on-content-click
-							>
+							<v-menu offset-y close-on-click close-on-content-click>
 								<template v-slot:activator="{ on }">
 									<v-spacer></v-spacer>
-									<v-btn
-										color="primary"
-										depressed
-										dark
-										v-on="on"
-										>ACTIONS</v-btn
-									>
+									<v-btn color="primary" depressed dark v-on="on">ACTIONS</v-btn>
 								</template>
 								<v-list>
-									<v-list-item
-										v-for="(item, index) in actions"
-										:key="index"
-									>
-										<v-list-item-title
-											class="pointer"
-											@click="item.fn"
-											>{{ item.title }}</v-list-item-title
-										>
+									<v-list-item v-for="(item, index) in actions" :key="index">
+										<v-list-item-title class="pointer" @click="item.fn">{{ item.title }}</v-list-item-title>
 									</v-list-item>
 								</v-list>
 							</v-menu>
 						</div>
 						<div class>
-							<v-dialog
-								v-model="dialogFull"
-								fullscreen
-								hide-overlay
-								transition="dialog-bottom-transition"
-							>
+							<v-dialog v-model="dialogFull" fullscreen hide-overlay transition="dialog-bottom-transition">
 								<v-card>
 									<v-toolbar dark color="primary">
-										<v-btn
-											icon
-											dark
-											@click="dialogFull = false"
-										>
+										<v-btn icon dark @click="dialogFull = false">
 											<v-icon>mdi-close</v-icon>
 										</v-btn>
-										<v-toolbar-title
-											>CREATE HALL(S)</v-toolbar-title
-										>
+										<v-toolbar-title>CREATE HALL(S)</v-toolbar-title>
 										<v-spacer></v-spacer>
 										<v-toolbar-items>
 											<v-btn
@@ -80,18 +49,14 @@
 														: null
 												"
 												@click="saveBulk"
-												>Save</v-btn
-											>
+											>Save</v-btn>
 										</v-toolbar-items>
 									</v-toolbar>
 									<!-- <v-list>
 										<v-list-item>
 									<v-list-item-content>-->
 									<v-container>
-										<v-checkbox
-											label="Bulk Addition"
-											v-model="isBulk"
-										></v-checkbox>
+										<v-checkbox label="Bulk Addition" v-model="isBulk"></v-checkbox>
 									</v-container>
 									<!-- </v-list-item-content>
 										</v-list-item>
@@ -100,9 +65,7 @@
 										<v-list-item>
 											<v-list-item-content>
 												<v-container>
-													<v-list-item-title>
-														Create Hall
-													</v-list-item-title>
+													<v-list-item-title>Create Hall</v-list-item-title>
 													<v-row align="center">
 														<v-col cols="6">
 															<v-text-field
@@ -132,11 +95,7 @@
 																"
 															></v-text-field>
 														</v-col>
-														<v-col
-															class="d-flex"
-															cols="12"
-															sm="6"
-														>
+														<v-col class="d-flex" cols="12" sm="6">
 															<v-select
 																:items="
 																	roomTypes
@@ -144,31 +103,23 @@
 																label="Room Type"
 																outlined
 															>
-																<template
-																	v-slot:item="{
+																<template v-slot:item="{
 																		item,
-																	}"
-																>
+																	}">
 																	{{
-																		item.title
+																	item.title
 																	}}
 																</template>
-																<template
-																	v-slot:selection="{
+																<template v-slot:selection="{
 																		item,
-																	}"
-																>
+																	}">
 																	{{
-																		item.title
+																	item.title
 																	}},
 																</template>
 															</v-select>
 														</v-col>
-														<v-col
-															class="d-flex"
-															cols="12"
-															sm="6"
-														>
+														<v-col class="d-flex" cols="12" sm="6">
 															<v-select
 																multiple
 																clearable
@@ -180,11 +131,7 @@
 																outlined
 															></v-select>
 														</v-col>
-														<v-col
-															class="d-flex"
-															cols="12"
-															sm="6"
-														>
+														<v-col class="d-flex" cols="12" sm="6">
 															<v-select
 																multiple
 																clearable
@@ -199,11 +146,7 @@
 																outlined
 															></v-select>
 														</v-col>
-														<v-col
-															class="d-flex"
-															cols="12"
-															sm="6"
-														>
+														<v-col class="d-flex" cols="12" sm="6">
 															<v-select
 																multiple
 																clearable
@@ -219,11 +162,7 @@
 																outlined
 															></v-select>
 														</v-col>
-														<v-col
-															class="d-flex"
-															cols="12"
-															sm="6"
-														>
+														<v-col class="d-flex" cols="12" sm="6">
 															<v-select
 																multiple
 																clearable
@@ -236,11 +175,7 @@
 																outlined
 															></v-select>
 														</v-col>
-														<v-col
-															class="d-flex"
-															cols="12"
-															sm="6"
-														>
+														<v-col class="d-flex" cols="12" sm="6">
 															<v-select
 																multiple
 																clearable
@@ -255,11 +190,7 @@
 														<v-col cols="12">
 															<div class="d-flex">
 																<v-spacer></v-spacer>
-																<v-btn
-																	color="success"
-																	depressed
-																	>SAVE</v-btn
-																>
+																<v-btn color="success" depressed>SAVE</v-btn>
 															</div>
 														</v-col>
 													</v-row>
@@ -271,12 +202,10 @@
 										<v-list-item>
 											<v-list-item-content>
 												<v-container>
-													<v-list-item-title>
-														Add Halls (Bulk)
-													</v-list-item-title>
+													<v-list-item-title>Add Halls (Bulk)</v-list-item-title>
 													<v-row>
 														<!-- <v-col cols="12">
-														</v-col> -->
+														</v-col>-->
 														<v-col cols="12" md="6">
 															<v-btn
 																class="my-5"
@@ -287,9 +216,7 @@
 																@click="
 																	downloadFormat
 																"
-															>
-																Download format
-															</v-btn>
+															>Download format</v-btn>
 															<v-file-input
 																persistent-hint
 																hint="make sure to download template before uploading file and upload with headers from template still present and unchanged in position"
@@ -317,18 +244,14 @@
 															>
 																Preview imported
 																CSV
-															</v-btn> -->
+															</v-btn>-->
 														</v-col>
 														<v-col cols="12" md="6">
 															<div>
 																The required
 																fields are:
-																<ul
-																	class="mt-2"
-																>
-																	<li>
-																		Name
-																	</li>
+																<ul class="mt-2">
+																	<li>Name</li>
 																</ul>
 															</div>
 															<div class="my-2">
@@ -341,9 +264,7 @@
 																where specified.
 																Note the
 																following:
-																<ul
-																	class="mt-2"
-																>
+																<ul class="mt-2">
 																	<li>
 																		Preferred
 																		Levels
@@ -476,21 +397,11 @@
 																</ul>
 															</div>
 														</v-col>
-														<v-col
-															cols="12"
-															md="12"
-															v-if="
+														<v-col cols="12" md="12" v-if="
 																dummy.length > 0
-															"
-														>
-															<v-card
-																flat
-																class="pa-3"
-															>
-																<v-subheader
-																	class="pa-0"
-																	>PREVIEW</v-subheader
-																>
+															">
+															<v-card flat class="pa-3">
+																<v-subheader class="pa-0">PREVIEW</v-subheader>
 																<v-data-table
 																	:headers="
 																		bulkHeaders
@@ -515,22 +426,16 @@
 					<v-card flat class="pa-3">
 						<v-data-table :headers="headers" :items="halls">
 							<template v-slot:item.name="{ item }">
-								<div class=" text-capitalize">
-									{{ item.name }}
-								</div>
+								<div class="text-capitalize">{{ item.name }}</div>
 							</template>
-							<template
-								v-slot:item.preferred_student_type="{ item }"
-							>
+							<template v-slot:item.preferred_student_type="{ item }">
 								<v-chip
 									small
-									class=" text-uppercase"
+									class="text-uppercase"
 									v-for="(it,
 									ix) in item.preferred_student_type"
 									:key="ix"
-								>
-									{{ it }}
-								</v-chip>
+								>{{ it }}</v-chip>
 							</template>
 
 							<template v-slot:item.actions="{ item }">
@@ -568,7 +473,7 @@ import Papa from "papaparse";
 import Axios from "axios";
 export default {
 	components: {
-		MetricCard,
+		MetricCard
 		// DownloadCsv
 	},
 	data() {
@@ -585,13 +490,13 @@ export default {
 				{ text: "PREFERRED PROGRAM(S)", value: "preferred_program" },
 				{
 					text: "PREFERRED NATIONALITIES",
-					value: "preferred_nationality",
+					value: "preferred_nationality"
 				},
 				{
 					text: "PREFERRED STUDENT TYPE(S)",
-					value: "preferred_student_type",
+					value: "preferred_student_type"
 				},
-				{ text: "PREFERRED LEVEL(S)", value: "preferred_level" },
+				{ text: "PREFERRED LEVEL(S)", value: "preferred_level" }
 			],
 			bulkFile: "",
 			file: [],
@@ -606,14 +511,14 @@ export default {
 				{
 					text: "PREFERRED STUDENT TYPES",
 					value: "preferred_student_type",
-					sortable: true,
+					sortable: true
 				},
 				{
 					text: "ACTIONS",
 					value: "actions",
 					sortable: true,
-					align: "center",
-				},
+					align: "center"
+				}
 			],
 			items: [
 				{
@@ -625,7 +530,7 @@ export default {
 					preferred_sex: "male",
 					preferred_program_id: null,
 					preferred_nationality: "local",
-					preferred_student_type: "Undergraduate",
+					preferred_student_type: "Undergraduate"
 				},
 				{
 					id: 2,
@@ -636,7 +541,7 @@ export default {
 					preferred_sex: "female",
 					preferred_program_id: null,
 					preferred_nationality: "international",
-					preferred_student_type: "Undergraduate",
+					preferred_student_type: "Undergraduate"
 				},
 				{
 					id: 3,
@@ -647,15 +552,15 @@ export default {
 					preferred_sex: "female",
 					preferred_program_id: null,
 					preferred_nationality: "local",
-					preferred_student_type: "postgraduate",
-				},
+					preferred_student_type: "postgraduate"
+				}
 			],
 			actions: [
 				{
 					title: "Create Hall",
-					fn: () => (this.dialogFull = true),
-				},
-			],
+					fn: () => (this.dialogFull = true)
+				}
+			]
 		};
 	},
 	computed: {
@@ -669,10 +574,10 @@ export default {
 					preferred_program: "",
 					preferred_nationality: "",
 					preferred_student_type: "",
-					preferred_level: "",
-				},
+					preferred_level: ""
+				}
 			];
-		},
+		}
 	},
 	methods: {
 		goToPage(routeName, id) {
@@ -688,7 +593,7 @@ export default {
 			// console.log(csv);
 
 			var csvData = new File([csv], "hall_template.csv", {
-				type: "text/csv;charset=utf-8",
+				type: "text/csv;charset=utf-8"
 			});
 
 			saveAs(csvData);
@@ -698,10 +603,10 @@ export default {
 				var reader = new FileReader();
 
 				reader.readAsText(ent);
-				reader.onload = async (evt) => {
+				reader.onload = async evt => {
 					this.dummy = await Papa.parse(evt.target.result, {
 						header: true,
-						skipEmptyLines: true,
+						skipEmptyLines: true
 					}).data;
 					// console.log(this.dummy);
 				};
@@ -710,12 +615,12 @@ export default {
 		async saveBulk() {
 			try {
 				if (this.dummy.length > 0) {
-					let items = this.dummy.map((item) => ({
+					let items = this.dummy.map(item => ({
 						name: item.name,
 						description: item.description,
 						capacity: item.capacity,
-						preferred_sex: item.sex
-							? JSON.stringify(item.sex.split(","))
+						preferred_sex: item.preferred_sex
+							? JSON.stringify(item.preferred_sex.split(","))
 							: null,
 						preferred_program: item.preferred_program
 							? JSON.stringify(item.preferred_program.split(","))
@@ -732,11 +637,11 @@ export default {
 							: null,
 						preferred_level: item.preferred_level
 							? JSON.stringify(item.preferred_level.split(","))
-							: null,
+							: null
 					}));
 
 					let res = await Axios.post("halls-bulk", {
-						data: JSON.stringify(items),
+						data: JSON.stringify(items)
 					});
 
 					this.$store.commit("openSnackbar", res.data.message);
@@ -757,7 +662,7 @@ export default {
 			} catch (error) {
 				console.log(error);
 			}
-		},
+		}
 	},
 	async mounted() {
 		try {
@@ -771,7 +676,7 @@ export default {
 			if (!v) {
 				this.dummy = [];
 			}
-		},
-	},
+		}
+	}
 };
 </script>
