@@ -14,17 +14,17 @@ export default new Vuex.Store({
 				title: "Departmental Courses",
 				subCategories: [
 					{ id: 1, title: "EIE Courses" },
-					{ id: 2, title: "Mech Courses" }
-				]
+					{ id: 2, title: "Mech Courses" },
+				],
 			},
 			{
 				id: 2,
 				title: "College Wide Courses Course",
 				subCategories: [
 					{ id: 1, title: "CST Courses" },
-					{ id: 2, title: "COE Courses" }
-				]
-			}
+					{ id: 2, title: "COE Courses" },
+				],
+			},
 		],
 		courses: [
 			{
@@ -36,23 +36,23 @@ export default new Vuex.Store({
 				semester: { id: 1, name: "Alpha Semester" },
 				prerequisites: [
 					{ id: 1, course_id: 5 },
-					{ id: 2, course_id: 2 }
+					{ id: 2, course_id: 2 },
 				],
 				facilitators: [
 					{ id: 1, staff_id: 1 },
-					{ id: 2, staff_id: 2 }
+					{ id: 2, staff_id: 2 },
 				],
 				categories: [
 					{
 						id: 1,
 						title: "Departmental Courses",
-						subCategories: [{ id: 1, title: "EIE Courses" }]
+						subCategories: [{ id: 1, title: "EIE Courses" }],
 					},
 					{
 						id: 1,
 						title: "College Wide Courses Course",
-						subCategories: [{ id: 2, title: "COE Courses" }]
-					}
+						subCategories: [{ id: 2, title: "COE Courses" }],
+					},
 				],
 				sections: [
 					{
@@ -63,15 +63,15 @@ export default new Vuex.Store({
 							{
 								id: 2,
 								name: "Mobility of electrons.docx",
-								type: "file"
+								type: "file",
 							},
 							{
 								id: 3,
 								name: "Term Paper",
 								type: "assignment",
-								submissions: []
-							}
-						]
+								submissions: [],
+							},
+						],
 					},
 					{
 						id: 2,
@@ -81,16 +81,16 @@ export default new Vuex.Store({
 								id: 1,
 								name:
 									"Electron stability by Professor Wiley & PJ Morton.pdf",
-								type: "file"
+								type: "file",
 							},
 							{
 								id: 2,
 								name: "Mobility of electrons 2.docx",
-								type: "file"
+								type: "file",
 							},
-							{ id: 3, name: "Term Paper 2", type: "assignment" }
-						]
-					}
+							{ id: 3, name: "Term Paper 2", type: "assignment" },
+						],
+					},
 				],
 				participants: [
 					{
@@ -110,7 +110,7 @@ export default new Vuex.Store({
 						program_id: 1,
 						room_number: "D402",
 						level: 500,
-						attendance: { scored_attendance: 15 }
+						attendance: { scored_attendance: 15 },
 					},
 					{
 						id: 2,
@@ -129,7 +129,7 @@ export default new Vuex.Store({
 						program_id: 1,
 						room_number: "D402",
 						level: 500,
-						attendance: { scored_attendance: 9 }
+						attendance: { scored_attendance: 9 },
 					},
 					{
 						id: 3,
@@ -148,7 +148,7 @@ export default new Vuex.Store({
 						program_id: 1,
 						room_number: "D402",
 						level: 500,
-						attendance: { scored_attendance: 10 }
+						attendance: { scored_attendance: 10 },
 					},
 					{
 						id: 4,
@@ -167,7 +167,7 @@ export default new Vuex.Store({
 						program_id: 1,
 						room_number: "D402",
 						level: 400,
-						attendance: { scored_attendance: 8 }
+						attendance: { scored_attendance: 8 },
 					},
 					{
 						id: 5,
@@ -186,9 +186,9 @@ export default new Vuex.Store({
 						program_id: 1,
 						room_number: "D402",
 						level: 300,
-						attendance: { scored_attendance: 18 }
-					}
-				]
+						attendance: { scored_attendance: 18 },
+					},
+				],
 			},
 			{
 				id: 2,
@@ -200,19 +200,19 @@ export default new Vuex.Store({
 				prerequisites: [{ id: 1, course_id: 3 }],
 				facilitators: [
 					{ id: 1, staff_id: 1 },
-					{ id: 2, staff_id: 3 }
+					{ id: 2, staff_id: 3 },
 				],
 				categories: [
 					{
 						id: 1,
 						title: "Departmental Courses",
-						subCategories: [{ id: 1, title: "EIE Courses" }]
+						subCategories: [{ id: 1, title: "EIE Courses" }],
 					},
 					{
 						id: 1,
 						title: "College Wide Courses Course",
-						subCategories: [{ id: 2, title: "COE Courses" }]
-					}
+						subCategories: [{ id: 2, title: "COE Courses" }],
+					},
 				],
 
 				sections: [
@@ -224,10 +224,10 @@ export default new Vuex.Store({
 							{
 								id: 2,
 								name: "Mobility of electrons.docx",
-								type: "file"
+								type: "file",
 							},
-							{ id: 3, name: "Term Paper", type: "assignment" }
-						]
+							{ id: 3, name: "Term Paper", type: "assignment" },
+						],
 					},
 					{
 						id: 2,
@@ -237,16 +237,16 @@ export default new Vuex.Store({
 								id: 1,
 								name:
 									"Electron stability by Professor Wiley & PJ Morton.pdf",
-								type: "file"
+								type: "file",
 							},
 							{
 								id: 2,
 								name: "Mobility of electrons 2.docx",
-								type: "file"
+								type: "file",
 							},
-							{ id: 3, name: "Term Paper 2", type: "assignment" }
-						]
-					}
+							{ id: 3, name: "Term Paper 2", type: "assignment" },
+						],
+					},
 				],
 				participants: [
 					{
@@ -266,7 +266,7 @@ export default new Vuex.Store({
 						program_id: 1,
 						room_number: "D402",
 						level: 500,
-						attendance: { scored_attendance: 15 }
+						attendance: { scored_attendance: 15 },
 					},
 					{
 						id: 2,
@@ -285,7 +285,7 @@ export default new Vuex.Store({
 						program_id: 1,
 						room_number: "D402",
 						level: 500,
-						attendance: { scored_attendance: 9 }
+						attendance: { scored_attendance: 9 },
 					},
 					{
 						id: 3,
@@ -304,7 +304,7 @@ export default new Vuex.Store({
 						program_id: 1,
 						room_number: "D402",
 						level: 500,
-						attendance: { scored_attendance: 10 }
+						attendance: { scored_attendance: 10 },
 					},
 					{
 						id: 4,
@@ -323,7 +323,7 @@ export default new Vuex.Store({
 						program_id: 1,
 						room_number: "D402",
 						level: 400,
-						attendance: { scored_attendance: 8 }
+						attendance: { scored_attendance: 8 },
 					},
 					{
 						id: 5,
@@ -342,9 +342,9 @@ export default new Vuex.Store({
 						program_id: 1,
 						room_number: "D402",
 						level: 300,
-						attendance: { scored_attendance: 18 }
-					}
-				]
+						attendance: { scored_attendance: 18 },
+					},
+				],
 			},
 			{
 				id: 3,
@@ -356,19 +356,19 @@ export default new Vuex.Store({
 				prerequisites: [{ id: 1, course_id: 4 }],
 				facilitators: [
 					{ id: 1, staff_id: 3 },
-					{ id: 2, staff_id: 4 }
+					{ id: 2, staff_id: 4 },
 				],
 				categories: [
 					{
 						id: 1,
 						title: "Departmental Courses",
-						subCategories: [{ id: 2, title: "Mech Courses" }]
+						subCategories: [{ id: 2, title: "Mech Courses" }],
 					},
 					{
 						id: 1,
 						title: "College Wide Courses Course",
-						subCategories: [{ id: 2, title: "COE Courses" }]
-					}
+						subCategories: [{ id: 2, title: "COE Courses" }],
+					},
 				],
 				sections: [
 					{
@@ -379,10 +379,10 @@ export default new Vuex.Store({
 							{
 								id: 2,
 								name: "Mobility of electrons.docx",
-								type: "file"
+								type: "file",
 							},
-							{ id: 3, name: "Term Paper", type: "assignment" }
-						]
+							{ id: 3, name: "Term Paper", type: "assignment" },
+						],
 					},
 					{
 						id: 2,
@@ -392,16 +392,16 @@ export default new Vuex.Store({
 								id: 1,
 								name:
 									"Electron stability by Professor Wiley & PJ Morton.pdf",
-								type: "file"
+								type: "file",
 							},
 							{
 								id: 2,
 								name: "Mobility of electrons 2.docx",
-								type: "file"
+								type: "file",
 							},
-							{ id: 3, name: "Term Paper 2", type: "assignment" }
-						]
-					}
+							{ id: 3, name: "Term Paper 2", type: "assignment" },
+						],
+					},
 				],
 				participants: [
 					{
@@ -421,7 +421,7 @@ export default new Vuex.Store({
 						program_id: 1,
 						room_number: "D402",
 						level: 500,
-						attendance: { scored_attendance: 15 }
+						attendance: { scored_attendance: 15 },
 					},
 					{
 						id: 2,
@@ -440,7 +440,7 @@ export default new Vuex.Store({
 						program_id: 1,
 						room_number: "D402",
 						level: 500,
-						attendance: { scored_attendance: 9 }
+						attendance: { scored_attendance: 9 },
 					},
 					{
 						id: 3,
@@ -459,7 +459,7 @@ export default new Vuex.Store({
 						program_id: 1,
 						room_number: "D402",
 						level: 500,
-						attendance: { scored_attendance: 10 }
+						attendance: { scored_attendance: 10 },
 					},
 					{
 						id: 4,
@@ -478,7 +478,7 @@ export default new Vuex.Store({
 						program_id: 1,
 						room_number: "D402",
 						level: 400,
-						attendance: { scored_attendance: 8 }
+						attendance: { scored_attendance: 8 },
 					},
 					{
 						id: 5,
@@ -497,9 +497,9 @@ export default new Vuex.Store({
 						program_id: 1,
 						room_number: "D402",
 						level: 300,
-						attendance: { scored_attendance: 18 }
-					}
-				]
+						attendance: { scored_attendance: 18 },
+					},
+				],
 			},
 			{
 				id: 4,
@@ -511,19 +511,19 @@ export default new Vuex.Store({
 				prerequisites: [{ id: 1, course_id: 2 }],
 				facilitators: [
 					{ id: 1, staff_id: 4 },
-					{ id: 2, staff_id: 2 }
+					{ id: 2, staff_id: 2 },
 				],
 				categories: [
 					{
 						id: 1,
 						title: "Departmental Courses",
-						subCategories: [{ id: 1, title: "EIE Courses" }]
+						subCategories: [{ id: 1, title: "EIE Courses" }],
 					},
 					{
 						id: 1,
 						title: "College Wide Courses Course",
-						subCategories: [{ id: 2, title: "COE Courses" }]
-					}
+						subCategories: [{ id: 2, title: "COE Courses" }],
+					},
 				],
 
 				sections: [
@@ -535,10 +535,10 @@ export default new Vuex.Store({
 							{
 								id: 2,
 								name: "Mobility of electrons.docx",
-								type: "file"
+								type: "file",
 							},
-							{ id: 3, name: "Term Paper", type: "assignment" }
-						]
+							{ id: 3, name: "Term Paper", type: "assignment" },
+						],
 					},
 					{
 						id: 2,
@@ -548,16 +548,16 @@ export default new Vuex.Store({
 								id: 1,
 								name:
 									"Electron stability by Professor Wiley & PJ Morton.pdf",
-								type: "file"
+								type: "file",
 							},
 							{
 								id: 2,
 								name: "Mobility of electrons 2.docx",
-								type: "file"
+								type: "file",
 							},
-							{ id: 3, name: "Term Paper 2", type: "assignment" }
-						]
-					}
+							{ id: 3, name: "Term Paper 2", type: "assignment" },
+						],
+					},
 				],
 				participants: [
 					{
@@ -577,7 +577,7 @@ export default new Vuex.Store({
 						program_id: 1,
 						room_number: "D402",
 						level: 500,
-						attendance: { scored_attendance: 15 }
+						attendance: { scored_attendance: 15 },
 					},
 					{
 						id: 2,
@@ -596,7 +596,7 @@ export default new Vuex.Store({
 						program_id: 1,
 						room_number: "D402",
 						level: 500,
-						attendance: { scored_attendance: 9 }
+						attendance: { scored_attendance: 9 },
 					},
 					{
 						id: 3,
@@ -615,7 +615,7 @@ export default new Vuex.Store({
 						program_id: 1,
 						room_number: "D402",
 						level: 500,
-						attendance: { scored_attendance: 10 }
+						attendance: { scored_attendance: 10 },
 					},
 					{
 						id: 4,
@@ -634,7 +634,7 @@ export default new Vuex.Store({
 						program_id: 1,
 						room_number: "D402",
 						level: 400,
-						attendance: { scored_attendance: 8 }
+						attendance: { scored_attendance: 8 },
 					},
 					{
 						id: 5,
@@ -653,9 +653,9 @@ export default new Vuex.Store({
 						program_id: 1,
 						room_number: "D402",
 						level: 300,
-						attendance: { scored_attendance: 18 }
-					}
-				]
+						attendance: { scored_attendance: 18 },
+					},
+				],
 			},
 			{
 				id: 5,
@@ -668,19 +668,19 @@ export default new Vuex.Store({
 				prerequisites: [{ id: 1, course_id: 1 }],
 				facilitators: [
 					{ id: 1, staff_id: 3 },
-					{ id: 2, staff_id: 1 }
+					{ id: 2, staff_id: 1 },
 				],
 				categories: [
 					{
 						id: 1,
 						title: "Departmental Courses",
-						subCategories: [{ id: 2, title: "Mech Courses" }]
+						subCategories: [{ id: 2, title: "Mech Courses" }],
 					},
 					{
 						id: 1,
 						title: "College Wide Courses Course",
-						subCategories: [{ id: 1, title: "CST Courses" }]
-					}
+						subCategories: [{ id: 1, title: "CST Courses" }],
+					},
 				],
 				sections: [
 					{
@@ -691,10 +691,10 @@ export default new Vuex.Store({
 							{
 								id: 2,
 								name: "Mobility of electrons.docx",
-								type: "file"
+								type: "file",
 							},
-							{ id: 3, name: "Term Paper", type: "assignment" }
-						]
+							{ id: 3, name: "Term Paper", type: "assignment" },
+						],
 					},
 					{
 						id: 2,
@@ -704,16 +704,16 @@ export default new Vuex.Store({
 								id: 1,
 								name:
 									"Electron stability by Professor Wiley & PJ Morton.pdf",
-								type: "file"
+								type: "file",
 							},
 							{
 								id: 2,
 								name: "Mobility of electrons 2.docx",
-								type: "file"
+								type: "file",
 							},
-							{ id: 3, name: "Term Paper 2", type: "assignment" }
-						]
-					}
+							{ id: 3, name: "Term Paper 2", type: "assignment" },
+						],
+					},
 				],
 				participants: [
 					{
@@ -733,7 +733,7 @@ export default new Vuex.Store({
 						program_id: 1,
 						room_number: "D402",
 						level: 500,
-						attendance: { scored_attendance: 15 }
+						attendance: { scored_attendance: 15 },
 					},
 					{
 						id: 2,
@@ -752,7 +752,7 @@ export default new Vuex.Store({
 						program_id: 1,
 						room_number: "D402",
 						level: 500,
-						attendance: { scored_attendance: 9 }
+						attendance: { scored_attendance: 9 },
 					},
 					{
 						id: 3,
@@ -771,7 +771,7 @@ export default new Vuex.Store({
 						program_id: 1,
 						room_number: "D402",
 						level: 500,
-						attendance: { scored_attendance: 10 }
+						attendance: { scored_attendance: 10 },
 					},
 					{
 						id: 4,
@@ -790,7 +790,7 @@ export default new Vuex.Store({
 						program_id: 1,
 						room_number: "D402",
 						level: 400,
-						attendance: { scored_attendance: 8 }
+						attendance: { scored_attendance: 8 },
 					},
 					{
 						id: 5,
@@ -809,10 +809,10 @@ export default new Vuex.Store({
 						program_id: 1,
 						room_number: "D402",
 						level: 300,
-						attendance: { scored_attendance: 18 }
-					}
-				]
-			}
+						attendance: { scored_attendance: 18 },
+					},
+				],
+			},
 		],
 		course_statuses: [],
 		student_courses: [
@@ -821,28 +821,28 @@ export default new Vuex.Store({
 				title: "Real Analysis",
 				course_code: "MAT411",
 				status: "registered",
-				attendance: 0.75
+				attendance: 0.75,
 			},
 			{
 				id: 2,
 				title: "Real Analysis II",
 				course_code: "MAT412",
 				status: "registered",
-				attendance: 1
+				attendance: 1,
 			},
 			{
 				id: 3,
 				title: "Logisitics & Statistics",
 				course_code: "MAT411",
 				status: "registered",
-				attendance: 0.5
+				attendance: 0.5,
 			},
 			{
 				id: 4,
 				title: "Numerical Analysis",
 				course_code: "MAT411",
 				status: "Pending",
-				attendance: 0.2
+				attendance: 0.2,
 			},
 			{
 				id: 5,
@@ -850,35 +850,35 @@ export default new Vuex.Store({
 					"Introduction to Embedded Systems and VHDL design patterns",
 				course_code: "MAT411",
 				status: "Pending",
-				attendance: 0.9
+				attendance: 0.9,
 			},
 			{
 				id: 6,
 				title: "Real Analysis",
 				course_code: "MAT411",
 				status: "registered",
-				attendance: 0.75
+				attendance: 0.75,
 			},
 			{
 				id: 7,
 				title: "Real Analysis II",
 				course_code: "MAT412",
 				status: "registered",
-				attendance: 1
+				attendance: 1,
 			},
 			{
 				id: 8,
 				title: "Logisitics & Statistics",
 				course_code: "MAT411",
 				status: "registered",
-				attendance: 0.5
+				attendance: 0.5,
 			},
 			{
 				id: 9,
 				title: "Numerical Analysis",
 				course_code: "MAT411",
 				status: "Pending",
-				attendance: 0.2
+				attendance: 0.2,
 			},
 			{
 				id: 10,
@@ -886,22 +886,22 @@ export default new Vuex.Store({
 					"Introduction to Embedded Systems and VHDL design patterns Introduction to Embedded Systems and VHDL design patterns",
 				course_code: "MAT411",
 				status: "Pending",
-				attendance: 0.9
-			}
+				attendance: 0.9,
+			},
 		],
 		studentHeaders: [
 			{
 				text: "Name",
 				align: "left",
 				sortable: false,
-				value: "name"
+				value: "name",
 			},
 			{ text: "Matriculation Number", value: "matric_number" },
 			{ text: "Registration Number", value: "reg_number" },
 			{ text: "Department", value: "department" },
 			{ text: "Grade/Level", value: "level" },
 			{ text: "Residence", value: "residence" },
-			{ text: "Actions", value: "actions", sortable: false }
+			{ text: "Actions", value: "actions", sortable: false },
 		],
 		students: [
 			{
@@ -921,14 +921,14 @@ export default new Vuex.Store({
 						id: 1,
 						name: "Justice Engworo",
 						phone_number1: "+2348035050175",
-						relationship: "Father"
+						relationship: "Father",
 					},
 					{
 						id: 2,
 						name: "Maya Angelou",
 						phone_number: "+2347089324817",
-						relationship: "Mother"
-					}
+						relationship: "Mother",
+					},
 				],
 				sex: "female",
 				dob: "03/12/1998",
@@ -949,7 +949,7 @@ export default new Vuex.Store({
 						priority: "Compulsory",
 						total_attendance: 18,
 						venue: "Covenant University Chapel",
-						time: "5:30AM"
+						time: "5:30AM",
 					},
 					{
 						id: 2,
@@ -959,7 +959,7 @@ export default new Vuex.Store({
 						priority: "Compulsory",
 						total_attendance: 18,
 						venue: "Covenant University Chapel",
-						time: "6:00AM"
+						time: "6:00AM",
 					},
 					{
 						id: 4,
@@ -969,9 +969,9 @@ export default new Vuex.Store({
 						priority: "Compulsory",
 						total_attendance: 18,
 						venue: "Covenant University Chapel",
-						time: "8:00AM"
-					}
-				]
+						time: "8:00AM",
+					},
+				],
 			},
 			{
 				id: 2,
@@ -990,14 +990,14 @@ export default new Vuex.Store({
 						id: 1,
 						name: "Justice Engworo",
 						phone_number1: "+2348035050175",
-						relationship: "Father"
+						relationship: "Father",
 					},
 					{
 						id: 2,
 						name: "Maya Angelou",
 						phone_number: "+2347089324817",
-						relationship: "Mother"
-					}
+						relationship: "Mother",
+					},
 				],
 				sex: "female",
 				dob: "03/12/1998",
@@ -1018,7 +1018,7 @@ export default new Vuex.Store({
 						priority: "Compulsory",
 						total_attendance: 18,
 						venue: "Covenant University Chapel",
-						time: "5:30AM"
+						time: "5:30AM",
 					},
 					{
 						id: 2,
@@ -1028,7 +1028,7 @@ export default new Vuex.Store({
 						priority: "Compulsory",
 						total_attendance: 18,
 						venue: "Covenant University Chapel",
-						time: "6:00AM"
+						time: "6:00AM",
 					},
 					{
 						id: 4,
@@ -1038,9 +1038,9 @@ export default new Vuex.Store({
 						priority: "Compulsory",
 						total_attendance: 18,
 						venue: "Covenant University Chapel",
-						time: "8:00AM"
-					}
-				]
+						time: "8:00AM",
+					},
+				],
 			},
 			{
 				id: 3,
@@ -1059,14 +1059,14 @@ export default new Vuex.Store({
 						id: 1,
 						name: "Justice Engworo",
 						phone_number1: "+2348035050175",
-						relationship: "Father"
+						relationship: "Father",
 					},
 					{
 						id: 2,
 						name: "Maya Angelou",
 						phone_number: "+2347089324817",
-						relationship: "Mother"
-					}
+						relationship: "Mother",
+					},
 				],
 				sex: "female",
 				dob: "03/12/1998",
@@ -1087,7 +1087,7 @@ export default new Vuex.Store({
 						priority: "Compulsory",
 						total_attendance: 18,
 						venue: "Covenant University Chapel",
-						time: "5:30AM"
+						time: "5:30AM",
 					},
 					{
 						id: 2,
@@ -1097,7 +1097,7 @@ export default new Vuex.Store({
 						priority: "Compulsory",
 						total_attendance: 18,
 						venue: "Covenant University Chapel",
-						time: "6:00AM"
+						time: "6:00AM",
 					},
 					{
 						id: 4,
@@ -1107,9 +1107,9 @@ export default new Vuex.Store({
 						priority: "Compulsory",
 						total_attendance: 18,
 						venue: "Covenant University Chapel",
-						time: "8:00AM"
-					}
-				]
+						time: "8:00AM",
+					},
+				],
 			},
 			{
 				id: 4,
@@ -1128,14 +1128,14 @@ export default new Vuex.Store({
 						id: 1,
 						name: "Justice Engworo",
 						phone_number1: "+2348035050175",
-						relationship: "Father"
+						relationship: "Father",
 					},
 					{
 						id: 2,
 						name: "Maya Angelou",
 						phone_number: "+2347089324817",
-						relationship: "Mother"
-					}
+						relationship: "Mother",
+					},
 				],
 				sex: "male",
 				dob: "03/12/1998",
@@ -1156,7 +1156,7 @@ export default new Vuex.Store({
 						priority: "Compulsory",
 						total_attendance: 18,
 						venue: "Covenant University Chapel",
-						time: "5:30AM"
+						time: "5:30AM",
 					},
 					{
 						id: 2,
@@ -1166,7 +1166,7 @@ export default new Vuex.Store({
 						priority: "Compulsory",
 						total_attendance: 18,
 						venue: "Covenant University Chapel",
-						time: "6:00AM"
+						time: "6:00AM",
 					},
 					{
 						id: 4,
@@ -1176,7 +1176,7 @@ export default new Vuex.Store({
 						priority: "Compulsory",
 						total_attendance: 18,
 						venue: "Covenant University Chapel",
-						time: "8:00AM"
+						time: "8:00AM",
 					},
 					{
 						id: 5,
@@ -1186,9 +1186,9 @@ export default new Vuex.Store({
 						priority: "Voluntary",
 						total_attendance: 18,
 						venue: "CUCRID Auditorium",
-						time: "12:00PM"
-					}
-				]
+						time: "12:00PM",
+					},
+				],
 			},
 			{
 				id: 5,
@@ -1207,14 +1207,14 @@ export default new Vuex.Store({
 						id: 1,
 						name: "Justice Engworo",
 						phone_number1: "+2348035050175",
-						relationship: "Father"
+						relationship: "Father",
 					},
 					{
 						id: 2,
 						name: "Maya Angelou",
 						phone_number: "+2347089324817",
-						relationship: "Mother"
-					}
+						relationship: "Mother",
+					},
 				],
 				sex: "male",
 				dob: "03/12/1998",
@@ -1235,7 +1235,7 @@ export default new Vuex.Store({
 						priority: "Compulsory",
 						total_attendance: 18,
 						venue: "Covenant University Chapel",
-						time: "5:30AM"
+						time: "5:30AM",
 					},
 					{
 						id: 2,
@@ -1245,7 +1245,7 @@ export default new Vuex.Store({
 						priority: "Compulsory",
 						total_attendance: 18,
 						venue: "Covenant University Chapel",
-						time: "6:00AM"
+						time: "6:00AM",
 					},
 					{
 						id: 3,
@@ -1255,9 +1255,9 @@ export default new Vuex.Store({
 						priority: "Compulsory",
 						total_attendance: 18,
 						venue: "Covenant University Chapel",
-						time: "08:00AM"
-					}
-				]
+						time: "08:00AM",
+					},
+				],
 			},
 			{
 				id: 6,
@@ -1277,14 +1277,14 @@ export default new Vuex.Store({
 						id: 1,
 						name: "Justice Engworo",
 						phone_number1: "+2348035050175",
-						relationship: "Father"
+						relationship: "Father",
 					},
 					{
 						id: 2,
 						name: "Maya Angelou",
 						phone_number: "+2347089324817",
-						relationship: "Mother"
-					}
+						relationship: "Mother",
+					},
 				],
 				sex: "male",
 				dob: "03/12/1998",
@@ -1304,7 +1304,7 @@ export default new Vuex.Store({
 						priority: "Compulsory",
 						total_attendance: 18,
 						venue: "Covenant University Chapel",
-						time: "5:30AM"
+						time: "5:30AM",
 					},
 					{
 						id: 2,
@@ -1314,7 +1314,7 @@ export default new Vuex.Store({
 						priority: "Compulsory",
 						total_attendance: 18,
 						venue: "Covenant University Chapel",
-						time: "6:00AM"
+						time: "6:00AM",
 					},
 					{
 						id: 3,
@@ -1324,9 +1324,9 @@ export default new Vuex.Store({
 						priority: "Compulsory",
 						total_attendance: 18,
 						venue: "Covenant University Chapel",
-						time: "08:00AM"
-					}
-				]
+						time: "08:00AM",
+					},
+				],
 			},
 			{
 				id: 7,
@@ -1346,14 +1346,14 @@ export default new Vuex.Store({
 						id: 1,
 						name: "Justice Engworo",
 						phone_number1: "+2348035050175",
-						relationship: "Father"
+						relationship: "Father",
 					},
 					{
 						id: 2,
 						name: "Maya Angelou",
 						phone_number: "+2347089324817",
-						relationship: "Mother"
-					}
+						relationship: "Mother",
+					},
 				],
 				sex: "male",
 				dob: "03/12/1998",
@@ -1373,7 +1373,7 @@ export default new Vuex.Store({
 						priority: "Compulsory",
 						total_attendance: 18,
 						venue: "Covenant University Chapel",
-						time: "5:30AM"
+						time: "5:30AM",
 					},
 					{
 						id: 2,
@@ -1383,7 +1383,7 @@ export default new Vuex.Store({
 						priority: "Compulsory",
 						total_attendance: 18,
 						venue: "Covenant University Chapel",
-						time: "6:00AM"
+						time: "6:00AM",
 					},
 					{
 						id: 5,
@@ -1393,7 +1393,7 @@ export default new Vuex.Store({
 						priority: "Voluntary",
 						total_attendance: 18,
 						venue: "CUCRID Auditorium",
-						time: "12:00PM"
+						time: "12:00PM",
 					},
 					{
 						id: 3,
@@ -1403,9 +1403,9 @@ export default new Vuex.Store({
 						priority: "Compulsory",
 						total_attendance: 18,
 						venue: "Covenant University Chapel",
-						time: "08:00AM"
-					}
-				]
+						time: "08:00AM",
+					},
+				],
 			},
 			{
 				id: 8,
@@ -1425,14 +1425,14 @@ export default new Vuex.Store({
 						id: 1,
 						name: "Justice Engworo",
 						phone_number1: "+2348035050175",
-						relationship: "Father"
+						relationship: "Father",
 					},
 					{
 						id: 2,
 						name: "Maya Angelou",
 						phone_number: "+2347089324817",
-						relationship: "Mother"
-					}
+						relationship: "Mother",
+					},
 				],
 				sex: "female",
 				dob: "11/08/1998",
@@ -1452,7 +1452,7 @@ export default new Vuex.Store({
 						priority: "Compulsory",
 						total_attendance: 18,
 						venue: "Covenant University Chapel",
-						time: "5:30AM"
+						time: "5:30AM",
 					},
 					{
 						id: 2,
@@ -1462,7 +1462,7 @@ export default new Vuex.Store({
 						priority: "Compulsory",
 						total_attendance: 18,
 						venue: "Covenant University Chapel",
-						time: "6:00AM"
+						time: "6:00AM",
 					},
 					{
 						id: 3,
@@ -1472,9 +1472,9 @@ export default new Vuex.Store({
 						priority: "Compulsory",
 						total_attendance: 18,
 						venue: "Covenant University Chapel",
-						time: "08:00AM"
-					}
-				]
+						time: "08:00AM",
+					},
+				],
 			},
 			{
 				id: 9,
@@ -1494,14 +1494,14 @@ export default new Vuex.Store({
 						id: 1,
 						name: "Justice Engworo",
 						phone_number1: "+2348035050175",
-						relationship: "Father"
+						relationship: "Father",
 					},
 					{
 						id: 2,
 						name: "Maya Angelou",
 						phone_number: "+2347089324817",
-						relationship: "Mother"
-					}
+						relationship: "Mother",
+					},
 				],
 				sex: "female",
 				dob: "08/13/1998",
@@ -1521,7 +1521,7 @@ export default new Vuex.Store({
 						priority: "Compulsory",
 						total_attendance: 18,
 						venue: "Covenant University Chapel",
-						time: "5:30AM"
+						time: "5:30AM",
 					},
 					{
 						id: 2,
@@ -1531,7 +1531,7 @@ export default new Vuex.Store({
 						priority: "Compulsory",
 						total_attendance: 18,
 						venue: "Covenant University Chapel",
-						time: "6:00AM"
+						time: "6:00AM",
 					},
 					{
 						id: 3,
@@ -1541,7 +1541,7 @@ export default new Vuex.Store({
 						priority: "Compulsory",
 						total_attendance: 18,
 						venue: "Covenant University Chapel",
-						time: "08:00AM"
+						time: "08:00AM",
 					},
 					{
 						id: 5,
@@ -1551,9 +1551,9 @@ export default new Vuex.Store({
 						priority: "Voluntary",
 						total_attendance: 18,
 						venue: "CUCRID Auditorium",
-						time: "12:00PM"
-					}
-				]
+						time: "12:00PM",
+					},
+				],
 			},
 			{
 				id: 10,
@@ -1573,14 +1573,14 @@ export default new Vuex.Store({
 						id: 1,
 						name: "Justice Engworo",
 						phone_number1: "+2348035050175",
-						relationship: "Father"
+						relationship: "Father",
 					},
 					{
 						id: 2,
 						name: "Maya Angelou",
 						phone_number: "+2347089324817",
-						relationship: "Mother"
-					}
+						relationship: "Mother",
+					},
 				],
 				sex: "male",
 				dob: "03/12/1998",
@@ -1600,7 +1600,7 @@ export default new Vuex.Store({
 						priority: "Compulsory",
 						total_attendance: 18,
 						venue: "Covenant University Chapel",
-						time: "5:30AM"
+						time: "5:30AM",
 					},
 					{
 						id: 2,
@@ -1610,7 +1610,7 @@ export default new Vuex.Store({
 						priority: "Compulsory",
 						total_attendance: 18,
 						venue: "Covenant University Chapel",
-						time: "6:00AM"
+						time: "6:00AM",
 					},
 					{
 						id: 3,
@@ -1620,10 +1620,10 @@ export default new Vuex.Store({
 						priority: "Compulsory",
 						total_attendance: 18,
 						venue: "Covenant University Chapel",
-						time: "08:00AM"
-					}
-				]
-			}
+						time: "08:00AM",
+					},
+				],
+			},
 		],
 		studentEvents: [
 			{
@@ -1636,7 +1636,7 @@ export default new Vuex.Store({
 					reg_number: 1500448,
 					department: "EIE",
 					residence: "Dorcas Hall",
-					level: 500
+					level: 500,
 				},
 				event: {
 					//event_id
@@ -1647,9 +1647,9 @@ export default new Vuex.Store({
 					priority: "Compulsory",
 					total_attendance: 18,
 					venue: "Covenant University Chapel",
-					time: "5:30AM"
+					time: "5:30AM",
 				},
-				date: new Date("03/07/2020")
+				date: new Date("03/07/2020"),
 			},
 			{
 				id: 2,
@@ -1660,7 +1660,7 @@ export default new Vuex.Store({
 					reg_number: 1500448,
 					department: "EIE",
 					residence: "Dorcas Hall",
-					level: 500
+					level: 500,
 				},
 				event: {
 					id: 1,
@@ -1670,9 +1670,9 @@ export default new Vuex.Store({
 					priority: "Compulsory",
 					total_attendance: 18,
 					venue: "Covenant University Chapel",
-					time: "5:30AM"
+					time: "5:30AM",
 				},
-				date: new Date("02/22/2020")
+				date: new Date("02/22/2020"),
 			},
 			{
 				id: 3,
@@ -1684,7 +1684,7 @@ export default new Vuex.Store({
 					reg_number: 1500448,
 					department: "EIE",
 					residence: "Dorcas Hall",
-					level: 500
+					level: 500,
 				},
 				event: {
 					id: 4,
@@ -1694,9 +1694,9 @@ export default new Vuex.Store({
 					priority: "Compulsory",
 					total_attendance: 18,
 					venue: "Covenant University Chapel",
-					time: "8:00AM"
+					time: "8:00AM",
 				},
-				date: new Date("03/12/2020")
+				date: new Date("03/12/2020"),
 			},
 			{
 				id: 4,
@@ -1708,7 +1708,7 @@ export default new Vuex.Store({
 					reg_number: 1500448,
 					department: "EIE",
 					residence: "Dorcas Hall",
-					level: 500
+					level: 500,
 				},
 				event: {
 					id: 2,
@@ -1718,9 +1718,9 @@ export default new Vuex.Store({
 					priority: "Compulsory",
 					total_attendance: 18,
 					venue: "Covenant University Chapel",
-					time: "6:00AM"
+					time: "6:00AM",
 				},
-				date: new Date("03/14/2020")
+				date: new Date("03/14/2020"),
 			},
 			{
 				id: 5,
@@ -1731,7 +1731,7 @@ export default new Vuex.Store({
 					reg_number: 1503445,
 					department: "EIE",
 					residence: "Dorcas Hall",
-					level: 500
+					level: 500,
 				},
 				event: {
 					//event_id
@@ -1743,9 +1743,9 @@ export default new Vuex.Store({
 					total_attendance: 18,
 
 					venue: "Covenant University Chapel",
-					time: "5:30AM"
+					time: "5:30AM",
 				},
-				date: new Date("03/06/2020")
+				date: new Date("03/06/2020"),
 			},
 			{
 				id: 6,
@@ -1756,7 +1756,7 @@ export default new Vuex.Store({
 					reg_number: 1503445,
 					department: "EIE",
 					residence: "Dorcas Hall",
-					level: 500
+					level: 500,
 				},
 				event: {
 					id: 4,
@@ -1767,9 +1767,9 @@ export default new Vuex.Store({
 					total_attendance: 18,
 
 					venue: "Covenant University Chapel",
-					time: "8:00AM"
+					time: "8:00AM",
 				},
-				date: new Date("03/12/2020")
+				date: new Date("03/12/2020"),
 			},
 			{
 				id: 7,
@@ -1780,7 +1780,7 @@ export default new Vuex.Store({
 					reg_number: 1503445,
 					department: "EIE",
 					residence: "Dorcas Hall",
-					level: 500
+					level: 500,
 				},
 				event: {
 					id: 2,
@@ -1790,10 +1790,10 @@ export default new Vuex.Store({
 					priority: "Compulsory",
 					total_attendance: 18,
 					venue: "Covenant University Chapel",
-					time: "6:00AM"
+					time: "6:00AM",
 				},
-				date: new Date("03/14/2020")
-			}
+				date: new Date("03/14/2020"),
+			},
 			// { id: 8, student: {}, event: {}, date: [] },
 			// { id: 9, student: {}, event: {}, date: null },
 			// { id: 10, student: {}, event: {}, date: null },
@@ -1823,9 +1823,9 @@ export default new Vuex.Store({
 					college: {
 						id: 1,
 						name: "College of Engineering",
-						short_name: "COE"
-					}
-				}
+						short_name: "COE",
+					},
+				},
 			},
 			{
 				id: 2,
@@ -1846,9 +1846,9 @@ export default new Vuex.Store({
 					college: {
 						id: 1,
 						name: "College of Engineering",
-						short_name: "COE"
-					}
-				}
+						short_name: "COE",
+					},
+				},
 			},
 			{
 				id: 3,
@@ -1869,9 +1869,9 @@ export default new Vuex.Store({
 					college: {
 						id: 1,
 						name: "College of Engineering",
-						short_name: "COE"
-					}
-				}
+						short_name: "COE",
+					},
+				},
 			},
 			{
 				id: 4,
@@ -1889,13 +1889,13 @@ export default new Vuex.Store({
 					college: {
 						id: 1,
 						name: "College of Engineering",
-						short_name: "COE"
-					}
+						short_name: "COE",
+					},
 				},
 				// department: "CBSS",
 				residence: "Daniel Hall",
-				phone_number: "080947373728"
-			}
+				phone_number: "080947373728",
+			},
 		],
 		events: [
 			{
@@ -1918,7 +1918,7 @@ export default new Vuex.Store({
 						department: "EIE",
 						residence: "Dorcas Hall",
 						level: 500,
-						weighted_attendance: 14
+						weighted_attendance: 14,
 					},
 					{
 						id: 2,
@@ -1928,7 +1928,7 @@ export default new Vuex.Store({
 						department: "EIE",
 						residence: "Dorcas Hall",
 						level: 500,
-						weighted_attendance: 14
+						weighted_attendance: 14,
 					},
 					{
 						id: 3,
@@ -1938,9 +1938,9 @@ export default new Vuex.Store({
 						department: "CST",
 						residence: "Deborah Hall",
 						level: 500,
-						weighted_attendance: 14
-					}
-				]
+						weighted_attendance: 14,
+					},
+				],
 				// protein: 4.+
 			},
 			{
@@ -1963,7 +1963,7 @@ export default new Vuex.Store({
 						department: "CBSS",
 						residence: "Daniel Hall",
 						weighted_attendance: 12,
-						level: 400
+						level: 400,
 					},
 					{
 						id: 5,
@@ -1973,7 +1973,7 @@ export default new Vuex.Store({
 						department: "CDLS",
 						residence: "Peter Hall",
 						weighted_attendance: 12,
-						level: 300
+						level: 300,
 					},
 					{
 						id: 6,
@@ -1983,9 +1983,9 @@ export default new Vuex.Store({
 						department: "CEDS",
 						level: 500,
 						residence: "Joseph Hall",
-						weighted_attendance: 12
-					}
-				]
+						weighted_attendance: 12,
+					},
+				],
 				// protein: 4.+
 			},
 			{
@@ -2008,7 +2008,7 @@ export default new Vuex.Store({
 						department: "COE",
 						level: 200,
 						residence: "John Hall",
-						weighted_attendance: 12
+						weighted_attendance: 12,
 					},
 					{
 						id: 8,
@@ -2018,7 +2018,7 @@ export default new Vuex.Store({
 						department: "CBSS",
 						level: 500,
 						residence: "Dorcas Hall",
-						weighted_attendance: 12
+						weighted_attendance: 12,
 					},
 					{
 						id: 9,
@@ -2028,9 +2028,9 @@ export default new Vuex.Store({
 						department: "COE",
 						level: 400,
 						residence: "Dorcas Hall",
-						weighted_attendance: 12
-					}
-				]
+						weighted_attendance: 12,
+					},
+				],
 				// protein: 4.+
 			},
 			{
@@ -2053,7 +2053,7 @@ export default new Vuex.Store({
 						department: "COE",
 						level: 200,
 						residence: "John Hall",
-						weighted_attendance: 14
+						weighted_attendance: 14,
 					},
 					{
 						id: 8,
@@ -2063,7 +2063,7 @@ export default new Vuex.Store({
 						department: "CBSS",
 						level: 500,
 						residence: "Dorcas Hall",
-						weighted_attendance: 14
+						weighted_attendance: 14,
 					},
 					{
 						id: 9,
@@ -2073,9 +2073,9 @@ export default new Vuex.Store({
 						department: "COE",
 						level: 400,
 						residence: "Dorcas Hall",
-						weighted_attendance: 14
-					}
-				]
+						weighted_attendance: 14,
+					},
+				],
 				// protein: 4.+
 			},
 			{
@@ -2097,16 +2097,16 @@ export default new Vuex.Store({
 						reg_number: 1500445,
 						department: "CEDS",
 						level: 300,
-						residence: "Paul Hall"
-					}
-				]
+						residence: "Paul Hall",
+					},
+				],
 				// protein: 4.+
-			}
+			},
 		],
 		snackbar: {
 			timeout: 3000,
 			text: "Welcome to Upschool!",
-			isActive: false
+			isActive: false,
 		},
 		loggedInUser: null,
 		loggedInStaff: {
@@ -2130,7 +2130,7 @@ export default new Vuex.Store({
 				name: "Buba M. Solomon",
 				email: "buba@test.com",
 				created_at: "2020-03-28T00:51:57.000000Z",
-				updated_at: "2020-03-28T00:51:57.000000Z"
+				updated_at: "2020-03-28T00:51:57.000000Z",
 			},
 			department: {
 				id: 1,
@@ -2145,9 +2145,9 @@ export default new Vuex.Store({
 					name: "College of Engineering",
 					short_name: "COE",
 					created_at: "2020-03-26T22:33:42.000000Z",
-					updated_at: "2020-03-26T22:33:42.000000Z"
-				}
-			}
+					updated_at: "2020-03-26T22:33:42.000000Z",
+				},
+			},
 		},
 		curriculum_types: [
 			{ id: 1, name: "Core/Compulsory Courses", short_form: "C" },
@@ -2155,15 +2155,15 @@ export default new Vuex.Store({
 			{ id: 3, name: "University Courses", short_form: "U" },
 			{ id: 4, name: "SWEP Courses", short_form: "SW" },
 			{ id: 5, name: "SIWES Courses", short_form: "SI" },
-			{ id: 6, name: "NUC Courses", short_form: "N" }
+			{ id: 6, name: "NUC Courses", short_form: "N" },
 		],
 		colleges: [
 			{ id: 1, name: "College of Engineering", short_name: "COE" },
 			{
 				id: 2,
 				name: "College of Science & Technology",
-				short_name: "CST"
-			}
+				short_name: "CST",
+			},
 		],
 		departments: [
 			{
@@ -2174,8 +2174,8 @@ export default new Vuex.Store({
 				college: {
 					id: 1,
 					name: "College of Engineering",
-					short_name: "COE"
-				}
+					short_name: "COE",
+				},
 			},
 			{
 				id: 2,
@@ -2185,9 +2185,9 @@ export default new Vuex.Store({
 				college: {
 					id: 1,
 					name: "College of Engineering",
-					short_name: "COE"
-				}
-			}
+					short_name: "COE",
+				},
+			},
 		],
 		programs: [
 			{
@@ -2204,8 +2204,8 @@ export default new Vuex.Store({
 					college: {
 						id: 1,
 						name: "College of Engineering",
-						short_name: "COE"
-					}
+						short_name: "COE",
+					},
 				},
 				no_of_years: 5,
 				graduation_requirements: [
@@ -2218,7 +2218,7 @@ export default new Vuex.Store({
 						siwes: null,
 						college_courses: null,
 						university_courses: 4,
-						nuc: 10
+						nuc: 10,
 					},
 					{
 						id: 2,
@@ -2229,7 +2229,7 @@ export default new Vuex.Store({
 						siwes: null,
 						college_courses: null,
 						university_courses: 4,
-						nuc: 6
+						nuc: 6,
 					},
 					{
 						id: 3,
@@ -2240,7 +2240,7 @@ export default new Vuex.Store({
 						siwes: null,
 						college_courses: null,
 						university_courses: 4,
-						nuc: 2
+						nuc: 2,
 					},
 					{
 						id: 4,
@@ -2251,7 +2251,7 @@ export default new Vuex.Store({
 						siwes: 6,
 						college_courses: null,
 						university_courses: 2,
-						nuc: null
+						nuc: null,
 					},
 					{
 						id: 5,
@@ -2262,8 +2262,8 @@ export default new Vuex.Store({
 						siwes: null,
 						college_courses: null,
 						university_courses: 4,
-						nuc: null
-					}
+						nuc: null,
+					},
 				],
 				curriculum: [
 					{
@@ -2282,11 +2282,11 @@ export default new Vuex.Store({
 										status: "registered",
 										semester: {
 											id: 1,
-											name: "Alpha Semester"
+											name: "Alpha Semester",
 										},
 										prerequisites: [
 											{ id: 1, course_id: 5 },
-											{ id: 2, course_id: 2 }
+											{ id: 2, course_id: 2 },
 										],
 										categories: [
 											{
@@ -2295,9 +2295,9 @@ export default new Vuex.Store({
 												subCategories: [
 													{
 														id: 1,
-														title: "EIE Courses"
-													}
-												]
+														title: "EIE Courses",
+													},
+												],
 											},
 											{
 												id: 1,
@@ -2306,13 +2306,13 @@ export default new Vuex.Store({
 												subCategories: [
 													{
 														id: 2,
-														title: "COE Courses"
-													}
-												]
-											}
-										]
-									}
-								]
+														title: "COE Courses",
+													},
+												],
+											},
+										],
+									},
+								],
 							},
 							{
 								id: 2,
@@ -2326,11 +2326,11 @@ export default new Vuex.Store({
 										status: "registered",
 										semester: {
 											id: 1,
-											name: "Alpha Semester"
+											name: "Alpha Semester",
 										},
 										prerequisites: [
 											{ id: 1, course_id: 5 },
-											{ id: 2, course_id: 2 }
+											{ id: 2, course_id: 2 },
 										],
 										categories: [
 											{
@@ -2339,9 +2339,9 @@ export default new Vuex.Store({
 												subCategories: [
 													{
 														id: 1,
-														title: "EIE Courses"
-													}
-												]
+														title: "EIE Courses",
+													},
+												],
 											},
 											{
 												id: 1,
@@ -2350,23 +2350,23 @@ export default new Vuex.Store({
 												subCategories: [
 													{
 														id: 2,
-														title: "COE Courses"
-													}
-												]
-											}
-										]
-									}
-								]
+														title: "COE Courses",
+													},
+												],
+											},
+										],
+									},
+								],
 							},
 							{
 								id: 3,
 								type_id: 4,
-								courses: []
+								courses: [],
 							},
 							{
 								id: 4,
 								type_id: 5,
-								courses: []
+								courses: [],
 							},
 							{
 								id: 5,
@@ -2380,11 +2380,11 @@ export default new Vuex.Store({
 										status: "registered",
 										semester: {
 											id: 1,
-											name: "Alpha Semester"
+											name: "Alpha Semester",
 										},
 										prerequisites: [
 											{ id: 1, course_id: 5 },
-											{ id: 2, course_id: 2 }
+											{ id: 2, course_id: 2 },
 										],
 										categories: [
 											{
@@ -2393,9 +2393,9 @@ export default new Vuex.Store({
 												subCategories: [
 													{
 														id: 1,
-														title: "EIE Courses"
-													}
-												]
+														title: "EIE Courses",
+													},
+												],
 											},
 											{
 												id: 1,
@@ -2404,13 +2404,13 @@ export default new Vuex.Store({
 												subCategories: [
 													{
 														id: 2,
-														title: "COE Courses"
-													}
-												]
-											}
-										]
-									}
-								]
+														title: "COE Courses",
+													},
+												],
+											},
+										],
+									},
+								],
 							},
 							{
 								id: 6,
@@ -2424,11 +2424,11 @@ export default new Vuex.Store({
 										status: "registered",
 										semester: {
 											id: 1,
-											name: "Alpha Semester"
+											name: "Alpha Semester",
 										},
 										prerequisites: [
 											{ id: 1, course_id: 5 },
-											{ id: 2, course_id: 2 }
+											{ id: 2, course_id: 2 },
 										],
 										categories: [
 											{
@@ -2437,9 +2437,9 @@ export default new Vuex.Store({
 												subCategories: [
 													{
 														id: 1,
-														title: "EIE Courses"
-													}
-												]
+														title: "EIE Courses",
+													},
+												],
 											},
 											{
 												id: 1,
@@ -2448,15 +2448,15 @@ export default new Vuex.Store({
 												subCategories: [
 													{
 														id: 2,
-														title: "COE Courses"
-													}
-												]
-											}
-										]
-									}
-								]
-							}
-						]
+														title: "COE Courses",
+													},
+												],
+											},
+										],
+									},
+								],
+							},
+						],
 					},
 					{
 						id: 2,
@@ -2474,11 +2474,11 @@ export default new Vuex.Store({
 										status: "registered",
 										semester: {
 											id: 1,
-											name: "Alpha Semester"
+											name: "Alpha Semester",
 										},
 										prerequisites: [
 											{ id: 1, course_id: 5 },
-											{ id: 2, course_id: 2 }
+											{ id: 2, course_id: 2 },
 										],
 										categories: [
 											{
@@ -2487,9 +2487,9 @@ export default new Vuex.Store({
 												subCategories: [
 													{
 														id: 1,
-														title: "EIE Courses"
-													}
-												]
+														title: "EIE Courses",
+													},
+												],
 											},
 											{
 												id: 1,
@@ -2498,13 +2498,13 @@ export default new Vuex.Store({
 												subCategories: [
 													{
 														id: 2,
-														title: "COE Courses"
-													}
-												]
-											}
-										]
-									}
-								]
+														title: "COE Courses",
+													},
+												],
+											},
+										],
+									},
+								],
 							},
 							{
 								id: 2,
@@ -2518,11 +2518,11 @@ export default new Vuex.Store({
 										status: "registered",
 										semester: {
 											id: 1,
-											name: "Alpha Semester"
+											name: "Alpha Semester",
 										},
 										prerequisites: [
 											{ id: 1, course_id: 5 },
-											{ id: 2, course_id: 2 }
+											{ id: 2, course_id: 2 },
 										],
 										categories: [
 											{
@@ -2531,9 +2531,9 @@ export default new Vuex.Store({
 												subCategories: [
 													{
 														id: 1,
-														title: "EIE Courses"
-													}
-												]
+														title: "EIE Courses",
+													},
+												],
 											},
 											{
 												id: 1,
@@ -2542,23 +2542,23 @@ export default new Vuex.Store({
 												subCategories: [
 													{
 														id: 2,
-														title: "COE Courses"
-													}
-												]
-											}
-										]
-									}
-								]
+														title: "COE Courses",
+													},
+												],
+											},
+										],
+									},
+								],
 							},
 							{
 								id: 3,
 								type_id: 4,
-								courses: []
+								courses: [],
 							},
 							{
 								id: 4,
 								type_id: 5,
-								courses: []
+								courses: [],
 							},
 							{
 								id: 5,
@@ -2572,11 +2572,11 @@ export default new Vuex.Store({
 										status: "registered",
 										semester: {
 											id: 1,
-											name: "Alpha Semester"
+											name: "Alpha Semester",
 										},
 										prerequisites: [
 											{ id: 1, course_id: 5 },
-											{ id: 2, course_id: 2 }
+											{ id: 2, course_id: 2 },
 										],
 										categories: [
 											{
@@ -2585,9 +2585,9 @@ export default new Vuex.Store({
 												subCategories: [
 													{
 														id: 1,
-														title: "EIE Courses"
-													}
-												]
+														title: "EIE Courses",
+													},
+												],
 											},
 											{
 												id: 1,
@@ -2596,13 +2596,13 @@ export default new Vuex.Store({
 												subCategories: [
 													{
 														id: 2,
-														title: "COE Courses"
-													}
-												]
-											}
-										]
-									}
-								]
+														title: "COE Courses",
+													},
+												],
+											},
+										],
+									},
+								],
 							},
 							{
 								id: 6,
@@ -2616,11 +2616,11 @@ export default new Vuex.Store({
 										status: "registered",
 										semester: {
 											id: 1,
-											name: "Alpha Semester"
+											name: "Alpha Semester",
 										},
 										prerequisites: [
 											{ id: 1, course_id: 5 },
-											{ id: 2, course_id: 2 }
+											{ id: 2, course_id: 2 },
 										],
 										categories: [
 											{
@@ -2629,9 +2629,9 @@ export default new Vuex.Store({
 												subCategories: [
 													{
 														id: 1,
-														title: "EIE Courses"
-													}
-												]
+														title: "EIE Courses",
+													},
+												],
 											},
 											{
 												id: 1,
@@ -2640,15 +2640,15 @@ export default new Vuex.Store({
 												subCategories: [
 													{
 														id: 2,
-														title: "COE Courses"
-													}
-												]
-											}
-										]
-									}
-								]
-							}
-						]
+														title: "COE Courses",
+													},
+												],
+											},
+										],
+									},
+								],
+							},
+						],
 					},
 					{
 						id: 3,
@@ -2666,11 +2666,11 @@ export default new Vuex.Store({
 										status: "registered",
 										semester: {
 											id: 1,
-											name: "Alpha Semester"
+											name: "Alpha Semester",
 										},
 										prerequisites: [
 											{ id: 1, course_id: 5 },
-											{ id: 2, course_id: 2 }
+											{ id: 2, course_id: 2 },
 										],
 										categories: [
 											{
@@ -2679,9 +2679,9 @@ export default new Vuex.Store({
 												subCategories: [
 													{
 														id: 1,
-														title: "EIE Courses"
-													}
-												]
+														title: "EIE Courses",
+													},
+												],
 											},
 											{
 												id: 1,
@@ -2690,13 +2690,13 @@ export default new Vuex.Store({
 												subCategories: [
 													{
 														id: 2,
-														title: "COE Courses"
-													}
-												]
-											}
-										]
-									}
-								]
+														title: "COE Courses",
+													},
+												],
+											},
+										],
+									},
+								],
 							},
 							{
 								id: 2,
@@ -2710,11 +2710,11 @@ export default new Vuex.Store({
 										status: "registered",
 										semester: {
 											id: 1,
-											name: "Alpha Semester"
+											name: "Alpha Semester",
 										},
 										prerequisites: [
 											{ id: 1, course_id: 5 },
-											{ id: 2, course_id: 2 }
+											{ id: 2, course_id: 2 },
 										],
 										categories: [
 											{
@@ -2723,9 +2723,9 @@ export default new Vuex.Store({
 												subCategories: [
 													{
 														id: 1,
-														title: "EIE Courses"
-													}
-												]
+														title: "EIE Courses",
+													},
+												],
 											},
 											{
 												id: 1,
@@ -2734,23 +2734,23 @@ export default new Vuex.Store({
 												subCategories: [
 													{
 														id: 2,
-														title: "COE Courses"
-													}
-												]
-											}
-										]
-									}
-								]
+														title: "COE Courses",
+													},
+												],
+											},
+										],
+									},
+								],
 							},
 							{
 								id: 3,
 								type_id: 4,
-								courses: []
+								courses: [],
 							},
 							{
 								id: 4,
 								type_id: 5,
-								courses: []
+								courses: [],
 							},
 							{
 								id: 5,
@@ -2764,11 +2764,11 @@ export default new Vuex.Store({
 										status: "registered",
 										semester: {
 											id: 1,
-											name: "Alpha Semester"
+											name: "Alpha Semester",
 										},
 										prerequisites: [
 											{ id: 1, course_id: 5 },
-											{ id: 2, course_id: 2 }
+											{ id: 2, course_id: 2 },
 										],
 										categories: [
 											{
@@ -2777,9 +2777,9 @@ export default new Vuex.Store({
 												subCategories: [
 													{
 														id: 1,
-														title: "EIE Courses"
-													}
-												]
+														title: "EIE Courses",
+													},
+												],
 											},
 											{
 												id: 1,
@@ -2788,13 +2788,13 @@ export default new Vuex.Store({
 												subCategories: [
 													{
 														id: 2,
-														title: "COE Courses"
-													}
-												]
-											}
-										]
-									}
-								]
+														title: "COE Courses",
+													},
+												],
+											},
+										],
+									},
+								],
 							},
 							{
 								id: 6,
@@ -2808,11 +2808,11 @@ export default new Vuex.Store({
 										status: "registered",
 										semester: {
 											id: 1,
-											name: "Alpha Semester"
+											name: "Alpha Semester",
 										},
 										prerequisites: [
 											{ id: 1, course_id: 5 },
-											{ id: 2, course_id: 2 }
+											{ id: 2, course_id: 2 },
 										],
 										categories: [
 											{
@@ -2821,9 +2821,9 @@ export default new Vuex.Store({
 												subCategories: [
 													{
 														id: 1,
-														title: "EIE Courses"
-													}
-												]
+														title: "EIE Courses",
+													},
+												],
 											},
 											{
 												id: 1,
@@ -2832,15 +2832,15 @@ export default new Vuex.Store({
 												subCategories: [
 													{
 														id: 2,
-														title: "COE Courses"
-													}
-												]
-											}
-										]
-									}
-								]
-							}
-						]
+														title: "COE Courses",
+													},
+												],
+											},
+										],
+									},
+								],
+							},
+						],
 					},
 					{
 						id: 4,
@@ -2858,11 +2858,11 @@ export default new Vuex.Store({
 										status: "registered",
 										semester: {
 											id: 1,
-											name: "Alpha Semester"
+											name: "Alpha Semester",
 										},
 										prerequisites: [
 											{ id: 1, course_id: 5 },
-											{ id: 2, course_id: 2 }
+											{ id: 2, course_id: 2 },
 										],
 										categories: [
 											{
@@ -2871,9 +2871,9 @@ export default new Vuex.Store({
 												subCategories: [
 													{
 														id: 1,
-														title: "EIE Courses"
-													}
-												]
+														title: "EIE Courses",
+													},
+												],
 											},
 											{
 												id: 1,
@@ -2882,13 +2882,13 @@ export default new Vuex.Store({
 												subCategories: [
 													{
 														id: 2,
-														title: "COE Courses"
-													}
-												]
-											}
-										]
-									}
-								]
+														title: "COE Courses",
+													},
+												],
+											},
+										],
+									},
+								],
 							},
 							{
 								id: 2,
@@ -2902,11 +2902,11 @@ export default new Vuex.Store({
 										status: "registered",
 										semester: {
 											id: 1,
-											name: "Alpha Semester"
+											name: "Alpha Semester",
 										},
 										prerequisites: [
 											{ id: 1, course_id: 5 },
-											{ id: 2, course_id: 2 }
+											{ id: 2, course_id: 2 },
 										],
 										categories: [
 											{
@@ -2915,9 +2915,9 @@ export default new Vuex.Store({
 												subCategories: [
 													{
 														id: 1,
-														title: "EIE Courses"
-													}
-												]
+														title: "EIE Courses",
+													},
+												],
 											},
 											{
 												id: 1,
@@ -2926,23 +2926,23 @@ export default new Vuex.Store({
 												subCategories: [
 													{
 														id: 2,
-														title: "COE Courses"
-													}
-												]
-											}
-										]
-									}
-								]
+														title: "COE Courses",
+													},
+												],
+											},
+										],
+									},
+								],
 							},
 							{
 								id: 3,
 								type_id: 4,
-								courses: []
+								courses: [],
 							},
 							{
 								id: 4,
 								type_id: 5,
-								courses: []
+								courses: [],
 							},
 							{
 								id: 5,
@@ -2956,11 +2956,11 @@ export default new Vuex.Store({
 										status: "registered",
 										semester: {
 											id: 1,
-											name: "Alpha Semester"
+											name: "Alpha Semester",
 										},
 										prerequisites: [
 											{ id: 1, course_id: 5 },
-											{ id: 2, course_id: 2 }
+											{ id: 2, course_id: 2 },
 										],
 										categories: [
 											{
@@ -2969,9 +2969,9 @@ export default new Vuex.Store({
 												subCategories: [
 													{
 														id: 1,
-														title: "EIE Courses"
-													}
-												]
+														title: "EIE Courses",
+													},
+												],
 											},
 											{
 												id: 1,
@@ -2980,13 +2980,13 @@ export default new Vuex.Store({
 												subCategories: [
 													{
 														id: 2,
-														title: "COE Courses"
-													}
-												]
-											}
-										]
-									}
-								]
+														title: "COE Courses",
+													},
+												],
+											},
+										],
+									},
+								],
 							},
 							{
 								id: 6,
@@ -3000,11 +3000,11 @@ export default new Vuex.Store({
 										status: "registered",
 										semester: {
 											id: 1,
-											name: "Alpha Semester"
+											name: "Alpha Semester",
 										},
 										prerequisites: [
 											{ id: 1, course_id: 5 },
-											{ id: 2, course_id: 2 }
+											{ id: 2, course_id: 2 },
 										],
 										categories: [
 											{
@@ -3013,9 +3013,9 @@ export default new Vuex.Store({
 												subCategories: [
 													{
 														id: 1,
-														title: "EIE Courses"
-													}
-												]
+														title: "EIE Courses",
+													},
+												],
 											},
 											{
 												id: 1,
@@ -3024,15 +3024,15 @@ export default new Vuex.Store({
 												subCategories: [
 													{
 														id: 2,
-														title: "COE Courses"
-													}
-												]
-											}
-										]
-									}
-								]
-							}
-						]
+														title: "COE Courses",
+													},
+												],
+											},
+										],
+									},
+								],
+							},
+						],
 					},
 					{
 						id: 5,
@@ -3050,11 +3050,11 @@ export default new Vuex.Store({
 										status: "registered",
 										semester: {
 											id: 1,
-											name: "Alpha Semester"
+											name: "Alpha Semester",
 										},
 										prerequisites: [
 											{ id: 1, course_id: 5 },
-											{ id: 2, course_id: 2 }
+											{ id: 2, course_id: 2 },
 										],
 										categories: [
 											{
@@ -3063,9 +3063,9 @@ export default new Vuex.Store({
 												subCategories: [
 													{
 														id: 1,
-														title: "EIE Courses"
-													}
-												]
+														title: "EIE Courses",
+													},
+												],
 											},
 											{
 												id: 1,
@@ -3074,13 +3074,13 @@ export default new Vuex.Store({
 												subCategories: [
 													{
 														id: 2,
-														title: "COE Courses"
-													}
-												]
-											}
-										]
-									}
-								]
+														title: "COE Courses",
+													},
+												],
+											},
+										],
+									},
+								],
 							},
 							{
 								id: 2,
@@ -3094,11 +3094,11 @@ export default new Vuex.Store({
 										status: "registered",
 										semester: {
 											id: 1,
-											name: "Alpha Semester"
+											name: "Alpha Semester",
 										},
 										prerequisites: [
 											{ id: 1, course_id: 5 },
-											{ id: 2, course_id: 2 }
+											{ id: 2, course_id: 2 },
 										],
 										categories: [
 											{
@@ -3107,9 +3107,9 @@ export default new Vuex.Store({
 												subCategories: [
 													{
 														id: 1,
-														title: "EIE Courses"
-													}
-												]
+														title: "EIE Courses",
+													},
+												],
 											},
 											{
 												id: 1,
@@ -3118,23 +3118,23 @@ export default new Vuex.Store({
 												subCategories: [
 													{
 														id: 2,
-														title: "COE Courses"
-													}
-												]
-											}
-										]
-									}
-								]
+														title: "COE Courses",
+													},
+												],
+											},
+										],
+									},
+								],
 							},
 							{
 								id: 3,
 								type_id: 4,
-								courses: []
+								courses: [],
 							},
 							{
 								id: 4,
 								type_id: 5,
-								courses: []
+								courses: [],
 							},
 							{
 								id: 5,
@@ -3148,11 +3148,11 @@ export default new Vuex.Store({
 										status: "registered",
 										semester: {
 											id: 1,
-											name: "Alpha Semester"
+											name: "Alpha Semester",
 										},
 										prerequisites: [
 											{ id: 1, course_id: 5 },
-											{ id: 2, course_id: 2 }
+											{ id: 2, course_id: 2 },
 										],
 										categories: [
 											{
@@ -3161,9 +3161,9 @@ export default new Vuex.Store({
 												subCategories: [
 													{
 														id: 1,
-														title: "EIE Courses"
-													}
-												]
+														title: "EIE Courses",
+													},
+												],
 											},
 											{
 												id: 1,
@@ -3172,13 +3172,13 @@ export default new Vuex.Store({
 												subCategories: [
 													{
 														id: 2,
-														title: "COE Courses"
-													}
-												]
-											}
-										]
-									}
-								]
+														title: "COE Courses",
+													},
+												],
+											},
+										],
+									},
+								],
 							},
 							{
 								id: 6,
@@ -3192,11 +3192,11 @@ export default new Vuex.Store({
 										status: "registered",
 										semester: {
 											id: 1,
-											name: "Alpha Semester"
+											name: "Alpha Semester",
 										},
 										prerequisites: [
 											{ id: 1, course_id: 5 },
-											{ id: 2, course_id: 2 }
+											{ id: 2, course_id: 2 },
 										],
 										categories: [
 											{
@@ -3205,9 +3205,9 @@ export default new Vuex.Store({
 												subCategories: [
 													{
 														id: 1,
-														title: "EIE Courses"
-													}
-												]
+														title: "EIE Courses",
+													},
+												],
 											},
 											{
 												id: 1,
@@ -3216,22 +3216,22 @@ export default new Vuex.Store({
 												subCategories: [
 													{
 														id: 2,
-														title: "COE Courses"
-													}
-												]
-											}
-										]
-									}
-								]
-							}
-						]
-					}
-				]
-			}
+														title: "COE Courses",
+													},
+												],
+											},
+										],
+									},
+								],
+							},
+						],
+					},
+				],
+			},
 		],
 		semesterTypes: [
 			{ id: 1, title: "Alpha Semester", short_name: "Alpha" },
-			{ id: 2, title: "Omega Semester", short_name: "Omega" }
+			{ id: 2, title: "Omega Semester", short_name: "Omega" },
 		],
 		semesters: [{ id: 1, type: "Alpha Semester", session_id: 1 }],
 		sessions: [
@@ -3239,8 +3239,8 @@ export default new Vuex.Store({
 				id: 1,
 				name: "2019/2020 Academic session",
 				start_date: "",
-				close_date: ""
-			}
+				close_date: "",
+			},
 		],
 		news: [
 			{
@@ -3251,7 +3251,7 @@ export default new Vuex.Store({
 				time: "02/11/2020",
 				featured: false,
 				image:
-					"https://www.opportunitiesforafricans.com/wp-content/uploads/2016/01/davido-oyedepo-foundation-scholarships.png"
+					"https://www.opportunitiesforafricans.com/wp-content/uploads/2016/01/davido-oyedepo-foundation-scholarships.png",
 			},
 
 			{
@@ -3262,7 +3262,7 @@ export default new Vuex.Store({
 				time: "02/11/2020",
 				featured: false,
 				image:
-					"https://whatsupnewp.com/wp-content/uploads/2020/03/banner.png"
+					"https://whatsupnewp.com/wp-content/uploads/2020/03/banner.png",
 			},
 			{
 				id: 3,
@@ -3272,8 +3272,8 @@ export default new Vuex.Store({
 				time: "02/11/2020",
 				featured: true,
 				image:
-					"https://whatsupnewp.com/wp-content/uploads/2020/03/banner.png"
-			}
+					"https://whatsupnewp.com/wp-content/uploads/2020/03/banner.png",
+			},
 		],
 		schoolEvents: [],
 		enrollments: [],
@@ -3289,27 +3289,27 @@ export default new Vuex.Store({
 						id: 1,
 						sender_id: 1,
 						text: "Hi! It's Prof, what are you up to?",
-						time: "12:00AM"
+						time: "12:00AM",
 					},
 					{
 						id: 2,
 						sender_id: 2,
 						text: "Just working on the final assignment, you?",
-						time: "12:05AM"
+						time: "12:05AM",
 					},
 					{
 						id: 3,
 						sender_id: 2,
 						text: "so far so good",
-						time: "12:07AM"
+						time: "12:07AM",
 					},
 					{
 						id: 4,
 						sender_id: 1,
 						text: "LMAO. I haven't even started it",
-						time: "12:08AM"
-					}
-				]
+						time: "12:08AM",
+					},
+				],
 			},
 			{
 				id: 2,
@@ -3321,28 +3321,28 @@ export default new Vuex.Store({
 						id: 1,
 						sender_id: 1,
 						text: "Hi! It's Chika, what are you up to?",
-						time: "12:00AM"
+						time: "12:00AM",
 					},
 					{
 						id: 2,
 						sender_id: 3,
 						text: "Just working on the final assignment, you?",
-						time: "12:05AM"
+						time: "12:05AM",
 					},
 					{
 						id: 3,
 						sender_id: 3,
 						text: "so far so good",
-						time: "12:07AM"
+						time: "12:07AM",
 					},
 					{
 						id: 4,
 						sender_id: 1,
 						text:
 							"Hmmm. I ran into a bit of a hurdle myself, I think I just need to change my approach",
-						time: "12:08AM"
-					}
-				]
+						time: "12:08AM",
+					},
+				],
 			},
 			{
 				id: 3,
@@ -3354,27 +3354,27 @@ export default new Vuex.Store({
 						id: 1,
 						sender_id: 1,
 						text: "Gideon here! what are you up to?",
-						time: "12:00AM"
+						time: "12:00AM",
 					},
 					{
 						id: 2,
 						sender_id: 4,
 						text: "Just working on the final assignment, you?",
-						time: "12:05AM"
+						time: "12:05AM",
 					},
 					{
 						id: 3,
 						sender_id: 4,
 						text: "so far so good",
-						time: "12:07AM"
+						time: "12:07AM",
 					},
 					{
 						id: 4,
 						sender_id: 1,
 						text: "I still have a long way to go :(",
-						time: "12:08AM"
-					}
-				]
+						time: "12:08AM",
+					},
+				],
 			},
 			{
 				id: 4,
@@ -3386,40 +3386,40 @@ export default new Vuex.Store({
 						id: 1,
 						sender_id: 1,
 						text: "Hi! what are you up to?",
-						time: "12:00AM"
+						time: "12:00AM",
 					},
 					{
 						id: 2,
 						sender_id: 5,
 						text: "Just working on the final assignment, you?",
-						time: "12:05AM"
+						time: "12:05AM",
 					},
 					{
 						id: 3,
 						sender_id: 5,
 						text: "so far so good",
-						time: "12:07AM"
+						time: "12:07AM",
 					},
 					{
 						id: 4,
 						sender_id: 1,
 						text:
 							"LMAO. Can't believe it's due next week, where do I begin?",
-						time: "12:08AM"
-					}
-				]
-			}
+						time: "12:08AM",
+					},
+				],
+			},
 		],
 		settings: {
 			canEnroll: true,
 			canAddAndDrop: true,
 			enrollBySemester: false,
-			enrollBySession: true
+			enrollBySession: true,
 		},
 		currentAcademicSession: {},
 		selectedPendingCourses: [],
 		facilitated: [],
-		schoolAssessments: []
+		schoolAssessments: [],
 	},
 	getters: {
 		getCourses({ courses }) {
@@ -3428,7 +3428,7 @@ export default new Vuex.Store({
 		getCoursesFromEnrollments({ enrollments }) {
 			if (enrollments.length > 0) {
 				let enrolled = enrollments[0].curriculum_items;
-				let ans = enrolled.map(item => item.curriculumable);
+				let ans = enrolled.map((item) => item.curriculumable);
 				// console.log(ans);
 				return ans;
 			}
@@ -3438,32 +3438,32 @@ export default new Vuex.Store({
 			return facilitated;
 		},
 		isAuthenticated: ({ token }) => !!token,
-		getEvent: ({ events }) => id => {
-			return events.find(event => event.id == id);
+		getEvent: ({ events }) => (id) => {
+			return events.find((event) => event.id == id);
 		},
-		getStudent: ({ students }) => id => {
-			return students.find(student => student.matric_number == id);
+		getStudent: ({ students }) => (id) => {
+			return students.find((student) => student.matric_number == id);
 		},
-		getStaffById: ({ staff }) => id => {
-			return staff.find(staf => staf.staff_number == id);
+		getStaffById: ({ staff }) => (id) => {
+			return staff.find((staf) => staf.staff_number == id);
 		},
-		getStudentEvent: ({ studentEvents }) => id => {
+		getStudentEvent: ({ studentEvents }) => (id) => {
 			return studentEvents.filter(
-				studentEvent => studentEvent.student.matric_number == id
+				(studentEvent) => studentEvent.student.matric_number == id
 			);
 		},
-		getCourseById: ({ courses }) => id => {
-			return courses.find(course => course.id == id);
+		getCourseById: ({ courses }) => (id) => {
+			return courses.find((course) => course.id == id);
 		},
-		getSemesterById: ({ semesters }) => id => {
-			return semesters.find(semester => semester.id == id);
+		getSemesterById: ({ semesters }) => (id) => {
+			return semesters.find((semester) => semester.id == id);
 		},
-		getNewsById: ({ news }) => id => {
-			return news.find(item => item.id == id);
+		getNewsById: ({ news }) => (id) => {
+			return news.find((item) => item.id == id);
 		},
 		snackbar({ snackbar }) {
 			return snackbar;
-		}
+		},
 	},
 	mutations: {
 		openSnackbar({ snackbar }, payload) {
@@ -3476,7 +3476,7 @@ export default new Vuex.Store({
 		},
 		closeSnackbar({ snackbar }) {
 			return (snackbar.isActive = false);
-		}
+		},
 	},
 	actions: {
 		async login({ commit }, payload) {
@@ -3521,7 +3521,8 @@ export default new Vuex.Store({
 			let res = await axios.post("auth/me");
 			console.log(res.data);
 
-			res.status ? (state.loggedInUser = res.data.user) : null;
+			state.loggedInUser = res.data.user;
+			// return res.data.user;
 		},
 		async getUserEvents({}, id) {
 			let body = { user_id: id };
@@ -3616,7 +3617,7 @@ export default new Vuex.Store({
 		},
 		async getEnrolledCourses({ state }) {
 			let body = {
-				student_id: state.loggedInUser.matric_number
+				student_id: state.loggedInUser.matric_number,
 			};
 
 			let res = await axios.post(`enroll/courses`, body);
@@ -3626,7 +3627,7 @@ export default new Vuex.Store({
 		async getCurrentEnrollment({ state }, id) {
 			let body = {
 				student_id: id,
-				semester_id: state.currentAcademicSession.semester.id
+				semester_id: state.currentAcademicSession.semester.id,
 			};
 			let res = await axios.post("enroll/student-latest", body);
 			console.log(res.data);
@@ -3648,13 +3649,13 @@ export default new Vuex.Store({
 		async enrollCourses({ state }) {
 			let arr = [];
 
-			state.selectedCourses.forEach(item => {
+			state.selectedCourses.forEach((item) => {
 				arr.push(item.id);
 			});
 
 			let body = {
 				ids: JSON.stringify(arr),
-				student_id: state.loggedInUser.id
+				student_id: state.loggedInUser.id,
 			};
 
 			let res = await axios.post("enroll", body);
@@ -3667,7 +3668,7 @@ export default new Vuex.Store({
 			let body = {
 				ids: JSON.stringify(payload),
 				// student_id: 1
-				student_id: this.state.loggedInUser.id
+				student_id: this.state.loggedInUser.id,
 			};
 
 			let res = await axios.post("add-and-drop", body);
@@ -3767,12 +3768,21 @@ export default new Vuex.Store({
 			console.log(res.data);
 			return res.data;
 		},
+		async testEcho({}) {
+			try {
+				let res = await axios.post("message", { body: "yoooo" });
+
+				console.log(res.data);
+			} catch (error) {
+				console.log(error);
+			}
+		},
 		setupDashboard({ dispatch }) {
 			dispatch("getStudents");
 			dispatch("getStaff");
 			dispatch("getDepartments");
 			dispatch("getColleges");
 			dispatch("getNews");
-		}
-	}
+		},
+	},
 });

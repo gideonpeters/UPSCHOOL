@@ -11,7 +11,16 @@
 			>
 				<v-list-item class="px-2 py-4">
 					<v-list-item-avatar>
-						<v-img src="https://randomuser.me/api/portraits/women/80.jpg"></v-img>
+						<v-img
+							lazy-src="https://coolbackgrounds.io/images/backgrounds/black/black-trianglify-b6181ec2.jpg"
+							src="https://randomuser.me/affpi/portraits/women/80.jpg"
+						>
+							<template v-slot:placeholder>
+								<v-row class="fill-height ma-0" align="center" justify="center">
+									<div class="headline text-center white--text text-bold">{{ user.user ? user.name[0] : '' }}</div>
+								</v-row>
+							</template>
+						</v-img>
 					</v-list-item-avatar>
 
 					<v-list-item-title>

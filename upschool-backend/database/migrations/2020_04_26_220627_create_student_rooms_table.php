@@ -17,9 +17,11 @@ class CreateStudentRoomsTable extends Migration
             $table->id();
             $table->foreignId('student_id');
             $table->foreignId('room_id');
+            $table->unsignedInteger('capacity')->nullable();
             $table->foreignId('is_reserved')->nullable();
             $table->boolean('has_key')->nullable();
             $table->boolean('is_signed_in')->nullable();
+            $table->boolean('is_signed_out')->nullable();
             $table->foreignId('semester_id')->nullable();
             $table->foreignId('session_id')->nullable();
             $table->timestamps();

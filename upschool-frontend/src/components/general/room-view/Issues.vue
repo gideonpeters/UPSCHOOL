@@ -1,5 +1,10 @@
 <template>
-	<v-card class="pa-3" flat min-height="600px">
+	<v-card
+		:color="isStudent || isStaff ? 'transparent' : 'white'"
+		class="pa-3"
+		flat
+		min-height="600px"
+	>
 		<v-row>
 			<v-col cols="12">
 				<v-dialog v-model="dialog" persistent max-width="600px">
@@ -61,6 +66,16 @@
 
 <script>
 export default {
+	props: {
+		isStudent: {
+			type: Boolean,
+			default: false
+		},
+		isStaff: {
+			type: Boolean,
+			default: false
+		}
+	},
 	data() {
 		return {
 			dialog: null,

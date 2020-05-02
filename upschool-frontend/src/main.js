@@ -7,19 +7,32 @@ import store from "./store/store";
 import router from "./routes/router";
 import lineClamp from "vue-line-clamp";
 import moment from "moment";
+import Echo from "laravel-echo";
+// import Pusher from "pusher-js";
 import "./includes";
 
 Vue.use(lineClamp, {
 	// plugin options
 });
 
+const pusher = require("pusher-js");
+
+const echo = new Echo({
+	broadcaster: "pusher",
+	key: "anyKey",
+	wsHost: "127.0.0.1",
+	wsPort: 6001,
+	wssPort: 6001,
+	disableStats: true,
+});
+
 axios.defaults.baseURL = "http://127.0.0.1:8000/api/";
 
-// const token = localStorage.getItem("user-token");
 const token = store.state.token;
 
 if (token) {
 	axios.defaults.headers.common["Authorization"] = `Bearer ${token}`;
+	// store.dispatch("getUser");
 }
 
 import "@mdi/font/css/materialdesignicons.css";
@@ -28,9 +41,10 @@ import "./assets/styles/main.scss";
 // import { createProvider } from './vue-apollo'
 
 Vue.prototype.moment = moment;
+Vue.prototype.echo = echo;
+Vue.prototype.pusher = pusher;
 
 Vue.config.productionTip = false;
-// Vue.config.ignoredElements = ["trix-vue"];
 
 new Vue({
 	store,
@@ -38,5 +52,5 @@ new Vue({
 	lineClamp,
 	vuetify,
 	// apolloProvider: createProvider(),
-	render: h => h(App)
+	render: (h) => h(App),
 }).$mount("#app");

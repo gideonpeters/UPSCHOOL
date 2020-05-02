@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Semester;
 use App\AcademicSession;
+use App\Events\WebSocketDemoEvent;
 use Illuminate\Http\Request;
 
 class AcademicSessionController extends Controller
@@ -30,6 +31,24 @@ class AcademicSessionController extends Controller
         $session->end_date = $request->end_date;
 
         $session->save();
+
+        return response()->json([
+            'status' => true,
+            'message' => 'Session created successfully',
+            'data' => $session
+        ], 201);
+    }
+
+    public function test(Request $request)
+    {
+        //
+        $session = new AcademicSession();
+        $session->title = $request->body;
+        $session->start_date = '2020-04-11';
+        $session->end_date = '2020-04-11';
+        $session->save();
+
+        broadcast(new WebSocketDemoEvent($session));
 
         return response()->json([
             'status' => true,

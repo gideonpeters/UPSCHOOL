@@ -18,12 +18,22 @@ class RoomController extends Controller
         //
         $rooms = Room::withCount('occupants')->get()->load('hall');
 
-        if ($request->status == 'available') {
-            $student = Student::find(1);
+        if ($request->status == 'available' && $request->student_id) {
+            $student = Student::find($request->student_id);
+
+            if (!$student) {
+                return response()->json([
+                    'status' => false,
+                    'message' => 'student not found',
+                    'data' => []
+                ], 201);
+            }
+
             $settings = AllocationSetting::latest()->first();
             $available_halls = Hall::all();
+
             if ($settings->allocate_by_sex) {
-                $available_halls = Hall::all()->filter(function ($value, $key) use ($student) {
+                $available_halls = $available_halls->filter(function ($value, $key) use ($student) {
                     $student_sex = strtolower(trim($student->sex));
                     $allowed_sexes = collect($value->preferred_sex)->transform(function ($value) {
                         return strtolower(trim($value));
@@ -31,11 +41,13 @@ class RoomController extends Controller
                     return $allowed_sexes->contains($student_sex) || $value->preferred_sex == null;
                 });
             }
+
             if ($settings->allocate_by_level) {
                 $available_halls = $available_halls->filter(function ($value) use ($student) {
                     return collect($value->preferred_level)->contains($student->level) || $value->preferred_level == null;
                 });
             }
+
             if ($settings->allocate_by_program) {
                 $available_halls = $available_halls->filter(function ($value) use ($student) {
                     $allowed_programs = collect($value->preferred_program)->transform(function ($value) {
@@ -53,28 +65,101 @@ class RoomController extends Controller
             }
 
             if ($settings->allocate_by_nationality) {
-                $available_halls = $available_halls->filter(function ($value) use ($student, $settings) {
+                $studentNationality = strtolower(trim($student->nationality));
+                $localNationality = strtolower(trim($settings->local_nationality));
 
-                    $studentNationality = strtolower(trim($student->nationality));
-                    $allowed_nationalities = collect($value->preferred_nationality)->transform(function ($val) {
-                        return strtolower(trim($val));
+                if ($studentNationality == $localNationality) {
+                    $available_halls = $available_halls->filter(function ($value) use ($studentNationality) {
+                        $allowed_nationalities = collect($value->preferred_nationality)->transform(function ($val) {
+                            return strtolower(trim($val));
+                        });
+                        return $allowed_nationalities->contains($studentNationality) || $allowed_nationalities->contains('local') || $value->preferred_nationality == null;
                     });
-                    if ($allowed_nationalities->contains('local')) {
-                        return $allowed_nationalities->contains(strtolower(trim($settings->local_nationality)));
-                    } else if ($allowed_nationalities->contains('international')) {
-                        return !($allowed_nationalities->contains(strtolower(trim($settings->local_nationality))));
-                    } else {
-                        return $allowed_nationalities->contains($studentNationality);
-                    }
-                });
+                } else {
+                    $available_halls = $available_halls->filter(function ($value) use ($studentNationality, $localNationality) {
+                        $allowed_nationalities = collect($value->preferred_nationality)->filter(function ($val) use ($localNationality) {
+                            return strtolower(trim($val)) != $localNationality;
+                        });
+                        $allowed_nationalities = collect($value->preferred_nationality)->transform(function ($val) {
+                            return strtolower(trim($val));
+                        });
+
+                        return $allowed_nationalities->contains($studentNationality) || $allowed_nationalities->contains('international') || $value->preferred_nationality == null;
+                    });
+                }
             }
+
             $available_halls = $available_halls->map(function ($value) {
                 return $value->id;
             });
-            $rooms = Room::whereIn('hall_id', $available_halls)->get();
-            dd($rooms->toArray());
-            // if ($settings->allocate_by_sex) {
-            // }
+
+            $available_rooms = Room::whereIn('hall_id', $available_halls)->get();
+
+            if ($settings->allocate_by_sex) {
+                $available_rooms = $available_rooms->filter(function ($value, $key) use ($student) {
+                    $student_sex = strtolower(trim($student->sex));
+                    $allowed_sexes = collect($value->preferred_sex)->transform(function ($value) {
+                        return strtolower(trim($value));
+                    });
+                    return $allowed_sexes->contains($student_sex) || $value->preferred_sex == null;
+                });
+            }
+
+            if ($settings->allocate_by_level) {
+                $available_rooms = $available_rooms->filter(function ($value) use ($student) {
+                    return collect($value->preferred_level)->contains($student->level) || $value->preferred_level == null;
+                });
+            }
+
+            if ($settings->allocate_by_program) {
+                $available_rooms = $available_rooms->filter(function ($value) use ($student) {
+                    $allowed_programs = collect($value->preferred_program)->transform(function ($value) {
+                        $progr = Program::find($value);
+                        if ($progr) {
+                            return $progr->id;
+                        } else {
+                            return null;
+                        }
+                    });
+
+                    return $allowed_programs->contains($student->program_id) || $value->preferred_program == null;
+                });
+            }
+
+            if ($settings->allocate_by_nationality) {
+                $studentNationality = strtolower(trim($student->nationality));
+                $localNationality = strtolower(trim($settings->local_nationality));
+
+                if ($studentNationality == $localNationality) {
+                    $available_rooms = $available_rooms->filter(function ($value) use ($studentNationality) {
+                        $allowed_nationalities = collect($value->preferred_nationality)->transform(function ($val) {
+                            return strtolower(trim($val));
+                        });
+                        return $allowed_nationalities->contains($studentNationality) || $allowed_nationalities->contains('local') || $value->preferred_nationality == null;
+                    });
+                } else {
+                    $available_rooms = $available_rooms->filter(function ($value) use ($studentNationality, $localNationality) {
+                        $allowed_nationalities = collect($value->preferred_nationality)->filter(function ($val) use ($localNationality) {
+                            return strtolower(trim($val)) != $localNationality;
+                        });
+                        $allowed_nationalities = collect($value->preferred_nationality)->transform(function ($val) {
+                            return strtolower(trim($val));
+                        });
+
+                        return $allowed_nationalities->contains($studentNationality) || $allowed_nationalities->contains('international') || $value->preferred_nationality == null;
+                    });
+                }
+            }
+
+            $available_rooms = $available_rooms->load('occupants', 'hall', 'room_type')->filter(function ($val) {
+                return count($val->occupants) <  $val->capacity;
+            });
+
+            return response()->json([
+                'status' => true,
+                'message' => 'these are all the available rooms',
+                'data' => $available_rooms->loadCount('occupants')
+            ], 201);
         }
 
         return response()->json([

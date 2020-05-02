@@ -4,6 +4,7 @@ namespace App;
 
 use App\Event;
 // use Illuminate\Contracts\Auth\MustVerifyEmail;
+use App\Message;
 use App\UserEvent;
 use App\SchoolEvent;
 use App\ScheduleItem;
@@ -72,6 +73,11 @@ class User extends Authenticatable implements JWTSubject
     public function events()
     {
         return $this->belongsToMany(Event::class, 'users_events')->using(UserEvent::class);
+    }
+
+    public function messages()
+    {
+        return $this->hasMany(Message::class);
     }
 
     // public function image()

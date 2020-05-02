@@ -9,6 +9,7 @@
     "license": "MIT",
     "require": {
         "php": "^7.2.5",
+        "beyondcode/laravel-websockets": "^1.4",
         "fideloper/proxy": "^4.2",
         "fruitcake/laravel-cors": "^1.0",
         "guzzlehttp/guzzle": "^6.3",
@@ -16,6 +17,7 @@
         "laravel/tinker": "^2.0",
         "mll-lab/laravel-graphql-playground": "^2.1",
         "nuwave/lighthouse": "^4.11",
+        "pusher/pusher-php-server": "~3.0",
         "tymon/jwt-auth": "1.0.x-dev"
     },
     "require-dev": {

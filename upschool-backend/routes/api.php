@@ -32,6 +32,8 @@ Route::group([
     Route::post('me', 'AuthController@me');
 });
 
+Route::post('message', 'AcademicSessionController@test');
+
 Route::group([], function ($router) {
     Route::get('courses', 'CourseController@index');
     Route::post('courses', 'CourseController@store');
@@ -262,12 +264,12 @@ Route::group([], function ($router) {
     Route::post('attendance/{attendance_id}', 'AttendanceController@update');
 });
 
-Route::group([], function ($router) {
-    Route::get('fee', 'FeeController@index');
-    Route::post('fee', 'FeeController@store');
-    Route::get('fee/{fee_id}', 'FeeController@show');
-    Route::post('fee/{fee_id}', 'FeeController@update');
-});
+// Route::group([], function ($router) {
+//     Route::get('fee', 'FeeController@index');
+//     Route::post('fee', 'FeeController@store');
+//     Route::get('fee/{fee_id}', 'FeeController@show');
+//     Route::post('fee/{fee_id}', 'FeeController@update');
+// });
 
 Route::group([], function ($router) {
     Route::get('student', 'StudentController@index');
@@ -301,6 +303,10 @@ Route::group([], function ($router) {
     Route::delete('room/{room_id}', 'RoomController@destroy');
 
     Route::post('room-bulk', 'RoomController@storeBulk');
+
+    Route::post('room-allocation', 'StudentRoomController@store');
+    Route::get('room-current', 'StudentRoomController@show');
+    Route::get('room-allocation', 'StudentRoomController@index');
 });
 
 Route::group([], function ($router) {

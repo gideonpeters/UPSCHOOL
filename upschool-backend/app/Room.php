@@ -3,6 +3,7 @@
 namespace App;
 
 use App\Hall;
+use App\Student;
 use App\RoomType;
 use App\StudentRoom;
 use Illuminate\Database\Eloquent\Model;
