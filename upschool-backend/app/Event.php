@@ -10,7 +10,13 @@ class Event extends Model
 {
     // 
     protected $guarded = [];
-    // protected $with = ['events'];
+    protected $appends = ['name'];
+
+    public function getNameAttribute()
+    {
+        $item = Event::with('eventable')->find($this->id);
+        return $item->eventable->title;
+    }
 
     public function semester()
     {

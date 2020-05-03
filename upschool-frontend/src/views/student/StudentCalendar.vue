@@ -73,6 +73,8 @@
 						:event-color="getEventColor"
 						:now="today"
 						:type="type"
+						event-start="start_time"
+						event-end="end_time"
 						@click:event="showEvent"
 						@click:more="viewDay"
 						@click:date="viewDay"
@@ -84,22 +86,30 @@
 						:activator="selectedElement"
 						offset-x
 					>
-						<v-card color="grey lighten-4" min-width="350px" flat>
+						<v-card
+							color="grey lighten-4"
+							min-width="350px"
+							flat
+							v-if="selectedEvent"
+						>
 							<v-toolbar :color="selectedEvent.color" dark>
-								<v-btn icon>
+								<!-- <v-btn icon>
 									<v-icon>mdi-pencil</v-icon>
-								</v-btn>
+								</v-btn> -->
 								<v-toolbar-title v-html="selectedEvent.name" />
 								<v-spacer />
-								<v-btn icon>
+								<!-- <v-btn icon>
 									<v-icon>mdi-heart</v-icon>
-								</v-btn>
-								<v-btn icon>
+								</v-btn> -->
+								<!-- <v-btn icon>
 									<v-icon>mdi-dots-vertical</v-icon>
-								</v-btn>
+								</v-btn> -->
 							</v-toolbar>
 							<v-card-text>
-								<span v-html="selectedEvent.details" />
+								<span
+									v-if="selectedEvent.eventable"
+									v-html="selectedEvent.eventable.description"
+								/>
 							</v-card-text>
 							<v-card-actions>
 								<v-btn
@@ -119,6 +129,7 @@
 </template>
 
 <script>
+import Axios from "axios";
 export default {
 	data: () => ({
 		focus: new Date().toISOString().substr(0, 10),
@@ -127,7 +138,7 @@ export default {
 			month: "Month",
 			week: "Week",
 			day: "Day",
-			"4day": "4 Days"
+			"4day": "4 Days",
 		},
 		start: null,
 		end: null,
@@ -143,7 +154,7 @@ export default {
 			"cyan",
 			"green",
 			"orange",
-			"grey darken-1"
+			"grey darken-1",
 		],
 		names: [
 			"Meeting",
@@ -153,8 +164,8 @@ export default {
 			"Event",
 			"Birthday",
 			"Conference",
-			"Party"
-		]
+			"Party",
+		],
 	}),
 	computed: {
 		title() {
@@ -188,12 +199,19 @@ export default {
 		monthFormatter() {
 			return this.$refs.calendar.getFormatter({
 				timeZone: "UTC",
-				month: "long"
+				month: "long",
 			});
-		}
+		},
 	},
-	mounted() {
-		this.$refs.calendar.checkChange();
+	async mounted() {
+		try {
+			this.$refs.calendar.checkChange();
+			let res = await Axios.get("event");
+			console.log(res.data.data);
+			this.events = res.data.data;
+		} catch (error) {
+			console.log(error);
+		}
 	},
 	methods: {
 		viewDay({ date }) {
@@ -201,7 +219,23 @@ export default {
 			this.type = "day";
 		},
 		getEventColor(event) {
-			return event.color;
+			let res;
+			switch (event.recurrence) {
+				case "daily":
+					res = this.colors[2];
+					break;
+				case "weekly":
+					res = this.colors[3];
+					break;
+				case "monthly":
+					res = this.colors[4];
+					break;
+
+				default:
+					res = this.colors[this.colors.length - 1];
+					break;
+			}
+			return res;
 		},
 		setToday() {
 			this.focus = this.today;
@@ -229,33 +263,8 @@ export default {
 			nativeEvent.stopPropagation();
 		},
 		updateRange({ start, end }) {
-			const events = [];
-
-			const min = new Date(`${start.date}T00:00:00`);
-			const max = new Date(`${end.date}T23:59:59`);
-			const days = (max.getTime() - min.getTime()) / 86400000;
-			const eventCount = this.rnd(days, days + 20);
-
-			for (let i = 0; i < eventCount; i++) {
-				const allDay = this.rnd(0, 3) === 0;
-				const firstTimestamp = this.rnd(min.getTime(), max.getTime());
-				const first = new Date(
-					firstTimestamp - (firstTimestamp % 900000)
-				);
-				const secondTimestamp = this.rnd(2, allDay ? 288 : 8) * 900000;
-				const second = new Date(first.getTime() + secondTimestamp);
-
-				events.push({
-					name: this.names[this.rnd(0, this.names.length - 1)],
-					start: this.formatDate(first, !allDay),
-					end: this.formatDate(second, !allDay),
-					color: this.colors[this.rnd(0, this.colors.length - 1)]
-				});
-			}
-
 			this.start = start;
 			this.end = end;
-			this.events = events;
 		},
 		nth(d) {
 			return d > 3 && d < 21
@@ -274,7 +283,7 @@ export default {
 				? `${a.getFullYear()}-${a.getMonth() +
 						1}-${a.getDate()} ${a.getHours()}:${a.getMinutes()}`
 				: `${a.getFullYear()}-${a.getMonth() + 1}-${a.getDate()}`;
-		}
-	}
+		},
+	},
 };
 </script>

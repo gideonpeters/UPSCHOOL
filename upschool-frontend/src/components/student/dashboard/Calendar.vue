@@ -1,9 +1,6 @@
 <template>
 	<div>
-		<!-- <v-card flat width="100%"> -->
-		<!-- <custom-header title="CALENDAR" cta-text="View" route="student.calendar" /> -->
 		<calendar />
-		<!-- </v-card> -->
 	</div>
 </template>
 
@@ -11,8 +8,8 @@
 import Calendar from "@/components/general/Calendar";
 export default {
 	components: {
-		Calendar
-	}
+		Calendar,
+	},
 };
 </script>
 

@@ -8,8 +8,13 @@ import router from "./routes/router";
 import lineClamp from "vue-line-clamp";
 import moment from "moment";
 import Echo from "laravel-echo";
+import VueTour from "vue-tour";
 // import Pusher from "pusher-js";
 import "./includes";
+
+require("vue-tour/dist/vue-tour.css");
+
+Vue.use(VueTour);
 
 Vue.use(lineClamp, {
 	// plugin options
@@ -22,7 +27,7 @@ const echo = new Echo({
 	key: "anyKey",
 	wsHost: "127.0.0.1",
 	wsPort: 6001,
-	wssPort: 6001,
+	// wssPort: 6001,
 	disableStats: true,
 });
 

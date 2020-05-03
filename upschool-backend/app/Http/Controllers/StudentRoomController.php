@@ -29,7 +29,9 @@ class StudentRoomController extends Controller
             ], 201);
         }
 
-        $student_rooms = StudentRoom::with('semester', 'session')->whereStudentId($student->id)->get();
+        // $allocation_settings = AllocationSetting::latest()->first();
+
+        $student_rooms = StudentRoom::with('semester', 'session', 'room', 'room.hall')->whereStudentId($student->id)->get()->groupBy('session_id');
 
         return response()->json([
             'status' => true,

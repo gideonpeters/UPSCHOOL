@@ -16,8 +16,16 @@
 							src="https://randomuser.me/affpi/portraits/women/80.jpg"
 						>
 							<template v-slot:placeholder>
-								<v-row class="fill-height ma-0" align="center" justify="center">
-									<div class="headline text-center white--text text-bold">{{ user.user ? user.name[0] : '' }}</div>
+								<v-row
+									class="fill-height ma-0"
+									align="center"
+									justify="center"
+								>
+									<div
+										class="headline text-center white--text text-bold"
+									>
+										{{ user.user ? user.name[0] : "" }}
+									</div>
 								</v-row>
 							</template>
 						</v-img>
@@ -25,7 +33,9 @@
 
 					<v-list-item-title>
 						<div>{{ user.user ? user.name : "" }}</div>
-						<div class="fs-4 my-3">Student #: {{ user ? user.matric_number : '' }}</div>
+						<div class="fs-4 my-3">
+							Student #: {{ user ? user.matric_number : "" }}
+						</div>
 						<div class="fs-4">Covenant University</div>
 					</v-list-item-title>
 
@@ -54,7 +64,9 @@
 						</v-list-item-icon>
 
 						<v-list-item-content>
-							<v-list-item-title class="text-uppercase">{{ dash.title }}</v-list-item-title>
+							<v-list-item-title class="text-uppercase">{{
+								dash.title
+							}}</v-list-item-title>
 						</v-list-item-content>
 					</v-list-item>
 				</v-list>
@@ -77,16 +89,17 @@
 						</v-list-item-icon>
 
 						<v-list-item-content>
-							<v-list-item-title class="text-uppercase">{{ item.title }}</v-list-item-title>
+							<v-list-item-title class="text-uppercase">{{
+								item.title
+							}}</v-list-item-title>
 						</v-list-item-content>
 					</v-list-item>
 				</v-list>
 
 				<v-footer absolute>
-					<div class="py-2 pointer" v-if="!mini" @click="
-							logoutUser
-								
-						">LOGOUT</div>
+					<div class="py-2 pointer" v-if="!mini" @click="logoutUser">
+						LOGOUT
+					</div>
 				</v-footer>
 			</v-navigation-drawer>
 			<!-- <v-card :ripple="false" color="grey lighten-4" flat height="100%" tile> -->
@@ -98,22 +111,43 @@
 							? (mini = !mini)
 							: (drawer = !drawer)
 					"
-				>mdi-menu</v-icon>
+					>mdi-menu</v-icon
+				>
 
 				<v-spacer />
 
 				<v-menu offset-y :close-on-content-click="closeOnContentClick">
 					<template v-slot:activator="{ on }">
-						<v-btn depressed color="primary" dark v-on="on" v-if="!(keyStat > 2)">
-							<v-icon color="white" class="pointer">mdi-apps</v-icon>
+						<v-btn
+							depressed
+							color="primary"
+							dark
+							v-on="on"
+							v-if="!(keyStat > 2)"
+						>
+							<v-icon color="white" class="pointer"
+								>mdi-apps</v-icon
+							>
 						</v-btn>
 					</template>
 
-					<v-card class="pa-4 primary-box-shadow" min-width="150px" max-height="350px" flat>
+					<v-card
+						class="pa-4 primary-box-shadow"
+						min-width="150px"
+						max-height="350px"
+						flat
+					>
 						<v-container>
 							<v-row>
-								<v-col cols="4" v-for="(item, index) in apps" :key="index">
-									<div class="d-flex flex-column align-center pointer" @click="goToPage(item.route)">
+								<v-col
+									cols="4"
+									v-for="(item, index) in apps"
+									:key="index"
+								>
+									<div
+										class="d-flex flex-column align-center pointer"
+										@click="goToPage(item.route)"
+									>
 										<div>
 											<v-icon>{{ item.icon }}</v-icon>
 										</div>
@@ -135,7 +169,9 @@
 					</template>
 					<v-list>
 						<v-list-item v-for="(item, i) in itemsx" :key="i">
-							<v-list-item-title>{{ item.title }}</v-list-item-title>
+							<v-list-item-title>{{
+								item.title
+							}}</v-list-item-title>
 						</v-list-item>
 					</v-list>
 				</v-menu>
@@ -193,64 +229,64 @@ export default {
 				{
 					route: "student.dashboard",
 					title: "Dashboard",
-					icon: "mdi-view-dashboard-outline"
+					icon: "mdi-view-dashboard-outline",
 				},
 				{
 					route: "student.profile",
 					title: "Profile",
-					icon: "mdi-account-outline"
+					icon: "mdi-account-outline",
 				},
 				{
 					route: "student.inbox",
 					title: "Inbox",
-					icon: "mdi-email-outline"
+					icon: "mdi-email-outline",
 				},
 				{
 					route: "student.news",
 					title: "News & Events",
-					icon: "mdi-newspaper"
-				}
+					icon: "mdi-newspaper",
+				},
 			],
 			overwriteBreakpoint: true,
 			bars: [
 				{ class: "" },
 				{ class: "", dark: true },
 				{ class: "primary", dark: true },
-				{ class: "elevation-0" }
+				{ class: "elevation-0" },
 			],
 			itemsx: [
 				{ title: "Click Me" },
 				{ title: "Click Me" },
 				{ title: "Click Me" },
-				{ title: "Click Me 2" }
+				{ title: "Click Me 2" },
 			],
 			apps: [
 				{
 					route: "student.course-reg",
 					title: "Courses",
-					icon: "mdi-bookshelf"
+					icon: "mdi-bookshelf",
 				},
 				{
 					route: "student.payments",
 					title: "Financials",
-					icon: "mdi-finance"
+					icon: "mdi-finance",
 				},
 				{
 					route: "student.calendar",
 					title: "Planner",
-					icon: "mdi-clock-outline"
+					icon: "mdi-clock-outline",
 				},
 				{
 					route: "student.results",
 					title: "Results & Grading",
-					icon: "mdi-school"
+					icon: "mdi-school",
 				},
 				{
 					route: "student.attendance",
 					title: "Attendance",
-					icon: "mdi-presentation"
-				}
-			]
+					icon: "mdi-presentation",
+				},
+			],
 		};
 	},
 	computed: {
@@ -279,147 +315,142 @@ export default {
 				{
 					route: "student.course-reg",
 					title: "Browse Courses",
-					icon: "mdi-magnify"
+					icon: "mdi-magnify",
 				},
 				{
 					route: "student.courses.plan",
 					title: "My Courses",
-					icon: "mdi-bookshelf"
+					icon: "mdi-bookshelf",
 				},
 				{
 					route: "student.courses.register",
 					title: "Enrollments",
-					icon: "mdi-book"
+					icon: "mdi-book",
 				},
 				{
 					route: "student.courses.assignments",
 					title: "Assignments",
-					icon: "mdi-clipboard-text"
+					icon: "mdi-clipboard-text",
 				},
 				{
 					route: "student.courses.grading",
 					title: "C.A's",
-					icon: "mdi-poll-box"
+					icon: "mdi-poll-box",
 				},
 				{
 					route: "student.calendar",
 					title: "Timetable",
-					icon: "mdi-clock-outline"
-				}
+					icon: "mdi-clock-outline",
+				},
 			];
 			let generalItems = [
 				{
 					route: "student.course-reg",
 					title: "Courses",
-					icon: "mdi-bookshelf"
+					icon: "mdi-bookshelf",
 				},
 				{
 					route: "student.payments",
 					title: "Financials",
-					icon: "mdi-finance"
+					icon: "mdi-finance",
 				},
 				{
 					route: "student.calendar",
 					title: "Planner",
-					icon: "mdi-clock-outline"
+					icon: "mdi-clock-outline",
 				},
 				{
 					route: "student.results",
 					title: "Results & Grading",
-					icon: "mdi-school-outline"
+					icon: "mdi-school-outline",
 				},
 				{
 					route: "student.attendance",
 					title: "Attendance",
-					icon: "mdi-presentation"
+					icon: "mdi-presentation",
 				},
 				{
 					route: "student.residence",
 					title: "Residency",
-					icon: "mdi-home-outline"
+					icon: "mdi-home-outline",
 				},
 				{
 					route: "student.settings",
 					title: "Settings",
-					icon: "mdi-settings-outline"
+					icon: "mdi-settings-outline",
 				},
 				{
 					route: "student.help",
 					title: "Help",
-					icon: "mdi-help-circle-outline"
-				}
+					icon: "mdi-help-circle-outline",
+				},
 			];
 
 			let resultItems = [
 				{
 					route: "student.results",
 					title: "Result Analyzer",
-					icon: "mdi-progress-clock"
+					icon: "mdi-progress-clock",
 				},
-				// {
-				// 	route: "student.results.transcript",
-				// 	title: "View Transcript",
-				// 	icon: "mdi-cloud-download"
-				// },\
 				{
 					route: "student.results.breakdown",
 					title: "Result Breakdown",
-					icon: "mdi-chart-arc"
+					icon: "mdi-chart-arc",
 				},
 				{
 					route: "student.results.calculator",
 					title: "Bull's Eye",
-					icon: "mdi-bullseye-arrow"
-				}
+					icon: "mdi-bullseye-arrow",
+				},
 			];
 
 			let financialItems = [
 				{
 					route: "student.payments",
 					title: "FEES",
-					icon: "mdi-cash"
+					icon: "mdi-cash",
 				},
 				{
 					route: "student.payments.history",
 					title: "PAYMENT HISTORY",
-					icon: "mdi-history"
-				}
+					icon: "mdi-history",
+				},
 			];
 
 			let plannerItems = [
 				{
 					route: "student.calendar",
-					title: "CALENDAR",
-					icon: "mdi-calendar"
+					title: "GENERAL CALENDAR",
+					icon: "mdi-calendar",
 				},
 				{
 					route: "student.schedule",
-					title: "Schedule",
-					icon: "mdi-watch"
+					title: "PERSONAL Schedule",
+					icon: "mdi-watch",
 				},
 				{
 					route: "student.school-calendar",
 					title: "School Calendar",
-					icon: "mdi-clock-outline"
-				}
+					icon: "mdi-clock-outline",
+				},
 			];
 
 			let residenceItems = [
 				{
 					route: "student.residence",
 					title: "Allocation",
-					icon: "mdi-stairs"
+					icon: "mdi-stairs",
 				},
 				{
 					route: "student.residence.history",
 					title: "History",
-					icon: "mdi-history"
+					icon: "mdi-history",
 				},
 				{
 					route: "student.residence.issues",
 					title: "Issues",
-					icon: "mdi-file"
-				}
+					icon: "mdi-file",
+				},
 			];
 
 			if (this.keyStat == 3) result = courseItems;
@@ -438,7 +469,7 @@ export default {
 			}
 
 			return {};
-		}
+		},
 	},
 	methods: {
 		goToPage(routeName) {
@@ -447,7 +478,7 @@ export default {
 		async logoutUser() {
 			await this.$store.dispatch("logout");
 			this.goToPage("main.login");
-		}
+		},
 	},
 	async created() {
 		try {
@@ -458,7 +489,7 @@ export default {
 		} catch (err) {
 			console.log(err);
 		}
-	}
+	},
 };
 </script>
 

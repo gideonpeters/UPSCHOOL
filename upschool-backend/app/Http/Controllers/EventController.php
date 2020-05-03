@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Event;
+use App\Semester;
 use Illuminate\Http\Request;
 
 class EventController extends Controller
@@ -15,12 +16,13 @@ class EventController extends Controller
     public function index()
     {
         //
-        $events = Event::whereEventId(null);
+        $currentSemester = Semester::latest()->first();
+        $events = Event::with('eventable')->whereNotNull('event_id')->whereSemesterId($currentSemester->id);
 
         return response()->json([
             'status' => true,
             'message' => 'these are all the events',
-            'data' => $events->with('eventable:id,title,description')->get()
+            'data' => $events->get()
         ], 201);
     }
 
