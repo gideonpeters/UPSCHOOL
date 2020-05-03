@@ -2,40 +2,44 @@
 
 namespace App\Http\Controllers;
 
+use App\Conversation;
 use App\Message;
+use App\User;
 use Illuminate\Http\Request;
 
 class MessageController extends Controller
 {
-    /**
-     * Display a listing of the resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
+
     public function index()
     {
         //
     }
 
-    /**
-     * Show the form for creating a new resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
-    public function create()
-    {
-        //
-    }
-
-    /**
-     * Store a newly created resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @return \Illuminate\Http\Response
-     */
     public function store(Request $request)
     {
         //
+        $sender_id = auth()->user()->id;
+        $receiver = User::find($request->receiver_id);
+
+        if (!$receiver) {
+            return response()->json([
+                'status' => true,
+                'message' => 'User does not exist',
+                'data' => null
+            ], 201);
+        }
+
+        $conversation = Conversation::whereSenderId($sender_id)->whereReceiverId($request->receiver_id)->first();
+
+        if (!$conversation) {
+            $conversation = new Conversation();
+            $conversation->sender_id = $sender_id;
+            $conversation->receiver_id = $receiver->id;
+            $conversation->save();
+        }
+        $message = new Message();
+        $message->sender_id = $sender_id;
+        // $message->
     }
 
     /**

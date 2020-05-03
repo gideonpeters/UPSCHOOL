@@ -4,7 +4,9 @@
 			<v-row wrap>
 				<v-col cols="12" sm="12" md="12">
 					<div class="d-flex align-baseline py-3">
-						<div class="fs-2 font-weight-light">Welcome, {{ student.first_name }}!</div>
+						<div class="fs-2 font-weight-light">
+							Welcome, {{ student.first_name }}!
+						</div>
 						<v-spacer></v-spacer>
 						<div>{{ date.toDateString() }}</div>
 					</div>
@@ -29,21 +31,40 @@
 									gradient="to bottom, rgba(0,0,0,.1), rgba(0,0,0,.8)"
 									height="200px"
 								>
-									<v-card-title class="py-0" v-text="latestNews.title"></v-card-title>
-									<v-card-title class="fs-4 py-0" v-html="latestNews.body" v-line-clamp:20="1"></v-card-title>
+									<v-card-title
+										class="py-0"
+										v-text="latestNews.title"
+									></v-card-title>
+									<v-card-title
+										class="fs-4 py-0"
+										v-html="latestNews.body"
+										v-line-clamp:20="1"
+									></v-card-title>
 									<v-card-actions class="py-0">
 										<v-spacer></v-spacer>
 
-										<v-btn text color="white">READ MORE</v-btn>
+										<v-btn text color="white"
+											>READ MORE</v-btn
+										>
 									</v-card-actions>
 								</v-img>
 							</v-card>
 						</div>
 						<div>
 							<v-card class="pa-3 mb-5" flat>
-								<custom-header title="TODAY'S SCHEDULE" ctaText="View full schedule" route="student.news"></custom-header>
+								<custom-header
+									data-v-step="1"
+									title="TODAY'S SCHEDULE"
+									ctaText="View full schedule"
+									route="student.news"
+								></custom-header>
 								<div>
-									<v-data-table :headers="headers" :items="schedule" hide-default-header hide-default-footer>
+									<v-data-table
+										:headers="headers"
+										:items="schedule"
+										hide-default-header
+										hide-default-footer
+									>
 										<template v-slot:item.check="{ item }">
 											<v-icon
 												size="10"
@@ -52,24 +73,25 @@
 														? 'blue accent-2 '
 														: 'grey'
 												"
-											>mdi-circle</v-icon>
+												>mdi-circle</v-icon
+											>
 											<!-- <v-simple-checkbox v-model="item.check" disabled> -->
 											<!-- </v-simple-checkbox> -->
 										</template>
 										<template v-slot:item.name="{ item }">
 											<div>
 												{{
-												item.course_id
-												? `${
-												getCourse(
-												item.course_id
-												).course_code
-												}: ${
-												getCourse(
-												item.course_id
-												).title
-												}`
-												: item.name
+													item.course_id
+														? `${
+																getCourse(
+																	item.course_id
+																).course_code
+														  }: ${
+																getCourse(
+																	item.course_id
+																).title
+														  }`
+														: item.name
 												}}
 											</div>
 											<!-- <v-icon size="10" :color="item.id == 1 ? 'blue accent-2 ' : 'grey'">mdi-circle</v-icon> -->
@@ -77,7 +99,9 @@
 											<!-- </v-simple-checkbox> -->
 										</template>
 										<template v-slot:item.time="{ item }">
-											<div class="d-flex fs-4 font-weight-bold grey--text">
+											<div
+												class="d-flex fs-4 font-weight-bold grey--text"
+											>
 												<div>{{ item.time }}</div>
 											</div>
 											<!-- <v-icon size="15" :color="item.id == 1 ? 'blue accent-2 ' : 'grey'">mdi-circle</v-icon> -->
@@ -85,9 +109,15 @@
 											<!-- </v-simple-checkbox> -->
 										</template>
 										<template v-slot:item.venue="{ item }">
-											<div class="d-flex fs-4 font-italic grey--text">
+											<div
+												class="d-flex fs-4 font-italic grey--text"
+											>
 												<div class="mr-1">
-													<v-icon size="15" color="grey">mdi-map-marker</v-icon>
+													<v-icon
+														size="15"
+														color="grey"
+														>mdi-map-marker</v-icon
+													>
 												</div>
 												<div>{{ item.venue }}</div>
 											</div>
@@ -104,13 +134,22 @@
 								<v-container fluid class="pa-0">
 									<v-row no-gutters>
 										<v-col cols="12">
-											<custom-header title="UPCOMING C.A." ctaText="View all" route="student.news"></custom-header>
+											<custom-header
+												title="UPCOMING C.A."
+												ctaText="View all"
+												route="student.news"
+											></custom-header>
 										</v-col>
 										<!-- <v-col cols="12" sm="3" v-for="i in 4" :key="i">
 														<quiz-card  />
 										</v-col>-->
 										<v-col cols="12">
-											<v-slide-group v-model="model" class center-active show-arrows>
+											<v-slide-group
+												v-model="model"
+												class
+												center-active
+												show-arrows
+											>
 												<v-slide-item
 													v-for="n in 15"
 													:key="n"
@@ -119,7 +158,11 @@
 														toggle,
 													}"
 												>
-													<quiz-card class :input-value="active" @click="toggle" />
+													<quiz-card
+														class
+														:input-value="active"
+														@click="toggle"
+													/>
 												</v-slide-item>
 											</v-slide-group>
 										</v-col>
@@ -133,13 +176,22 @@
 									<v-row no-gutters>
 										<v-col cols="12">
 											<custom-header
+												data-v-step="2"
 												title="PENDING SUBMISSIONS"
 												ctaText="View all"
-												:route="routeName('courses.assignments')"
+												:route="
+													routeName(
+														'courses.assignments'
+													)
+												"
 											></custom-header>
 										</v-col>
 										<v-col cols="12">
-											<assignment-table isDashboard :isStudent="isStudent" :isStaff="isStaff" />
+											<assignment-table
+												isDashboard
+												:isStudent="isStudent"
+												:isStaff="isStaff"
+											/>
 										</v-col>
 									</v-row>
 								</v-container>
@@ -150,10 +202,19 @@
 								<v-container fluid class="pa-0">
 									<v-row no-gutters>
 										<v-col cols="12">
-											<custom-header title="UPCOMING EXAMS" ctaText="View all" route="student.news"></custom-header>
+											<custom-header
+												title="UPCOMING EXAMS"
+												ctaText="View all"
+												route="student.news"
+											></custom-header>
 										</v-col>
 										<v-col cols="12">
-											<v-slide-group v-model="model" class center-active show-arrows>
+											<v-slide-group
+												v-model="model"
+												class
+												center-active
+												show-arrows
+											>
 												<v-slide-item
 													v-for="n in 15"
 													:key="n"
@@ -162,7 +223,11 @@
 														toggle,
 													}"
 												>
-													<quiz-card class :input-value="active" @click="toggle" />
+													<quiz-card
+														class
+														:input-value="active"
+														@click="toggle"
+													/>
 												</v-slide-item>
 											</v-slide-group>
 										</v-col>
@@ -179,7 +244,11 @@
 								<v-container fluid>
 									<v-row justify="center">
 										<v-col cols="12">
-											<custom-header title="ACADEMIC PROGRESS" ctaText="View" route="student.profile"></custom-header>
+											<custom-header
+												title="ACADEMIC PROGRESS"
+												ctaText="View"
+												route="student.profile"
+											></custom-header>
 										</v-col>
 										<v-col cols="4" sm="6" class="px-5">
 											<v-progress-circular
@@ -190,31 +259,46 @@
 												:width="width"
 												color="light-blue"
 											>
-												<v-icon size="25" color="light-blue">mdi-school-outline</v-icon>
+												<v-icon
+													size="25"
+													color="light-blue"
+													>mdi-school-outline</v-icon
+												>
 											</v-progress-circular>
 										</v-col>
 										<v-col class="px-5">
 											<div>
 												<div class="d-flex flex-column">
-													<div class="font-weight-bold fs-4">PROGRAM</div>
-													<div class="fs-4" v-if="student.program">
+													<div
+														class="font-weight-bold fs-4"
+													>
+														PROGRAM
+													</div>
+													<div
+														class="fs-4"
+														v-if="student.program"
+													>
 														{{
-														student.program.name
+															student.program.name
 														}}
 														({{
-														student.program
-														.degree
-														.short_name
+															student.program
+																.degree
+																.short_name
 														}})
 													</div>
 												</div>
-												<div class="d-flex flex-column mt-4">
-													<div class="font-weight-bold fs-4">STATUS</div>
+												<div
+													class="d-flex flex-column mt-4"
+												>
+													<div
+														class="font-weight-bold fs-4"
+													>
+														STATUS
+													</div>
 													<div class="fs-4">
 														PROMOTED:
-														{{
-														student.level
-														}}
+														{{ student.level }}
 														Level
 													</div>
 												</div>
@@ -224,15 +308,17 @@
 									<v-divider></v-divider>
 									<v-row>
 										<v-col cols="12">
-											<custom-header title="CREDITS TO GRADUATE"></custom-header>
+											<custom-header
+												title="CREDITS TO GRADUATE"
+											></custom-header>
 											<div class="fs-3">
 												<div>
 													You need a total of
 													{{
-													student.program
-													? student.program
-													.min_graduation_units
-													: ""
+														student.program
+															? student.program
+																	.min_graduation_units
+															: ""
 													}}
 													units to graduate
 												</div>
@@ -242,9 +328,11 @@
 														achieved:
 													</div>
 													<v-spacer></v-spacer>
-													<div class="font-weight-bold mr-5">
+													<div
+														class="font-weight-bold mr-5"
+													>
 														{{
-														student.credits_achieved
+															student.credits_achieved
 														}}
 													</div>
 												</div>
@@ -271,7 +359,11 @@
 										</v-col>
 										<v-col>
 											<div class="d-flex flex-column">
-												<div class="fs-3 text-uppercase font-weight-bold grey--text">{{ latestNews.title }}</div>
+												<div
+													class="fs-3 text-uppercase font-weight-bold grey--text"
+												>
+													{{ latestNews.title }}
+												</div>
 												<v-card
 													v-html="latestNews.body"
 													flat
@@ -292,7 +384,8 @@
 																	latestNews.id
 																)
 															"
-														>read more</v-btn>
+															>read more</v-btn
+														>
 													</div>
 												</div>
 												<!-- <div class="primary--text fs-4 mt-4 pointer" >Read more</div> -->
@@ -308,14 +401,27 @@
 								<v-container fluid class="pa-0">
 									<v-row no-gutters>
 										<v-col cols="12">
-											<custom-header title="EVENTS" ctaText="View more" route="student.news"></custom-header>
+											<custom-header
+												title="EVENTS"
+												ctaText="View more"
+												route="student.news"
+											></custom-header>
 										</v-col>
 										<v-col>
 											<div class="d-flex flex-column">
-												<div class="fs-3 text-uppercase font-weight-bold grey--text">{{ latestEvent.name }}</div>
-												<v-card flat max-height="76" v-line-clamp:20="4" class="fs-4 d-flex text-wrap">
+												<div
+													class="fs-3 text-uppercase font-weight-bold grey--text"
+												>
+													{{ latestEvent.name }}
+												</div>
+												<v-card
+													flat
+													max-height="76"
+													v-line-clamp:20="4"
+													class="fs-4 d-flex text-wrap"
+												>
 													{{
-													latestEvent.description
+														latestEvent.description
 													}}
 												</v-card>
 												<!-- <div class="primary--text fs-4 mt-4 pointer">ADD TO SCHEDULE</div> -->
@@ -330,7 +436,11 @@
 								<v-container fluid class="pa-0">
 									<v-row no-gutters>
 										<v-col cols="12">
-											<custom-header title="CALENDAR" cta-text="View" route="student.calendar" />
+											<custom-header
+												title="CALENDAR"
+												cta-text="View"
+												route="student.calendar"
+											/>
 										</v-col>
 										<v-col>
 											<dashboard-calendar />
@@ -355,17 +465,17 @@ export default {
 	components: {
 		QuizCard,
 		DashboardCalendar,
-		AssignmentTable
+		AssignmentTable,
 	},
 	props: {
 		isStaff: {
 			type: Boolean,
-			default: false
+			default: false,
 		},
 		isStudent: {
 			type: Boolean,
-			default: false
-		}
+			default: false,
+		},
 	},
 	data() {
 		return {
@@ -386,9 +496,9 @@ export default {
 					text: "NAME",
 					align: "start",
 					sortable: false,
-					value: "name"
+					value: "name",
 				},
-				{ text: "LOCATION", value: "venue" }
+				{ text: "LOCATION", value: "venue" },
 			],
 			asgnHeaders: [
 				{ text: "COURSE CODE ", value: "course_code", sortable: false },
@@ -396,10 +506,10 @@ export default {
 					text: "TOPIC",
 					align: "start",
 					sortable: false,
-					value: "name"
+					value: "name",
 				},
 				{ text: "WEIGHT", value: "weight", sortable: false },
-				{ text: "DUE DATE", value: "time", sortable: false }
+				{ text: "DUE DATE", value: "time", sortable: false },
 			],
 			asgn: [
 				{
@@ -407,24 +517,24 @@ export default {
 					course_code: "GST411",
 					name: "GST111: Communications in English Language",
 					time: "Nov 26, 2020",
-					weight: "10%"
+					weight: "10%",
 				},
 				{
 					id: 2,
 					course_code: "EIE411",
 					name: "EIE517: applied Electronics",
 					time: "June 26, 2020",
-					weight: "20%"
+					weight: "20%",
 				},
 				{
 					id: 3,
 					course_code: "CEN411",
 					name: "Report on the 8051 micro controller",
 					time: "Mar 31, 2020",
-					weight: "20%"
-				}
+					weight: "20%",
+				},
 			],
-			schedule: []
+			schedule: [],
 		};
 	},
 	computed: {
@@ -464,7 +574,7 @@ export default {
 				  100
 				: 0;
 			return ans;
-		}
+		},
 	},
 	methods: {
 		goToPage(name, id) {
@@ -480,7 +590,7 @@ export default {
 				route = "staff." + route;
 			}
 			return route;
-		}
+		},
 	},
 	async mounted() {
 		try {
@@ -492,13 +602,13 @@ export default {
 				this.asgnHeaders.push({
 					text: "ACTIONS",
 					value: "action",
-					sortable: false
+					sortable: false,
 				});
 			}
 		} catch (error) {
 			console.log(error);
 		}
-	}
+	},
 };
 </script>
 

@@ -6,6 +6,7 @@
 				{{ snackbar.text }}
 				<v-btn color="blue" text @click="closeSnackbar">Close</v-btn>
 			</v-snackbar>
+			<v-tour name="studentTour" :steps="steps" />
 		</main>
 	</v-app>
 </template>
@@ -18,16 +19,44 @@ export default {
 	name: "App",
 	data: () => ({
 		//
+		steps: [
+			{
+				target: '[data-v-step="0"]',
+				content:
+					"Hi! I'm just going to put you through a few things so you're on your way to conquering this app!",
+				params: {
+					placement: "bottom",
+					highlight: false,
+				},
+			},
+			{
+				target: '[data-v-step="1"]',
+				content: "These are all the events you have lined up for today",
+				params: {
+					placement: "auto",
+					highlight: false,
+				},
+			},
+			{
+				target: '[data-v-step="2"]',
+				content:
+					"These are all the submissions you have not attended to. Hurry! Some may be due soon.",
+				params: {
+					placement: "bottom",
+					highlight: false,
+				},
+			},
+		],
 	}),
 	computed: {
 		snackbar() {
 			return this.$store.getters.snackbar;
-		}
+		},
 	},
 	methods: {
 		closeSnackbar() {
 			return this.$store.commit("close-snackbar");
-		}
+		},
 	},
 	created: function() {
 		axios.interceptors.response.use(undefined, function(err) {
@@ -44,6 +73,9 @@ export default {
 				throw err;
 			});
 		});
-	}
+	},
+	mounted() {
+		this.$tours["studentTour"].start();
+	},
 };
 </script>

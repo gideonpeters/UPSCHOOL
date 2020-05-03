@@ -105,6 +105,7 @@
 			<!-- <v-card :ripple="false" color="grey lighten-4" flat height="100%" tile> -->
 			<v-app-bar app class="primary disable-dbl-tap-zoom">
 				<v-icon
+					data-v-step="0"
 					color="white"
 					@click="
 						$vuetify.breakpoint.mdAndUp
@@ -490,6 +491,7 @@ export default {
 			console.log(err);
 		}
 	},
+	mounted() {},
 };
 </script>
 

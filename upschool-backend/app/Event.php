@@ -12,6 +12,8 @@ class Event extends Model
     protected $guarded = [];
     protected $appends = ['name'];
 
+    protected $casts = ['priority' => 'boolean'];
+
     public function getNameAttribute()
     {
         $item = Event::with('eventable')->find($this->id);
