@@ -7,13 +7,18 @@
 			<div class="title">Month news ({{ pickerDate || 'change month...' }})</div>
 			<div class="subheading">Change month to see other news</div>
 			<ul class="ma-4">
-				<li v-for="note in notes" :key="note">{{ note }}</li>
+				<li
+					v-for="note in notes"
+					:key="note.id"
+					class="text-capitalize"
+				>{{ note.title }} ({{note.event.recurrence}})</li>
 			</ul>
 		</v-col>
 	</v-row>
 </template>
 
 <script>
+// import Axios from "axios";
 export default {
 	props: {
 		isStudent: {
@@ -24,22 +29,48 @@ export default {
 	data: () => ({
 		date: new Date().toISOString().substr(0, 10),
 		pickerDate: null,
-		notes: [],
-		allNotes: [
-			"President met with prime minister",
-			"New power plant opened",
-			"Rocket launch announced",
-			"Global warming discussion cancelled",
-			"Company changed its location"
-		]
+		events: []
 	}),
+	computed: {
+		notes() {
+			let ans = [];
+			if (this.events.length > 0) {
+				let val = this.events.filter(item => {
+					return (
+						this.moment(
+							this.moment(item.start_time).format("YYYY-MM-DD")
+						).month() ||
+						this.moment(
+							this.moment(item.end_time).format("YYYY-MM-DD")
+						).month() ==
+							this.moment(`${this.pickerDate}-01`).month()
+					);
+				});
+
+				return val.filter(item => {
+					return (
+						this.moment(
+							this.moment(item.start_time).format("YYYY-MM-DD")
+						).year() == this.moment(`${this.pickerDate}-01`).year()
+					);
+				});
+			}
+			return ans;
+		}
+	},
 	watch: {
-		pickerDate(val) {
-			this.notes = [
-				this.allNotes[Math.floor(Math.random() * 5)],
-				this.allNotes[Math.floor(Math.random() * 5)],
-				this.allNotes[Math.floor(Math.random() * 5)]
-			].filter((value, index, self) => self.indexOf(value) === index);
+		pickerDate(val, v) {
+			// console.log(val, this.date);
+			// this.date = `${val}-01`;
+		}
+	},
+	async mounted() {
+		try {
+			let res = await this.$store.dispatch("getSchoolEvents");
+
+			this.events = res.data;
+		} catch (error) {
+			console.log(error);
 		}
 	}
 };

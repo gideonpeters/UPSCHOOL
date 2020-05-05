@@ -10,7 +10,7 @@
 								<v-img :src="item.avatar">
 									<template v-slot:placeholder>
 										<v-row class="fill-height grey ma-0" align="center" justify="center">
-											<div class="headline text-center text-bold">{{ item.title[0] }}</div>
+											<div class="headline text-center white--text text-bold">{{ item.title[0] }}</div>
 										</v-row>
 									</template>
 								</v-img>
@@ -21,24 +21,26 @@
 								<div class="fs-5 text-truncate mt-2">{{ item.last_message }}</div>
 							</v-list-item-content>
 							<v-list-item-icon>
-								<v-icon small color="grey" class="mr-2">mdi-clock</v-icon>
-								{{
-								moment().diff(
-								moment(item.last_sent),
-								"days"
-								) < 1
-								? moment(item.last_sent).format("LT")
-								: moment().diff(
-								moment(item.last_sent),
-								"days"
-								) == 1
-								? moment(
-								moment(item.last_sent).format()
-								).calendar(moment(), {
-								lastDay: "[Yesterday]",
-								})
-								: moment(item.last_sent).format("L")
-								}}
+								<!-- <v-icon small color="grey" class="mr-2">mdi-clock</v-icon> -->
+								<div class="fs-5">
+									{{
+									moment().diff(
+									moment(item.last_sent),
+									"days"
+									) < 1
+									? moment(item.last_sent).format("LT")
+									: moment().diff(
+									moment(item.last_sent),
+									"days"
+									) == 1
+									? moment(
+									moment(item.last_sent).format()
+									).calendar(moment(), {
+									lastDay: "[Yesterday]",
+									})
+									: moment(item.last_sent).format("L")
+									}}
+								</div>
 							</v-list-item-icon>
 						</v-list-item>
 					</v-list>
@@ -56,14 +58,14 @@
 				</v-card>
 				<v-card flat v-else class="d-flex flex-column pa-3" min-height="550" max-height="500">
 					<div class="d-flex align-center">
-						<div v-if="!$vuetify.breakpoint.mdAndUp" @click="showFirstStep = false">
-							<v-icon size="18" class="mr-2">mdi-arrow-left</v-icon>
-						</div>
+						<v-btn icon v-if="!$vuetify.breakpoint.mdAndUp" @click="showFirstStep = false">
+							<v-icon small class="mr-2">mdi-arrow-left</v-icon>
+						</v-btn>
 						<div>
 							<h2 class="font-weight-light">{{ currentMessageList.title }}</h2>
-							<div class="fs-6">
+							<!-- <div class="fs-6">
 								<v-icon size="8" class="mr-1" color="yellow">mdi-circle</v-icon>Undergraduate
-							</div>
+							</div>-->
 						</div>
 					</div>
 					<v-divider class="mb-5 mt-2"></v-divider>

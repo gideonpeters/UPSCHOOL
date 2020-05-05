@@ -67,7 +67,9 @@
 
 									<div class="d-flex flex-column mb-4">
 										<div class="font-weight-bold fs-4">DEPARTMENT</div>
-										<div>{{staff.department.name}} ({{staff.department.short_name}})</div>
+										<div
+											v-if="staff && staff.department"
+										>{{staff.department.name}} ({{staff.department.short_name}})</div>
 									</div>
 
 									<div class="d-flex flex-column mb-4">
@@ -137,11 +139,15 @@ export default {
 		isStaff: {
 			type: Boolean,
 			default: false
+		},
+		isAdmin: {
+			type: Boolean,
+			default: false
 		}
 	},
 	data() {
 		return {
-			currentItem: "tab-Curriculum",
+			currentItem: null,
 			curriculumTab: null,
 			items: [
 				"Academic Profile",
@@ -239,10 +245,6 @@ export default {
 	async mounted() {
 		try {
 			this.$store.dispatch("getCourseStatus");
-			// this.$store.dispatch(
-			// 	"getstaffCurriculum",
-			// 	this.staff.program.id
-			// );
 		} catch (error) {
 			console.log(error);
 		}

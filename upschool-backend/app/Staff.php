@@ -11,7 +11,7 @@ use Illuminate\Database\Eloquent\Model;
 class Staff extends Model
 {
     //
-    protected $with = ['user'];
+    protected $with = ['user', 'department'];
 
     protected $appends = ['name', 'type'];
 

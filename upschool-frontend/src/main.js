@@ -29,11 +29,11 @@ Vue.use(lineClamp, {
 
 axios.defaults.baseURL = "http://127.0.0.1:8000/api/";
 
-const token = store.state.token;
+let token = localStorage.getItem(`upschool-token`);
 
 if (token) {
 	axios.defaults.headers.common["Authorization"] = `Bearer ${token}`;
-	// store.dispatch("getUser");
+	store.dispatch("getUser");
 }
 window.io = require("socket.io-client");
 
@@ -42,7 +42,7 @@ window.Echo = new Echo({
 	host: "http://localhost:6001",
 	auth: {
 		headers: {
-			Authorization: "Bearer " + localStorage.getItem(`upschool-token`),
+			Authorization: "Bearer " + token,
 		},
 	},
 });

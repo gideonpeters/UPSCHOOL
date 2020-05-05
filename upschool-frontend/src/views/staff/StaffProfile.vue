@@ -22,7 +22,7 @@ export default {
 			if (id) {
 				res = this.$store.getters.getStaffById(id);
 			} else {
-				res = this.$store.state.loggedInStaff;
+				res = this.$store.state.loggedInUser;
 			}
 			return res;
 		}

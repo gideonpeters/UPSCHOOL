@@ -6,7 +6,6 @@ Vue.use(Vuex);
 
 export default new Vuex.Store({
 	state: {
-		token: localStorage.getItem(`upschool-token`),
 		selectedCourses: [],
 		courseCategories: [
 			{
@@ -217,10 +216,7 @@ export default new Vuex.Store({
 				const token = res.data.token;
 				const userInfo = res.data.user;
 
-				localStorage.setItem(
-					`upschool-token-${userInfo.user.id}`,
-					token
-				);
+				localStorage.setItem(`upschool-token`, token);
 				axios.defaults.headers.common[
 					"Authorization"
 				] = `Bearer ${token}`;
@@ -238,18 +234,13 @@ export default new Vuex.Store({
 				return { data: res.data, type: userInfo.type };
 			} catch (error) {
 				// commit("auth_eror");
-				localStorage.removeItem("upschool-token");
+				localStorage.removeItem(`upschool-token`);
 			}
 		},
-		async logout({
-			state: {
-				loggedInUser: { user },
-			},
-			commit,
-		}) {
+		async logout({ commit }) {
 			try {
 				await axios.post("auth/logout");
-				localStorage.removeItem(`upshool-token-${user.id}`);
+				localStorage.removeItem(`upshool-token`);
 				commit("openSnackbar", "Logged out successfully!");
 			} catch (error) {
 				console.log(error);
@@ -346,6 +337,7 @@ export default new Vuex.Store({
 			let res = await axios.get("school-event");
 			console.log(res.data);
 			state.schoolEvents = res.data.data;
+			return res.data;
 		},
 
 		async getCourseStatus({ state }) {
