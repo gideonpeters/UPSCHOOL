@@ -320,3 +320,8 @@ Route::group([], function ($router) {
 });
 
 Route::get('allocation-settings', 'AllocationSettingController@index');
+
+Route::group([], function ($router) {
+    Route::get('conversation', 'ConversationController@index');
+    Route::post('messages', 'MessageController@store');
+});

@@ -1,19 +1,26 @@
 <template>
 	<v-app>
 		<!-- <h2>Inbox</h2> -->
-		<inbox :messageList="messageList" />
+		<inbox isStudent :messageList="messageList" />
 	</v-app>
 </template>
 
 <script>
 import Inbox from "@/components/general/Inbox";
+import Axios from "axios";
 export default {
 	components: { Inbox },
-	data: () => ({}),
-	computed: {
-		messageList() {
-			return this.$store.state.messageList;
+	data: () => ({
+		messageList: [],
+	}),
+	async mounted() {
+		try {
+			let res = await Axios.get("conversation");
+			console.log(res.data);
+			this.messageList = res.data.data;
+		} catch (error) {
+			console.log(error);
 		}
-	}
+	},
 };
 </script>

@@ -6,9 +6,9 @@
 export default {
 	async mounted() {
 		// console.log(this.echo);
-		this.echo.channel("chat").listen(".chat", (e) => {
-			console.log("here I am! BEAT ME!!!!!!! I AM THE ERROR", e);
-		});
+		// window.Echochannel("chat").listen(".chat", (e) => {
+		// 	console.log("here I am! BEAT ME!!!!!!! I AM THE ERROR", e);
+		// });
 		// console.log();
 	},
 };

@@ -3,6 +3,8 @@
 namespace App\Http\Controllers;
 
 use App\Conversation;
+use App\Events\MessageWasSent;
+use App\Events\WebSocketDemoEvent;
 use App\Message;
 use App\User;
 use Illuminate\Http\Request;
@@ -19,27 +21,40 @@ class MessageController extends Controller
     {
         //
         $sender_id = auth()->user()->id;
-        $receiver = User::find($request->receiver_id);
 
-        if (!$receiver) {
-            return response()->json([
-                'status' => true,
-                'message' => 'User does not exist',
-                'data' => null
-            ], 201);
-        }
-
-        $conversation = Conversation::whereSenderId($sender_id)->whereReceiverId($request->receiver_id)->first();
+        $conversation = Conversation::find($request->conversation_id);
 
         if (!$conversation) {
+            $receiver = User::find($request->receiver_id);
+
+            if (!$receiver) {
+                return response()->json([
+                    'status' => false,
+                    'message' => 'User does not exist',
+                    'data' => null
+                ], 201);
+            }
+
             $conversation = new Conversation();
-            $conversation->sender_id = $sender_id;
-            $conversation->receiver_id = $receiver->id;
+            $conversation->name = $request->name;
             $conversation->save();
+            $conversation->users()->attach([$sender_id, $receiver->id]);
         }
+
         $message = new Message();
         $message->sender_id = $sender_id;
-        // $message->
+        $message->conversation_id = $conversation->id;
+        $message->body = $request->body;
+        $message->save();
+
+        broadcast(new MessageWasSent($message));
+        // broadcast(new WebSocketDemoEvent('Yoooo'));
+
+        return response()->json([
+            'status' => true,
+            'message' => 'Message sent successfully',
+            'data' => $message
+        ], 201);
     }
 
     /**

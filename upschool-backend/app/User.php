@@ -7,6 +7,7 @@ use App\Event;
 use App\Message;
 use App\UserEvent;
 use App\SchoolEvent;
+use App\Conversation;
 use App\ScheduleItem;
 use Tymon\JWTAuth\Contracts\JWTSubject;
 use Illuminate\Notifications\Notifiable;
@@ -75,9 +76,14 @@ class User extends Authenticatable implements JWTSubject
         return $this->belongsToMany(Event::class, 'users_events')->using(UserEvent::class);
     }
 
-    public function messages()
+    // public function messages()
+    // {
+    //     return $this->hasMany(Message::class);
+    // }
+
+    public function conversations()
     {
-        return $this->hasMany(Message::class);
+        return $this->belongsToMany(Conversation::class, 'users_conversations');
     }
 
     // public function image()

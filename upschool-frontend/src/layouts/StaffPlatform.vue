@@ -11,13 +11,19 @@
 			>
 				<v-list-item class="px-2 py-4">
 					<v-list-item-avatar>
-						<v-img src="https://randomuser.me/api/portraits/women/85.jpg"></v-img>
+						<v-img src="https://randomuser.me/api/portraits/women/85.jpg">
+							<template v-slot:placeholder>
+								<v-row class="fill-height grey ma-0" align="center" justify="center">
+									<div class="headline text-center white--text text-bold">{{ user.user ? user.name[0] : "" }}</div>
+								</v-row>
+							</template>
+						</v-img>
 					</v-list-item-avatar>
 
 					<v-list-item-title>
-						<div>Igebu Anesi</div>
-						<div class="fs-4 mt-3">Staff #: 11CU02876</div>
-						<div class="fs-4 my-3">Senior Lecturer</div>
+						<div>{{user.name}}</div>
+						<div class="fs-4 mt-3">Staff #: {{user.staff_number}}</div>
+						<div class="fs-4 my-3 text-capitalize">{{user.rank}}</div>
 						<div class="fs-4">Covenant University</div>
 					</v-list-item-title>
 
@@ -279,6 +285,14 @@ export default {
 
 			return title;
 		},
+		user() {
+			let ans = this.$store.state.loggedInUser;
+			if (ans) {
+				return ans;
+			}
+
+			return {};
+		},
 		items() {
 			let result;
 			let courseItems = [
@@ -389,7 +403,18 @@ export default {
 			await this.$store.dispatch("logout");
 			this.goToPage("main.login");
 		}
-	}
+	},
+	async created() {
+		try {
+			if (!this.$store.state.loggedInUser) {
+				this.$store.dispatch("getUser");
+			}
+			this.$store.dispatch("getNews");
+		} catch (err) {
+			console.log(err);
+		}
+	},
+	mounted() {}
 };
 </script>
 

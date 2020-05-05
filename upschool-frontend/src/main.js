@@ -9,26 +9,22 @@ import lineClamp from "vue-line-clamp";
 import moment from "moment";
 import Echo from "laravel-echo";
 import VueTour from "vue-tour";
+import VueChatScroll from "vue-chat-scroll";
 // import Pusher from "pusher-js";
 import "./includes";
 
+import "@mdi/font/css/materialdesignicons.css";
+
+import "./assets/styles/main.scss";
+
+// import { createProvider } from './vue-apollo'
 require("vue-tour/dist/vue-tour.css");
 
 Vue.use(VueTour);
+Vue.use(VueChatScroll);
 
 Vue.use(lineClamp, {
 	// plugin options
-});
-
-const pusher = require("pusher-js");
-
-const echo = new Echo({
-	broadcaster: "pusher",
-	key: "anyKey",
-	wsHost: "127.0.0.1",
-	wsPort: 6001,
-	// wssPort: 6001,
-	disableStats: true,
 });
 
 axios.defaults.baseURL = "http://127.0.0.1:8000/api/";
@@ -39,15 +35,20 @@ if (token) {
 	axios.defaults.headers.common["Authorization"] = `Bearer ${token}`;
 	// store.dispatch("getUser");
 }
+window.io = require("socket.io-client");
 
-import "@mdi/font/css/materialdesignicons.css";
-
-import "./assets/styles/main.scss";
-// import { createProvider } from './vue-apollo'
+window.Echo = new Echo({
+	broadcaster: "socket.io",
+	host: "http://localhost:6001",
+	auth: {
+		headers: {
+			Authorization: "Bearer " + localStorage.getItem(`upschool-token`),
+		},
+	},
+});
 
 Vue.prototype.moment = moment;
-Vue.prototype.echo = echo;
-Vue.prototype.pusher = pusher;
+// Vue.prototype.echo = echo;
 
 Vue.config.productionTip = false;
 

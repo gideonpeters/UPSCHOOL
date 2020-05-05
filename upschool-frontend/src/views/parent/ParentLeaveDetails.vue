@@ -3,17 +3,21 @@
 		<div class="d-flex justify-space-between align-center">
 			<div class="my-5">Leave/Exeat Applications</div>
 			<div>
-				<v-btn color="blue accent-2 white--text" depressed>Apply for Leave</v-btn>
+				<v-btn color="blue accent-2 white--text" depressed
+					>Apply for Leave</v-btn
+				>
 			</div>
 		</div>
 
 		<v-row>
 			<v-col cols="4">
-				<v-card class="elevation-1 px-3 pa-3 pb-5" v-if="ix != 2">
+				<v-card class="elevation-1 px-3 pa-3 pb-5">
 					<div class="d-flex flex-column align-center pb-5">
 						<div class="my-3">
 							<v-avatar height="130" width="130">
-								<v-img src="https://randomuser.me/api/portraits/men/85.jpg"></v-img>
+								<v-img
+									src="https://randomuser.me/api/portraits/men/85.jpg"
+								></v-img>
 							</v-avatar>
 						</div>
 						<div>PETERS GIDEON OJOAJOGU</div>
@@ -26,20 +30,27 @@
 
 			<v-col>
 				<v-expansion-panels multiple>
-					<v-expansion-panel v-for="(item,i) in 5" :key="i">
+					<v-expansion-panel v-for="(item, i) in 5" :key="i">
 						<v-expansion-panel-header>
 							<div class="font-weight-bold fs-3">
 								<v-icon
 									size="18"
 									class="mr-2"
-									:color="i ==  1 ? 'blue accent-2' : 'orange accent-2'"
-								>mdi-circle-slice-8</v-icon>EXT2309202015CJ02876
+									:color="
+										i == 1
+											? 'blue accent-2'
+											: 'orange accent-2'
+									"
+									>mdi-circle-slice-8</v-icon
+								>EXT2309202015CJ02876
 							</div>
 						</v-expansion-panel-header>
 						<v-expansion-panel-content>
 							<div class="mb-4 d-flex justify-space-between">
 								<div>
-									<div class="font-weight-bold fs-4">EXEAT TYPE</div>
+									<div class="font-weight-bold fs-4">
+										EXEAT TYPE
+									</div>
 									<div>HOME EXEAT</div>
 								</div>
 								<div>
@@ -48,106 +59,201 @@
 							</div>
 
 							<div class="mb-4">
-								<div class="font-weight-bold fs-4">DURATION</div>
+								<div class="font-weight-bold fs-4">
+									DURATION
+								</div>
 								<div>3 days</div>
 							</div>
 
 							<div class="mb-4">
 								<div class="font-weight-bold fs-4">STATUS</div>
-								<v-chip color="orange accent-2 mt-2">Pending</v-chip>
+								<v-chip color="orange accent-2 mt-2"
+									>Pending</v-chip
+								>
 							</div>
 
 							<div class="mb-4">
 								<div class="font-weight-bold fs-4">REASON</div>
-								<div>Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.</div>
+								<div>
+									Lorem ipsum dolor sit amet, consectetur
+									adipiscing elit, sed do eiusmod tempor
+									incididunt ut labore et dolore magna aliqua.
+									Ut enim ad minim veniam, quis nostrud
+									exercitation ullamco laboris nisi ut aliquip
+									ex ea commodo consequat.
+								</div>
 							</div>
 
 							<div class="mb-4">
-								<div class="font-weight-bold fs-4">PHONE NUMBER</div>
+								<div class="font-weight-bold fs-4">
+									PHONE NUMBER
+								</div>
 								<div>+2347089324817</div>
 							</div>
 
 							<div class="mb-4">
-								<div class="font-weight-bold fs-4">GUARDIAN'S PHONE NUMBER</div>
+								<div class="font-weight-bold fs-4">
+									GUARDIAN'S PHONE NUMBER
+								</div>
 								<div>+2347089324817</div>
 								<div>+2348035050175</div>
 							</div>
 
 							<div class="mb-4">
-								<div class="font-weight-bold fs-4">REQUESTED DEPARTURE DATETIME</div>
+								<div class="font-weight-bold fs-4">
+									REQUESTED DEPARTURE DATETIME
+								</div>
 								<div>8:00 AM 22nd March, 2020</div>
 							</div>
 
 							<div class="mb-4">
-								<div class="font-weight-bold fs-4">DATE/TIME OF DEPARTURE</div>
+								<div class="font-weight-bold fs-4">
+									DATE/TIME OF DEPARTURE
+								</div>
 								<div>8:00 AM 22nd March, 2020</div>
 							</div>
 
 							<div class="mb-4">
-								<div class="font-weight-bold fs-4">DATE/TIME OF ARRIVAL</div>
+								<div class="font-weight-bold fs-4">
+									DATE/TIME OF ARRIVAL
+								</div>
 								<div>8:00 AM 25th March, 2020</div>
 							</div>
 
 							<div class="mb-4">
-								<div class="font-weight-bold fs-4">PROGRESS</div>
+								<div class="font-weight-bold fs-4">
+									PROGRESS
+								</div>
 								<div>
-									<v-progress-linear value="15"></v-progress-linear>
+									<v-progress-linear
+										value="15"
+									></v-progress-linear>
 								</div>
 							</div>
 
 							<div class="mb-4">
-								<div class="font-weight-bold fs-4">ATTACHMENTS</div>
+								<div class="font-weight-bold fs-4">
+									ATTACHMENTS
+								</div>
 								<div>8:00 AM 25th March, 2020</div>
 							</div>
 
 							<div class="d-flex justify-end">
-								<v-dialog v-model="dialog2" persistent max-width="290">
+								<v-dialog
+									v-model="dialog2"
+									persistent
+									max-width="290"
+								>
 									<template v-slot:activator="{ on }">
-										<v-btn depressed outlined color="red accent-2" v-on="on">DECLINE</v-btn>
+										<v-btn
+											depressed
+											outlined
+											color="red accent-2"
+											v-on="on"
+											>DECLINE</v-btn
+										>
 										<!-- <v-btn color="primary" dark v-on="on">Open Dialog</v-btn> -->
 									</template>
 									<v-card>
-										<v-card-title class="headline">DECLINE LEAVE?</v-card-title>
+										<v-card-title class="headline"
+											>DECLINE LEAVE?</v-card-title
+										>
 										<v-card-text>
-											Are you sure you are ready to decline this exeat and that it meets all the school's policies regarding this.
+											Are you sure you are ready to
+											decline this exeat and that it meets
+											all the school's policies regarding
+											this.
 											<div class="mt-3">
-												<div class="fs-4 font-weight-bold">REMARKS</div>
+												<div
+													class="fs-4 font-weight-bold"
+												>
+													REMARKS
+												</div>
 												<v-row>
 													<v-col cols="12">
-														<textarea outlined label="Outlined textarea" placeholder="Type here" name="remarks"></textarea>
+														<textarea
+															outlined
+															label="Outlined textarea"
+															placeholder="Type here"
+															name="remarks"
+														></textarea>
 													</v-col>
 												</v-row>
 											</div>
 										</v-card-text>
 										<v-card-actions>
 											<v-spacer></v-spacer>
-											<v-btn color="green darken-1" text @click="dialog2 = false">Disagree</v-btn>
-											<v-btn color="green darken-1" text @click="dialog2 = false">Agree</v-btn>
+											<v-btn
+												color="green darken-1"
+												text
+												@click="dialog2 = false"
+												>Disagree</v-btn
+											>
+											<v-btn
+												color="green darken-1"
+												text
+												@click="dialog2 = false"
+												>Agree</v-btn
+											>
 										</v-card-actions>
 									</v-card>
 								</v-dialog>
-								<v-dialog v-model="dialog" persistent max-width="290">
+								<v-dialog
+									v-model="dialog"
+									persistent
+									max-width="290"
+								>
 									<template v-slot:activator="{ on }">
-										<v-btn depressed color="green accent-4" class="white--text ml-2" v-on="on">APPROVE</v-btn>
+										<v-btn
+											depressed
+											color="green accent-4"
+											class="white--text ml-2"
+											v-on="on"
+											>APPROVE</v-btn
+										>
 										<!-- <v-btn color="primary" dark v-on="on">Open Dialog</v-btn> -->
 									</template>
 									<v-card>
-										<v-card-title class="headline">APPROVE LEAVE?</v-card-title>
+										<v-card-title class="headline"
+											>APPROVE LEAVE?</v-card-title
+										>
 										<v-card-text>
-											Are you sure you are ready to approve this exeat and that it meets all the school's policies regarding this.
+											Are you sure you are ready to
+											approve this exeat and that it meets
+											all the school's policies regarding
+											this.
 											<div class="mt-3">
-												<div class="fs-4 font-weight-bold">REMARKS</div>
+												<div
+													class="fs-4 font-weight-bold"
+												>
+													REMARKS
+												</div>
 												<v-row>
 													<v-col cols="12">
-														<textarea outlined label="Outlined textarea" placeholder="Type here" name="remarks"></textarea>
+														<textarea
+															outlined
+															label="Outlined textarea"
+															placeholder="Type here"
+															name="remarks"
+														></textarea>
 													</v-col>
 												</v-row>
 											</div>
 										</v-card-text>
 										<v-card-actions>
 											<v-spacer></v-spacer>
-											<v-btn color="green darken-1" text @click="dialog = false">Disagree</v-btn>
-											<v-btn color="green darken-1" text @click="dialog = false">Agree</v-btn>
+											<v-btn
+												color="green darken-1"
+												text
+												@click="dialog = false"
+												>Disagree</v-btn
+											>
+											<v-btn
+												color="green darken-1"
+												text
+												@click="dialog = false"
+												>Agree</v-btn
+											>
 										</v-card-actions>
 									</v-card>
 								</v-dialog>
@@ -165,8 +271,8 @@ export default {
 	data() {
 		return {
 			dialog: false,
-			dialog2: false
+			dialog2: false,
 		};
-	}
+	},
 };
 </script>

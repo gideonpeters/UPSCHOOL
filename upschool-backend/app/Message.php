@@ -3,6 +3,7 @@
 namespace App;
 
 use App\User;
+use App\Conversation;
 use Illuminate\Database\Eloquent\Model;
 
 class Message extends Model
@@ -18,6 +19,16 @@ class Message extends Model
 
     public function getSelfMessageAttribute()
     {
-        return $this->user_id === auth()->user()->id;
+        return $this->sender_id === auth()->user()->id;
+    }
+
+    public function sender()
+    {
+        return $this->belongsTo(User::class, 'sender_id');
+    }
+
+    public function conversation()
+    {
+        return $this->belongsTo(Conversation::class);
     }
 }

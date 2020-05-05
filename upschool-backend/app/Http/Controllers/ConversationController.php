@@ -7,14 +7,18 @@ use Illuminate\Http\Request;
 
 class ConversationController extends Controller
 {
-    /**
-     * Display a listing of the resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
     public function index()
     {
         //
+        $user = auth()->user();
+
+        $conversations = $user->conversations;
+
+        return response()->json([
+            'status' => true,
+            'message' => 'these are all the conversations for this user',
+            'data' => $conversations
+        ], 201);
     }
 
     /**

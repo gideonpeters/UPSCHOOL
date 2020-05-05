@@ -1,5 +1,8 @@
 <?php
 
+use App\Broadcasting\ConversationChannel;
+use App\Conversation;
+use App\User;
 use Illuminate\Support\Facades\Broadcast;
 
 /*
@@ -20,3 +23,5 @@ Broadcast::channel('App.User.{id}', function ($user, $id) {
 Broadcast::channel('chat', function () {
     return true;
 });
+
+Broadcast::channel('conversation.{conversation}', ConversationChannel::class);
