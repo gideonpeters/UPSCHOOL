@@ -45,7 +45,7 @@
 									data-v-step="1"
 									title="TODAY'S SCHEDULE"
 									ctaText="View full schedule"
-									route="student.news"
+									route="student.calendar"
 								></custom-header>
 								<div>
 									<v-data-table :headers="headers" :items="schedule" hide-default-header hide-default-footer>
@@ -83,7 +83,7 @@
 										</template>
 										<template v-slot:item.time="{ item }">
 											<div class="d-flex fs-4 font-weight-bold grey--text">
-												<div>{{ item.time }}</div>
+												<div>{{ moment(item.start_time).format("LT") }} - {{ moment(item.end_time).format("LT") }}</div>
 											</div>
 											<!-- <v-icon size="15" :color="item.id == 1 ? 'blue accent-2 ' : 'grey'">mdi-circle</v-icon> -->
 											<!-- <v-simple-checkbox v-model="item.check" disabled> -->
@@ -358,6 +358,7 @@
 import QuizCard from "@/components/general/QuizCard";
 import DashboardCalendar from "@/components/general/Calendar";
 import AssignmentTable from "@/components/general/AssignmentTable";
+import Axios from "axios";
 
 export default {
 	components: {
@@ -388,7 +389,7 @@ export default {
 			absolute: true,
 			overlay: false,
 			headers: [
-				{ text: " ", value: "check" },
+				{ text: "ICON", value: "check" },
 				{ text: "TIME", value: "time" },
 				{
 					text: "NAME",
@@ -476,9 +477,12 @@ export default {
 		try {
 			this.$store.dispatch("getNews");
 			this.$store.dispatch("getSchoolEvents");
-			let res = this.$store.dispatch("getUserSchedule");
+			let res = await Axios.get("event");
+			console.log(res.data);
 
-			this.schedule = res.data;
+			this.schedule = res.data.data.filter(item =>
+				this.moment().isSame(this.moment(item.start_time), "day")
+			);
 			if (this.isStaff) {
 				this.asgnHeaders.push({
 					text: "ACTIONS",

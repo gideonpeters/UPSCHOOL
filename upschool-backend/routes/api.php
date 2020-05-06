@@ -40,6 +40,7 @@ Route::group([], function ($router) {
     Route::get('courses/{id}', 'CourseController@show');
     Route::get('courses-facilitators', 'CourseController@getFacilitatedCourses');
     Route::get('courses/{id}/participants', 'CourseController@indexParticipants');
+    Route::get('courses-enrolled', 'CourseController@enrolledCourses');
 });
 Route::post('bulk/courses', 'CourseController@storeBulk');
 

@@ -27,6 +27,13 @@ class Course extends Model
         return $this->belongsTo(SemesterType::class);
     }
 
+    public function getIsEnrolledAttribute()
+    {
+        $semester = Semester::latest()->first();
+        $enrollment = Enrollment::whereStudentId(auth()->user()->userable->id)->whereSemesterId($semester->id)->first();
+        return $enrollment->curriculum_items->contains('curriculumable_id', $this->id);
+    }
+
     public function sections()
     {
         return $this->hasMany(CourseSection::class);

@@ -2,7 +2,11 @@
 	<v-app>
 		<v-container>
 			<v-card class="pa-3">
-				<!-- <v-subheader>Personal Schedule</v-subheader> -->
+				<div class="d-flex align-center">
+					<v-subheader>Personal Schedule</v-subheader>
+					<v-spacer></v-spacer>
+					<v-btn color="primary" text tile outlined>ADD EVENT</v-btn>
+				</div>
 				<v-row>
 					<v-col>
 						<v-sheet height="64">

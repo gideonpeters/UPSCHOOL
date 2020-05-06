@@ -18,10 +18,13 @@ use App\StudentCourse;
 use App\StudentEnrollmentItem;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Notifications\Notifiable;
 
 class Student extends Model
 {
     //
+    use Notifiable;
+
     protected $with = ['user', 'program'];
 
     protected $appends = ['credits_achieved', 'name', 'type'];

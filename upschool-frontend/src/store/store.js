@@ -6,6 +6,7 @@ Vue.use(Vuex);
 
 export default new Vuex.Store({
 	state: {
+		token: localStorage.getItem("upschool-token"),
 		selectedCourses: [],
 		courseCategories: [
 			{
@@ -216,7 +217,7 @@ export default new Vuex.Store({
 				const token = res.data.token;
 				const userInfo = res.data.user;
 
-				localStorage.setItem(`upschool-token`, token);
+				localStorage.setItem("upschool-token", token);
 				axios.defaults.headers.common[
 					"Authorization"
 				] = `Bearer ${token}`;

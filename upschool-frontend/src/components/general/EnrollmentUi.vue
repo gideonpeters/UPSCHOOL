@@ -141,7 +141,7 @@
 													: "Pending"
 													}}
 												</v-subheader>
-												<div class="d-flex align-center">
+												<div class="d-flex align-center" v-if="currentEnrollment.curriculum_items">
 													<v-subheader class="pa-0 fs-5 font-weight-bold">
 														TOTAL UNITS REGISTERED:
 														{{

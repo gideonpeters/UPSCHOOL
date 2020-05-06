@@ -4,6 +4,9 @@ namespace App\Http\Controllers;
 
 use App\Staff;
 use App\Course;
+use App\Semester;
+use App\Student;
+use App\StudentCourse;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 
@@ -19,6 +22,46 @@ class CourseController extends Controller
             'status' => true,
             'message' => 'these are all the courses',
             'data' => $courses->load('facilitators', 'prerequisites', 'participants',)
+        ], 201);
+    }
+
+    public function enrolledCourses(Request $request)
+    {
+        if (!$request->semester_id) {
+            $semester = Semester::latest()->first();
+        } else {
+            $semester = Semester::find($request->semester_id);
+
+            if (!$semester) {
+                return response()->json([
+                    'status' => false,
+                    'message' => 'semester does not exist',
+                    'data' => []
+                ], 201);
+            }
+        }
+
+        $student = Student::find($request->student_id);
+
+        if (!$student) {
+            return response()->json([
+                'status' => false,
+                'message' => 'student does not exist',
+                'data' => []
+            ], 201);
+        }
+
+        $student_courses = StudentCourse::whereStudentId($student->id)->whereSemesterId($semester->id)->get();
+        $ids = $student_courses->flatten()->map(function ($item, $key) {
+            return $item->course_id;
+        })->unique();
+
+        $courses = Course::findMany($ids)->append('is_enrolled');
+
+        return response()->json([
+            'status' => true,
+            'message' => 'these are all your enrolled courses',
+            'data' => $courses
         ], 201);
     }
 

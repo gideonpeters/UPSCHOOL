@@ -22,6 +22,7 @@
 				<v-spacer></v-spacer>
 				<v-col cols="12" md="3">
 					<v-combobox
+						outlined
 						v-model="selectCategory"
 						:items="categories.map(category => category.title)"
 						label="Filter Categories"
@@ -354,6 +355,7 @@ import MetricCard from "@/components/parent/Metric";
 import CourseItem from "@/components/general/CourseItem";
 // import VueCsvImport from "vue-csv-import";
 import Papa from "papaparse";
+import Axios from "axios";
 export default {
 	components: { DownloadCsv, MetricCard, CourseItem },
 	props: {
@@ -424,7 +426,8 @@ export default {
 				{ id: 4, title: "Departmental Courses" }
 			],
 			dummy: null,
-			pageLength: 0
+			pageLength: 0,
+			enrolledCourses: []
 			// subItems: []
 		};
 	},
@@ -449,7 +452,7 @@ export default {
 			return this.$store.state.courses;
 		},
 		getCoursesFromEnrollments() {
-			return this.$store.getters.getCoursesFromEnrollments;
+			return this.enrolledCourses;
 		},
 		courses() {
 			let items;
@@ -548,10 +551,21 @@ export default {
 			// console.log(v);
 		}
 	},
-	async created() {
+	async mounted() {
 		try {
 			// if (this.courses.length == 0) {
-			await this.$store.dispatch("getAllCourses");
+			if (this.personal) {
+				let res = await Axios.get(
+					`courses-enrolled?student_id=${this.$store.state.loggedInUser.id}`
+				);
+
+				console.log(res.data);
+
+				this.enrolledCourses = res.data.data;
+			} else {
+				await this.$store.dispatch("getAllCourses");
+			}
+
 			// }
 		} catch (error) {
 			console.log(error);

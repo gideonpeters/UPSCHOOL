@@ -377,7 +377,7 @@ export default {
 	},
 	data() {
 		return {
-			currentItem: "tab-Curriculum",
+			currentItem: null,
 			curriculumTab: null,
 			items: [
 				"Academic Profile",

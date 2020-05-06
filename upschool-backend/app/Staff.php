@@ -7,10 +7,13 @@ use App\User;
 use App\Course;
 use App\Department;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Notifications\Notifiable;
 
 class Staff extends Model
 {
     //
+    use Notifiable;
+
     protected $with = ['user', 'department'];
 
     protected $appends = ['name', 'type'];

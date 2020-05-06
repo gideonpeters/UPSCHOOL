@@ -7,8 +7,11 @@ use App\Semester;
 use App\Gradelist;
 use App\Subsection;
 use App\CourseSection;
+use App\Notifications\AssignmentCreated;
 use App\SubmissionList;
 use Illuminate\Http\Request;
+// use Illuminate\Notifications\Notification;
+use Illuminate\Support\Facades\Notification;
 use Illuminate\Support\Facades\Storage;
 
 class SubsectionController extends Controller
@@ -64,6 +67,10 @@ class SubsectionController extends Controller
             $submission_list->total_score = $request->total_score;
             $submission_list->gradelist_id = $gradelist->id;
             $submission_list->save();
+
+            // $participants = $section->course->participants()->whereSemesterId($currentSemester->id)->get();
+
+            // Notification::send($participants, new AssignmentCreated($submission_list));
         }
 
         if ($request->hasFile('file')) {

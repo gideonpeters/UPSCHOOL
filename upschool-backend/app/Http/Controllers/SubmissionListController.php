@@ -14,6 +14,16 @@ class SubmissionListController extends Controller
     public function index(Request $request)
     {
         //
+        $course = Course::find($request->course_id);
+
+        if (!$course) {
+            return response()->json([
+                'status' => false,
+                'message' => 'course does not exist',
+                'data' => []
+            ], 201);
+        }
+
         $submission_lists = SubmissionList::whereCourseId($request->course_id)->get();
 
         return response()->json([

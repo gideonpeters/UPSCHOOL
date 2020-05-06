@@ -2,10 +2,13 @@
 
 namespace App\Http\Controllers;
 
+use App\Student;
 use App\Semester;
 use App\AcademicSession;
-use App\Events\WebSocketDemoEvent;
 use Illuminate\Http\Request;
+use App\Events\WebSocketDemoEvent;
+use App\Notifications\AssignmentCreated;
+use Illuminate\Support\Facades\Notification;
 
 class AcademicSessionController extends Controller
 {
@@ -42,13 +45,19 @@ class AcademicSessionController extends Controller
     public function test(Request $request)
     {
         //
-        $session = new AcademicSession();
-        $session->title = $request->body;
-        $session->start_date = '2020-04-11';
-        $session->end_date = '2020-04-11';
-        $session->save();
+        // $session = new AcademicSession();
+        // $session->title = $request->body;
+        // $session->start_date = '2020-04-11';
+        // $session->end_date = '2020-04-11';
+        // $session->save();
+        $session = AcademicSession::latest()->first();
+        $students = Student::all()->flatten()->map(function ($item, $key) {
+            return $item->user;
+        });
+        // dd($students);
 
-        broadcast(new WebSocketDemoEvent($session));
+        // broadcast(new WebSocketDemoEvent($session));
+        Notification::send($students, new AssignmentCreated($session));
 
         return response()->json([
             'status' => true,

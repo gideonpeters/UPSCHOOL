@@ -58,7 +58,7 @@
 					>
 						<v-icon small color="grey">mdi-close-circle</v-icon>
 					</v-btn>
-					{{ facilitator.user.name }}
+					{{ facilitator.name }}
 				</div>
 				<v-dialog v-model="confirmRemove" max-width="290">
 					<v-card>
@@ -216,10 +216,9 @@ export default {
 		},
 		async getStaff() {
 			try {
-				let res = await Axios.get("staff");
-
-				console.log(res.data);
-				this.staff = res.data.data;
+				// let res = await Axios.get("staff");
+				// console.log(res.data);
+				// this.staff = res.data.data;
 			} catch (error) {
 				console.log(error);
 			}
