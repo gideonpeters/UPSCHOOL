@@ -5,19 +5,27 @@
 				<div class="my-4 subtitle-1">Description</div>
 
 				<div>{{ course.description }}</div>
-				<v-row align="center" class="mx-0 mt-5">
-					<div>CLASSES:</div>
+				<!-- <v-row align="center" class="mx-0 mt-5"> -->
+				<div class="d-flex flex-lg-row flex-column">
+					<div class="py-3 pr-4">CLASSES:</div>
 					<!-- <v-rating :value="4.5" color="amber" dense half-increments readonly size="14"></v-rating> -->
 
-					<div class="grey--text ml-4 d-flex align-center" v-for="i in 2" :key="i">
+					<div
+						class="grey--text d-flex flex-lg-row flex-column align-start align-lg-center"
+						:class="i < 2 ? 'pr-4': ''"
+						v-for="i in 2"
+						:key="i"
+					>
 						Mondays 8:00AM -10PM
 						<v-icon v-if="!isStudent" size="15" class="px-2">mdi-close-circle</v-icon>
 
 						<v-icon v-if="!isStudent" size="15">mdi-pencil</v-icon>
 					</div>
-					<v-spacer></v-spacer>
-					<v-btn color="primary" outlined v-if="!isStudent">ADD CLASS</v-btn>
-				</v-row>
+				</div>
+
+				<v-spacer></v-spacer>
+				<v-btn color="primary" outlined v-if="!isStudent">ADD CLASS</v-btn>
+				<!-- </v-row> -->
 			</v-card-text>
 
 			<v-divider class="mx-4"></v-divider>

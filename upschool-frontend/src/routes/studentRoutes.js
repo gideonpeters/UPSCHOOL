@@ -278,6 +278,13 @@ export default [
 						"./../views/student/components/residence/ResidenceIssues"
 					),
 			},
+			{
+				path: "exeat",
+				name: "student.exeat",
+				meta: { title: "Exeats", key: 7 },
+				component: () =>
+					import("./../views/student/components/residence/Exeat"),
+			},
 		],
 	},
 	{

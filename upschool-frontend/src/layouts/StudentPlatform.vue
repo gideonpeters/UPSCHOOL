@@ -420,6 +420,11 @@ export default {
 					route: "student.residence.issues",
 					title: "Issues",
 					icon: "mdi-file"
+				},
+				{
+					route: "student.exeat",
+					title: "Exeats",
+					icon: "mdi-application"
 				}
 			];
 
@@ -460,7 +465,17 @@ export default {
 			console.log(err);
 		}
 	},
-	mounted() {}
+	mounted() {
+		window.Echo.private(
+			`App.User.${this.$store.state.loggedInUser.user.id}`
+		)
+			.listen(`App.User.${this.$store.state.loggedInUser.user.id}`, e => {
+				console.log(e);
+			})
+			.notification(notification => {
+				console.table(notification);
+			});
+	}
 };
 </script>
 

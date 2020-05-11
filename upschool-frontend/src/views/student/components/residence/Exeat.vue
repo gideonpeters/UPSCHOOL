@@ -1,6 +1,6 @@
 <template>
 	<v-app>
-		<exeat-ui isAdmin />
+		<exeat-ui isStudent />
 	</v-app>
 </template>
 
@@ -8,10 +8,10 @@
 import ExeatUi from "@/components/general/exeat-view/ExeatUi";
 export default {
 	components: {
-		ExeatUi
+		ExeatUi,
 	},
 	data() {
 		return {};
-	}
+	},
 };
 </script>

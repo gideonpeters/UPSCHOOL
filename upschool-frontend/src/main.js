@@ -35,17 +35,17 @@ if (token) {
 	axios.defaults.headers.common["Authorization"] = `Bearer ${token}`;
 	store.dispatch("getUser");
 }
-// window.io = require("socket.io-client");
+window.io = require("socket.io-client");
 
-// window.Echo = new Echo({
-// 	broadcaster: "socket.io",
-// 	host: "http://localhost:6001",
-// 	auth: {
-// 		headers: {
-// 			Authorization: "Bearer " + token,
-// 		},
-// 	},
-// });
+window.Echo = new Echo({
+	broadcaster: "socket.io",
+	host: "http://localhost:6001",
+	auth: {
+		headers: {
+			Authorization: "Bearer " + token,
+		},
+	},
+});
 
 Vue.prototype.moment = moment;
 // Vue.prototype.echo = echo;

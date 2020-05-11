@@ -115,6 +115,7 @@
 							prepend-inner-icon="mdi-paperclip"
 							append-icon="mdi-send mdi-rotate-270"
 							solo
+							@keydown.enter="sendMessage"
 							@click:append="sendMessage"
 							name="input-7-4"
 							label="Type here..."
@@ -170,15 +171,22 @@ export default {
 				if (!this.body) {
 					return alert("you have to send a message");
 				}
+				let text = this.body;
 				let body = {
-					body: this.body,
+					body: text,
 					sender_id: this.userId,
 					conversation_id: this.currentMessageList.id
 				};
+				let ownBody = body;
+				ownBody.created_at = this.moment().format();
+				ownBody.updated_at = this.moment().format();
+				this.messages.push(ownBody);
+				this.body = "";
 
 				let res = await Axios.post("messages", body);
 
 				console.log(res.data);
+
 				if (res.data.status) {
 					// this.currentMessageList.last_message = this.body;
 					this.body = "";
@@ -190,31 +198,42 @@ export default {
 			}
 		}
 	},
-	beforeMount() {
-		// this.currentMessageList = this.messageList[this.messageList.length - 1];
+	beforeDestroy() {
+		window.Echo.leave(`messages.${this.$store.state.loggedInUser.user.id}`);
+		this.messageList.forEach(list => {
+			window.Echo.leave(`conversations.${list.id}`);
+		});
+		// this.messageList = [];
 	},
-	async mounted() {
+	async beforeMount() {
 		try {
-			// if (this.messageList.length > 0) {
-			// if (this.currentMessageList) {
-			// }
+			// console.table(`messages.${this.$store.state.loggedInUser.user.id}`);
 		} catch (error) {
 			console.log(error);
 		}
 	},
+	mounted() {
+		// let now =
+		// console.log(now);
+	},
 	watch: {
 		currentMessageList(v) {
 			this.messages = [...v.messages];
-			window.Echo.join(`conversation.${v.id}`).listen(
-				".messageSent",
-				e => {
-					//
-					this.messages.push(e.message);
-					this.currentMessageList.last_sent = e.message.created_at;
-					this.currentMessageList.last_message = e.message.body;
-					console.log(e, "sent you a message");
-				}
-			);
+		},
+		messageList(v) {
+			v.forEach(list => {
+				window.Echo.join(`conversations.${list.id}`).listen(
+					".messageSent",
+					e => {
+						//
+						// this.messages.push(e.message);
+						this.currentMessageList.last_sent =
+							e.message.created_at;
+						this.currentMessageList.last_message = e.message.body;
+						console.log(e, "sent you a message");
+					}
+				);
+			});
 		}
 	}
 };

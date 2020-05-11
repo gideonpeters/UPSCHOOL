@@ -11,7 +11,7 @@ import Axios from "axios";
 export default {
 	components: { Inbox },
 	data: () => ({
-		messageList: [],
+		messageList: []
 	}),
 	async mounted() {
 		try {
@@ -22,5 +22,8 @@ export default {
 			console.log(error);
 		}
 	},
+	beforeDestroy() {
+		this.messageList = [];
+	}
 };
 </script>

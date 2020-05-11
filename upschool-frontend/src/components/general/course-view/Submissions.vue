@@ -1,45 +1,47 @@
 <template>
 	<v-card flat class="pa-3" min-height="500">
-		<v-row>
-			<v-col cols="12">
-				<metric-card title="Number of Submission Lists" :value="submissionList.length" />
-			</v-col>
-			<v-col cols="12">
-				<v-card flat class="pa-3">
-					<div class="d-flex justify-space-between align-center">
-						<v-subheader class="pa-0">SUBMISSION LISTS</v-subheader>
-						<v-spacer></v-spacer>
-					</div>
-
-					<v-card class="pa-3 mt-4">
-						<div class="fs-5 font-italic">
-							<v-icon size="10" class="mr-1" color="blue">mdi-information</v-icon>Click table item to view
+		<v-container>
+			<v-row align="center">
+				<v-col cols="12" md="3">
+					<metric-card title="Number of Submission Lists" :value="submissionList.length" />
+				</v-col>
+				<v-col cols="12">
+					<v-card flat class>
+						<div class="d-flex justify-space-between align-center">
+							<v-subheader class="pa-0">SUBMISSION LISTS</v-subheader>
+							<v-spacer></v-spacer>
 						</div>
-						<v-data-table
-							:headers="submissionListHeaders"
-							:items="submissionList"
-							@click:row="openItem"
-							:items-per-page="5"
-						>
-							<template v-slot:item.open_date="{ item }">
-								{{`${moment(
-								item.open_date
-								).format("dddd, MMMM Do YYYY, h:mm a")} (${moment(
-								item.open_date
-								).fromNow()})`}}
-							</template>
-							<template v-slot:item.due_date="{ item }">
-								{{`${moment(
-								item.due_date
-								).format("dddd, MMMM Do YYYY, h:mm a")} (${moment(
-								item.due_date
-								).fromNow()})`}}
-							</template>
-						</v-data-table>
+
+						<v-card class="pa-3 mt-4">
+							<div class="fs-5 font-italic">
+								<v-icon size="10" class="mr-1" color="blue">mdi-information</v-icon>Click table item to view
+							</div>
+							<v-data-table
+								:headers="submissionListHeaders"
+								:items="submissionList"
+								@click:row="openItem"
+								:items-per-page="5"
+							>
+								<template v-slot:item.open_date="{ item }">
+									{{`${moment(
+									item.open_date
+									).format("dddd, MMMM Do YYYY, h:mm a")} (${moment(
+									item.open_date
+									).fromNow()})`}}
+								</template>
+								<template v-slot:item.due_date="{ item }">
+									{{`${moment(
+									item.due_date
+									).format("dddd, MMMM Do YYYY, h:mm a")} (${moment(
+									item.due_date
+									).fromNow()})`}}
+								</template>
+							</v-data-table>
+						</v-card>
 					</v-card>
-				</v-card>
-			</v-col>
-		</v-row>
+				</v-col>
+			</v-row>
+		</v-container>
 	</v-card>
 </template>
 

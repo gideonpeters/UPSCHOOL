@@ -3,6 +3,7 @@
 namespace App\Broadcasting;
 
 use App\Conversation;
+use App\Message;
 use App\User;
 
 class ConversationChannel
@@ -19,5 +20,6 @@ class ConversationChannel
     {
         // return true;
         return $conversation->users->contains($user);
+        // return $message->users->contains($user);
     }
 }

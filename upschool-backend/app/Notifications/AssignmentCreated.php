@@ -63,7 +63,7 @@ class AssignmentCreated extends Notification implements ShouldQueue
     public function toBroadcast($notifiable)
     {
         return new BroadcastMessage([
-            'name' => $this->session->title,
+            'name' => '$this->session->title',
         ]);
     }
 }

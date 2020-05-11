@@ -1,8 +1,8 @@
 <template>
 	<div>
 		<v-container>
-			<v-row v-if="personal">
-				<v-col cols="4">
+			<v-row v-if="personal" align="center">
+				<v-col cols="12" md="4">
 					<metric-card
 						:title="isStudent ?'Number of enrolled courses':'Number of facilitated courses'"
 						:value="courses.length"
@@ -314,7 +314,7 @@
 						<v-row :justify="
 							$vuetify.breakpoint.mdAndUp ? 'start' : 'center'
 						">
-							<v-col cols="10" md="4" sm="5" v-for="(course, index) in visibleCourses" :key="index">
+							<v-col cols="12" md="4" sm="5" v-for="(course, index) in visibleCourses" :key="index">
 								<course-item
 									:course="course"
 									:personal="personal"
@@ -457,7 +457,7 @@ export default {
 		courses() {
 			let items;
 			if (this.personal && this.isStudent) {
-				items = [...this.$store.getters.getCoursesFromEnrollments];
+				items = [...this.getCoursesFromEnrollments];
 			} else if (this.personal && this.isStaff) {
 				items = [...this.$store.getters.getFacilitatedCourses];
 			} else {

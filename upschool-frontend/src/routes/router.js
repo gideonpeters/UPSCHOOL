@@ -37,8 +37,12 @@ export default new VueRouter({
 		{
 			path: "/upschool",
 			component: ParentPlatform,
-			children: parentRoutes
+			children: parentRoutes,
 			// beforeEnter: ifAuthenticated
+		},
+		{
+			path: "/select",
+			component: () => import("./../layouts/SelectApp"),
 		},
 		{
 			path: "/",
@@ -48,37 +52,37 @@ export default new VueRouter({
 				{
 					path: "",
 					name: "main.login",
-					component: () => import("./../views/general/Login")
+					component: () => import("./../views/general/Login"),
 				},
 				{
 					path: "register",
 					name: "main.register",
-					component: () => import("./../views/general/Register")
-				}
-			]
+					component: () => import("./../views/general/Register"),
+				},
+			],
 		},
 		{
 			path: "/student",
 			component: StudentPlatform,
-			children: studentRoutes
+			children: studentRoutes,
 			// beforeEnter: ifAuthenticated
 		},
 		{
 			path: "/staff",
 			component: StaffPlatform,
-			children: staffRoutes
+			children: staffRoutes,
 			// beforeEnter: ifAuthenticated
 		},
 		{
 			path: "/admin",
 			component: AdminPlatform,
-			children: adminRoutes
+			children: adminRoutes,
 			// beforeEnter: ifAuthenticated
 		},
 		{
 			path: "/help",
 			name: "main.help",
-			component: () => import("./../views/general/Help")
-		}
-	]
+			component: () => import("./../views/general/Help"),
+		},
+	],
 });

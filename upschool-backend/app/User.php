@@ -86,6 +86,11 @@ class User extends Authenticatable implements JWTSubject
         return $this->belongsToMany(Conversation::class, 'users_conversations');
     }
 
+    public function receivesBroadcastNotificationsOn()
+    {
+        return 'App.User.' . $this->id;
+    }
+
     // public function image()
     // {
     //     return $this->morphOne(File::class, 'fileable');
