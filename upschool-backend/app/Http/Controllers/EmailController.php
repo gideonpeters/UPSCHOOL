@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Mail\TestedMail;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Mail;
 
@@ -14,14 +15,9 @@ class EmailController extends Controller
         $title = $request->input('title');
         $content = $request->input('content');
 
-        Mail::send('emails.send', ['title' => $title, 'content' => $content], function ($message) {
-
-            $message->from('admin@upschool.com', 'UPSCHOOL Admin');
-
-            $message->to('gideonpeters85@gmail.com');
-        });
+        Mail::to('gideonpeters85@gmail.com')->send(new TestedMail($title, $content));
 
 
-        return response()->json(['message' => 'Request completed']);
+        return new TestedMail($title, $content);
     }
 }

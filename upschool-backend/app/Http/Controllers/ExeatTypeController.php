@@ -7,35 +7,34 @@ use Illuminate\Http\Request;
 
 class ExeatTypeController extends Controller
 {
-    /**
-     * Display a listing of the resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
     public function index()
     {
         //
+        $exeat_types = ExeatType::all();
+
+        return response()->json([
+            'status' => true,
+            'message' => 'These are all the exeat types',
+            'data' => $exeat_types
+        ], 201);
     }
 
-    /**
-     * Show the form for creating a new resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
-    public function create()
-    {
-        //
-    }
-
-    /**
-     * Store a newly created resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @return \Illuminate\Http\Response
-     */
     public function store(Request $request)
     {
         //
+        $exeat_type = new ExeatType();
+        $exeat_type->name = $request->name;
+        $exeat_type->description = $request->description;
+        $exeat_type->metric = $request->metric;
+        $exeat_type->number_of_metric = $request->number_of_metric;
+
+        $exeat_type->save();
+
+        return response()->json([
+            'status' => true,
+            'message' => 'exeat type created successfully',
+            'data' => $exeat_type
+        ], 201);
     }
 
     /**
