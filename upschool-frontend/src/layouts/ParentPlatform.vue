@@ -14,7 +14,7 @@
 					<v-img src="https://randomuser.me/api/portraits/men/85.jpg"></v-img>
 				</v-list-item-avatar>-->
 
-				<v-list-item-title>Peters Gideon</v-list-item-title>
+				<v-list-item-title>{{user.name}}</v-list-item-title>
 
 				<v-btn icon @click.stop="mini = !mini">
 					<v-icon>mdi-chevron-left</v-icon>
@@ -129,10 +129,16 @@
 				</v-list>
 			</v-menu>
 
-			<v-menu left bottom>
+			<v-menu offset-y bottom>
 				<template v-slot:activator="{ on }">
 					<v-avatar v-on="on">
-						<v-img src="https://randomuser.me/api/portraits/men/85.jpg"></v-img>
+						<v-img :src="user.profile_picture">
+							<template v-slot:placeholder>
+								<v-row class="fill-height grey ma-0" align="center" justify="center">
+									<div class="headline text-center white--text text-bold" v-if="user.name">{{ user.name[0] }}</div>
+								</v-row>
+							</template>
+						</v-img>
 					</v-avatar>
 				</template>
 
@@ -333,6 +339,16 @@ export default {
 			mini: true,
 			search: ""
 		};
+	},
+	computed: {
+		user() {
+			let ans = this.$store.state.loggedInUser;
+			if (ans) {
+				return ans;
+			}
+
+			return {};
+		}
 	},
 	methods: {
 		goToPage(name) {

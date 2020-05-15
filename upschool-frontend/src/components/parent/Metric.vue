@@ -7,8 +7,8 @@
 
 		<div class="d-flex justify-space-between align-center">
 			<div>
-				<div class="fs-3 font-weight-bold">{{ value }}</div>
-				<div class="fs-6 green--text">
+				<div class="fs-3 font-weight-bold" :class="{'fs-2-b grey--text': !compare}">{{ value }}</div>
+				<div class="fs-6 green--text" v-if="compare">
 					+{{ percentageChange }}%
 					<br />since last semester
 				</div>
@@ -62,6 +62,10 @@ export default {
 		},
 		routeName: {
 			type: String
+		},
+		compare: {
+			type: Boolean,
+			default: false
 		}
 	},
 	methods: {

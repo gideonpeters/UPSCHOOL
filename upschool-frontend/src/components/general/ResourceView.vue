@@ -22,15 +22,15 @@
 
 		<v-card class="mt-4 pa-3">
 			<v-subheader class="d-flex mb-4 pa-0">
-				<div class="fs-5 font-italic">
-					<v-icon size="10" class="mr-1" color="blue">mdi-information</v-icon>Click table item to view
+				<div class="fs-5 font-italic d-flex align-center">
+					<v-icon small color="blue">mdi-information</v-icon>Click table item to view
 				</div>
 				<v-spacer></v-spacer>
 				<div class="d-flex align-center justify-end">
 					<v-menu offset-y :close-on-content-click="false">
 						<template v-slot:activator="{ on }">
-							<v-btn :ripple="false" v-on="on" color text>
-								<v-icon color="grey" size="18">mdi-filter</v-icon>
+							<v-btn :ripple="false" v-on="on" color="grey" text>
+								<v-icon color="grey" small>mdi-filter</v-icon>
 								<div>Filter</div>
 							</v-btn>
 						</template>
@@ -72,28 +72,32 @@
 						</v-card>
 					</v-menu>
 
-					<div>
-						<v-btn color icon>
-							<v-icon color="grey" size="18">mdi-dots-vertical</v-icon>
-						</v-btn>
-					</div>
+					<v-menu offset-y :close-on-content-click="false">
+						<template v-slot:activator="{ on }">
+							<v-btn color="grey" icon v-on="on">
+								<v-icon color="grey" small>mdi-dots-vertical</v-icon>
+							</v-btn>
+						</template>
+						<v-list>
+							<v-list-item @click="createResource">
+								<v-list-item-title>Create New {{ type }}</v-list-item-title>
+							</v-list-item>
+						</v-list>
+					</v-menu>
 				</div>
 			</v-subheader>
 			<!-- <v-card-title>
 			</v-card-title>-->
-			<v-data-table
-				:headers="headers"
-				:items="items"
-				:search="search"
-				@click:row="goToPage"
-				class="elevation-1"
-			>
+			<v-data-table :headers="headers" :items="items" :search="search" class="elevation-1">
 				<template v-slot:item.action="{ item }">
-					<v-btn icon @click="editItem(item)" color="grey">
+					<v-btn icon @click="goToPage(item)" color="grey">
 						<v-icon small>mdi-eye</v-icon>
 					</v-btn>
-					<v-btn icon @click="deleteItem(item)" color="grey">
+					<v-btn icon @click="editItem(item)" color="grey">
 						<v-icon small>mdi-pencil</v-icon>
+					</v-btn>
+					<v-btn icon @click="deleteItem(item)" color="grey">
+						<v-icon small>mdi-delete</v-icon>
 					</v-btn>
 				</template>
 				<template v-slot:item.department="{ item }">{{item.department.short_name}}</template>
@@ -159,7 +163,15 @@ export default {
 				name: this.viewRoute,
 				params: { id }
 			});
-		}
+		},
+		createResource() {
+			this.$emit("create");
+		},
+		viewItem() {},
+		deleteItem(item) {
+			this.$emit("delete", item);
+		},
+		editItem() {}
 	}
 };
 </script>

@@ -1,5 +1,6 @@
 <?php
 
+use Spatie\Permission\PermissionServiceProvider;
 use Tymon\JWTAuth\Providers\LaravelServiceProvider;
 
 return [
@@ -177,6 +178,7 @@ return [
         App\Providers\EventServiceProvider::class,
         App\Providers\RouteServiceProvider::class,
         Tymon\JWTAuth\Providers\LaravelServiceProvider::class,
+        Spatie\Permission\PermissionServiceProvider::class,
 
     ],
 

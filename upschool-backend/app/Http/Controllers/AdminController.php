@@ -12,6 +12,13 @@ class AdminController extends Controller
     public function index()
     {
         //
+        $admins = Admin::with('user')->get();
+
+        return response()->json([
+            'status' => true,
+            'message' => 'these are all the admins',
+            'data' => $admins
+        ], 201);
     }
 
     public function store(Request $request)
@@ -27,6 +34,7 @@ class AdminController extends Controller
         $user->password = bcrypt($request->password);
         $user->userable_id = $admin->id;
         $user->userable_type = 'App\Admin';
+        $user->save();
 
         return response()->json([
             'status' => true,
@@ -35,12 +43,6 @@ class AdminController extends Controller
         ], 201);
     }
 
-    /**
-     * Display the specified resource.
-     *
-     * @param  \App\Admin  $admin
-     * @return \Illuminate\Http\Response
-     */
     public function show(Admin $admin)
     {
         //
@@ -69,14 +71,25 @@ class AdminController extends Controller
         //
     }
 
-    /**
-     * Remove the specified resource from storage.
-     *
-     * @param  \App\Admin  $admin
-     * @return \Illuminate\Http\Response
-     */
-    public function destroy(Admin $admin)
+    public function destroy($admin_id)
     {
         //
+        $admin = Admin::find($admin_id);
+
+        if (!$admin) {
+            return response()->json([
+                'status' => false,
+                'message' => 'admin does not exist',
+                'data' => []
+            ], 201);
+        }
+
+        $admin->delete();
+
+        return response()->json([
+            'status' => true,
+            'message' => 'admin deleted successfully',
+            'data' => []
+        ], 201);
     }
 }

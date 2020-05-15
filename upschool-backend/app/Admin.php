@@ -9,6 +9,7 @@ class Admin extends Model
 {
     //
     protected $appends = ['type'];
+    protected $with = ['user'];
 
     public function user()
     {

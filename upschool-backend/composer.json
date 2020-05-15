@@ -18,6 +18,7 @@
         "nuwave/lighthouse": "^4.11",
         "predis/predis": "^1.1",
         "pusher/pusher-php-server": "^4.1",
+        "spatie/laravel-permission": "^3.12",
         "spatie/laravel-query-builder": "^2.8",
         "tymon/jwt-auth": "1.0.x-dev"
     },

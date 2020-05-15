@@ -1,87 +1,90 @@
 <template>
 	<v-app>
-		<div>
-			<div class="my-5">Dashboard</div>
-			<div>
-				<div class="d-flex justify-space-between">
+		<v-container>
+			<v-row>
+				<v-col cols="12">
+					<div>Dashboard</div>
+				</v-col>
+				<v-col cols="3">
 					<metric title="Total Students" :value="students.length" routeName="parent.students" />
-					<!-- <div class="px-3"></div> -->
-					<metric
-						title="Total Staff"
-						:value="staff.length"
-						routeName="parent.staff"
-						@click="goToPage()"
-					/>
+				</v-col>
+				<v-col cols="3">
+					<metric title="Total Staff" :value="staff.length" routeName="parent.staff" />
+				</v-col>
+				<v-col cols="3">
 					<metric title="Total Departments" :value="departments.length" routeName="parent.students" />
-
+				</v-col>
+				<v-col cols="3">
 					<metric title="Total Colleges" :value="colleges.length" routeName="parent.students" />
-				</div>
-			</div>
-			<div class="mt-4">
-				<v-card class="pa-3">
-					<v-subheader>Statistics</v-subheader>
-					<apexchart type="area" height="350" :options="chartOptions" :series="series"></apexchart>
-				</v-card>
-			</div>
-			<div class="mt-4">
-				<v-row>
-					<v-col cols="12" md="8">
-						<v-card class="pa-3">
-							<div class="d-flex align-center">
-								<v-subheader>Attendance</v-subheader>
-								<v-spacer></v-spacer>
-								<v-btn color="primary" x-small text @click="goToPage('parent.attendance')">VIEW ATTENDANCE</v-btn>
-							</div>
-							<apexchart
-								type="bar"
-								height="350"
-								:options="attendanceChart.chartOptions"
-								:series="attendanceChart.series"
-							></apexchart>
-						</v-card>
-					</v-col>
-					<v-col cols="12" md="4">
-						<div class="flex-column">
-							<div>
-								<v-card class="pa-3">
-									<v-subheader class="pa-0">Birthdays</v-subheader>
-
-									<div class="d-flex fs-4 mb-3">
-										<div class="pr-4">
-											<v-icon size="15">mdi-circle-slice-8</v-icon>
-										</div>
-										<div>Professor AAA. Atayero</div>
-									</div>
-									<div class="d-flex fs-4 mb-3">
-										<div class="pr-4">
-											<v-icon size="15">mdi-circle-slice-8</v-icon>
-										</div>
-										<div>Francess Oyelade</div>
-									</div>
-								</v-card>
-							</div>
-
-							<div class="mt-4">
+				</v-col>
+				<v-col cols="12">
+					<v-card class="pa-3">
+						<v-subheader>Statistics</v-subheader>
+						<apexchart type="area" height="350" :options="chartOptions" :series="series"></apexchart>
+					</v-card>
+				</v-col>
+				<v-col cols="12">
+					<div class>
+						<v-row>
+							<v-col cols="12" md="8">
 								<v-card class="pa-3">
 									<div class="d-flex align-center">
-										<v-subheader class="pa-0">News Feed</v-subheader>
+										<v-subheader>Attendance</v-subheader>
 										<v-spacer></v-spacer>
-										<v-btn color="primary" text x-small @click="goToPage('parent.news')">View all</v-btn>
+										<v-btn color="primary" x-small text @click="goToPage('parent.attendance')">VIEW ATTENDANCE</v-btn>
+									</div>
+									<apexchart
+										type="bar"
+										height="350"
+										:options="attendanceChart.chartOptions"
+										:series="attendanceChart.series"
+									></apexchart>
+								</v-card>
+							</v-col>
+							<v-col cols="12" md="4">
+								<div class="flex-column">
+									<div>
+										<v-card class="pa-3">
+											<v-subheader class="pa-0">Birthdays</v-subheader>
+
+											<div class="d-flex fs-4 mb-3">
+												<div class="pr-4">
+													<v-icon size="15">mdi-circle-slice-8</v-icon>
+												</div>
+												<div>Professor AAA. Atayero</div>
+											</div>
+											<div class="d-flex fs-4 mb-3">
+												<div class="pr-4">
+													<v-icon size="15">mdi-circle-slice-8</v-icon>
+												</div>
+												<div>Francess Oyelade</div>
+											</div>
+										</v-card>
 									</div>
 
-									<div class="d-flex fs-4 mb-3" v-for="(item, i) in news" :key="i">
-										<div class="pr-4">
-											<v-icon size="15">mdi-circle-slice-8</v-icon>
-										</div>
-										<div>{{ item.title }}</div>
+									<div class="mt-4">
+										<v-card class="pa-3">
+											<div class="d-flex align-center">
+												<v-subheader class="pa-0">News Feed</v-subheader>
+												<v-spacer></v-spacer>
+												<v-btn color="primary" text x-small @click="goToPage('parent.news')">View all</v-btn>
+											</div>
+
+											<div class="d-flex fs-4 mb-3" v-for="(item, i) in news" :key="i">
+												<div class="pr-4">
+													<v-icon size="15">mdi-circle-slice-8</v-icon>
+												</div>
+												<div>{{ item.title }}</div>
+											</div>
+										</v-card>
 									</div>
-								</v-card>
-							</div>
-						</div>
-					</v-col>
-				</v-row>
-			</div>
-		</div>
+								</div>
+							</v-col>
+						</v-row>
+					</div>
+				</v-col>
+			</v-row>
+		</v-container>
 	</v-app>
 </template>
 

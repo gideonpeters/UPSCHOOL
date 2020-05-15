@@ -244,6 +244,7 @@ Route::group([], function ($router) {
     Route::post('admin', 'AdminController@store');
     Route::get('admin/{admin_id}', 'AdminController@show');
     Route::post('admin/{admin_id}', 'AdminController@update');
+    Route::delete('admin/{admin_id}', 'AdminController@destroy');
 });
 
 Route::group([], function ($router) {
