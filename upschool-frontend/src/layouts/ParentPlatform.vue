@@ -224,6 +224,12 @@ export default {
 							subItems: []
 						},
 						{
+							title: "Admins",
+							icon: "mdi-admin",
+							route: "parent.admins",
+							subItems: []
+						},
+						{
 							title: "Colleges",
 							icon: "mdi-teach",
 							route: "parent.colleges",

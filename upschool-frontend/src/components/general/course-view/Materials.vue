@@ -1,10 +1,10 @@
 <template>
 	<div>
 		<v-card flat class="pa-3" min-height="500">
-			<v-row justify="start">
+			<v-row justify="end">
 				<v-dialog v-model="dialogSection" persistent max-width="600px">
 					<template v-slot:activator="{ on }">
-						<v-btn color="primary" v-on="on" depressed text v-if="!isStudent">Add Section</v-btn>
+						<v-btn color="primary" v-on="on" depressed v-if="!isStudent">Add Section</v-btn>
 					</template>
 					<v-card>
 						<v-card-title>
@@ -257,50 +257,57 @@
 				v-if="courseSections.length == 0"
 			>No materials uploaded by facilitator yet</div>
 
-			<div class="mt-2 border-dashed pb-2" v-for="section in courseSections" :key="section.id">
-				<div class="d-flex justify-space-between align-center">
-					<h3 class="blue-grey--text c">{{ section.title }}</h3>
-
-					<div class="text-center" v-if="!isStudent">
-						<v-menu offset-y>
-							<template v-slot:activator="{ on }">
-								<v-btn v-on="on" depressed icon>
-									<v-icon color="grey">mdi-dots-vertical</v-icon>
-								</v-btn>
-							</template>
-							<v-list>
-								<v-list-item
-									v-for="(item,
+			<v-expansion-panels flat multiple class="mt-4 elevation-0" tile>
+				<v-expansion-panel class="elevation-0" v-for="section in courseSections" :key="section.id">
+					<v-expansion-panel-header expand-icon="mdi-menu-down">
+						<div class="d-flex justify-space-between align-center">
+							<h3 class="blue-grey--text c">{{ section.title }}</h3>
+						</div>
+					</v-expansion-panel-header>
+					<v-expansion-panel-content>
+						<div class="d-flex justify-space-between align-center" v-if="!isStudent">
+							<div v-html="section.body"></div>
+							<v-menu offset-y>
+								<template v-slot:activator="{ on }">
+									<v-btn v-on="on" depressed icon>
+										<v-icon color="grey" small>mdi-wrench</v-icon>
+									</v-btn>
+								</template>
+								<v-list>
+									<v-list-item
+										v-for="(item,
 													index) in sectionActions"
-									:key="index"
-									@click="item.fn(section.id)"
-								>
-									<v-list-item-title>
-										{{
-										item.title
-										}}
-									</v-list-item-title>
-								</v-list-item>
-							</v-list>
-						</v-menu>
-					</div>
-				</div>
-				<div v-html="section.body"></div>
-				<div
-					class="fs-3 align-center d-flex pointer"
-					v-for="(subsection,
+										:key="index"
+										@click="item.fn(section.id)"
+									>
+										<v-list-item-title>
+											{{
+											item.title
+											}}
+										</v-list-item-title>
+									</v-list-item>
+								</v-list>
+							</v-menu>
+						</div>
+						<div
+							class="fs-3 align-center d-flex pointer"
+							v-for="(subsection,
 									idx) in section.subsections"
-					:key="idx"
-				>
-					<section-item @submitted="getCourseSections" :subsection="subsection" />
-					<!-- <div v-for="subsection in ">{{}}</div> -->
-				</div>
-				<div class="d-flex mt-4 align-baseline justify-end pb-3">
-					<div class="fs-5 font-weight-light">Uploaded {{moment(section.created_at).fromNow()}}</div>
-					<div class="px-2"></div>
-					<div class="fs-5 font-weight-light">Updated {{ moment(section.updated_at).fromNow() }}</div>
-				</div>
-				<v-divider></v-divider>
+							:key="idx"
+						>
+							<section-item @submitted="getCourseSections" :subsection="subsection" />
+						</div>
+						<div class="d-flex mt-4 align-baseline justify-end pb-3">
+							<div class="fs-5 font-weight-light">Uploaded {{moment(section.created_at).fromNow()}}</div>
+							<div class="px-2"></div>
+							<div class="fs-5 font-weight-light">Updated {{ moment(section.updated_at).fromNow() }}</div>
+						</div>
+						<!-- <v-divider></v-divider> -->
+					</v-expansion-panel-content>
+				</v-expansion-panel>
+			</v-expansion-panels>
+			<div class="mt-2 border-dashed pb-2">
+				<div></div>
 			</div>
 		</v-card>
 	</div>

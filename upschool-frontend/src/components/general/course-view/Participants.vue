@@ -1,7 +1,10 @@
 <template>
 	<v-row>
-		<v-col cols="12">
+		<v-col cols="3">
 			<metric-card title="Number of Participants" :value="participants.length" />
+		</v-col>
+		<v-col cols="4">
+			<!-- <metric-card title="Number of Participants" :value="participants.length" /> -->
 		</v-col>
 		<v-col cols="12">
 			<v-card flat class="pa-3" min-height="500">

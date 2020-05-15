@@ -115,6 +115,7 @@
 
 <script>
 import StudentCard from "@/components/general/StudentCard";
+import Axios from "axios";
 export default {
 	props: {
 		isStudent: {
@@ -131,6 +132,7 @@ export default {
 	},
 	data: () => ({
 		tab: null,
+		student: {},
 		events: [
 			{ id: 1, name: "FRIDAY CHOP" },
 			{ id: 2, name: "TUESDAY SERVICE" },
@@ -356,13 +358,6 @@ export default {
 					this.courseAttendance.length) *
 					100
 			).toFixed(2);
-		},
-		student() {
-			let id = this.$route.params.id;
-			if (!id) {
-				return this.$store.state.loggedInUser;
-			}
-			return this.$store.getters.getStudent(id);
 		}
 	},
 	async mounted() {
@@ -370,7 +365,13 @@ export default {
 			let id = this.$route.params.id;
 			if (!id) {
 				id = this.$store.state.loggedInUser.id;
+				this.student = this.$store.state.loggedInUser;
+			} else {
+				let res = await Axios.get(`student/${id}`);
+				console.log(res.data);
+				this.student = res.data.data;
 			}
+
 			this.studentEvents = await this.$store.dispatch(
 				"getUserEvents",
 				id

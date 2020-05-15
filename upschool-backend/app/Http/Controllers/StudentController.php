@@ -54,13 +54,13 @@ class StudentController extends Controller
 
         $user->save();
 
-        $path = Storage::putFileAs(
-            'images/profile-images/students',
-            $request->file('image'),
-            preg_replace('/[^A-Za-z0-9\-]/', '_', str_replace(' ', '_', $user->name . $request->file('image')->getClientOriginalName()))
-        );
 
-        if ($path) {
+        if ($request->hasFile('image')) {
+            $path = Storage::putFileAs(
+                'images/profile-images/students',
+                $request->file('image'),
+                preg_replace('/[^A-Za-z0-9\-]/', '_', str_replace(' ', '_', $user->name . $request->file('image')->getClientOriginalName()))
+            );
 
             $file = new File();
             $file->name = $request->file('image')->getClientOriginalName();
@@ -79,9 +79,24 @@ class StudentController extends Controller
         ], 201);
     }
 
-    public function show(Student $student)
+    public function show(Request $request, $student_id)
     {
         //
+        $student = Student::whereMatricNumber($student_id)->orWhere('id', $student_id)->first();
+
+        if (!$student) {
+            return response()->json([
+                'status' => false,
+                'message' => 'Student does not exist',
+                'data' => []
+            ], 201);
+        }
+
+        return response()->json([
+            'status' => true,
+            'message' => 'This is the student',
+            'data' => $student->load('user', 'image', 'adviser')
+        ], 201);
     }
 
     public function update(Request $request, Student $student)

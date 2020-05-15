@@ -111,6 +111,16 @@ export default [
 		component: () => import("./../views/parent/ParentStaffView"),
 	},
 	{
+		path: "admins",
+		name: "parent.admins",
+		component: () => import("./../views/parent/ParentAdmins"),
+	},
+	{
+		path: "admins/:id",
+		name: "parent.admins.view",
+		component: () => import("./../views/parent/ParentAdminView"),
+	},
+	{
 		path: "inbox",
 		name: "parent.inbox",
 		component: () => import("./../views/parent/ParentInbox"),

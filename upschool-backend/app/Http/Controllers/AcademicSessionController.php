@@ -9,6 +9,7 @@ use Illuminate\Http\Request;
 use App\Events\WebSocketDemoEvent;
 use App\Notifications\AssignmentCreated;
 use Illuminate\Support\Facades\Notification;
+use Illuminate\Support\Facades\Schema;
 
 class AcademicSessionController extends Controller
 {
@@ -51,19 +52,20 @@ class AcademicSessionController extends Controller
         // $session->end_date = '2020-04-11';
         // $session->save();
         $session = AcademicSession::latest()->first();
-        $students = Student::all()->flatten()->map(function ($item, $key) {
-            return $item->user;
-        });
-        // dd($students);
+        dd(Schema::getColumnListing($session->getTable()));
+        // $students = Student::all()->flatten()->map(function ($item, $key) {
+        //     return $item->user;
+        // });
+        // // dd($students);
 
-        // broadcast(new WebSocketDemoEvent($session));
-        Notification::send($students, new AssignmentCreated($session));
+        // // broadcast(new WebSocketDemoEvent($session));
+        // Notification::send($students, new AssignmentCreated($session));
 
-        return response()->json([
-            'status' => true,
-            'message' => 'Session created successfully',
-            'data' => $session
-        ], 201);
+        // return response()->json([
+        //     'status' => true,
+        //     'message' => 'Session created successfully',
+        //     'data' => $session
+        // ], 201);
     }
 
 

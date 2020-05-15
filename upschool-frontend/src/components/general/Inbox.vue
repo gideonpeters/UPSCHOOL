@@ -5,6 +5,51 @@
 				<v-card flat height="550">
 					<v-list>
 						<v-subheader>INBOX</v-subheader>
+						<v-list-item>
+							<v-autocomplete
+								v-model="friends"
+								:disabled="isUpdating"
+								:items="people"
+								filled
+								solo
+								flat
+								dense
+								chips
+								color="blue-grey lighten-2"
+								label="Search by name, matric number or staff number"
+								item-text="name"
+								item-value="name"
+							>
+								<template v-slot:selection="data">
+									<v-chip
+										v-bind="data.attrs"
+										:input-value="data.selected"
+										close
+										@click="data.select, selectNew"
+										@click:close="remove(data.item)"
+									>
+										<v-avatar left>
+											<v-img :src="data.item.avatar"></v-img>
+										</v-avatar>
+										{{ data.item.name }}
+									</v-chip>
+								</template>
+								<template v-slot:item="data">
+									<template v-if="typeof data.item !== 'object'">
+										<v-list-item-content v-text="data.item"></v-list-item-content>
+									</template>
+									<template v-else>
+										<v-list-item-avatar>
+											<img :src="data.item.avatar" />
+										</v-list-item-avatar>
+										<v-list-item-content>
+											<v-list-item-title v-html="data.item.name"></v-list-item-title>
+											<v-list-item-subtitle v-html="data.item.group"></v-list-item-subtitle>
+										</v-list-item-content>
+									</template>
+								</template>
+							</v-autocomplete>
+						</v-list-item>
 						<v-list-item v-for="(item, i) in messageList" :key="i" @click.stop="showMessageList(item.id)">
 							<v-list-item-avatar>
 								<v-img :src="item.avatar">
@@ -136,10 +181,13 @@ export default {
 		messageList: { type: Array }
 	},
 	data: () => ({
+		friends: {},
 		currentMessageList: {},
 		showFirstStep: false,
 		body: "",
-		messages: []
+		isUpdating: false,
+		messages: [],
+		people: [{ id: 1, name: "John Doe" }]
 	}),
 	computed: {
 		userId() {
@@ -165,7 +213,17 @@ export default {
 			this.showFirstStep = !this.showFirstStep;
 			return;
 		},
-
+		remove() {
+			this.friends = {};
+			// const index = this.friends.indexOf(item.name);
+			// if (index >= 0) this.friends.splice(index, 1);
+		},
+		selectNew(item) {
+			// this.messageList.push({
+			// 	// id: 'new',
+			// 	// name
+			// })
+		},
 		async sendMessage() {
 			try {
 				if (!this.body) {

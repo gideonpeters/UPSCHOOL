@@ -1,8 +1,11 @@
 <template>
 	<v-card flat class="pa-3" min-height="500">
 		<v-row v-if="!showGradeList">
-			<v-col cols="12">
+			<v-col cols="3">
 				<metric-card title="Number of GradeLists" :value="gradelist.length" />
+			</v-col>
+			<v-col cols="9">
+				<!-- <metric-card title="Number of GradeLists" :value="gradelist.length" /> -->
 			</v-col>
 			<v-col cols="8">
 				<v-card flat class="pa-3">
@@ -154,97 +157,95 @@
 							>submit</v-btn>
 						</div>
 					</div>
-					<v-row justify="center">
-						<v-dialog v-model="dialogAssessment" persistent max-width="600px">
-							<template v-slot:activator="{on}">
-								<v-btn
-									v-if="courseSchoolAssessments.length ==  0"
-									color="info"
-									v-on="on"
-									small
-									text
-									outlined
-									depressed
-								>Create School Submission for course</v-btn>
-							</template>
-							<v-card>
-								<v-card-title>
-									<span class="headline">CREATE COURSE SCHOOL ASSESSMENT</span>
-								</v-card-title>
-								<v-card-text>
-									<v-container>
-										<v-row>
-											<v-col cols="12">
-												<v-text-field
-													outlined
-													disabled
-													label="Course"
-													:value="
+				</v-card>
+				<v-row justify="center" class="pa-3">
+					<v-dialog v-model="dialogAssessment" persistent max-width="600px">
+						<template v-slot:activator="{on}">
+							<v-btn
+								v-if="courseSchoolAssessments.length ==  0"
+								color="primary"
+								v-on="on"
+								block
+								depressed
+							>Create School Submission for course</v-btn>
+						</template>
+						<v-card>
+							<v-card-title>
+								<span class="headline">CREATE COURSE SCHOOL ASSESSMENT</span>
+							</v-card-title>
+							<v-card-text>
+								<v-container>
+									<v-row>
+										<v-col cols="12">
+											<v-text-field
+												outlined
+												disabled
+												label="Course"
+												:value="
 																				`${course.course_code}: ${course.title}`
 																			"
-													required
-												></v-text-field>
-											</v-col>
-											<v-col cols="6">
-												<v-text-field
-													outlined
-													label="Name of Assessment"
-													v-model="
+												required
+											></v-text-field>
+										</v-col>
+										<v-col cols="6">
+											<v-text-field
+												outlined
+												label="Name of Assessment"
+												v-model="
 																				assessmentName
 																			"
-													required
-												></v-text-field>
-											</v-col>
+												required
+											></v-text-field>
+										</v-col>
 
-											<v-col cols="6">
-												<v-text-field
-													outlined
-													label="Total Score"
-													required
-													v-model="
+										<v-col cols="6">
+											<v-text-field
+												outlined
+												label="Total Score"
+												required
+												v-model="
 																				totalAssessmentScore
 																			"
-												></v-text-field>
-											</v-col>
-											<v-col cols="6">
-												<v-text-field
-													outlined
-													label="Percentage in final result"
-													required
-													v-model="
+											></v-text-field>
+										</v-col>
+										<v-col cols="6">
+											<v-text-field
+												outlined
+												label="Percentage in final result"
+												required
+												v-model="
 																				totalAssessmentPercentage
 																			"
-												></v-text-field>
-											</v-col>
-										</v-row>
-									</v-container>
-									<!-- <small>*indicates required field</small> -->
-								</v-card-text>
-								<v-card-actions>
-									<v-spacer></v-spacer>
-									<v-btn
-										color="blue darken-1"
-										text
-										@click="
-																	closeAdd
+											></v-text-field>
+										</v-col>
+									</v-row>
+								</v-container>
+								<!-- <small>*indicates required field</small> -->
+							</v-card-text>
+							<v-card-actions>
+								<v-spacer></v-spacer>
+								<v-btn
+									color="blue darken-1"
+									text
+									@click="
+																	closeSchoolAssessment
 																"
-									>Close</v-btn>
-									<v-btn
-										color="blue darken-1"
-										text
-										:disabled="
+								>Close</v-btn>
+								<v-btn
+									color="blue darken-1"
+									text
+									:disabled="
 																	!(
 																		assessmentName &&
 																		totalAssessmentPercentage && totalAssessmentScore
 																	)
 																"
-										@click="createNewCourseAssessment"
-									>Save</v-btn>
-								</v-card-actions>
-							</v-card>
-						</v-dialog>
-					</v-row>
-				</v-card>
+									@click="createNewCourseAssessment"
+								>Save</v-btn>
+							</v-card-actions>
+						</v-card>
+					</v-dialog>
+				</v-row>
 			</v-col>
 		</v-row>
 
@@ -416,6 +417,12 @@ export default {
 			this.selectedAssessment = {};
 			this.selectedGradeAction = "";
 			this.selectedGrades = [];
+		},
+		closeSchoolAssessment() {
+			this.dialogAssessment = false;
+			this.assessmentName = "";
+			this.totalAssessmentScore = "";
+			this.totalAssessmentPercentage = "";
 		},
 		openItem(v) {
 			// console.log(v);

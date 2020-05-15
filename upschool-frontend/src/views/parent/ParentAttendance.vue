@@ -9,54 +9,37 @@
 
 				<div>
 					<v-row>
+						<v-col cols="12" sm="6" md="4">
+							<v-text-field
+								v-model="search"
+								single-line
+								hide-details
+								flat
+								label="Search events by name"
+								solo
+								prepend-inner-icon="mdi-magnify"
+							></v-text-field>
+						</v-col>
 						<v-col cols="12" md="9">
 							<v-card flat class="pa-3">
-								<div
-									class="d-flex justify-space-between align-center"
-								>
-									<v-subheader class="pa-0"
-										>EVENTS</v-subheader
-									>
+								<div class="d-flex justify-space-between align-center">
+									<v-subheader class="pa-0">EVENTS</v-subheader>
 									<div>
-										<v-dialog
-											v-model="dialog"
-											persistent
-											max-width="600px"
-										>
+										<v-dialog v-model="dialog" persistent max-width="600px">
 											<template v-slot:activator="{ on }">
-												<v-btn
-													color="primary"
-													dark
-													depressed
-													v-on="on"
-													>ADD EVENT</v-btn
-												>
+												<v-btn color="primary" dark depressed v-on="on">ADD EVENT</v-btn>
 											</template>
 											<v-card>
 												<v-card-title>
-													<span class="headline"
-														>Create Event</span
-													>
+													<span class="headline">Create Event</span>
 												</v-card-title>
 												<v-card-text>
 													<v-container>
 														<v-row>
-															<v-col
-																cols="12"
-																sm="6"
-																md="12"
-															>
-																<v-text-field
-																	label="Title of Event"
-																	outlined
-																	required
-																></v-text-field>
+															<v-col cols="12" sm="6" md="12">
+																<v-text-field label="Title of Event" outlined required></v-text-field>
 															</v-col>
-															<v-col
-																cols="12"
-																sm="6"
-																md="12"
-															>
+															<v-col cols="12" sm="6" md="12">
 																<v-select
 																	v-model="
 																		selectFrequency
@@ -70,11 +53,7 @@
 																	required
 																></v-select>
 															</v-col>
-															<v-col
-																cols="12"
-																sm="6"
-																md="12"
-															>
+															<v-col cols="12" sm="6" md="12">
 																<v-textarea
 																	v-model="
 																		editorContent
@@ -83,11 +62,7 @@
 																	outlined
 																/>
 															</v-col>
-															<v-col
-																cols="12"
-																sm="6"
-																md="12"
-															>
+															<v-col cols="12" sm="6" md="12">
 																<v-select
 																	:items="
 																		priority
@@ -100,11 +75,7 @@
 																	outlined
 																></v-select>
 															</v-col>
-															<v-col
-																cols="12"
-																sm="6"
-																md="12"
-															>
+															<v-col cols="12" sm="6" md="12">
 																<v-combobox
 																	v-model="
 																		selectAttendableApply
@@ -137,32 +108,21 @@
 															</v-col>-->
 														</v-row>
 													</v-container>
-													<small
-														>*indicates required
-														field</small
-													>
+													<small>
+														*indicates required
+														field
+													</small>
 												</v-card-text>
 												<v-card-actions>
 													<v-spacer></v-spacer>
-													<v-btn
-														color="blue darken-1"
-														text
-														@click="dialog = false"
-														>Close</v-btn
-													>
-													<v-btn
-														color="blue darken-1"
-														text
-														@click="dialog = false"
-														>Save</v-btn
-													>
+													<v-btn color="blue darken-1" text @click="dialog = false">Close</v-btn>
+													<v-btn color="blue darken-1" text @click="dialog = false">Save</v-btn>
 													<v-btn
 														class="white--text"
 														color="primary"
 														depressed
 														@click="dialog = false"
-														>Activate & Save</v-btn
-													>
+													>Activate & Save</v-btn>
 												</v-card-actions>
 											</v-card>
 										</v-dialog>
@@ -170,9 +130,7 @@
 								</div>
 
 								<div class="fs-5 font-italic">
-									<v-icon size="10" class="mr-1" color="blue"
-										>mdi-information</v-icon
-									>Click table item to view
+									<v-icon size="10" class="mr-1" color="blue">mdi-information</v-icon>Click table item to view
 								</div>
 
 								<v-data-table
@@ -184,19 +142,16 @@
 									:items-per-page="5"
 								>
 									<template v-slot:item.status="{ item }">
-										<v-chip
-											:color="getColor(item.event.status)"
-											dark
-											small
-											>{{
-												item.status
-													? "ACTIVE"
-													: "INACTIVE"
-											}}</v-chip
-										>
+										<v-chip :color="getColor(item.event.status)" dark small>
+											{{
+											item.status
+											? "ACTIVE"
+											: "INACTIVE"
+											}}
+										</v-chip>
 									</template>
 									<template v-slot:item.priority="{ item }">
-										<div class="">
+										<div class>
 											<v-icon
 												size="15"
 												:color="
@@ -204,29 +159,28 @@
 														? 'info lighten-3'
 														: 'red lighten-3'
 												"
-												>mdi-circle-slice-8</v-icon
-											>
+											>mdi-circle-slice-8</v-icon>
 										</div>
 									</template>
 									<template v-slot:item.time="{ item }">
-										<div class="">
+										<div class>
 											{{
-												moment(
-													item.event.start_time
-												).format(
-													"dddd, MMMM Do YYYY, h:mm a"
-												)
+											moment(
+											item.event.start_time
+											).format(
+											"dddd, MMMM Do YYYY, h:mm a"
+											)
 											}}
 										</div>
 									</template>
 									<template v-slot:item.end_time="{ item }">
-										<div class="">
+										<div class>
 											{{
-												moment(
-													item.event.end_time
-												).format(
-													"dddd, MMMM Do YYYY, h:mm a"
-												)
+											moment(
+											item.event.end_time
+											).format(
+											"dddd, MMMM Do YYYY, h:mm a"
+											)
 											}}
 										</div>
 									</template>
@@ -235,9 +189,7 @@
 						</v-col>
 						<v-col cols="12" md="3">
 							<v-card flat class="pa-3">
-								<v-subheader class="pa-0"
-									>ATTENDABLE GROUPS</v-subheader
-								>
+								<v-subheader class="pa-0">ATTENDABLE GROUPS</v-subheader>
 
 								<div
 									class="d-flex fs-4 mb-3"
@@ -246,9 +198,7 @@
 									:key="idx"
 								>
 									<div class="pr-4">
-										<v-icon size="15"
-											>mdi-circle-slice-8</v-icon
-										>
+										<v-icon size="15">mdi-circle-slice-8</v-icon>
 									</div>
 									<div>{{ attendableGroup }}</div>
 								</div>
@@ -261,46 +211,31 @@
 										transition="dialog-bottom-transition"
 									>
 										<template v-slot:activator="{ on }">
-											<v-btn
-												color="success"
-												depressed
-												dark
-												v-on="on"
-												>Create Attendable Group</v-btn
-											>
+											<v-btn color="success" depressed dark v-on="on">Create Attendable Group</v-btn>
 										</template>
 										<v-card>
 											<v-toolbar dark color="primary">
-												<v-btn
-													icon
-													dark
-													@click="dialogFull = false"
-												>
+												<v-btn icon dark @click="dialogFull = false">
 													<v-icon>mdi-close</v-icon>
 												</v-btn>
-												<v-toolbar-title
-													>Manage Attendable
-													Group</v-toolbar-title
-												>
+												<v-toolbar-title>
+													Manage Attendable
+													Group
+												</v-toolbar-title>
 												<v-spacer></v-spacer>
 												<v-toolbar-items>
-													<v-btn
-														dark
-														text
-														@click="
+													<v-btn dark text @click="
 															dialogFull = false
-														"
-														>Save</v-btn
-													>
+														">Save</v-btn>
 												</v-toolbar-items>
 											</v-toolbar>
 											<v-list three-line subheader>
 												<v-list-item>
 													<v-list-item-content>
-														<v-list-item-title
-															>Manage Attendable
-															Group</v-list-item-title
-														>
+														<v-list-item-title>
+															Manage Attendable
+															Group
+														</v-list-item-title>
 														<div>
 															<v-data-table
 																v-model="
@@ -319,12 +254,8 @@
 																show-select
 																class="elevation-1"
 															>
-																<template
-																	v-slot:top
-																>
-																	<div
-																		class="d-flex justify-space-between align-center"
-																	>
+																<template v-slot:top>
+																	<div class="d-flex justify-space-between align-center">
 																		<div>
 																			<v-select
 																				v-model="
@@ -340,33 +271,31 @@
 																			/>
 																		</div>
 																		<v-spacer></v-spacer>
-																		<div
-																			class="d-flex mb-3"
-																		>
+																		<div class="d-flex mb-3">
 																			<v-btn
 																				color="success"
 																				text
 																				v-if="
 																					selectAttendableGroup
 																				"
-																				>IMPORT
-																				CSV</v-btn
 																			>
+																				IMPORT
+																				CSV
+																			</v-btn>
 																			<v-btn
 																				color="success"
 																				text
 																				v-if="
 																					selectAttendableGroup
 																				"
-																				>EXPORT
-																				CSV</v-btn
 																			>
-																			<v-btn
-																				color="primary"
-																				depressed
-																				>Save
-																				Selected</v-btn
-																			>
+																				EXPORT
+																				CSV
+																			</v-btn>
+																			<v-btn color="primary" depressed>
+																				Save
+																				Selected
+																			</v-btn>
 																			<v-btn
 																				color="primary"
 																				text
@@ -379,17 +308,16 @@
 																						selected.length <
 																							1
 																				"
-																				>New
-																				Group</v-btn
 																			>
+																				New
+																				Group
+																			</v-btn>
 																		</div>
 																	</div>
 																</template>
-																<template
-																	v-slot:item.actions="{
+																<template v-slot:item.actions="{
 																		item,
-																	}"
-																>
+																	}">
 																	<v-icon
 																		small
 																		@click="
@@ -397,8 +325,7 @@
 																				item
 																			)
 																		"
-																		>mdi-delete</v-icon
-																	>
+																	>mdi-delete</v-icon>
 																</template>
 															</v-data-table>
 														</div>
@@ -411,23 +338,17 @@
 							</v-card>
 
 							<v-card flat class="pa-3 mt-4">
-								<v-subheader class="pa-0"
-									>PRIORITY LEVELS</v-subheader
-								>
+								<v-subheader class="pa-0">PRIORITY LEVELS</v-subheader>
 
 								<div class="d-flex fs-4 mb-3">
 									<div class="pr-4">
-										<v-icon size="15" color="info lighten-3"
-											>mdi-circle-slice-8</v-icon
-										>
+										<v-icon size="15" color="info lighten-3">mdi-circle-slice-8</v-icon>
 									</div>
 									<div>Voluntary</div>
 								</div>
 								<div class="d-flex fs-4 mb-3">
 									<div class="pr-4">
-										<v-icon size="15" color="red lighten-3"
-											>mdi-alert-circle</v-icon
-										>
+										<v-icon size="15" color="red lighten-3">mdi-alert-circle</v-icon>
 									</div>
 									<div>Mandatory</div>
 								</div>
@@ -450,7 +371,7 @@ import Metric from "./../../components/parent/Metric";
 
 export default {
 	components: {
-		Metric,
+		Metric
 		// VueTrix,
 		// apexchart: VueApexCharts
 	},
@@ -473,7 +394,7 @@ export default {
 			"All 300 level students",
 			"All CST Students",
 			"All SIWES Students",
-			"All Final year students",
+			"All Final year students"
 		],
 		frequency: ["Once", "Daily", "Weekly", "Monthly"],
 		priority: ["Voluntary", "Mandatory"],
@@ -482,15 +403,15 @@ export default {
 				text: "NAME",
 				align: "start",
 				sortable: false,
-				value: "title",
+				value: "title"
 			},
 			{ text: "START TIME", value: "time" },
 			{ text: "END TIME", value: "end_time" },
 			{ text: "FREQUENCY", value: "event.recurrence" },
 			{ text: "STATUS", value: "status", align: "center" },
-			{ text: "PRIORITY", value: "priority", align: "center" },
+			{ text: "PRIORITY", value: "priority", align: "center" }
 			// { text: "WEIGHTED SCORE", value: "protein" }
-		],
+		]
 	}),
 	computed: {
 		students() {
@@ -501,21 +422,21 @@ export default {
 		},
 		events() {
 			return this.$store.state.schoolEvents;
-		},
+		}
 	},
 	methods: {
 		goToPage(v) {
 			// console.log(v);
 			this.$router.push({
 				name: "parent.attendance.details",
-				params: { id: v.id },
+				params: { id: v.id }
 			});
 		},
 		getColor(val) {
 			return val ? "green accent-3" : "red accent-2";
 		},
 		editItem() {},
-		deleteItem() {},
+		deleteItem() {}
 	},
 	async mounted() {
 		try {
@@ -523,6 +444,6 @@ export default {
 		} catch (error) {
 			console.log(error);
 		}
-	},
+	}
 };
 </script>

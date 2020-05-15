@@ -4,7 +4,7 @@
 			<div class="d-flex justify-space-between align-center">
 				<div class="my-5">Leave/Exeat Applications</div>
 				<div>
-					<v-btn color="blue accent-2 white--text" depressed>Apply for Leave</v-btn>
+					<v-btn @ color="blue accent-2 white--text" depressed>Apply for Leave</v-btn>
 				</div>
 			</div>
 			<v-row>

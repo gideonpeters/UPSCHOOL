@@ -3,7 +3,11 @@
 		<div class="my-5">{{type}}</div>
 
 		<v-row>
-			<v-col cols="12" sm="6" md="6">
+			<v-col cols="3">
+				<metric-card :title="`Number of ${type}`" :value="items.length" />
+			</v-col>
+			<v-col cols="8"></v-col>
+			<v-col cols="12" sm="6" md="4">
 				<v-text-field
 					v-model="search"
 					single-line
@@ -23,10 +27,51 @@
 				</div>
 				<v-spacer></v-spacer>
 				<div class="d-flex align-center justify-end">
-					<v-btn color text>
-						<v-icon color="grey" size="18">mdi-filter</v-icon>
-						<div>Filter</div>
-					</v-btn>
+					<v-menu offset-y :close-on-content-click="false">
+						<template v-slot:activator="{ on }">
+							<v-btn :ripple="false" v-on="on" color text>
+								<v-icon color="grey" size="18">mdi-filter</v-icon>
+								<div>Filter</div>
+							</v-btn>
+						</template>
+						<v-card class="pa-3" flat>
+							<v-row>
+								<v-col cols="12">
+									<v-subheader class="fs-4 pa-0">PROPERTY</v-subheader>
+									<div class="d-flex fs-5 align-stretch">
+										<div class="d-flex align-center mr-3">
+											<v-icon small>mdi-dots-vertical</v-icon>
+											<div>Name</div>
+										</div>
+										<div class="d-flex align-center my-auto">
+											<input placeholder="Name" class="pa-3" style="height: 16px; border: 0.5px solid grey;" />
+										</div>
+										<div class="d-flex align-center ml-3">
+											<v-menu offset-y>
+												<template v-slot:activator="{ on }">
+													<v-btn v-on="on" icon color="grey">
+														<v-icon small>mdi-plus-circle</v-icon>
+													</v-btn>
+												</template>
+												<v-list>
+													<v-list-item v-for="i in 3" :key="i">
+														<v-list-item-title>
+															<div class="fs-5 pointer">Matriculation Number</div>
+														</v-list-item-title>
+													</v-list-item>
+												</v-list>
+											</v-menu>
+										</div>
+									</div>
+								</v-col>
+							</v-row>
+							<v-card-actions>
+								<v-spacer></v-spacer>
+								<v-btn x-small color="success" text>Done</v-btn>
+							</v-card-actions>
+						</v-card>
+					</v-menu>
+
 					<div>
 						<v-btn color icon>
 							<v-icon color="grey" size="18">mdi-dots-vertical</v-icon>
@@ -44,8 +89,12 @@
 				class="elevation-1"
 			>
 				<template v-slot:item.action="{ item }">
-					<v-icon small class="mr-2" @click="editItem(item)">mdi-pencil</v-icon>
-					<v-icon small @click="deleteItem(item)">mdi-delete</v-icon>
+					<v-btn icon @click="editItem(item)" color="grey">
+						<v-icon small>mdi-eye</v-icon>
+					</v-btn>
+					<v-btn icon @click="deleteItem(item)" color="grey">
+						<v-icon small>mdi-pencil</v-icon>
+					</v-btn>
 				</template>
 				<template v-slot:item.department="{ item }">{{item.department.short_name}}</template>
 				<!-- <template v-slot:item.program="{ item }">{{item.program.name}}</template> -->
@@ -68,7 +117,11 @@
 </template>
 
 <script>
+import MetricCard from "@/components/parent/Metric";
 export default {
+	components: {
+		MetricCard
+	},
 	props: {
 		items: {
 			type: Array

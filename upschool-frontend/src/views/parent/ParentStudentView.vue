@@ -2,7 +2,9 @@
 	<v-app>
 		<div>
 			<div class="my-5">
-				<v-icon size="18" class="mr-1">mdi-arrow-left</v-icon>
+				<v-btn @click="$router.go(-1)" icon color="grey">
+					<v-icon small>mdi-arrow-left</v-icon>
+				</v-btn>
 				Student Information / {{student.name}}
 			</div>
 

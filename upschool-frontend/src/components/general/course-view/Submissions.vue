@@ -10,6 +10,7 @@
 						<div class="d-flex justify-space-between align-center">
 							<v-subheader class="pa-0">SUBMISSION LISTS</v-subheader>
 							<v-spacer></v-spacer>
+							<v-btn color="primary" depressed>CREATE SUBMISSION</v-btn>
 						</div>
 
 						<v-card class="pa-3 mt-4">

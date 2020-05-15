@@ -6,7 +6,7 @@
 				{{ snackbar.text }}
 				<v-btn color="blue" text @click="closeSnackbar">Close</v-btn>
 			</v-snackbar>
-			<!-- <v-tour name="studentTour" :steps="steps" /> -->
+			<v-tour name="studentTour" :steps="steprs" />
 		</main>
 	</v-app>
 </template>
@@ -19,6 +19,7 @@ export default {
 	name: "App",
 	data: () => ({
 		//
+		steprs: [],
 		steps: [
 			{
 				target: '[data-v-step="0"]',

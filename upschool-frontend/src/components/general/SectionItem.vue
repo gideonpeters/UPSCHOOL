@@ -1,19 +1,23 @@
 <template>
-	<div class="pl-5">
-		<div
-			:class="isHovered ? 'blue--text text-underline' : 'grey--text'"
-			@mouseenter="isHovered = true"
-			@mouseleave="isHovered = false"
-			@click="action"
-		>
-			<v-icon
-				:color="isHovered ? 'blue' : ''"
-				size="18"
-				class="mr-1"
-			>{{ subsection.type == 'file' ? 'mdi-file' : 'mdi-poll-box'}}</v-icon>
-			{{subsection.name}}
+	<div
+		class="d-flex flex-column flex px-5 py-3 justify-space-around"
+		:class="isHovered ? 'selected-item black--text ' : 'grey--text'"
+		@mouseenter="isHovered = true"
+		@mouseleave="isHovered = false"
+		style="cursor: default"
+	>
+		<div class="d-flex justify-space-between align-center">
+			<div class="align-center pointer" :class="isHovered? 'blue--text' : ''" @click="action">
+				<v-icon v-if="subsection.file" :color="isHovered ? 'blue' : ''" size="18" class="mr-1">{{ icon}}</v-icon>
+				{{subsection.name}}
+			</div>
+			<v-spacer></v-spacer>
+			<div
+				class="fs-6 font-italic t-primary"
+			>{{ moment(subsection.created_at).format("dddd, MMMM Do YYYY, [at] h:mm a") }}</div>
 		</div>
 		<div class="pl-5 mt-1" v-html="subsection.body"></div>
+		<!-- <div> </div> -->
 		<v-row justify="center">
 			<v-dialog v-model="dialog" width="600px">
 				<v-card>
@@ -162,6 +166,22 @@ export default {
 			];
 
 			return res;
+		},
+		icon() {
+			let res;
+			switch (this.subsection.file.type) {
+				case "application/pdf":
+					res = "mdi-file-pdf";
+					break;
+				case "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet":
+					res = "mdi-file-excel";
+					break;
+
+				default:
+					res = "mdi-poll-box";
+					break;
+			}
+			return res;
 		}
 	},
 	methods: {
@@ -212,3 +232,10 @@ export default {
 	}
 };
 </script>
+
+<style lang="scss" scoped>
+.selected-item {
+	border-left: 5px solid #607d8b !important;
+	// color: green;
+}
+</style>

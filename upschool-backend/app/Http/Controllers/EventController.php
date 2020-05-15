@@ -26,44 +26,29 @@ class EventController extends Controller
         ], 201);
     }
 
-    /**
-     * Show the form for creating a new resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
-    public function create()
-    {
-        //
-    }
-
-    /**
-     * Store a newly created resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @return \Illuminate\Http\Response
-     */
     public function store(Request $request)
     {
         //
     }
 
-    /**
-     * Display the specified resource.
-     *
-     * @param  \App\Event  $event
-     * @return \Illuminate\Http\Response
-     */
-    public function show(Event $event)
+    public function show(Event $event, $event_id)
     {
         //
+        $event = Event::with('eventable')->find($event_id);
+        if (!$event) {
+            return response()->json([
+                'status' => false,
+                'message' => 'event does not exist',
+                'data' => []
+            ], 201);
+        }
+        return response()->json([
+            'status' => true,
+            'message' => 'this is the event',
+            'data' => $event
+        ], 201);
     }
 
-    /**
-     * Show the form for editing the specified resource.
-     *
-     * @param  \App\Event  $event
-     * @return \Illuminate\Http\Response
-     */
     public function edit(Event $event)
     {
         //

@@ -4,7 +4,7 @@
 			<div class="d-flex justify-space-between my-5">
 				<div>Fee Management</div>
 				<div>
-					<v-btn depressed outline>APPLY FEE</v-btn>
+					<v-btn depressed outlined>APPLY FEE</v-btn>
 				</div>
 			</div>
 			<div>
@@ -33,6 +33,7 @@
 														append-icon="mdi-magnify"
 														label="Search"
 														single-line
+														outlined
 														hide-details
 													></v-text-field>
 												</v-col>

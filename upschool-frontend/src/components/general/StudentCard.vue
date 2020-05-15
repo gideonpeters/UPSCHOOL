@@ -9,14 +9,25 @@
 			<div class="d-flex flex-column align-center pb-5">
 				<div class="my-3">
 					<v-avatar height="130" width="130">
-						<v-img :src="student.profile_picture"></v-img>
+						<v-img :src="student.profile_picture">
+							<template v-slot:placeholder>
+								<v-row class="fill-height grey ma-0" align="center" justify="center">
+									<div
+										class="text-center fs-1 white--text text-bold"
+									>{{ student.user ? student.user.name[0] : "" }}</div>
+								</v-row>
+							</template>
+						</v-img>
 					</v-avatar>
 				</div>
 				<div
 					class="text-uppercase"
 				>{{`${student.first_name} ${student.middle_name} ${student.last_name}`}}</div>
 				<div class="pt-3 grey--text">#{{ student.matric_number }}</div>
-				<div class="py-3">{{student.program.name}} {{' / '}}{{student.program.department.name}}</div>
+				<div
+					class="py-3"
+					v-if="student.program"
+				>{{student.program.name}} {{' / '}}{{student.program.department.name}}</div>
 				<!-- <div class="pb-5 fs-4" v-if="!staff">{{student.residence}}/{{student.room_number}}</div> -->
 
 				<div class="py-5" v-if="isSuspended">

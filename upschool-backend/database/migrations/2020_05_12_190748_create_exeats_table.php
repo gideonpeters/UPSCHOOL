@@ -17,6 +17,8 @@ class CreateExeatsTable extends Migration
             $table->id();
             $table->string('exeat_id');
             $table->foreignId('exeat_type_id');
+            $table->foreignId('student_id');
+            $table->foreignId('semester_id');
             $table->string('status')->default('pending');
             $table->longText('reason');
             $table->dateTime('requested_departure');

@@ -240,6 +240,13 @@ Route::group([], function ($router) {
 });
 
 Route::group([], function ($router) {
+    Route::get('admin', 'AdminController@index');
+    Route::post('admin', 'AdminController@store');
+    Route::get('admin/{admin_id}', 'AdminController@show');
+    Route::post('admin/{admin_id}', 'AdminController@update');
+});
+
+Route::group([], function ($router) {
     Route::get('schedule', 'ScheduleItemController@show');
     // Route::post('event', 'EventController@store');
     // Route::get('event/{event_id}', 'EventController@show');
