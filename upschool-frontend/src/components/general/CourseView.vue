@@ -27,11 +27,6 @@
 
 <script>
 export default {
-	components: {
-		// SectionItem,
-		// MetricCard
-		// VueEditor
-	},
 	props: {
 		isStudent: {
 			type: Boolean,
@@ -70,19 +65,10 @@ export default {
 					tab: "GRADES",
 					route: "courses.view.grades"
 				}
-			],
-			attachSubsection: false,
-			showGradeList: false,
-			enrollActions: [
-				{ id: 1, title: "Student Enrollment", fn: () => {} },
-				{ id: 2, title: "Staff Enrollment", fn: () => {} }
 			]
 		};
 	},
-	computed: {},
 	methods: {
-		reserve() {},
-		openItem() {},
 		getRoute(route) {
 			let res;
 			if (this.isAdmin) {

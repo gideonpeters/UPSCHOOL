@@ -125,16 +125,7 @@ export default [
 		name: "parent.inbox",
 		component: () => import("./../views/parent/ParentInbox"),
 	},
-	{
-		path: "leave",
-		name: "parent.leave",
-		component: () => import("./../views/parent/ParentLeave"),
-	},
-	{
-		path: "leave/:id",
-		name: "parent.leave-details",
-		component: () => import("./../views/parent/ParentLeaveDetails"),
-	},
+
 	{
 		path: "residence",
 		name: "parent.residence",
@@ -245,8 +236,41 @@ export default [
 	},
 	{
 		path: "applications",
-		name: "parent.applications",
 		component: () => import("./../views/parent/ParentApplications"),
+		children: [
+			{
+				path: "leave",
+				name: "parent.leave.view",
+				component: () =>
+					import("./../views/parent/leave-view/ParentLeave"),
+			},
+			{
+				path: "leave/:id",
+				name: "parent.leave.details",
+				component: () =>
+					import("./../views/parent/leave-view/ParentLeaveDetails"),
+			},
+			{
+				path: "exeat",
+				name: "parent.exeat.view",
+				component: () =>
+					import("./../views/parent/exeat-view/ParentExeat"),
+			},
+			{
+				path: "exeat/:id",
+				name: "parent.exeat.details",
+				component: () =>
+					import("./../views/parent/exeat-view/ParentExeatDetails"),
+			},
+			{
+				path: "types",
+				name: "parent.applications.types",
+				component: () =>
+					import(
+						"./../views/parent/application-view/ParentApplicationTypes"
+					),
+			},
+		],
 	},
 	{
 		path: "news",

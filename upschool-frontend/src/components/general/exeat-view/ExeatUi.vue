@@ -1,204 +1,291 @@
 <template>
-	<div>
-		<v-container>
-			<div class="d-flex justify-space-between align-center">
-				<div class="my-5">Leave/Exeat Applications</div>
-				<div>
-					<v-btn @ color="blue accent-2 white--text" depressed>Apply for Leave</v-btn>
-				</div>
-			</div>
-			<v-row>
-				<v-col cols="4" v-if="isAdmin">
-					<v-card class="elevation-1 px-3 pa-3 pb-5">
-						<div class="d-flex flex-column align-center pb-5">
-							<div class="my-3">
-								<v-avatar height="130" width="130">
-									<v-img src="https://randomuser.me/api/portraits/men/85.jpg"></v-img>
-								</v-avatar>
-							</div>
-							<div>PETERS GIDEON OJOAJOGU</div>
-							<div class="py-3">15CJ02876</div>
-							<div class="pb-3">B.Eng. COMPUTER ENGINEERING/EIE</div>
-							<div class="pb-5">Daniel Hall/C302</div>
-						</div>
-					</v-card>
-				</v-col>
-
-				<v-col>
-					<v-expansion-panels multiple>
-						<v-expansion-panel v-for="(item, i) in 5" :key="i">
-							<v-expansion-panel-header>
-								<div class="font-weight-bold fs-3">
-									<v-icon
-										size="18"
-										class="mr-2"
-										:color="
-										i == 1
-											? 'blue accent-2'
-											: 'orange accent-2'
-									"
-									>mdi-circle-slice-8</v-icon>EXT2309202015CJ02876
-								</div>
-							</v-expansion-panel-header>
-							<v-expansion-panel-content>
-								<div class="mb-4 d-flex justify-space-between">
-									<div>
-										<div class="font-weight-bold fs-4">EXEAT TYPE</div>
-										<div>HOME EXEAT</div>
-									</div>
-									<div>
-										<v-icon color="grey">mdi-flag</v-icon>
-									</div>
-								</div>
-
-								<div class="mb-4">
-									<div class="font-weight-bold fs-4">DURATION</div>
-									<div>3 days</div>
-								</div>
-
-								<div class="mb-4">
-									<div class="font-weight-bold fs-4">STATUS</div>
-									<v-chip color="orange accent-2 mt-2">Pending</v-chip>
-								</div>
-
-								<div class="mb-4">
-									<div class="font-weight-bold fs-4">REASON</div>
-									<div>
-										Lorem ipsum dolor sit amet, consectetur
-										adipiscing elit, sed do eiusmod tempor
-										incididunt ut labore et dolore magna aliqua.
-										Ut enim ad minim veniam, quis nostrud
-										exercitation ullamco laboris nisi ut aliquip
-										ex ea commodo consequat.
-									</div>
-								</div>
-
-								<div class="mb-4">
-									<div class="font-weight-bold fs-4">PHONE NUMBER</div>
-									<div>+2347089324817</div>
-								</div>
-
-								<div class="mb-4">
-									<div class="font-weight-bold fs-4">GUARDIAN'S PHONE NUMBER</div>
-									<div>+2347089324817</div>
-									<div>+2348035050175</div>
-								</div>
-
-								<div class="mb-4">
-									<div class="font-weight-bold fs-4">REQUESTED DEPARTURE DATETIME</div>
-									<div>8:00 AM 22nd March, 2020</div>
-								</div>
-
-								<div class="mb-4">
-									<div class="font-weight-bold fs-4">DATE/TIME OF DEPARTURE</div>
-									<div>8:00 AM 22nd March, 2020</div>
-								</div>
-
-								<div class="mb-4">
-									<div class="font-weight-bold fs-4">DATE/TIME OF ARRIVAL</div>
-									<div>8:00 AM 25th March, 2020</div>
-								</div>
-
-								<div class="mb-4">
-									<div class="font-weight-bold fs-4">PROGRESS</div>
-									<div>
-										<v-progress-linear value="15"></v-progress-linear>
-									</div>
-								</div>
-
-								<div class="mb-4">
-									<div class="font-weight-bold fs-4">ATTACHMENTS</div>
-									<div>8:00 AM 25th March, 2020</div>
-								</div>
-
-								<div class="d-flex justify-end">
-									<v-dialog v-model="dialog2" persistent max-width="290">
-										<template v-slot:activator="{ on }">
-											<v-btn depressed outlined color="red accent-2" v-on="on">DECLINE</v-btn>
-											<!-- <v-btn color="primary" dark v-on="on">Open Dialog</v-btn> -->
-										</template>
-										<v-card>
-											<v-card-title class="headline">DECLINE LEAVE?</v-card-title>
-											<v-card-text>
-												Are you sure you are ready to
-												decline this exeat and that it meets
-												all the school's policies regarding
-												this.
-												<div class="mt-3">
-													<div class="fs-4 font-weight-bold">REMARKS</div>
-													<v-row>
-														<v-col cols="12">
-															<textarea outlined label="Outlined textarea" placeholder="Type here" name="remarks"></textarea>
-														</v-col>
-													</v-row>
-												</div>
-											</v-card-text>
-											<v-card-actions>
-												<v-spacer></v-spacer>
-												<v-btn color="green darken-1" text @click="dialog2 = false">Disagree</v-btn>
-												<v-btn color="green darken-1" text @click="dialog2 = false">Agree</v-btn>
-											</v-card-actions>
-										</v-card>
-									</v-dialog>
-									<v-dialog v-model="dialog" persistent max-width="290">
-										<template v-slot:activator="{ on }">
-											<v-btn depressed color="green accent-4" class="white--text ml-2" v-on="on">APPROVE</v-btn>
-											<!-- <v-btn color="primary" dark v-on="on">Open Dialog</v-btn> -->
-										</template>
-										<v-card>
-											<v-card-title class="headline">APPROVE LEAVE?</v-card-title>
-											<v-card-text>
-												Are you sure you are ready to
-												approve this exeat and that it meets
-												all the school's policies regarding
-												this.
-												<div class="mt-3">
-													<div class="fs-4 font-weight-bold">REMARKS</div>
-													<v-row>
-														<v-col cols="12">
-															<textarea outlined label="Outlined textarea" placeholder="Type here" name="remarks"></textarea>
-														</v-col>
-													</v-row>
-												</div>
-											</v-card-text>
-											<v-card-actions>
-												<v-spacer></v-spacer>
-												<v-btn color="green darken-1" text @click="dialog = false">Disagree</v-btn>
-												<v-btn color="green darken-1" text @click="dialog = false">Agree</v-btn>
-											</v-card-actions>
-										</v-card>
-									</v-dialog>
-								</div>
-							</v-expansion-panel-content>
-						</v-expansion-panel>
-					</v-expansion-panels>
-				</v-col>
-			</v-row>
-		</v-container>
-	</div>
+	<v-app>
+		<v-card flat>
+			<v-container>
+				<v-row>
+					<v-col cols="3">
+						<metric-card title="Number of pending applications" :value="14" />
+					</v-col>
+					<v-col cols="3">
+						<metric-card title="Number of due applications" :value="14" />
+					</v-col>
+					<v-col cols="3">
+						<metric-card title="Number of applications" :value="14" />
+					</v-col>
+					<v-col cols="12" sm="6" md="4">
+						<v-text-field
+							v-model="search"
+							append-icon="mdi-magnify"
+							label="Search"
+							single-line
+							flat
+							outlined
+							hide-details
+						></v-text-field>
+					</v-col>
+					<v-col cols="12">
+						<v-card class="mt-4 pa-3">
+							<v-subheader class="d-flex mb-4 mr-4">
+								<v-spacer></v-spacer>
+								<v-icon size="18">mdi-filter</v-icon>
+								<div>Filter</div>
+							</v-subheader>
+							<v-data-table
+								:headers="headers"
+								:items="exeats"
+								:search="search"
+								sort-by="calories"
+								@click:row="goToPage"
+								class="elevation-1"
+							>
+								<template v-slot:item.status="{ item }">
+									<v-chip
+										:color="getColor(item.status)"
+										small
+										dark
+										class="text-uppercase"
+									>{{ status(item.status) }}</v-chip>
+								</template>
+								<template v-slot:item.action="{ item }">
+									<v-icon small class="mr-2" @click="editItem(item)">mdi-pencil</v-icon>
+									<v-icon small @click="deleteItem(item)">mdi-delete</v-icon>
+								</template>
+								<template v-slot:no-data>
+									<v-btn color="primary" @click="initialize">Reset</v-btn>
+								</template>
+							</v-data-table>
+						</v-card>
+					</v-col>
+				</v-row>
+			</v-container>
+		</v-card>
+	</v-app>
 </template>
 
 <script>
+import MetricCard from "@/components/parent/Metric";
 export default {
-	props: {
-		isAdmin: {
-			type: Boolean,
-			default: false
-		},
-		isStudent: {
-			type: Boolean,
-			default: false
-		},
-		isStaff: {
-			type: Boolean,
-			default: false
-		}
+	components: {
+		MetricCard
 	},
 	data() {
 		return {
+			search: "",
 			dialog: false,
-			dialog2: false
+			headers: [
+				{
+					text: "Name",
+					align: "left",
+					sortable: false,
+					value: "name"
+				},
+				{ text: "Matriculation Number", value: "calories" },
+				{ text: "Type", value: "fat" },
+				{ text: "Duration", value: "duration" },
+				{ text: "Grade/Level", value: "protein" },
+				{ text: "Department", value: "carbs" },
+				{ text: "Status", value: "status" },
+				{ text: "Residence", value: "residence" },
+				{ text: "Actions", value: "action", sortable: false }
+			],
+			exeats: []
 		};
+	},
+	computed: {
+		formTitle() {
+			return this.editedIndex === -1 ? "New Item" : "Edit Item";
+		}
+	},
+
+	watch: {
+		dialog(val) {
+			val || this.close();
+		}
+	},
+
+	created() {
+		this.initialize();
+	},
+
+	methods: {
+		initialize() {
+			this.exeats = [
+				{
+					id: 1,
+					name: "Uzoatuegwu Petrina Chidera",
+					calories: "15CJ02889",
+					fat: "DAY EXEAT",
+					carbs: "EIE",
+					residence: "Dorcas Hall",
+					protein: 500,
+					duration: "1 day",
+					status: 1
+				},
+				{
+					id: 2,
+					name: "Shobande Josephine",
+					calories: "15CJ02873",
+					fat: "BANK EXEAT",
+					carbs: "EIE",
+					residence: "Dorcas Hall",
+					protein: 500,
+					duration: "15 hours",
+					status: 3
+				},
+				{
+					id: 3,
+					name: "Owolabi Ifeoluwa Anuoluwa",
+					calories: "15CJ02880",
+					fat: "HOME",
+					carbs: "CST",
+					residence: "Deborah Hall",
+					protein: 500,
+					duration: "3 DAYS",
+					status: 2
+				},
+				{
+					id: 4,
+					name: "Udochi Dikamsiyochi Young",
+					calories: "15CJ02885",
+					fat: "CUSTOM",
+					carbs: "CBSS",
+					residence: "Daniel Hall",
+					protein: 400,
+					duration: "2 WEEKS",
+					status: 2
+				},
+				{
+					id: 5,
+					name: "Williams Adedayo Adewale, a.",
+					calories: "15CJ02890",
+					fat: "HOME",
+					carbs: "CDLS",
+					residence: "Peter Hall",
+					protein: 300,
+					duration: "2 DAYS",
+					status: 1
+				},
+				{
+					id: 6,
+					name: "Paul Chukwuebuka Chimezie",
+					calories: "15CJ02875",
+					fat: "DAY",
+					carbs: "CEDS",
+					protein: 500,
+					residence: "Joseph Hall",
+					duration: "15 hours",
+					status: 1
+				},
+				{
+					id: 7,
+					name: "Okoye Emeka Elvis",
+					calories: "15CJ02857",
+					fat: "CUSTOM",
+					carbs: "COE",
+					protein: 200,
+					residence: "John Hall",
+					duration: "15 hours",
+					status: 3
+				},
+				{
+					id: 8,
+					name: "Olomo Rachael Ayobami",
+					calories: "14CJ016805",
+					fat: "CUSTOM",
+					carbs: 87,
+					protein: 500,
+					residence: "Dorcas Hall",
+					duration: "15 hours",
+					status: 1
+				},
+				{
+					id: 9,
+					name: "Olashore Oluwatoyosi ",
+					calories: "15CJ02861",
+					fat: "HOME",
+					carbs: "COE",
+					protein: 4.9,
+					residence: "Dorcas Hall",
+					duration: "15 hours",
+					status: 1
+				},
+				{
+					id: 10,
+					name: "Oguntolu Shalom Folayan",
+					calories: "15CJ02852",
+					fat: "DAY",
+					carbs: "CEDS",
+					protein: 7,
+					residence: "Paul Hall",
+					duration: "15 hours",
+					status: 3
+				}
+			];
+		},
+
+		editItem(item) {
+			this.editedIndex = this.desserts.indexOf(item);
+			this.editedItem = Object.assign({}, item);
+			this.dialog = true;
+		},
+
+		deleteItem(item) {
+			const index = this.desserts.indexOf(item);
+			confirm("Are you sure you want to delete this item?") &&
+				this.desserts.splice(index, 1);
+		},
+
+		goToPage(v) {
+			// console.log(v);
+			this.$router.push({
+				name: "parent.leave-details",
+				params: { id: v.id }
+			});
+		},
+
+		getColor(status) {
+			if (status == 1) return "green accent-3";
+			else if (status == 2) return "orange accent-2";
+			else if (status == 3) return "red accent-2";
+			else return "red";
+		},
+
+		status(v) {
+			let res;
+			switch (v) {
+				case 1:
+					res = "Approved";
+					break;
+				case 2:
+					res = "Pending";
+					break;
+				case 3:
+					res = "Unapproved";
+					break;
+				default:
+					res = "Unapproved";
+					break;
+			}
+
+			return res;
+		},
+
+		close() {
+			this.dialog = false;
+			setTimeout(() => {
+				this.editedItem = Object.assign({}, this.defaultItem);
+				this.editedIndex = -1;
+			}, 300);
+		},
+
+		save() {
+			if (this.editedIndex > -1) {
+				Object.assign(this.desserts[this.editedIndex], this.editedItem);
+			} else {
+				this.desserts.push(this.editedItem);
+			}
+			this.close();
+		}
 	}
 };
 </script>

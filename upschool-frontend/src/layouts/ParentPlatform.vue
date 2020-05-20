@@ -312,17 +312,17 @@ export default {
 					subItems: []
 				},
 				{
-					title: "Applications",
+					title: "Leave & Exeat Applications",
 					icon: "mdi-application",
-					route: "parent.applications",
+					route: "parent.exeat.view",
 					subItems: []
 				},
-				{
-					title: "Leave/Exeats",
-					icon: "mdi-cloud-question",
-					route: "parent.leave",
-					subItems: []
-				},
+				// {
+				// 	title: "Leave/Exeats",
+				// 	icon: "mdi-cloud-question",
+				// 	route: "parent.leave",
+				// 	subItems: []
+				// },
 				{
 					title: "Help Center",
 					icon: "mdi-help",

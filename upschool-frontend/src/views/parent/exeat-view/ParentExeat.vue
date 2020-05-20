@@ -9,9 +9,6 @@ import ExeatUi from "@/components/general/exeat-view/ExeatUi";
 export default {
 	components: {
 		ExeatUi
-	},
-	data() {
-		return {};
 	}
 };
 </script>

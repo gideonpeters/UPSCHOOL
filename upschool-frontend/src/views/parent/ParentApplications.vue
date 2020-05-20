@@ -1,5 +1,14 @@
 <template>
 	<v-app>
-		<h1>Applications</h1>
+		<application-view isAdmin />
 	</v-app>
 </template>
+
+<script>
+import ApplicationView from "@/components/general/application-view/ApplicationView";
+export default {
+	components: {
+		ApplicationView,
+	},
+};
+</script>

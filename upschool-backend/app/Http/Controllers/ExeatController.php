@@ -4,9 +4,10 @@ namespace App\Http\Controllers;
 
 use App\File;
 use App\Exeat;
-use App\ExeatType;
-use App\Semester;
 use App\Student;
+use App\Semester;
+use App\ExeatType;
+use Carbon\Carbon;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Storage;
 
@@ -59,7 +60,7 @@ class ExeatController extends Controller
 
         $exeat = new Exeat();
         $exeat->exeat_type_id = $exeat_type->id;
-        $exeat->exeat_id = "EXT$student->matric_number";
+        $exeat->exeat_id = "EXT" . Carbon::now()->format('Ymd') . $student->matric_number;
         $exeat->student_id = $student->id;
         $exeat->semester_id = $semester->id;
         $exeat->reason = $request->reason;
@@ -96,35 +97,11 @@ class ExeatController extends Controller
         //
     }
 
-    /**
-     * Show the form for editing the specified resource.
-     *
-     * @param  \App\Exeat  $exeat
-     * @return \Illuminate\Http\Response
-     */
-    public function edit(Exeat $exeat)
-    {
-        //
-    }
-
-    /**
-     * Update the specified resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @param  \App\Exeat  $exeat
-     * @return \Illuminate\Http\Response
-     */
     public function update(Request $request, Exeat $exeat)
     {
         //
     }
 
-    /**
-     * Remove the specified resource from storage.
-     *
-     * @param  \App\Exeat  $exeat
-     * @return \Illuminate\Http\Response
-     */
     public function destroy(Exeat $exeat)
     {
         //

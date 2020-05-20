@@ -1,108 +1,96 @@
 <template>
 	<v-app>
-		<div>
-			<div class="my-5">Leave/Exeat Applications</div>
-
-			<v-card flat class="pa-3">
-				<v-tabs v-model="tab" background-color="transparent">
-					<v-tab v-for="item in items" :key="item.id">{{ item.tab }}</v-tab>
-				</v-tabs>
-
-				<v-tabs-items v-model="tab">
-					<v-tab-item v-for="(item, ix) in items" :key="ix">
-						<v-row>
-							<v-col cols="12" sm="6" md="6">
-								<v-text-field
-									v-model="search"
-									append-icon="mdi-magnify"
-									label="Search"
-									single-line
-									hide-details
-								></v-text-field>
-							</v-col>
-							<v-col cols="12">
-								<v-card class="mt-4 pa-3">
-									<v-subheader class="d-flex mb-4 mr-4">
-										<v-spacer></v-spacer>
-										<v-icon size="18">mdi-filter</v-icon>
-										<div>Filter</div>
-									</v-subheader>
-									<!-- <v-card-title>
-									</v-card-title>-->
-									<v-data-table
-										:headers="headers"
-										:items="desserts"
-										:search="search"
-										sort-by="calories"
-										@click:row="goToPage"
-										class="elevation-1"
-									>
-										<template v-slot:item.status="{ item }">
-											<v-chip :color="getColor(item.status)" dark>{{ status(item.status) }}</v-chip>
-										</template>
-										<template v-slot:item.action="{ item }">
-											<v-icon small class="mr-2" @click="editItem(item)">mdi-pencil</v-icon>
-											<v-icon small @click="deleteItem(item)">mdi-delete</v-icon>
-										</template>
-										<template v-slot:no-data>
-											<v-btn color="primary" @click="initialize">Reset</v-btn>
-										</template>
-									</v-data-table>
-								</v-card>
-							</v-col>
-						</v-row>
-					</v-tab-item>
-				</v-tabs-items>
-			</v-card>
-		</div>
+		<v-card flat>
+			<v-container>
+				<v-row>
+					<v-col cols="3">
+						<metric-card title="Number of pending applications" :value="14" />
+					</v-col>
+					<v-col cols="3">
+						<metric-card title="Number of due applications" :value="14" />
+					</v-col>
+					<v-col cols="3">
+						<metric-card title="Number of applications" :value="14" />
+					</v-col>
+					<v-col cols="12" sm="6" md="4">
+						<v-text-field
+							v-model="search"
+							append-icon="mdi-magnify"
+							label="Search"
+							single-line
+							flat
+							outlined
+							hide-details
+						></v-text-field>
+					</v-col>
+					<v-col cols="12">
+						<v-card class="mt-4 pa-3">
+							<v-subheader class="d-flex mb-4 mr-4">
+								<v-spacer></v-spacer>
+								<v-icon size="18">mdi-filter</v-icon>
+								<div>Filter</div>
+							</v-subheader>
+							<v-data-table
+								:headers="headers"
+								:items="leaves"
+								:search="search"
+								sort-by="calories"
+								@click:row="goToPage"
+								class="elevation-1"
+							>
+								<template v-slot:item.status="{ item }">
+									<v-chip
+										:color="getColor(item.status)"
+										small
+										dark
+										class="text-uppercase"
+									>{{ status(item.status) }}</v-chip>
+								</template>
+								<template v-slot:item.action="{ item }">
+									<v-icon small class="mr-2" @click="editItem(item)">mdi-pencil</v-icon>
+									<v-icon small @click="deleteItem(item)">mdi-delete</v-icon>
+								</template>
+								<template v-slot:no-data>
+									<v-btn color="primary" @click="initialize">Reset</v-btn>
+								</template>
+							</v-data-table>
+						</v-card>
+					</v-col>
+				</v-row>
+			</v-container>
+		</v-card>
 	</v-app>
 </template>
 
 <script>
+import MetricCard from "@/components/parent/Metric";
 export default {
-	data: () => ({
-		search: "",
-		tab: null,
-		items: [
-			{ id: 1, tab: "EXEAT APPLICATIONS" },
-			{ id: 2, tab: "LEAVE APPLICATIONS" },
-			{ id: 3, tab: "SETTINGS" }
-		],
-		dialog: false,
-		headers: [
-			{
-				text: "Name",
-				align: "left",
-				sortable: false,
-				value: "name"
-			},
-			{ text: "Matriculation Number", value: "calories" },
-			{ text: "Type", value: "fat" },
-			{ text: "Duration", value: "duration" },
-			{ text: "Grade/Level", value: "protein" },
-			{ text: "Department", value: "carbs" },
-			{ text: "Status", value: "status" },
-			{ text: "Residence", value: "residence" },
-			{ text: "Actions", value: "action", sortable: false }
-		],
-		desserts: [],
-		editedIndex: -1,
-		editedItem: {
-			name: "",
-			calories: 0,
-			fat: 0,
-			carbs: 0,
-			protein: 0
-		},
-		defaultItem: {
-			name: "",
-			calories: 0,
-			fat: 0,
-			carbs: 0,
-			protein: 0
-		}
-	}),
-
+	components: {
+		MetricCard
+	},
+	data() {
+		return {
+			search: "",
+			dialog: false,
+			headers: [
+				{
+					text: "Name",
+					align: "left",
+					sortable: false,
+					value: "name"
+				},
+				{ text: "Matriculation Number", value: "calories" },
+				{ text: "Type", value: "fat" },
+				{ text: "Duration", value: "duration" },
+				{ text: "Grade/Level", value: "protein" },
+				{ text: "Department", value: "carbs" },
+				{ text: "Status", value: "status" },
+				{ text: "Residence", value: "residence" },
+				{ text: "Actions", value: "action", sortable: false }
+			],
+			leaves: []
+		};
+	},
 	computed: {
 		formTitle() {
 			return this.editedIndex === -1 ? "New Item" : "Edit Item";
@@ -121,7 +109,7 @@ export default {
 
 	methods: {
 		initialize() {
-			this.desserts = [
+			this.leaves = [
 				{
 					id: 1,
 					name: "Uzoatuegwu Petrina Chidera",
