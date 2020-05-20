@@ -9,15 +9,19 @@
 								<custom-header title="FEATURED POST" ctaText="View" route="student.news"></custom-header>
 
 								<v-img
-									:src="
-										`http://127.0.0.1:8000${latestNews.image.url}`
+									:src="latestNews?
+										`http://127.0.0.1:8000${latestNews.image.url}`: ''
 									"
 									class="white--text align-end"
 									gradient="to bottom, rgba(0,0,0,.1), rgba(0,0,0,.8)"
 									height="200px"
 								>
-									<v-card-title class="py-0" v-text="latestNews.title"></v-card-title>
-									<v-card-title class="fs-4 py-0" v-html="latestNews.body" v-line-clamp:20="1"></v-card-title>
+									<v-card-title class="py-0" v-text="latestNews? latestNews.title: ''"></v-card-title>
+									<v-card-title
+										class="fs-4 py-0"
+										v-html="latestNews ? latestNews.body :''"
+										v-line-clamp:20="1"
+									></v-card-title>
 									<v-card-actions class="py-0">
 										<v-spacer></v-spacer>
 

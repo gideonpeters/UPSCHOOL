@@ -3,10 +3,7 @@
 		<v-container>
 			<v-row>
 				<v-col cols="3">
-					<metric-card
-						title="Number of Rooms"
-						:value="rooms.length"
-					/>
+					<metric-card title="Number of Rooms" :value="rooms.length" />
 				</v-col>
 				<v-col cols="3">
 					<metric-card
@@ -19,32 +16,16 @@
 				<v-col cols="12">
 					<div class="d-flex">
 						<v-spacer></v-spacer>
-						<v-btn
-							@click="dialogFull = true"
-							depressed
-							color="primary"
-							>CREATE NEW ROOM</v-btn
-						>
+						<v-btn @click="dialogFull = true" depressed color="primary">CREATE NEW ROOM</v-btn>
 					</div>
 					<div class>
-						<v-dialog
-							v-model="dialogFull"
-							fullscreen
-							hide-overlay
-							transition="dialog-bottom-transition"
-						>
+						<v-dialog v-model="dialogFull" fullscreen hide-overlay transition="dialog-bottom-transition">
 							<v-card>
 								<v-toolbar dark color="primary">
-									<v-btn
-										icon
-										dark
-										@click="dialogFull = false"
-									>
+									<v-btn icon dark @click="dialogFull = false">
 										<v-icon>mdi-close</v-icon>
 									</v-btn>
-									<v-toolbar-title
-										>CREATE ROOM(S)</v-toolbar-title
-									>
+									<v-toolbar-title>CREATE ROOM(S)</v-toolbar-title>
 									<v-spacer></v-spacer>
 									<v-toolbar-items>
 										<v-btn
@@ -57,33 +38,22 @@
 													: null
 											"
 											@click="saveBulk"
-											>Save</v-btn
-										>
+										>Save</v-btn>
 									</v-toolbar-items>
 								</v-toolbar>
 
 								<v-container>
-									<v-checkbox
-										label="Bulk Addition"
-										v-model="isBulk"
-									></v-checkbox>
+									<v-checkbox label="Bulk Addition" v-model="isBulk"></v-checkbox>
 								</v-container>
 
 								<v-list three-line subheader v-if="!isBulk">
 									<v-list-item>
 										<v-list-item-content>
 											<v-container>
-												<v-list-item-title>
-													Create Room
-												</v-list-item-title>
+												<v-list-item-title>Create Room</v-list-item-title>
 												<v-row align="center">
 													<v-col cols="6">
-														<v-text-field
-															outlined
-															v-model="roomId"
-															hint="e.g. F201"
-															label="Room ID*"
-														></v-text-field>
+														<v-text-field outlined v-model="roomId" hint="e.g. F201" label="Room ID*"></v-text-field>
 													</v-col>
 													<v-col cols="6">
 														<v-select
@@ -126,19 +96,10 @@
 														></v-text-field>
 													</v-col>
 													<v-col cols="6">
-														<v-text-field
-															v-model="roomWing"
-															hint="Name of wing or block"
-															outlined
-															label="Wing*"
-														></v-text-field>
+														<v-text-field v-model="roomWing" hint="Name of wing or block" outlined label="Wing*"></v-text-field>
 													</v-col>
 
-													<v-col
-														class="d-flex"
-														cols="12"
-														sm="6"
-													>
+													<v-col class="d-flex" cols="12" sm="6">
 														<v-select
 															multiple
 															clearable
@@ -154,11 +115,7 @@
 															outlined
 														></v-select>
 													</v-col>
-													<v-col
-														class="d-flex"
-														cols="12"
-														sm="6"
-													>
+													<v-col class="d-flex" cols="12" sm="6">
 														<v-select
 															multiple
 															clearable
@@ -177,11 +134,7 @@
 															outlined
 														></v-select>
 													</v-col>
-													<v-col
-														class="d-flex"
-														cols="12"
-														sm="6"
-													>
+													<v-col class="d-flex" cols="12" sm="6">
 														<v-select
 															multiple
 															clearable
@@ -202,11 +155,7 @@
 															outlined
 														></v-select>
 													</v-col>
-													<v-col
-														class="d-flex"
-														cols="12"
-														sm="6"
-													>
+													<v-col class="d-flex" cols="12" sm="6">
 														<v-select
 															multiple
 															clearable
@@ -224,11 +173,7 @@
 															outlined
 														></v-select>
 													</v-col>
-													<v-col
-														class="d-flex"
-														cols="12"
-														sm="6"
-													>
+													<v-col class="d-flex" cols="12" sm="6">
 														<v-select
 															multiple
 															clearable
@@ -254,8 +199,7 @@
 																"
 																color="success"
 																depressed
-																>SAVE</v-btn
-															>
+															>SAVE</v-btn>
 														</div>
 													</v-col>
 												</v-row>
@@ -267,12 +211,10 @@
 									<v-list-item>
 										<v-list-item-content>
 											<v-container>
-												<v-list-item-title>
-													Add Halls (Bulk)
-												</v-list-item-title>
+												<v-list-item-title>Add Halls (Bulk)</v-list-item-title>
 												<v-row>
 													<!-- <v-col cols="12">
-														</v-col> -->
+													</v-col>-->
 													<v-col cols="12" md="6">
 														<v-btn
 															class="my-5"
@@ -283,9 +225,7 @@
 															@click="
 																downloadFormat
 															"
-														>
-															Download format
-														</v-btn>
+														>Download format</v-btn>
 														<v-file-input
 															persistent-hint
 															hint="make sure to download template before uploading file and upload with headers from template still present and unchanged in position"
@@ -307,25 +247,17 @@
 															>
 																The Available
 																Room Types are :
-																<ul
-																	class="pt-2"
-																>
-																	<li
-																		v-for="it in roomTypes"
-																		:key="
+																<ul class="pt-2">
+																	<li v-for="it in roomTypes" :key="
 																			it.id
-																		"
-																	>
+																		">
 																		{{
-																			it.name
+																		it.name
 																		}}
 																	</li>
 																</ul>
 															</div>
-															<div
-																class="fs-4 mt-5"
-																v-else
-															>
+															<div class="fs-4 mt-5" v-else>
 																You have no room
 																types specified;
 																kindly leave
@@ -344,25 +276,17 @@
 															>
 																The Available
 																Halls are :
-																<ul
-																	class="pt-2"
-																>
-																	<li
-																		v-for="it in halls"
-																		:key="
+																<ul class="pt-2">
+																	<li v-for="it in halls" :key="
 																			it.id
-																		"
-																	>
+																		">
 																		{{
-																			it.name
+																		it.name
 																		}}
 																	</li>
 																</ul>
 															</div>
-															<div
-																class="fs-4 mt-5"
-																v-else
-															>
+															<div class="fs-4 mt-5" v-else>
 																You have no
 																halls specified;
 																kindly provide a
@@ -376,12 +300,8 @@
 															The required fields
 															are:
 															<ul class="mt-2">
-																<li>
-																	Room ID
-																</li>
-																<li>
-																	Capacity
-																</li>
+																<li>Room ID</li>
+																<li>Capacity</li>
 																<li>Hall</li>
 															</ul>
 														</div>
@@ -494,19 +414,9 @@
 															</ul>
 														</div>
 													</v-col>
-													<v-col
-														cols="12"
-														md="12"
-														v-if="dummy.length > 0"
-													>
-														<v-card
-															flat
-															class="pa-3"
-														>
-															<v-subheader
-																class="pa-0"
-																>PREVIEW</v-subheader
-															>
+													<v-col cols="12" md="12" v-if="dummy.length > 0">
+														<v-card flat class="pa-3">
+															<v-subheader class="pa-0">PREVIEW</v-subheader>
 															<v-data-table
 																:headers="
 																	bulkHeaders
@@ -530,16 +440,17 @@
 							<template v-slot:item.status="{ item: { status } }">
 								<v-chip
 									small
-									class=" white--text"
+									class="white--text"
 									:color="
-										status
-											? 'green accent-2'
+										!status
+											? 'green accent-3'
 											: ' red accent-2'
 									"
-									>{{
-										!status ? "Unavailable" : "Available"
-									}}</v-chip
 								>
+									{{
+									!status ? "Available" : "Unavailable"
+									}}
+								</v-chip>
 							</template>
 							<template v-slot:item.actions="{ item }">
 								<div class="d-flex align-center justify-center">
@@ -591,18 +502,8 @@
 						</v-card-text>
 						<v-card-actions>
 							<v-spacer></v-spacer>
-							<v-btn
-								color="blue darken-1"
-								text
-								@click="dialogDelete = false"
-								>Cancel</v-btn
-							>
-							<v-btn
-								color="blue darken-1"
-								text
-								@click="deleteRoom(selectedRoom.id)"
-								>Proceed</v-btn
-							>
+							<v-btn color="blue darken-1" text @click="dialogDelete = false">Cancel</v-btn>
+							<v-btn color="blue darken-1" text @click="deleteRoom(selectedRoom.id)">Proceed</v-btn>
 						</v-card-actions>
 					</v-card>
 				</v-dialog>
@@ -619,7 +520,7 @@ import { saveAs } from "file-saver";
 
 export default {
 	components: {
-		MetricCard,
+		MetricCard
 	},
 	data() {
 		return {
@@ -649,13 +550,13 @@ export default {
 				{ text: "PREFERRED PROGRAM(S)", value: "preferred_program" },
 				{
 					text: "PREFERRED NATIONALITIES",
-					value: "preferred_nationality",
+					value: "preferred_nationality"
 				},
 				{
 					text: "PREFERRED STUDENT TYPE(S)",
-					value: "preferred_student_type",
+					value: "preferred_student_type"
 				},
-				{ text: "PREFERRED LEVEL(S)", value: "preferred_level" },
+				{ text: "PREFERRED LEVEL(S)", value: "preferred_level" }
 			],
 			headers: [
 				{ text: "ROOM ID", value: "room_id", sortable: true },
@@ -665,21 +566,21 @@ export default {
 					text: "CAPACITY",
 					value: "capacity",
 					sortable: true,
-					align: "center",
+					align: "center"
 				},
 				{
 					text: "STATUS",
 					value: "status",
 					sortable: true,
-					align: "center",
+					align: "center"
 				},
 				{ text: "OCCUPANTS", value: "occupants_count", sortable: true },
 				{
 					text: "ACTIONS",
 					value: "actions",
 					sortable: true,
-					align: "center",
-				},
+					align: "center"
+				}
 			],
 			items: [
 				{
@@ -687,7 +588,7 @@ export default {
 					room_id: "A100",
 					wing: {
 						id: 1,
-						name: "A WING",
+						name: "A WING"
 					},
 					capacity: 4,
 					status: "Available",
@@ -696,28 +597,28 @@ export default {
 					hall: {
 						id: 1,
 						name: "Esther Hall",
-						sex: "female",
+						sex: "female"
 					},
-					sex: "female",
+					sex: "female"
 				},
 				{
 					id: 2,
 					room_id: "B100",
 					wing: {
 						id: 1,
-						name: "B WING",
+						name: "B WING"
 					},
 					hall: {
 						id: 1,
 						name: "Daniel Hall",
-						sex: "male",
+						sex: "male"
 					},
 					capacity: 4,
 					status: "Available",
 					room_type: "Standard",
 					occupants: 1,
-					sex: "male",
-				},
+					sex: "male"
+				}
 			],
 			rooms: [],
 			dummy: [],
@@ -725,7 +626,7 @@ export default {
 			halls: [],
 			hall: "",
 			file: [],
-			bulkFile: "",
+			bulkFile: ""
 		};
 	},
 	computed: {
@@ -742,10 +643,10 @@ export default {
 					preferred_program: "",
 					preferred_nationality: "",
 					preferred_student_type: "",
-					preferred_level: "",
-				},
+					preferred_level: ""
+				}
 			];
-		},
+		}
 	},
 	methods: {
 		goToPage(routeName, id) {
@@ -756,10 +657,10 @@ export default {
 				var reader = new FileReader();
 
 				reader.readAsText(ent);
-				reader.onload = async (evt) => {
+				reader.onload = async evt => {
 					this.dummy = await Papa.parse(evt.target.result, {
 						header: true,
-						skipEmptyLines: true,
+						skipEmptyLines: true
 					}).data;
 					// console.log(this.dummy);
 				};
@@ -770,12 +671,12 @@ export default {
 			let res = null;
 
 			if (type == "hall") {
-				res = this.halls.find((item) => {
+				res = this.halls.find(item => {
 					let hallName = item.name.trim().toLowerCase();
 					return name == hallName;
 				});
 			} else if (type == "room-type") {
-				res = this.roomTypes.find((item) => {
+				res = this.roomTypes.find(item => {
 					let hallName = item.name.trim().toLowerCase();
 					return name == hallName;
 				});
@@ -787,7 +688,7 @@ export default {
 			try {
 				// console.log(this.findItem("danieel hall ", "hall"));
 				if (this.dummy.length > 0) {
-					let items = this.dummy.map((item) => ({
+					let items = this.dummy.map(item => ({
 						// ...item,
 						room_id: item.room_id,
 						description: item.description,
@@ -815,11 +716,11 @@ export default {
 							: null,
 						preferred_level: item.preferred_level
 							? JSON.stringify(item.preferred_level.split(","))
-							: null,
+							: null
 					}));
 
 					let res = await Axios.post("room-bulk", {
-						data: JSON.stringify(items),
+						data: JSON.stringify(items)
 					});
 					console.log(res.data);
 					this.$store.commit("openSnackbar", res.data.message);
@@ -847,7 +748,7 @@ export default {
 			var csv = await Papa.unparse(this.csvData);
 
 			var csvData = new File([csv], "room_template.csv", {
-				type: "text/csv;charset=utf-8",
+				type: "text/csv;charset=utf-8"
 			});
 
 			saveAs(csvData);
@@ -885,7 +786,7 @@ export default {
 						: null,
 					preferred_level: this.roomLevel
 						? JSON.stringify(this.roomLevel)
-						: null,
+						: null
 				};
 				// console.log(body);
 				let res = await Axios.post("room", body);
@@ -929,7 +830,7 @@ export default {
 			} catch (error) {
 				console.log(error);
 			}
-		},
+		}
 	},
 	async mounted() {
 		try {
@@ -939,6 +840,6 @@ export default {
 		} catch (error) {
 			console.log(error);
 		}
-	},
+	}
 };
 </script>

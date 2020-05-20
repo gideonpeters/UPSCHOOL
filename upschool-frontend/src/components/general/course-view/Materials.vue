@@ -302,13 +302,9 @@
 							<div class="px-2"></div>
 							<div class="fs-5 font-weight-light">Updated {{ moment(section.updated_at).fromNow() }}</div>
 						</div>
-						<!-- <v-divider></v-divider> -->
 					</v-expansion-panel-content>
 				</v-expansion-panel>
 			</v-expansion-panels>
-			<div class="mt-2 border-dashed pb-2">
-				<div></div>
-			</div>
 		</v-card>
 	</div>
 </template>
