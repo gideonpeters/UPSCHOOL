@@ -3,6 +3,7 @@
 namespace App;
 
 use App\Event;
+use App\Exeat;
 use App\Course;
 use App\Result;
 use App\Gradelist;
@@ -62,5 +63,10 @@ class Semester extends Model
     public function courses()
     {
         return $this->hasMany(Course::class);
+    }
+
+    public function exeats()
+    {
+        return $this->hasMany(Exeat::class);
     }
 }

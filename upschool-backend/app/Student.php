@@ -5,6 +5,7 @@ namespace App;
 use App\File;
 use App\Room;
 use App\User;
+use App\Exeat;
 use App\Course;
 use App\Option;
 use App\Result;
@@ -99,6 +100,11 @@ class Student extends Model
     public function results()
     {
         return $this->hasMany(Result::class);
+    }
+
+    public function exeats()
+    {
+        return $this->hasMany(Exeat::class);
     }
 
     // public function option()

@@ -33,7 +33,7 @@ class ExeatController extends Controller
         return response()->json([
             'status' => true,
             'message' => 'These are all the exeats',
-            'data' => $exeats
+            'data' => $exeats->load('student')
         ], 201);
     }
 
