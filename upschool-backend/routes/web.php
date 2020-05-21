@@ -1,5 +1,6 @@
 <?php
 
+use Carbon\Carbon;
 use Illuminate\Support\Facades\Broadcast;
 use Illuminate\Support\Facades\Route;
 
@@ -19,4 +20,5 @@ use Illuminate\Support\Facades\Route;
 // ]);
 Route::get('/', function () {
     return view('welcome');
+    // dd(Carbon::parse('2020-05-20T03:15:00')->addCenturies(3));
 });

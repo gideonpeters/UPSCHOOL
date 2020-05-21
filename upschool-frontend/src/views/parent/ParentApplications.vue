@@ -8,7 +8,7 @@
 import ApplicationView from "@/components/general/application-view/ApplicationView";
 export default {
 	components: {
-		ApplicationView,
-	},
+		ApplicationView
+	}
 };
 </script>

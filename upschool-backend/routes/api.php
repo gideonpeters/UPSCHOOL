@@ -334,3 +334,11 @@ Route::group([], function ($router) {
     Route::get('conversation', 'ConversationController@index');
     Route::post('messages', 'MessageController@store');
 });
+
+Route::group([], function ($router) {
+    Route::get('exeat', 'ExeatController@index');
+    Route::post('exeat', 'ExeatController@store');
+
+    Route::get('exeat-type', 'ExeatTypeController@index');
+    Route::post('exeat-type', 'ExeatTypeController@store');
+});

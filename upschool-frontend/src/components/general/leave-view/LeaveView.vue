@@ -1,5 +1,5 @@
 <template>
-	<div>
+	<v-card flat min-height="800px">
 		<v-container>
 			<div class="d-flex justify-space-between align-center">
 				<div class="d-flex align-center">
@@ -180,7 +180,7 @@
 				</v-col>
 			</v-row>
 		</v-container>
-	</div>
+	</v-card>
 </template>
 
 <script>

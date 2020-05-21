@@ -13,10 +13,22 @@ use Illuminate\Support\Facades\Storage;
 
 class ExeatController extends Controller
 {
-    public function index()
+    public function index(Request $request)
     {
         //
         $exeats = Exeat::all();
+        if ($request->has('student_id')) {
+            $student = Student::find($request->student_id);
+
+            if (!$student) {
+                return response()->json([
+                    'status' => false,
+                    'message' => 'student does not exist',
+                    'data' => []
+                ], 201);
+            }
+            $exeats = Exeat::whereStudentId($student->id)->get();
+        }
 
         return response()->json([
             'status' => true,
@@ -65,7 +77,15 @@ class ExeatController extends Controller
         $exeat->semester_id = $semester->id;
         $exeat->reason = $request->reason;
         $exeat->requested_departure = $request->requested_departure;
-        $exeat->expected_arrival = $request->expected_arrival;
+        if ($exeat_type->metric == 'hours') {
+            $exeat->expected_arrival = Carbon::parse($request->requested_departure)->addHours($exeat_type->duration);
+        } else if ($exeat_type->metric == 'days') {
+            $exeat->expected_arrival = Carbon::parse($request->requested_departure)->addDays($exeat_type->duration);
+        } else if ($exeat_type->metric == 'weeks') {
+            $exeat->expected_arrival = Carbon::parse($request->requested_departure)->addWeeks($exeat_type->duration);
+        } else if ($exeat_type->metric == 'months') {
+            $exeat->expected_arrival = Carbon::parse($request->requested_departure)->addMonths($exeat_type->duration);
+        }
         $exeat->save();
 
         if ($request->hasFile('file')) {

@@ -26,7 +26,7 @@ class ExeatTypeController extends Controller
         $exeat_type->name = $request->name;
         $exeat_type->description = $request->description;
         $exeat_type->metric = $request->metric;
-        $exeat_type->number_of_metric = $request->number_of_metric;
+        $exeat_type->duration = $request->duration;
 
         $exeat_type->save();
 

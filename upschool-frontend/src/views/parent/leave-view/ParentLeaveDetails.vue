@@ -1,15 +1,16 @@
 <template>
 	<v-app>
-		<leave-ui isAdmin />
+		<leave-view isAdmin />
 	</v-app>
 </template>
 
 <script>
 // import ExeatUi from "@/components/general/exeat-view/ExeatUi";
-import LeaveUi from "@/components/general/leave-view/LeaveUi";
+import LeaveView from "@/components/general/leave-view/LeaveView";
+
 export default {
 	components: {
-		LeaveUi
+		LeaveView
 	},
 	data() {
 		return {};

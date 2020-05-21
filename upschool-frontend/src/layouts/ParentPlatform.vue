@@ -68,22 +68,6 @@
 					</v-list-item>
 				</div>
 			</v-list>
-
-			<!-- <v-footer absolute class="font-weight-medium">
-				<v-col class="text-center" cols="12">
-					<v-list dense>
-						<v-list-item link>
-							<v-list-item-icon>
-								<v-icon>mdi-message</v-icon>
-							</v-list-item-icon>
-
-							<v-list-item-content>
-								<v-list-item-title>Send us a message</v-list-item-title>
-							</v-list-item-content>
-						</v-list-item>
-					</v-list>
-				</v-col>
-			</v-footer>-->
 		</v-navigation-drawer>
 		<v-app-bar color="white" app>
 			<!-- <v-app-bar-nav-icon @click.stop="mini = !mini"></v-app-bar-nav-icon> -->

@@ -1,5 +1,5 @@
 <template>
-	<div>
+	<v-card flat min-height="800px">
 		<v-container>
 			<div class="d-flex justify-space-between align-center">
 				<div class="d-flex align-center">
@@ -8,9 +8,105 @@
 					</v-btn>
 					<div class>Exeat Applications</div>
 				</div>
-				<div>
-					<v-btn @ color="blue accent-2 white--text" depressed>Apply for Exeat</v-btn>
-				</div>
+				<v-dialog v-model="dialog3" persistent max-width="600px">
+					<template v-slot:activator="{ on }">
+						<v-btn color="primary" small dark depressed v-on="on">APPLY FOR EXEAT</v-btn>
+					</template>
+					<v-card>
+						<v-card-title>
+							<span class="headline">APPLY FOR EXEAT</span>
+						</v-card-title>
+						<v-card-text>
+							<v-container>
+								<v-row>
+									<v-col cols="12">
+										<v-select v-model="selectedExeatType" outlined label="Select Type*" :items="exeatTypes"></v-select>
+									</v-col>
+									<v-col cols="12">
+										<v-textarea v-model="reason" outlined rows="10" label="Reason"></v-textarea>
+									</v-col>
+									<v-col cols="11" sm="6">
+										<v-menu
+											ref="menuDepartureTime"
+											v-model="menuDepartureTime"
+											:close-on-content-click="false"
+											:nudge-right="40"
+											:return-value.sync="departureTime"
+											transition="scale-transition"
+											offset-y
+											max-width="290px"
+											min-width="290px"
+										>
+											<template v-slot:activator="{ on }">
+												<v-text-field
+													outlined
+													v-model="departureTime"
+													label="Departure Time*"
+													prepend-inner-icon="mdi-clock"
+													readonly
+													v-on="on"
+												></v-text-field>
+											</template>
+											<v-time-picker
+												v-if="menuDepartureTime"
+												v-model="departureTime"
+												full-width
+												@click:minute="$refs.menuDepartureTime.save(departureTime)"
+											></v-time-picker>
+										</v-menu>
+									</v-col>
+									<v-col cols="12" sm="6" md="6">
+										<v-dialog
+											ref="dialogDepartureDate"
+											v-model="modalDepartureDate"
+											:return-value.sync="departureDate"
+											persistent
+											width="290px"
+										>
+											<template v-slot:activator="{ on }">
+												<v-text-field
+													outlined
+													v-model="departureDate"
+													label="Departure Date*"
+													prepend-inner-icon="mdi-calendar"
+													readonly
+													v-on="on"
+												></v-text-field>
+											</template>
+											<v-date-picker v-model="departureDate" scrollable>
+												<v-spacer></v-spacer>
+												<v-btn text color="primary" @click="modalDepartureDate = false">Cancel</v-btn>
+												<v-btn text color="primary" @click="$refs.dialogDepartureDate.save(departureDate)">OK</v-btn>
+											</v-date-picker>
+										</v-dialog>
+									</v-col>
+									<v-col cols="12">
+										<v-file-input
+											:rules="rules"
+											prepend-inner-icon="mdi-paperclip"
+											prepend-icon
+											show-size
+											outlined
+											multiple
+											v-model="files"
+											accept="image/*"
+											label="Add attachments"
+										></v-file-input>
+									</v-col>
+								</v-row>
+							</v-container>
+							<small>
+								*indicates required
+								field
+							</small>
+						</v-card-text>
+						<v-card-actions>
+							<v-spacer></v-spacer>
+							<v-btn color="error darken-1" outlined text @click="clear">Cancel</v-btn>
+							<v-btn color="success darken-1" depressed @click="submitExeat">Submit</v-btn>
+						</v-card-actions>
+					</v-card>
+				</v-dialog>
 			</div>
 			<v-row>
 				<v-col cols="4" v-if="isAdmin">
@@ -46,24 +142,19 @@
 								</div>
 							</v-expansion-panel-header>
 							<v-expansion-panel-content>
-								<div class="mb-4 d-flex justify-space-between">
-									<div>
-										<div class="font-weight-bold fs-4">EXEAT TYPE</div>
-										<div>HOME EXEAT</div>
-									</div>
-									<div>
-										<v-icon color="grey">mdi-flag</v-icon>
-									</div>
+								<div>
+									<div class="font-weight-bold fs-4">EXEAT TYPE</div>
+									<div>HOME EXEAT</div>
 								</div>
 
-								<div class="mb-4">
+								<div class="my-4">
 									<div class="font-weight-bold fs-4">DURATION</div>
 									<div>3 days</div>
 								</div>
 
-								<div class="mb-4">
-									<div class="font-weight-bold fs-4">STATUS</div>
-									<v-chip color="orange accent-2 mt-2">Pending</v-chip>
+								<div class="mb-4 d-flex align-center">
+									<div class="font-weight-bold fs-4 mr-5">STATUS:</div>
+									<v-chip color="yellow darken-2" small class="white--text">Pending</v-chip>
 								</div>
 
 								<div class="mb-4">
@@ -180,10 +271,11 @@
 				</v-col>
 			</v-row>
 		</v-container>
-	</div>
+	</v-card>
 </template>
 
 <script>
+import Axios from "axios";
 export default {
 	props: {
 		isAdmin: {
@@ -202,8 +294,63 @@ export default {
 	data() {
 		return {
 			dialog: false,
-			dialog2: false
+			dialog2: false,
+			dialog3: false,
+			menuDepartureTime: null,
+			departureTime: null,
+			modalDepartureDate: null,
+			departureDate: null,
+			rules: [
+				value =>
+					!value ||
+					value.size < 2000000 ||
+					"Cover image size should be less than 2 MB!"
+			],
+			exeatTypes: [],
+			files: [],
+			reason: "",
+			selectedExeatType: ""
 		};
+	},
+	methods: {
+		async getExeatTypes() {
+			try {
+				let res = await Axios.get("exeat-type");
+				console.table(res.data);
+				this.exeatTypes = res.data.data;
+			} catch (error) {
+				throw error;
+			}
+		},
+		async getExeats() {
+			try {
+				let id = this.$route.params.id;
+				let res = await Axios.get(`exeat?student_id=${id}`);
+				console.table(res.data);
+				this.exeatTypes = res.data.data;
+			} catch (error) {
+				throw error;
+			}
+		},
+		async submitExeat() {
+			try {
+				let res = await Axios.post("exeat");
+				console.table(res.data);
+				this.exeatTypes = res.data.data;
+			} catch (error) {
+				throw error;
+			}
+		},
+		clear() {
+			this.departureTime = null;
+			this.departureDate = null;
+			this.selectedExeatType = null;
+			this.reason = "";
+			this.files = [];
+		}
+	},
+	mounted() {
+		this.getExeats();
 	}
 };
 </script>

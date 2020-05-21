@@ -24,7 +24,7 @@
 						></v-text-field>
 					</v-col>
 					<v-col cols="12">
-						<v-card class="mt-4 pa-3">
+						<v-card class="mt-4 pa-3" flat>
 							<v-subheader class="d-flex mb-4 mr-4">
 								<v-spacer></v-spacer>
 								<v-icon size="18">mdi-filter</v-icon>
@@ -35,7 +35,6 @@
 								:items="exeats"
 								:search="search"
 								sort-by="calories"
-								@click:row="goToPage"
 								class="elevation-1"
 							>
 								<template v-slot:item.status="{ item }">
@@ -47,8 +46,17 @@
 									>{{ status(item.status) }}</v-chip>
 								</template>
 								<template v-slot:item.action="{ item }">
-									<v-icon small class="mr-2" @click="editItem(item)">mdi-pencil</v-icon>
-									<v-icon small @click="deleteItem(item)">mdi-delete</v-icon>
+									<div class="d-flex flex-column">
+										<v-btn icon color="grey" @click="goToPage(item)">
+											<v-icon small color="grey">mdi-eye</v-icon>
+										</v-btn>
+										<v-btn icon color="grey" @click="editItem(item)">
+											<v-icon small>mdi-pencil</v-icon>
+										</v-btn>
+										<v-btn icon color="grey" @click="deleteItem(item)">
+											<v-icon small>mdi-delete</v-icon>
+										</v-btn>
+									</div>
 								</template>
 								<template v-slot:no-data>
 									<v-btn color="primary" @click="initialize">Reset</v-btn>
@@ -81,12 +89,16 @@ export default {
 				},
 				{ text: "Matriculation Number", value: "calories" },
 				{ text: "Type", value: "fat" },
-				{ text: "Duration", value: "duration" },
 				{ text: "Grade/Level", value: "protein" },
 				{ text: "Department", value: "carbs" },
 				{ text: "Status", value: "status" },
 				{ text: "Residence", value: "residence" },
-				{ text: "Actions", value: "action", sortable: false }
+				{
+					text: "Actions",
+					value: "action",
+					sortable: false,
+					align: "center"
+				}
 			],
 			exeats: []
 		};
@@ -238,7 +250,7 @@ export default {
 		goToPage(v) {
 			// console.log(v);
 			this.$router.push({
-				name: "parent.leave-details",
+				name: "parent.exeat.details",
 				params: { id: v.id }
 			});
 		},
@@ -260,10 +272,10 @@ export default {
 					res = "Pending";
 					break;
 				case 3:
-					res = "Unapproved";
+					res = "Declined";
 					break;
 				default:
-					res = "Unapproved";
+					res = "Declined";
 					break;
 			}
 

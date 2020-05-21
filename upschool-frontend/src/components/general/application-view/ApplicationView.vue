@@ -37,7 +37,8 @@ export default {
 			dialog2: null,
 			items: [
 				{ id: 1, tab: "EXEAT APPLICATIONS", route: "exeat.view" },
-				{ id: 2, tab: "LEAVE APPLICATIONS", route: "leave.view" }
+				{ id: 2, tab: "LEAVE APPLICATIONS", route: "leave.view" },
+				{ id: 3, tab: "APPLICATION TYPES", route: "applications.types" }
 			]
 		};
 	},

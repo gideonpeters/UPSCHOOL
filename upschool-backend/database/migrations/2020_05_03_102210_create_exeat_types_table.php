@@ -18,7 +18,7 @@ class CreateExeatTypesTable extends Migration
             $table->string('name');
             $table->text('description')->nullable();
             $table->string('metric')->default('days'); //in days, in hours, weeks
-            $table->unsignedInteger('number_of_metric');
+            $table->unsignedInteger('duration');
             $table->timestamps();
         });
     }
