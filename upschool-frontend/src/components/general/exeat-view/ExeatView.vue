@@ -7,6 +7,7 @@
 						<v-icon>mdi-arrow-left</v-icon>
 					</v-btn>
 					<div class>Exeat Applications</div>
+					<!-- <button @click="test">check</button> -->
 				</div>
 				<v-dialog v-model="dialog3" persistent max-width="600px">
 					<template v-slot:activator="{ on }">
@@ -20,7 +21,14 @@
 							<v-container>
 								<v-row>
 									<v-col cols="12">
-										<v-select v-model="selectedExeatType" outlined label="Select Type*" :items="exeatTypes"></v-select>
+										<v-select
+											return-object
+											item-text="name"
+											v-model="selectedExeatType"
+											outlined
+											label="Select Type*"
+											:items="exeatTypes"
+										></v-select>
 									</v-col>
 									<v-col cols="12">
 										<v-textarea v-model="reason" outlined rows="10" label="Reason"></v-textarea>
@@ -108,7 +116,7 @@
 					</v-card>
 				</v-dialog>
 			</div>
-			<v-row>
+			<v-row v-if="!isLoading">
 				<v-col cols="4" v-if="isAdmin">
 					<v-card class="elevation-1 px-3 pa-3 pb-5">
 						<div class="d-flex flex-column align-center pb-5">
@@ -124,49 +132,47 @@
 						</div>
 					</v-card>
 				</v-col>
-
 				<v-col>
 					<v-expansion-panels multiple>
-						<v-expansion-panel v-for="(item, i) in 5" :key="i">
+						<v-expansion-panel v-for="exeat in exeats" :key="exeat.id">
 							<v-expansion-panel-header>
 								<div class="font-weight-bold fs-3">
 									<v-icon
 										size="18"
 										class="mr-2"
 										:color="
-										i == 1
-											? 'blue accent-2'
-											: 'orange accent-2'
+										getStatus(exeat.status)
 									"
-									>mdi-circle-slice-8</v-icon>EXT2309202015CJ02876
+									>mdi-circle-slice-8</v-icon>
+									{{exeat.exeat_id}}
 								</div>
 							</v-expansion-panel-header>
 							<v-expansion-panel-content>
 								<div>
 									<div class="font-weight-bold fs-4">EXEAT TYPE</div>
-									<div>HOME EXEAT</div>
+									<div v-if="exeat.exeat_type" class="text-capitalize">{{exeat.exeat_type.name}}</div>
 								</div>
 
 								<div class="my-4">
 									<div class="font-weight-bold fs-4">DURATION</div>
-									<div>3 days</div>
+									<div
+										v-if="exeat.exeat_type"
+										class="text-capitalize"
+									>{{exeat.exeat_type.duration}} {{exeat.exeat_type.metric}}</div>
 								</div>
 
 								<div class="mb-4 d-flex align-center">
 									<div class="font-weight-bold fs-4 mr-5">STATUS:</div>
-									<v-chip color="yellow darken-2" small class="white--text">Pending</v-chip>
+									<v-chip
+										:color="getStatus(exeat.status)"
+										small
+										class="white--text text-uppercase"
+									>{{exeat.status}}</v-chip>
 								</div>
 
 								<div class="mb-4">
 									<div class="font-weight-bold fs-4">REASON</div>
-									<div>
-										Lorem ipsum dolor sit amet, consectetur
-										adipiscing elit, sed do eiusmod tempor
-										incididunt ut labore et dolore magna aliqua.
-										Ut enim ad minim veniam, quis nostrud
-										exercitation ullamco laboris nisi ut aliquip
-										ex ea commodo consequat.
-									</div>
+									<div v-text="exeat.reason"></div>
 								</div>
 
 								<div class="mb-4">
@@ -182,7 +188,12 @@
 
 								<div class="mb-4">
 									<div class="font-weight-bold fs-4">REQUESTED DEPARTURE DATETIME</div>
-									<div>8:00 AM 22nd March, 2020</div>
+									<div>{{moment(exeat.requested_departure).format("LLL")}}</div>
+								</div>
+
+								<div class="mb-4">
+									<div class="font-weight-bold fs-4">EXPECTED DEPARTURE DATETIME</div>
+									<div>{{moment(exeat.expected_arrival).format("LLL")}}</div>
 								</div>
 
 								<div class="mb-4">
@@ -195,20 +206,30 @@
 									<div>8:00 AM 25th March, 2020</div>
 								</div>
 
-								<div class="mb-4">
+								<div class="mb-4" v-if="exeat.status == 'approved'">
 									<div class="font-weight-bold fs-4">PROGRESS</div>
 									<div>
 										<v-progress-linear value="15"></v-progress-linear>
 									</div>
 								</div>
 
-								<div class="mb-4">
-									<div class="font-weight-bold fs-4">ATTACHMENTS</div>
-									<div>8:00 AM 25th March, 2020</div>
+								<div class="mb-4" v-if="exeat.file.length > 0">
+									<div class="font-weight-bold fs-4 mb-2">ATTACHMENTS</div>
+									<v-chip
+										@click="goTo(file.url)"
+										class="mr-2 pointer"
+										v-for="file in exeat.file"
+										:key="file.id"
+									>{{file.name}}</v-chip>
 								</div>
 
 								<div class="d-flex justify-end">
-									<v-dialog v-model="dialog2" persistent max-width="290">
+									<v-dialog
+										v-model="dialog2"
+										persistent
+										max-width="290"
+										v-if="exeat.status == 'pending' || exeat.status == 'approved'"
+									>
 										<template v-slot:activator="{ on }">
 											<v-btn depressed outlined color="red accent-2" v-on="on">DECLINE</v-btn>
 											<!-- <v-btn color="primary" dark v-on="on">Open Dialog</v-btn> -->
@@ -232,11 +253,20 @@
 											<v-card-actions>
 												<v-spacer></v-spacer>
 												<v-btn color="green darken-1" text @click="dialog2 = false">Disagree</v-btn>
-												<v-btn color="green darken-1" text @click="dialog2 = false">Agree</v-btn>
+												<v-btn
+													color="green darken-1"
+													text
+													@click="dialog2 = false, respondToExeat(false, exeat.id)"
+												>Agree</v-btn>
 											</v-card-actions>
 										</v-card>
 									</v-dialog>
-									<v-dialog v-model="dialog" persistent max-width="290">
+									<v-dialog
+										v-model="dialog"
+										persistent
+										max-width="290"
+										v-if="exeat.status == 'pending' || exeat.status == 'declined'"
+									>
 										<template v-slot:activator="{ on }">
 											<v-btn depressed color="green accent-4" class="white--text ml-2" v-on="on">APPROVE</v-btn>
 											<!-- <v-btn color="primary" dark v-on="on">Open Dialog</v-btn> -->
@@ -260,7 +290,11 @@
 											<v-card-actions>
 												<v-spacer></v-spacer>
 												<v-btn color="green darken-1" text @click="dialog = false">Disagree</v-btn>
-												<v-btn color="green darken-1" text @click="dialog = false">Agree</v-btn>
+												<v-btn
+													color="green darken-1"
+													text
+													@click="dialog = false, respondToExeat(true, exeat.id)"
+												>Agree</v-btn>
 											</v-card-actions>
 										</v-card>
 									</v-dialog>
@@ -268,6 +302,11 @@
 							</v-expansion-panel-content>
 						</v-expansion-panel>
 					</v-expansion-panels>
+				</v-col>
+			</v-row>
+			<v-row v-else>
+				<v-col cols="12" v-for="i in 4" :key="i">
+					<v-skeleton-loader ref="skeleton" type="list-item-avatar" class="mx-auto"></v-skeleton-loader>
 				</v-col>
 			</v-row>
 		</v-container>
@@ -296,6 +335,7 @@ export default {
 			dialog: false,
 			dialog2: false,
 			dialog3: false,
+			isLoading: true,
 			menuDepartureTime: null,
 			departureTime: null,
 			modalDepartureDate: null,
@@ -309,7 +349,8 @@ export default {
 			exeatTypes: [],
 			files: [],
 			reason: "",
-			selectedExeatType: ""
+			selectedExeatType: "",
+			exeats: []
 		};
 	},
 	methods: {
@@ -324,19 +365,90 @@ export default {
 		},
 		async getExeats() {
 			try {
+				this.isLoading = true;
 				let id = this.$route.params.id;
+				if (!id) {
+					id = this.$store.state.loggedInUser.matric_number;
+				}
+				// console.log(id);
 				let res = await Axios.get(`exeat?student_id=${id}`);
 				console.table(res.data);
-				this.exeatTypes = res.data.data;
+				this.exeats = res.data.data;
 			} catch (error) {
 				throw error;
 			}
 		},
+		goTo(url) {
+			if (url) {
+				window.open(`http://127.0.0.1:8000${url}`, "_blank");
+				// console.log(url);
+			} else {
+				this.$store.commit(
+					"openSnackbar",
+					"File not available, contact facilitator"
+				);
+			}
+		},
+		test() {
+			// const items = new FormData();
+			// items.append("key1", "yoyoyoy");
+			// items.append("key2", "hfggff");
+			// console.log(...items);
+		},
+		getStatus(val) {
+			let res;
+			switch (val) {
+				case "pending":
+					res = "yellow accent-4";
+					break;
+				case "approved":
+					res = "green accent-2";
+					break;
+				case "declined":
+					res = "red accent-2";
+					break;
+
+				default:
+					res = "yellow accent-2";
+					break;
+			}
+			return res;
+		},
 		async submitExeat() {
 			try {
-				let res = await Axios.post("exeat");
+				var body = new FormData();
+				body.append("student_id", this.$store.state.loggedInUser.id);
+				body.append("reason", this.reason);
+				body.append("exeat_type_id", this.selectedExeatType.id);
+				body.append(
+					"requested_departure",
+					`${this.departureDate}T${this.departureTime}:00`
+				);
+
+				for (let index = 0; index < this.files.length; index++) {
+					body.append(`files[]`, this.files[index]);
+				}
+
+				// console.log(...body);
+				let res = await Axios.post("exeat", body);
+				this.$store.commit("openSnackbar", res.data.message);
 				console.table(res.data);
-				this.exeatTypes = res.data.data;
+				if (res.data.status) {
+					this.getExeats().then(() => (this.isLoading = false));
+				}
+				// this.exeatTypes = res.data.data;
+			} catch (error) {
+				throw error;
+			}
+		},
+		async respondToExeat(val = false, id) {
+			try {
+				let res = await Axios.post(`exeat?action="${val}`, {
+					status: val,
+					exeat_id: id
+				});
+				this.$store.commit("openSnackbar", res.data.message);
+				this.getExeats().then(() => (this.isLoading = false));
 			} catch (error) {
 				throw error;
 			}
@@ -347,10 +459,12 @@ export default {
 			this.selectedExeatType = null;
 			this.reason = "";
 			this.files = [];
+			this.dialog3 = false;
 		}
 	},
 	mounted() {
-		this.getExeats();
+		this.getExeats().then(() => (this.isLoading = false));
+		this.getExeatTypes();
 	}
 };
 </script>

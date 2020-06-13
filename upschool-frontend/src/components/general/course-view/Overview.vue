@@ -41,6 +41,9 @@
 						v-for="prerequisite in course.prerequisites"
 						:key="prerequisite.id"
 					>{{ prerequisite.course_code }}</v-chip>
+					<v-chip
+						v-if="course.prerequisites && course.prerequisites.length == 0"
+					>No prerequisites for this course</v-chip>
 				</v-chip-group>
 			</v-card-text>
 
@@ -67,6 +70,9 @@
 						<v-icon small color="grey">mdi-close-circle</v-icon>
 					</v-btn>
 					{{ facilitator.name }}
+				</div>
+				<div class="d-flex align-center" v-if="course.facilitators && course.facilitators.length == 0">
+					<p>No facilitators registered for this course yet</p>
 				</div>
 				<v-dialog v-model="confirmRemove" max-width="290">
 					<v-card>

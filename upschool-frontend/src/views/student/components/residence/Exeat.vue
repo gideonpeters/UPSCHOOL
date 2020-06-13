@@ -1,17 +1,17 @@
 <template>
 	<v-app>
-		<exeat-ui isStudent />
+		<exeat-view isStudent />
 	</v-app>
 </template>
 
 <script>
-import ExeatUi from "@/components/general/exeat-view/ExeatUi";
+import ExeatView from "@/components/general/exeat-view/ExeatView";
 export default {
 	components: {
-		ExeatUi,
+		ExeatView
 	},
 	data() {
 		return {};
-	},
+	}
 };
 </script>

@@ -18,7 +18,7 @@ class ExeatController extends Controller
         //
         $exeats = Exeat::all();
         if ($request->has('student_id')) {
-            $student = Student::find($request->student_id);
+            $student = Student::whereMatricNumber($request->student_id)->first();
 
             if (!$student) {
                 return response()->json([
@@ -33,13 +33,37 @@ class ExeatController extends Controller
         return response()->json([
             'status' => true,
             'message' => 'These are all the exeats',
-            'data' => $exeats->load('student')
+            'data' => $exeats->load('student', 'file', 'exeat_type')
         ], 201);
     }
 
     public function store(Request $request)
     {
         //
+        // $items = $request->files;
+        // return response()->json([
+        //     'data' => $items[0]
+        // ], 201);
+        if ($request->has('action')) {
+            $existing_exeat = Exeat::find($request->exeat_id);
+
+            if (!$existing_exeat) {
+                return response()->json([
+                    'status' => false,
+                    'message' => 'exeat does not exist',
+                    'data' => []
+                ], 201);
+            }
+
+            $existing_exeat->status = $request->status == true ? 'approved' : 'declined';
+            $existing_exeat->save();
+
+            return response()->json([
+                'status' => true,
+                'message' => $request->status == true ? 'exeat approved' : 'exeat declined',
+                'data' => $existing_exeat
+            ], 201);
+        }
         $student = Student::find($request->student_id);
 
         if (!$student) {
@@ -88,21 +112,24 @@ class ExeatController extends Controller
         }
         $exeat->save();
 
-        if ($request->hasFile('file')) {
-            $path = Storage::putFileAs(
-                "documents/exeat-applications/$semester->id",
-                $request->file('file'),
-                preg_replace('/[^A-Za-z0-9\-]/', '_', str_replace(' ', '_', $exeat->exeat_id)) . '.' . $request->file('file')->getClientOriginalExtension()
-            );
+        if ($request->has('files')) {
+            foreach ($request->file('files') as $key => $sent_file) {
+                # code...
+                $path = Storage::putFileAs(
+                    "documents/exeat-applications/$semester->id",
+                    $sent_file,
+                    preg_replace('/[^A-Za-z0-9\-]/', '_', str_replace(' ', '_', $exeat->exeat_id)) . '.' . $sent_file->getClientOriginalExtension()
+                );
 
-            $file = new File();
-            $file->name = $request->file('file')->getClientOriginalName();
-            $file->type = $request->file('file')->getClientMimeType();
-            $file->path = $path;
-            $file->fileable_id = $exeat->id;
-            $file->fileable_type = 'App\Exeat';
+                $file = new File();
+                $file->name = $sent_file->getClientOriginalName();
+                $file->type = $sent_file->getClientMimeType();
+                $file->path = $path;
+                $file->fileable_id = $exeat->id;
+                $file->fileable_type = 'App\Exeat';
 
-            $file->save();
+                $file->save();
+            }
         }
 
         return response()->json([

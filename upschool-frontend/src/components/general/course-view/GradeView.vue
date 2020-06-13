@@ -43,11 +43,10 @@
 					</template>
 					<template v-slot:item.score="{item}">
 						<v-edit-dialog
-							:return-value.sync="item.score"
-							@save="saveScore(item.score)"
+							:return-value.sync="item"
+							@save="saveScore(item)"
 							@cancel="cancel"
 							@open="openScoreEdit"
-							@close="closeScoreEdit"
 						>
 							{{ item.score }}
 							<template v-slot:input>
@@ -124,8 +123,6 @@
 				</v-card-actions>
 			</v-card>
 		</v-dialog>
-
-		
 	</v-card>
 </template>
 
@@ -184,8 +181,7 @@ export default {
 				}
 			],
 			dialogDelete: null,
-			gradeList: [],
-			
+			gradeList: []
 		};
 	},
 	computed: {
@@ -284,15 +280,36 @@ export default {
 				this.$store.commit("openSnackbar", "No records uploaded");
 			}
 		},
-		saveScore(v) {
-			console.log(this.$refs.score.value);
-			this.$store.commit("openSnackbar", "Score saved!");
+		async saveScore(v) {
+			try {
+				// console.log(v);
+				// // let v = this.$refs.score.value;
+				let res = await axios.post(`gradeitem`, {
+					score: v.score,
+					grade_id: v.id
+				});
+				// console.log(res);
+				this.$store.commit("openSnackbar", res.data.message);
+			} catch (error) {
+				throw error;
+			}
 		},
 		cancel() {},
-		openScoreEdit() {},
-		closeScoreEdit() {
-			// console.log('Dialog closed')
-		}
+		openScoreEdit() {}
+		// async closeScoreEdit(v) {
+		// 	try {
+		// 		// console.log(this.$refs.score);
+		// 		// let v = this.$refs.score.value;
+		// 		let res = await axios.post(`gradeitem`, {
+		// 			score: v.score,
+		// 			grade_id: v.id
+		// 		});
+		// 		// console.log(res);
+		// 		this.$store.commit("openSnackbar", res.data.message);
+		// 	} catch (error) {
+		// 		throw error;
+		// 	}
+		// }
 	},
 	async mounted() {
 		try {

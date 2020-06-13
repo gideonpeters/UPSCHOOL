@@ -2,9 +2,7 @@
 	<div class="mt-3">
 		<div class="d-flex justify-space-between">
 			<div>
-				<v-subheader class="pa-0 mb-0 text-uppercase"
-					>{{ status.name }}
-				</v-subheader>
+				<v-subheader class="pa-0 mb-0 text-uppercase">{{ status.name }}</v-subheader>
 				<div
 					class="fs-5 t-primary mb-3"
 					v-if="
@@ -14,9 +12,9 @@
 				>
 					Students must register at least
 					{{
-						curriculumItem.max_required_units
-							? curriculumItem.max_required_units
-							: "All " + totalUnits
+					curriculumItem.max_required_units
+					? curriculumItem.max_required_units
+					: "All " + totalUnits
 					}}
 					units
 				</div>
@@ -30,20 +28,15 @@
 					</template>
 
 					<v-list>
-						<v-list-item
-							v-for="(item, i) in items"
-							:key="i"
-							@click="item.fn"
-						>
-							<div class="font-weight-light">
-								{{ item.title }}
-							</div>
+						<v-list-item v-for="(item, i) in items" :key="i" @click="item.fn">
+							<div class="font-weight-light">{{ item.title }}</div>
 						</v-list-item>
 					</v-list>
 				</v-menu>
-				<div class="fs-5 t-primary" v-if="isEnrolling">
-					{{ itemsSelected }} Units selected from this block
-				</div>
+				<div
+					class="fs-5 t-primary"
+					v-if="isEnrolling"
+				>{{ itemsSelected }} Units selected from this block</div>
 			</div>
 		</div>
 		<div>
@@ -53,7 +46,7 @@
 						<v-btn color="primary" dark v-on="on"
 							>Open Dialog</v-btn
 						>
-					</template> -->
+					</template>-->
 					<v-card>
 						<v-card-title>
 							<span class="headline">EDIT CURRICULUM BLOCK</span>
@@ -71,28 +64,13 @@
 										></v-text-field>
 									</v-col>
 									<v-col cols="12">
-										<v-text-field
-											outlined
-											disabled
-											label="Course Status"
-											:value="status.name"
-											required
-										></v-text-field>
+										<v-text-field outlined disabled label="Course Status" :value="status.name" required></v-text-field>
 									</v-col>
 									<v-col>
-										<v-checkbox
-											label="All courses are compulsory"
-											v-model="isCompulsory"
-										>
-										</v-checkbox>
+										<v-checkbox label="All courses are compulsory" v-model="isCompulsory"></v-checkbox>
 									</v-col>
 									<v-col cols="12">
-										<v-text-field
-											v-if="!isCompulsory"
-											outlined
-											label="Number of units required"
-											required
-										></v-text-field>
+										<v-text-field v-if="!isCompulsory" outlined label="Number of units required" required></v-text-field>
 									</v-col>
 								</v-row>
 							</v-container>
@@ -100,18 +78,8 @@
 						</v-card-text>
 						<v-card-actions>
 							<v-spacer></v-spacer>
-							<v-btn
-								color="blue darken-1"
-								text
-								@click="dialog = false"
-								>Close</v-btn
-							>
-							<v-btn
-								color="blue darken-1"
-								text
-								@click="dialog = false"
-								>Save</v-btn
-							>
+							<v-btn color="blue darken-1" text @click="dialog = false">Close</v-btn>
+							<v-btn color="blue darken-1" text @click="dialog = false">Save</v-btn>
 						</v-card-actions>
 					</v-card>
 				</v-dialog>
@@ -122,9 +90,7 @@
 				<v-dialog v-model="dialog2" persistent max-width="600px">
 					<v-card>
 						<v-card-title>
-							<span class="headline"
-								>ADD COURSE TO CURRICULUM</span
-							>
+							<span class="headline">ADD COURSE TO CURRICULUM</span>
 						</v-card-title>
 						<v-card-text>
 							<v-container>
@@ -141,13 +107,7 @@
 										></v-text-field>
 									</v-col>
 									<v-col cols="6">
-										<v-text-field
-											outlined
-											disabled
-											label="Course Status"
-											:value="status.name"
-											required
-										></v-text-field>
+										<v-text-field outlined disabled label="Course Status" :value="status.name" required></v-text-field>
 									</v-col>
 									<v-col cols="6">
 										<v-text-field
@@ -171,12 +131,7 @@
 										></v-autocomplete>
 									</v-col>
 									<v-col cols="4">
-										<v-text-field
-											outlined
-											label="Number of credit unit(s)"
-											required
-											v-model="credits"
-										></v-text-field>
+										<v-text-field outlined label="Number of credit unit(s)" required v-model="credits"></v-text-field>
 									</v-col>
 								</v-row>
 							</v-container>
@@ -184,9 +139,7 @@
 						</v-card-text>
 						<v-card-actions>
 							<v-spacer></v-spacer>
-							<v-btn color="blue darken-1" text @click="closeAdd"
-								>Close</v-btn
-							>
+							<v-btn color="blue darken-1" text @click="closeAdd">Close</v-btn>
 							<v-btn
 								color="blue darken-1"
 								text
@@ -197,8 +150,8 @@
 									)
 								"
 								@click="save"
-								>Save</v-btn
-							><v-btn
+							>Save</v-btn>
+							<v-btn
 								color="blue darken-1"
 								:disabled="
 									!(
@@ -208,14 +161,14 @@
 								"
 								text
 								@click="save(true)"
-								>Save & Add Another</v-btn
-							>
+							>Save & Add Another</v-btn>
 						</v-card-actions>
 					</v-card>
 				</v-dialog>
 			</v-row>
 		</div>
 		<v-data-table
+			:loading="isLoadingCurrent"
 			v-model="selectedCourses"
 			:headers="isEnrolling ? enrollingHeaders : headers"
 			:show-select="isEnrolling"
@@ -224,10 +177,7 @@
 			class="elevation-1"
 		>
 			<template v-slot:item.completed="{ item }">
-				<v-simple-checkbox
-					:value="item.completed"
-					disabled
-				></v-simple-checkbox>
+				<v-simple-checkbox :value="item.completed" disabled></v-simple-checkbox>
 			</template>
 			<template v-slot:no-data="{}">
 				<div>No data to display</div>
@@ -238,11 +188,7 @@
 
 			<template v-slot:item.prerequisites="{ item }">
 				<!-- <div v-if="item.curriculumable.prerequisites.length > 0"> -->
-				<div
-					class="py-1"
-					v-for="(subItem, i) in item.curriculumable.prerequisites"
-					:key="i"
-				>
+				<div class="py-1" v-for="(subItem, i) in item.curriculumable.prerequisites" :key="i">
 					<v-chip>{{ subItem.course_code }}</v-chip>
 				</div>
 				<!-- </div> -->
@@ -258,9 +204,7 @@
 		<div>
 			<v-snackbar v-model="snackbar.isActive" :timeout="snackbar.timeout">
 				{{ snackbar.text }}
-				<v-btn color="blue" text @click="snackbar.isActive = false"
-					>Close</v-btn
-				>
+				<v-btn color="blue" text @click="snackbar.isActive = false">Close</v-btn>
 			</v-snackbar>
 		</div>
 	</div>
@@ -281,6 +225,10 @@ export default {
 		isEnrolling: {
 			type: Boolean,
 			default: false
+		},
+		isLoadingCurrent: {
+			type: Boolean,
+			default: true
 		},
 		bus: {}
 		// selectedCourses: {

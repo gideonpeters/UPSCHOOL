@@ -1,113 +1,63 @@
 <template>
 	<v-app>
-		<div class="d-flex flex-lg-row flex-column justify-lg-space-between">
-			<v-card class="primary-box-shadow pa-3 my-3" flat>
-				<v-subheader>RESULT OVERVIEW</v-subheader>
-				<div class="d-flex flex-wrap flex-column">
-					<div class="d-flex flex-lg-row flex-column">
-						<div class="d-flex justify-center">
-							<passed-courses rate="3.26" number="10" />
-						</div>
-						<div class="d-flex justify-center">
-							<passed-courses rate="-1.9" number="2" :status="1" />
-						</div>
-						<!-- <div class="d-flex">fkfk</div> -->
-					</div>
-					<div class="d-flex flex-lg-row flex-column">
-						<div class="d-flex justify-center">
-							<passed-courses rate="+2.4" number="4.96" :status="2" />
-						</div>
-						<div class="d-flex justify-center">
-							<passed-courses rate="+1.2" number="4.89" :status="3" />
-						</div>
-					</div>
-				</div>
-			</v-card>
-			<!-- <div class="d-flex justify-center"> -->
-			<!-- <div id="chart">sm</div> -->
-			<v-card class="primary-box-shadow py-3 px-5 my-3" flat>
-				<div class="d-flex justify-space-between">
-					<div class="d-flex flex-column">
-						<div>OVERVIEW</div>
-						<div>RESULT CHART</div>
-					</div>
-					<div>
-						<v-btn
-							color="primary"
-							class="course-btn pointer"
-							@click="isFullReport = false"
-						>View full report</v-btn>
-					</div>
-				</div>
-				<apexchart type="donut" width="380" :options="chartOptions" :series="series" />
-			</v-card>
-			<!-- </div> -->
-		</div>
-
-		
-		<!-- <div class="d-flex"> -->
-		<!-- <v-card class="primary-box-shadow pa-3" flat>
-			<div class="d-flex justify-space-between">
-				<div class="d-flex h-text t-primary">RESULT BREAK DOWN</div>
-				<div class="d-flex">
-					<div class="mx-3 course-btn result-btn pa-2 pointer" @click="isFullReport = true">View All</div>
-					<div class="course-btn result-btn pa-2">Print Unofficial Transcript</div>
-				</div>
-			</div>
-			<v-tabs
-				v-model="model"
-				background-color="transparent"
-				next-icon="mdi-chevron-right"
-				prev-icon="mdi-chevron-left"
-				show-arrows
-			>
-				<v-tabs-slider color="purple" />
-				<v-tab
-					v-for="(tab, ix) in tabs"
-					:key="ix"
-					class="px-3"
-					:href="`#tab-${ix}`"
-					active-class="purple--text"
-				>{{ tab.text }}</v-tab>
-
-				<v-tabs-items v-model="model">
-					<v-tab-item value="tab-0">
-						<div class="pa-2">
-							<div class="result-table" v-for="(semester, idx) in semesters" :key="idx">
-								<div class="py-4 font-weight-bold">{{ semester }}</div>
-								<div style="width: 100%">
-									<div class="d-flex text-center thead">
-										<div class="col-lg-2 col">COURSE</div>
-										<div class="col-3 col-lg-6 d-none d-lg-block">COURSE TITLE</div>
-										<div class="col">CREDIT UNIT</div>
-										<div class="col">WEIGHTED SCORE</div>
-										<div class="col">
-											<div class="text-wrap">GRADE SCORE</div>
-										</div>
-									</div>
-									<div class="row no-gutters">
-										<div
-											v-for="(course,
-											i) in studentCoursesResult"
-											:key="i"
-											class="col-12 no-gutters"
-										>
-											<result-item :course="course" :course-index="i" />
-										</div>
-									</div>
+		<v-container>
+			<v-row>
+				<v-col cols="7">
+					<v-card class="primary-box-shadow pa-3 my-3" flat>
+						<v-subheader>RESULT OVERVIEW</v-subheader>
+						<div class="d-flex flex-wrap flex-column">
+							<div class="d-flex flex-lg-row flex-column">
+								<div class="d-flex justify-center">
+									<passed-courses rate="3.26" number="10" />
+								</div>
+								<div class="d-flex justify-center">
+									<passed-courses rate="-1.9" number="2" :status="1" />
+								</div>
+								<!-- <div class="d-flex">fkfk</div> -->
+							</div>
+							<div class="d-flex flex-lg-row flex-column">
+								<div class="d-flex justify-center">
+									<passed-courses rate="+2.4" number="4.96" :status="2" />
+								</div>
+								<div class="d-flex justify-center">
+									<passed-courses rate="+1.2" number="4.89" :status="3" />
 								</div>
 							</div>
 						</div>
-					</v-tab-item>
-					<v-tab-item value="tab-1">0</v-tab-item>
-					<v-tab-item value="tab-2">1</v-tab-item>
-					<v-tab-item value="tab-3">2</v-tab-item>
-					<v-tab-item value="tab-4">2</v-tab-item>
-					<v-tab-item value="tab-5">2</v-tab-item>
-				</v-tabs-items>
-			</v-tabs>
-		</v-card>-->
-		<!-- </div> -->
+					</v-card>
+				</v-col>
+				<v-col cols="5">
+					<v-card class="primary-box-shadow py-3 px-5 my-3" flat>
+						<div class="d-flex justify-space-between">
+							<div class="d-flex flex-column">
+								<div>OVERVIEW</div>
+								<div>RESULT CHART</div>
+							</div>
+							<div>
+								<v-btn
+									color="primary"
+									class="course-btn pointer"
+									@click="isFullReport = false"
+								>View full report</v-btn>
+							</div>
+						</div>
+						<apexchart type="donut" width="380" :options="chartOptions" :series="series" />
+					</v-card>
+				</v-col>
+				<v-col>
+					<v-card>
+						<v-row>
+							<v-col cols="12">
+								<v-subheader>FAILED COURSES</v-subheader>
+							</v-col>
+							<v-col cols="12">
+								<v-data-table></v-data-table>
+							</v-col>
+						</v-row>
+					</v-card>
+				</v-col>
+			</v-row>
+		</v-container>
 	</v-app>
 </template>
 
@@ -119,7 +69,7 @@ import VueApexCharts from "vue-apexcharts";
 export default {
 	components: {
 		"passed-courses": Metric,
-		apexchart: VueApexCharts,
+		apexchart: VueApexCharts
 		// ResultItem,
 	},
 	props: {

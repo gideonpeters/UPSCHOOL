@@ -72,6 +72,7 @@
 
 <script>
 import MetricCard from "@/components/parent/Metric";
+import Axios from "axios";
 export default {
 	components: {
 		MetricCard
@@ -85,12 +86,15 @@ export default {
 					text: "Name",
 					align: "left",
 					sortable: false,
-					value: "name"
+					value: "student.name"
 				},
-				{ text: "Matriculation Number", value: "calories" },
-				{ text: "Type", value: "fat" },
-				{ text: "Grade/Level", value: "protein" },
-				{ text: "Department", value: "carbs" },
+				{
+					text: "Matriculation Number",
+					value: "student.matric_number"
+				},
+				{ text: "Type", value: "exeat_type.name" },
+				{ text: "Grade/Level", value: "student.level" },
+				{ text: "Program", value: "student.program.name" },
 				{ text: "Status", value: "status" },
 				{ text: "Residence", value: "residence" },
 				{
@@ -108,7 +112,16 @@ export default {
 			return this.editedIndex === -1 ? "New Item" : "Edit Item";
 		}
 	},
+	async mounted() {
+		try {
+			let res = await Axios.get("exeat");
 
+			this.exeats = res.data.data;
+			console.table(res.data);
+		} catch (error) {
+			throw error;
+		}
+	},
 	watch: {
 		dialog(val) {
 			val || this.close();

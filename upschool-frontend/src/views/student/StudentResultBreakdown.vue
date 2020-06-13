@@ -3,12 +3,10 @@
 		<v-container>
 			<v-row>
 				<v-col>
-					<div>
-						<v-card class="pa-3" flat>
-							<v-subheader>RESULT BREAKDOWN</v-subheader>
-							<result-tabs />
-						</v-card>
-					</div>
+					<v-card class="pa-3" flat>
+						<v-subheader>RESULT BREAKDOWN</v-subheader>
+						<result-tabs />
+					</v-card>
 				</v-col>
 			</v-row>
 		</v-container>

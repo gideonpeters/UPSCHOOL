@@ -54,9 +54,26 @@ class GradeItemController extends Controller
      * @param  \App\GradeItem  $gradeItem
      * @return \Illuminate\Http\Response
      */
-    public function edit(GradeItem $gradeItem)
+    public function edit(Request $request)
     {
         //
+        $gradeItem = GradeItem::find($request->grade_id);
+
+        if (!$gradeItem) {
+            return response()->json([
+                'status' => false,
+                'message' => 'grade not found',
+                'data' => null
+            ], 201);
+        }
+        $gradeItem->score = $request->score;
+        $gradeItem->save();
+
+        return response()->json([
+            'status' => true,
+            'message' => 'score uploaded successfully',
+            'data' => $gradeItem
+        ], 201);
     }
 
     /**

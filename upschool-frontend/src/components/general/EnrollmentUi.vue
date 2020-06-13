@@ -105,6 +105,7 @@
 												:key="curriculumItem.id"
 											>
 												<curriculum-table
+													:isLoadingCurrent="isLoadingCurrent"
 													:isEnrolling="isEnrolling"
 													:selectedCourses="
 														selectedCourses
@@ -214,6 +215,8 @@
 
 											<v-data-table
 												:headers="pendingHeaders"
+												:loading="isLoadingPending"
+												loading-text="Loading... Please wait"
 												:items="pendingAddableItems"
 												@item-selected="selectItem"
 												class="elevation-1"
@@ -269,6 +272,8 @@
 												:items="pendingItems"
 												@item-selected="selectItem"
 												class="elevation-1"
+												:loading="isLoadingPending"
+												loading-text="Loading... Please wait"
 												:show-select="
 													isEnrolling
 												"
@@ -331,6 +336,10 @@ export default {
 		isStudent: {
 			type: Boolean,
 			default: false
+		},
+		isAdmin: {
+			type: Boolean,
+			default: false
 		}
 	},
 	components: {
@@ -346,6 +355,8 @@ export default {
 			},
 			// isStudent: false,
 			selectedCourses: [],
+			isLoadingPending: true,
+			isLoadingCurrent: true,
 			pendingSelected: [],
 			awaitingApprovalCourses: [],
 			showPendingSelect: false,
@@ -370,29 +381,7 @@ export default {
 				{ text: "DUE DATE", value: "time", sortable: false },
 				{ text: "ACTIONS", value: "action", sortable: false }
 			],
-			asgn: [
-				{
-					id: 1,
-					course_code: "GST411",
-					name: "GST111: Communications in English Language",
-					time: "Nov 26, 2020",
-					weight: "10%"
-				},
-				{
-					id: 2,
-					course_code: "EIE411",
-					name: "EIE517: applied Electronics",
-					time: "June 26, 2020",
-					weight: "20%"
-				},
-				{
-					id: 3,
-					course_code: "CEN411",
-					name: "Report on the 8051 micro controller",
-					time: "Mar 31, 2020",
-					weight: "20%"
-				}
-			],
+			asgn: [],
 			text:
 				"Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.",
 			headers: [
@@ -543,14 +532,13 @@ export default {
 	},
 	computed: {
 		academicSession() {
-			return this.$store.state.currentAcademicSession.session;
+			return this.$store.state.currentAcademicSession.session || {};
 		},
-
 		semester() {
-			return this.$store.state.currentAcademicSession.semester;
+			return this.$store.state.currentAcademicSession.semester || {};
 		},
 		settings() {
-			return this.$store.state.settings;
+			return this.$store.state.settings || {};
 		},
 		level() {
 			return this.$store.state.loggedInUser.level;

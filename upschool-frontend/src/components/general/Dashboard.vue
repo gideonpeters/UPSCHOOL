@@ -155,8 +155,7 @@
 								</v-container>
 							</v-card>
 						</div>
-						<div>
-							<v-card class="pa-3 mb-5" flat>
+						<!-- <v-card class="pa-3 mb-5" flat>
 								<v-container fluid class="pa-0">
 									<v-row no-gutters>
 										<v-col cols="12">
@@ -178,8 +177,7 @@
 										</v-col>
 									</v-row>
 								</v-container>
-							</v-card>
-						</div>
+						</v-card>-->
 					</div>
 				</v-col>
 				<v-col cols="12" sm="12" md="4">
@@ -262,79 +260,80 @@
 								</v-container>
 							</v-card>
 						</div>
-						<div>
-							<v-card class="pa-3 mb-5" flat>
-								<v-container fluid class="pa-0">
-									<v-row no-gutters>
-										<v-col cols="12">
-											<custom-header
-												title="NEWS"
-												ctaText="View more"
-												:route="
+						<v-card class="pa-3 mb-5" flat>
+							<v-container fluid class="pa-0">
+								<v-row no-gutters>
+									<v-col cols="12">
+										<custom-header
+											title="NEWS"
+											ctaText="View more"
+											:route="
 													isStudent
 														? 'student.news'
 														: 'staff.news'
 												"
-											></custom-header>
-										</v-col>
-										<v-col>
-											<div class="d-flex flex-column">
-												<div class="fs-3 text-uppercase font-weight-bold grey--text">{{ latestNews.title }}</div>
-												<v-card
-													v-html="latestNews.body"
-													flat
-													max-height="76"
-													v-line-clamp:20="4"
-													class="fs-4 d-flex text-wrap"
-												></v-card>
-												<div class="d-flex">
-													<v-spacer></v-spacer>
-													<div>
-														<v-btn
-															color="primary"
-															text
-															small
-															@click="
+										></custom-header>
+									</v-col>
+									<v-col>
+										<div class="d-flex flex-column">
+											<div class="fs-3 text-uppercase font-weight-bold grey--text">{{ latestNews.title }}</div>
+											<v-card
+												v-html="latestNews.body"
+												flat
+												max-height="76"
+												v-line-clamp:20="4"
+												class="fs-4 d-flex text-wrap"
+											></v-card>
+											<div class="d-flex">
+												<v-spacer></v-spacer>
+												<div>
+													<v-btn
+														color="primary"
+														text
+														small
+														@click="
 																goToPage(
 																	'student.news.details',
 																	latestNews.id
 																)
 															"
-														>read more</v-btn>
-													</div>
+													>read more</v-btn>
 												</div>
-												<!-- <div class="primary--text fs-4 mt-4 pointer" >Read more</div> -->
 											</div>
-										</v-col>
-									</v-row>
-								</v-container>
-								<!-- <v-subheader>NEWS</v-subheader> -->
-							</v-card>
-						</div>
-						<div>
-							<v-card class="pa-3 mb-5" flat>
-								<v-container fluid class="pa-0">
-									<v-row no-gutters>
-										<v-col cols="12">
-											<custom-header title="EVENTS" ctaText="View more" route="student.news"></custom-header>
-										</v-col>
-										<v-col>
-											<div class="d-flex flex-column" v-if="latestEvent">
-												<div class="fs-3 text-uppercase font-weight-bold grey--text">{{ latestEvent.name }}</div>
-												<v-card flat max-height="76" v-line-clamp:20="4" class="fs-4 d-flex text-wrap">
-													{{
-													latestEvent.description
-													}}
-												</v-card>
-												<!-- <div class="primary--text fs-4 mt-4 pointer">ADD TO SCHEDULE</div> -->
-											</div>
-										</v-col>
-									</v-row>
-								</v-container>
-							</v-card>
-						</div>
-						<div>
-							<v-card class="pa-3 mb-5" flat>
+											<!-- <div class="primary--text fs-4 mt-4 pointer" >Read more</div> -->
+										</div>
+									</v-col>
+								</v-row>
+							</v-container>
+							<!-- <v-subheader>NEWS</v-subheader> -->
+						</v-card>
+						<v-card class="pa-3 mb-5" flat min-width="100%">
+							<v-container fluid class="pa-0">
+								<v-row no-gutters>
+									<v-col cols="12">
+										<custom-header title="EVENTS" ctaText="View more" route="student.news"></custom-header>
+									</v-col>
+									<v-col cols="12">
+										<div v-if="latestEvent">
+											<div class="fs-3 text-uppercase font-weight-bold grey--text">{{ latestEvent.name }}</div>
+											<v-card
+												min-width="100%"
+												flat
+												max-height="76"
+												v-line-clamp:20="4"
+												class="fs-4 d-flex text-wrap"
+											>
+												{{
+												latestEvent.description
+												}}
+											</v-card>
+											<!-- <div class="primary--text fs-4 mt-4 pointer">ADD TO SCHEDULE</div> -->
+										</div>
+									</v-col>
+								</v-row>
+							</v-container>
+						</v-card>
+						<!-- <v-card class="pa-3 mb-5" flat>
 								<v-container fluid class="pa-0">
 									<v-row no-gutters>
 										<v-col cols="12">
@@ -345,8 +344,7 @@
 										</v-col>
 									</v-row>
 								</v-container>
-							</v-card>
-						</div>
+						</v-card>-->
 					</div>
 				</v-col>
 			</v-row>
@@ -356,14 +354,14 @@
 
 <script>
 import QuizCard from "@/components/general/QuizCard";
-import DashboardCalendar from "@/components/general/Calendar";
+// import DashboardCalendar from "@/components/general/Calendar";
 import AssignmentTable from "@/components/general/AssignmentTable";
 import Axios from "axios";
 
 export default {
 	components: {
 		QuizCard,
-		DashboardCalendar,
+		// DashboardCalendar,
 		AssignmentTable
 	},
 	props: {

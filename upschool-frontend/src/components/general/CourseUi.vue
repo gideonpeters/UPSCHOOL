@@ -3,10 +3,17 @@
 		<v-container>
 			<v-row v-if="personal" align="center">
 				<v-col cols="12" md="4">
-					<metric-card
-						:title="isStudent ?'Number of enrolled courses':'Number of facilitated courses'"
-						:value="courses.length"
-					/>
+					<v-skeleton-loader
+						transition="scale-transition"
+						:loading="isLoadingCourses"
+						height="94"
+						type="list-item-two-line"
+					>
+						<metric-card
+							:title="isStudent ?'Number of enrolled courses':'Number of facilitated courses'"
+							:value="courses.length"
+						/>
+					</v-skeleton-loader>
 				</v-col>
 			</v-row>
 			<v-row align="center">
@@ -311,9 +318,12 @@
 				</v-col>
 				<v-col cols="12" md="12">
 					<v-card flat color="transparent" min-height="300px">
-						<v-row :justify="
+						<v-row
+							:justify="
 							$vuetify.breakpoint.mdAndUp ? 'start' : 'center'
-						">
+						"
+							v-if="!isLoadingCourses"
+						>
 							<v-col cols="12" md="4" sm="5" v-for="(course, index) in visibleCourses" :key="index">
 								<course-item
 									:course="course"
@@ -322,6 +332,11 @@
 									:isAdmin="isAdmin"
 									:isStudent="isStudent"
 								/>
+							</v-col>
+						</v-row>
+						<v-row v-else>
+							<v-col cols="12" md="4" sm="5" v-for="i in 6" :key="i">
+								<v-skeleton-loader ref="skeleton" type="card" class="mx-auto"></v-skeleton-loader>
 							</v-col>
 						</v-row>
 					</v-card>
@@ -389,6 +404,7 @@ export default {
 				timeout: 3000,
 				text: ""
 			},
+			isLoadingCourses: true,
 			creditUnit: 0,
 			courseTitle: null,
 			courseCode: null,
@@ -544,6 +560,18 @@ export default {
 			});
 			this.bulkHeaders = arr;
 			// console.log(headers);
+		},
+		async getEnrolledCourses() {
+			try {
+				let res = await Axios.get(
+					`courses-enrolled?student_id=${this.$store.state.loggedInUser.id}`
+				);
+				this.enrolledCourses = res.data.data;
+
+				console.table(res.data);
+			} catch (error) {
+				throw error;
+			}
 		}
 	},
 	watch: {
@@ -555,15 +583,13 @@ export default {
 		try {
 			// if (this.courses.length == 0) {
 			if (this.personal) {
-				let res = await Axios.get(
-					`courses-enrolled?student_id=${this.$store.state.loggedInUser.id}`
+				this.getEnrolledCourses().then(
+					() => (this.isLoadingCourses = false)
 				);
-
-				console.log(res.data);
-
-				this.enrolledCourses = res.data.data;
 			} else {
-				await this.$store.dispatch("getAllCourses");
+				await this.$store
+					.dispatch("getAllCourses")
+					.then(() => (this.isLoadingCourses = false));
 			}
 
 			// }
