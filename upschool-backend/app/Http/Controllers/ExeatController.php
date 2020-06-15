@@ -7,6 +7,7 @@ use App\Exeat;
 use App\Student;
 use App\Semester;
 use App\ExeatType;
+use App\StudentRoom;
 use Carbon\Carbon;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Storage;
@@ -29,6 +30,9 @@ class ExeatController extends Controller
             }
             $exeats = Exeat::whereStudentId($student->id)->get();
         }
+        $exeats->each(function ($query) {
+            $query->append('latest_room');
+        });
 
         return response()->json([
             'status' => true,
@@ -39,11 +43,7 @@ class ExeatController extends Controller
 
     public function store(Request $request)
     {
-        //
-        // $items = $request->files;
-        // return response()->json([
-        //     'data' => $items[0]
-        // ], 201);
+
         if ($request->has('action')) {
             $existing_exeat = Exeat::find($request->exeat_id);
 
@@ -55,12 +55,12 @@ class ExeatController extends Controller
                 ], 201);
             }
 
-            $existing_exeat->status = $request->status == true ? 'approved' : 'declined';
+            $existing_exeat->status = $request->status ? 'approved' : 'declined';
             $existing_exeat->save();
 
             return response()->json([
                 'status' => true,
-                'message' => $request->status == true ? 'exeat approved' : 'exeat declined',
+                'message' => "exeat $existing_exeat->status",
                 'data' => $existing_exeat
             ], 201);
         }

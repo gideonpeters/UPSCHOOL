@@ -365,7 +365,25 @@
 						</v-dialog>
 					</v-card>
 				</v-col>
-				<v-col cols="12" md="3">
+				<v-col>
+					<v-card flat class="pa-3 mt-4">
+						<v-subheader class="pa-0">PRIORITY LEVELS</v-subheader>
+
+						<div class="d-flex fs-4 mb-3">
+							<div class="pr-4">
+								<v-icon small color="info lighten-3">mdi-circle-slice-8</v-icon>
+							</div>
+							<div>Voluntary</div>
+						</div>
+						<div class="d-flex fs-4 mb-3">
+							<div class="pr-4">
+								<v-icon small color="red lighten-3">mdi-alert-circle</v-icon>
+							</div>
+							<div>Mandatory</div>
+						</div>
+					</v-card>
+				</v-col>
+				<!-- <v-col cols="12" md="3">
 					<v-card flat class="pa-3">
 						<v-subheader class="pa-0">ATTENDABLE GROUPS</v-subheader>
 
@@ -446,43 +464,7 @@
 																				/>
 																			</div>
 																			<v-spacer></v-spacer>
-																			<!-- <div class="d-flex mb-3">
-																				<v-btn
-																					color="success"
-																					text
-																					v-if="
-																					selectAttendableGroup
-																				"
-																				>
-																					IMPORT
-																					CSV
-																				</v-btn>
-																				<v-btn
-																					color="success"
-																					text
-																					v-if="
-																					selectAttendableGroup
-																				"
-																				>
-																					EXPORT
-																					CSV
-																				</v-btn>
-																				<v-btn color="primary" depressed>
-																					Save
-																					Selected
-																				</v-btn>
-																				<v-btn
-																					color="primary"
-																					text
-																					depressed
-																					v-if="
-																					!selectAttendableGroup
-																				"
-																				>
-																					New
-																					Group
-																				</v-btn>
-																			</div>-->
+																		
 																			<div class="d-flex align-center justify-end">
 																				<v-menu
 																					v-model="filterMenu"
@@ -607,23 +589,8 @@
 						</div>
 					</v-card>
 
-					<v-card flat class="pa-3 mt-4">
-						<v-subheader class="pa-0">PRIORITY LEVELS</v-subheader>
-
-						<div class="d-flex fs-4 mb-3">
-							<div class="pr-4">
-								<v-icon small color="info lighten-3">mdi-circle-slice-8</v-icon>
-							</div>
-							<div>Voluntary</div>
-						</div>
-						<div class="d-flex fs-4 mb-3">
-							<div class="pr-4">
-								<v-icon small color="red lighten-3">mdi-alert-circle</v-icon>
-							</div>
-							<div>Mandatory</div>
-						</div>
-					</v-card>
-				</v-col>
+					
+				</v-col>-->
 			</v-row>
 		</v-container>
 	</v-app>

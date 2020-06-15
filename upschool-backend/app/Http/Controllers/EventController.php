@@ -35,6 +35,7 @@ class EventController extends Controller
     {
         //
         $event = Event::with('eventable')->find($event_id);
+
         if (!$event) {
             return response()->json([
                 'status' => false,
@@ -42,6 +43,9 @@ class EventController extends Controller
                 'data' => []
             ], 201);
         }
+
+        $event->append('dates');
+
         return response()->json([
             'status' => true,
             'message' => 'this is the event',

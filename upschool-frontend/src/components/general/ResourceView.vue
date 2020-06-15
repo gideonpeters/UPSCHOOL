@@ -90,7 +90,7 @@
 			</v-card-title>-->
 			<v-data-table :headers="headers" :items="items" :search="search" class="elevation-1">
 				<template v-slot:item.action="{ item }">
-					<v-btn icon @click="goToPage(item)" color="grey">
+					<v-btn icon @click="!singlePage ? goToPage(item): showItem(item)" color="grey">
 						<v-icon small>mdi-eye</v-icon>
 					</v-btn>
 					<v-btn icon @click="editItem(item)" color="grey">
@@ -117,6 +117,37 @@
 				<template v-slot:item.college_short_name="{ item }">{{item.college.short_name}}</template>
 			</v-data-table>
 		</v-card>
+		<v-dialog v-model="dialog1" max-width="600px">
+			<!-- <v-card>
+				<v-card-title>{{type}}</v-card-title>
+				<v-card-text>
+					<div
+						class="py-3 text-capitalize"
+						v-for="item in Object.keys(selectedResource)"
+						:key="item.id"
+					>{{item.replace(/_/g, " ")}}: {{String(selectedResource[item]).replace(/_/g, " ")}}</div>
+				</v-card-text>
+			</v-card>-->
+			<v-card>
+				<v-card-title>{{type}}</v-card-title>
+				<v-card-text>
+					<v-container>
+						<v-row>
+							<v-col>
+								<div class="d-flex">
+									<div class="font-weight-bold mr-2">NAME:</div>
+									<div>{{selectedResource.name}}</div>
+								</div>
+								<div class="d-flex mt-4">
+									<div class="font-weight-bold mr-2">TOTAL SCORE:</div>
+									<div>{{selectedResource.total_score}}</div>
+								</div>
+							</v-col>
+						</v-row>
+					</v-container>
+				</v-card-text>
+			</v-card>
+		</v-dialog>
 	</div>
 </template>
 
@@ -139,11 +170,17 @@ export default {
 		type: {
 			type: String,
 			default: "def"
+		},
+		"single-page": {
+			type: Boolean,
+			default: false
 		}
 	},
 	data() {
 		return {
-			search: ""
+			search: "",
+			dialog1: false,
+			selectedResource: {}
 		};
 	},
 	methods: {
@@ -168,6 +205,10 @@ export default {
 			this.$emit("create");
 		},
 		viewItem() {},
+		showItem(item) {
+			this.dialog1 = true;
+			this.selectedResource = item;
+		},
 		deleteItem(item) {
 			this.$emit("delete", item);
 		},

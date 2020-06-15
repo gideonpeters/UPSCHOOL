@@ -28,9 +28,13 @@
 									<div v-if="indx == 0">
 										<v-expansion-panels multiple>
 											<v-expansion-panel v-for="(schoolEvent, i) in studentEvents" :key="i">
-												<v-expansion-panel-header class="text-uppercase">{{schoolEvent.title}}</v-expansion-panel-header>
+												<v-expansion-panel-header class="text-uppercase">{{schoolEvent.name}}</v-expansion-panel-header>
 												<v-expansion-panel-content>
-													<div class="d-flex align-start h-100 mb-4" v-for="i in 3" :key="i">
+													<div
+														class="d-flex align-start h-100 mb-4"
+														v-for="date in schoolEvent.logged_dates"
+														:key="date.id"
+													>
 														<div class="d-flex flex-column align-center mr-4 h-100">
 															<div>
 																<v-icon color="info" size="20">mdi-circle-slice-8</v-icon>
@@ -40,8 +44,8 @@
 
 														<div>
 															<!-- <div>{{ eventDate.date.toUTCString() }}</div> -->
-															<div class="fs-3">{{schoolEvent.event.venue}}</div>
-															<div class="fs-4">{{schoolEvent.event.start_time}}</div>
+															<div class="fs-3">{{moment(date.start_time).format('DD mm YYYY')}}</div>
+															<!-- <div class="fs-4">jdjdk</div> -->
 														</div>
 
 														<div class="ml-auto">
@@ -123,6 +127,10 @@ export default {
 			default: false
 		},
 		staff: {
+			type: Boolean,
+			default: false
+		},
+		staffView: {
 			type: Boolean,
 			default: false
 		}
@@ -364,21 +372,22 @@ export default {
 		try {
 			let id = this.$route.params.id;
 			if (!id) {
-				id = this.$store.state.loggedInUser.id;
+				id = this.$store.state.loggedInUser.matric_number;
 				this.student = this.$store.state.loggedInUser;
 			} else {
 				let res = await Axios.get(`student/${id}`);
-				console.log(res.data);
+				// console.log(res.data);
 				this.student = res.data.data;
 			}
 
-			this.studentEvents = await this.$store.dispatch(
-				"getUserEvents",
-				id
-			);
-			// console.log(this.studentEvents);
+			this.studentEvents = await this.$store.dispatch("getUserEvents", {
+				id,
+				type: !this.staffView ? "student" : "staff"
+			});
+
+			console.log(this.studentEvents);
 		} catch (error) {
-			console.log(error);
+			throw error;
 		}
 	},
 	methods: {

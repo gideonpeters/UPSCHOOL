@@ -18,6 +18,7 @@ class CreateUsersEventsTable extends Migration
             $table->foreignId('user_id');
             $table->foreignId('school_event_id')->nullable();
             $table->foreignId('event_id')->nullable();
+            $table->boolean('status')->nullable();
             $table->timestamps();
         });
     }

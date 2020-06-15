@@ -443,7 +443,7 @@ export default {
 		},
 		async respondToExeat(val = false, id) {
 			try {
-				let res = await Axios.post(`exeat?action="${val}`, {
+				let res = await Axios.post(`exeat?action=${val}`, {
 					status: val,
 					exeat_id: id
 				});

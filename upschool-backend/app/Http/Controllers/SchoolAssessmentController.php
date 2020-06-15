@@ -153,10 +153,23 @@ class SchoolAssessmentController extends Controller
         ], 201);
     }
 
-    public function show(SchoolAssessment $schoolAssessment)
+    public function show(Request $request, $id)
     {
         //
+        $school_assessment = SchoolAssessment::with('school_assessment_items', 'school_assessment_items.student_course')->find($id);
+        if (!$school_assessment) {
+            return response()->json([
+                'status' => false,
+                'message' => 'assessment not found',
+                'data' => []
+            ], 201);
+        }
 
+        return response()->json([
+            'status' => true,
+            'message' => 'school assessment found',
+            'data' => $school_assessment
+        ], 201);
     }
 
     public function storeCourse(Request $request)

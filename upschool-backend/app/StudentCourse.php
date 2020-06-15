@@ -17,7 +17,7 @@ class StudentCourse extends Pivot
     //
     protected $table = 'student_courses';
 
-    protected $with = ['curriculum_item'];
+    protected $with = ['curriculum_item', 'student'];
 
     public function result_item()
     {

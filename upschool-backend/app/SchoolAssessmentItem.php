@@ -8,7 +8,7 @@ use Illuminate\Database\Eloquent\Model;
 class SchoolAssessmentItem extends Model
 {
     //
-    protected $with = ['school_assessment:id,name,total_score'];
+    protected $with = ['school_assessment:id,name,total_score', 'student_course'];
 
     public function school_assessment()
     {

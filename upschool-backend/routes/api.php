@@ -127,6 +127,7 @@ Route::group([], function ($router) {
 
 Route::group([], function ($router) {
     Route::get('school-assessment', 'SchoolAssessmentController@index');
+    Route::get('school-assessment/{id}', 'SchoolAssessmentController@show');
     Route::post('school-assessment', 'SchoolAssessmentController@store');
     Route::post('school-assessment-upload', 'SchoolAssessmentController@upload');
 
@@ -257,7 +258,7 @@ Route::group([], function ($router) {
 });
 
 Route::group([], function ($router) {
-    Route::post('user-event', 'UserEventController@getUserEvents');
+    Route::get('user-event', 'UserEventController@getUserEvents');
 });
 
 

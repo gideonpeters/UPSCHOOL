@@ -62,6 +62,12 @@ class Student extends Model
         return $this->belongsToMany(Room::class, 'student_rooms')->using(StudentRoom::class);
     }
 
+    public function getLatestRoomAttribute()
+    {
+        return '670';
+        // return StudentRoom::whereStudentId($this->id)->whereSemesterId(Semester::latest()->first()->id)->first();
+    }
+
     public function enrollment_items()
     {
         return $this->hasMany(StudentEnrollmentItem::class);

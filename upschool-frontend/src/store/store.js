@@ -244,46 +244,44 @@ export default new Vuex.Store({
 				localStorage.removeItem(`upshool-token`);
 				commit("openSnackbar", "Logged out successfully!");
 			} catch (error) {
-				console.log(error);
+				throw error;
 			}
 		},
 		async getUser({ state }) {
 			let res = await axios.post("auth/me");
-			console.log(res.data);
 
 			state.loggedInUser = res.data.user;
 			// return res.data.user;
 		},
-		async getUserEvents({}, id) {
-			let body = { user_id: id };
-			let res = await axios.post("user-event", body);
-			console.log(res.data);
+		async getUserEvents({}, item) {
+			let res = await axios.get(
+				`user-event?user_id=${item.id}&type=${item.type}`
+			);
 			return res.data.data;
 		},
 		async getUserSchedule() {
 			let res = await axios.get("schedule");
-			console.log(res.data);
 
 			return res.data;
 		},
 		async getColleges({ state }) {
 			let res = await axios.get("college");
-			console.log(res.data);
+
 			state.colleges = res.data.data;
 		},
 		async getDepartments({ state }) {
 			let res = await axios.get("department");
-			console.log(res.data);
+
 			state.departments = res.data.data;
 		},
 		async getPrograms({ state }) {
 			let res = await axios.get("program");
-			console.log(res.data);
+
 			state.programs = res.data.data;
 		},
 		async getStudents({ state }) {
 			let res = await axios.get("student");
-			console.log(res.data);
+
 			state.students = res.data.data;
 			return res.data;
 		},
@@ -291,21 +289,19 @@ export default new Vuex.Store({
 			let res = await axios.get(
 				`school-assessment?course_id=${course_id}`
 			);
-			console.log(res.data);
+
 			state.schoolAssessments = res.data.data;
 			return res.data;
 		},
 		async getAllSchoolAssessments({ state }) {
 			let res = await axios.get(`school-assessment`);
 
-			console.log(res.data);
-
 			state.schoolAssessments = res.data.data;
 			return res.data;
 		},
 		async getStaff({ state }) {
 			let res = await axios.get("staff");
-			console.log(res.data);
+
 			state.staff = res.data.data;
 		},
 		async getFacilitatedCourses({ state }, id) {
@@ -313,30 +309,29 @@ export default new Vuex.Store({
 				let res = await axios.get(
 					`courses-facilitators?staff_id=${id}`
 				);
-				console.log(res.data);
 
 				state.facilitated = res.data.data;
 			} catch (error) {
-				console.log(eror);
+				throw error;
 			}
 		},
 		async getCourseParticipants({}, id) {
 			try {
 				let res = await axios.get(`courses/${id}/participants`);
-				console.log(res.data);
+
 				return res.data;
 			} catch (error) {
-				console.log(error);
+				throw error;
 			}
 		},
 		async getNews({ state }) {
 			let res = await axios.get("news");
-			console.log(res.data);
+
 			state.news = res.data.data;
 		},
 		async getSchoolEvents({ state }) {
 			let res = await axios.get("school-event");
-			console.log(res.data);
+
 			state.schoolEvents = res.data.data;
 			return res.data;
 		},
@@ -352,7 +347,7 @@ export default new Vuex.Store({
 			};
 
 			let res = await axios.post(`enroll/courses`, body);
-			console.log(res.data);
+
 			state.enrollments = res.data.data;
 		},
 		async getCurrentEnrollment({ state }, id) {
@@ -361,19 +356,16 @@ export default new Vuex.Store({
 				semester_id: state.currentAcademicSession.semester.id,
 			};
 			let res = await axios.post("enroll/student-latest", body);
-			console.log(res.data);
+
 			return res.data.data;
 		},
 		async getEnrollableItems({}, id) {
 			let res = await axios.get(`curriculum-block-student/${id}`);
-			console.log(res.data);
 			return res.data;
 		},
 		async getStudentEnrollments({}, id) {
 			let body = { student_id: id };
 			let res = await axios.post("enroll/student", body);
-
-			console.log(res.data);
 
 			return res.data.data;
 		},
@@ -390,8 +382,6 @@ export default new Vuex.Store({
 			};
 
 			let res = await axios.post("enroll", body);
-
-			console.log(res.data);
 
 			return res.data;
 		},
@@ -413,27 +403,23 @@ export default new Vuex.Store({
 
 				return res.data;
 			} catch (error) {
-				console.log(error);
+				throw error;
 			}
 		},
 		async getStudentResults({ state }, student_id) {
 			let id = state.loggedInUser ? state.loggedInUser.id : student_id;
 			let res = await axios.get(`result/${id}`);
 
-			console.log(res.data);
-
 			return res.data.data;
 		},
 		async getCourseSection({}, id) {
 			let res = await axios.get(`course-section/${id}`);
 
-			console.log(res.data);
-
 			return res.data.data;
 		},
 		async getAllCourses({ state }) {
 			let res = await axios.get("courses");
-			console.log(res.data);
+
 			state.courses = res.data.data;
 		},
 		async getCourseById({}, id) {
@@ -442,7 +428,7 @@ export default new Vuex.Store({
 		},
 		async getCurricula({}, id) {
 			let res = await axios.get(`curriculum-block/${id}`);
-			console.log(res.data);
+
 			return res.data.data;
 		},
 		async saveBulkCourses({ dispatch }, payload) {
@@ -451,7 +437,7 @@ export default new Vuex.Store({
 			if (res.data.status) {
 				dispatch("getAllCourses");
 			}
-			console.log(res.data);
+
 			return res.data;
 		},
 		async uploadSchoolAssessment({ commit }, payload) {
@@ -461,12 +447,12 @@ export default new Vuex.Store({
 		},
 		async getCourseGradelist({}, id) {
 			let res = await axios.get(`gradelist?course_id=${id}`);
-			console.log(res.data);
+
 			return res.data;
 		},
 		async saveCourseGradelist({ commit }, body) {
 			let res = await axios.post(`gradelist`, body);
-			console.log(res.data);
+
 			commit("openSnackbar", res.data.message);
 			return res.data;
 		},
@@ -484,28 +470,26 @@ export default new Vuex.Store({
 				`curriculum-item/${payload.blockId}`,
 				payload.body
 			);
-			console.log(res.data);
+
 			return res.data;
 		},
 		async getCurrentAcademicSession({ state }) {
 			let res = await axios.get("academic-session-current");
-			console.log(res.data);
+
 			state.currentAcademicSession = res.data.data;
 		},
 		async getAdvisees({ state }) {
 			let res = await axios.get(
 				`staff-advisees?staff_id=${state.loggedInUser.id}`
 			);
-			console.log(res.data);
+
 			return res.data;
 		},
 		async testEcho({}) {
 			try {
-				let res = await axios.post("message", { body: "yoooo" });
-
-				console.log(res.data);
+				await axios.post("message", { body: "yoooo" });
 			} catch (error) {
-				console.log(error);
+				throw error;
 			}
 		},
 		setupDashboard({ dispatch }) {

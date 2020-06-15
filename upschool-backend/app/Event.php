@@ -4,6 +4,7 @@ namespace App;
 
 use App\User;
 use App\Semester;
+use Carbon\Carbon;
 use Illuminate\Database\Eloquent\Model;
 
 class Event extends Model
@@ -18,6 +19,43 @@ class Event extends Model
     {
         $item = Event::with('eventable')->find($this->id);
         return $item->eventable->title;
+    }
+
+    public function getDatesAttribute()
+    {
+        // if (!$this->event_id) {
+        $dates = collect($this->events)->map(function ($item) {
+            return $item->start_time;
+        });
+        $dates = $dates->filter(function ($item) {
+            return Carbon::parse($item)->lessThanOrEqualTo(Carbon::now());
+        });
+
+        return $dates;
+        // }
+    }
+
+    public function getLoggedDatesAttribute()
+    {
+        $val = $this->events->filter(function ($item) {
+            return Carbon::parse($item->start_time)->lessThanOrEqualTo(Carbon::now());
+        })->all();
+
+        return $val;
+    }
+
+    // public function getDefaultsAttribute()
+    // {
+    //     $val = $this->events->filter(function ($item) {
+    //         return Carbon::parse($item->start_time)->lessThanOrEqualTo(Carbon::now());
+    //     })->all();
+
+    //     return count($val);
+    // }
+
+    public function getEventsCountAttribute()
+    {
+        return count($this->events);
     }
 
     public function semester()
