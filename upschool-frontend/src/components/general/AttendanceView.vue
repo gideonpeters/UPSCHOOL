@@ -6,16 +6,16 @@
 		</div>
 
 		<v-row>
-			<v-col cols="12" md="4">
+			<v-col cols="12" md="4" v-if="!isStudent">
 				<div class="d-flex flex-column justify-center">
 					<student-card :student="student" />
-					<div class="d-flex flex-column justify-center" v-if="!isStudent">
+					<div class="d-flex flex-column justify-center">
 						<v-btn color="success" outlined depressed class="mb-2">Create Clearance</v-btn>
 						<v-btn color="success" depressed>Generate Report</v-btn>
 					</div>
 				</div>
 			</v-col>
-			<v-col cols="12" md="8">
+			<v-col>
 				<v-card flat class="pa-3">
 					<v-tabs v-model="tab" background-color="transparent">
 						<v-tab v-for="(item, idx) in items" :key="idx">{{ item.tab }}</v-tab>
@@ -385,7 +385,7 @@ export default {
 				type: !this.staffView ? "student" : "staff"
 			});
 
-			console.log(this.studentEvents);
+			// console.log(this.studentEvents);
 		} catch (error) {
 			throw error;
 		}

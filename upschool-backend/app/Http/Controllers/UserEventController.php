@@ -3,9 +3,9 @@
 namespace App\Http\Controllers;
 
 use App\Event;
+use App\UserEvent;
 use App\Staff;
 use App\Student;
-use App\UserEvent;
 use Carbon\Carbon;
 use Illuminate\Http\Request;
 

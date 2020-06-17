@@ -1,10 +1,10 @@
 <template>
 	<div>
 		<v-row>
-			<v-col cols="12" md="3">
+			<v-col cols="12" md="3" v-if="!isStaff">
 				<div class="d-flex flex-column">
 					<staff-card :isSuspended="isSuspended" :staff="staff" flat />
-					<v-menu v-if="!isStaff" bottom left>
+					<v-menu bottom left>
 						<template v-slot:activator="{ on }">
 							<v-btn color="primary" depressed v-on="on">Actions</v-btn>
 						</template>
@@ -15,7 +15,7 @@
 					</v-menu>
 				</div>
 			</v-col>
-			<v-col cols="12" md="9">
+			<v-col>
 				<div>
 					<v-tabs v-model="currentItem" fixed-tabs slider-color="white">
 						<v-tab v-for="item in items" :key="item" :href="'#tab-' + item">{{ item }}</v-tab>
@@ -152,12 +152,12 @@ export default {
 			items: [
 				"Academic Profile",
 				"Personal Information",
-				"Curriculum",
-				"Results/Transcripts"
+				// "Curriculum",
+				"Course Evaluations"
 			],
 			more: [
 				"Finances",
-				"Graduation Requirements",
+				// "Graduation Requirements",
 				"Issues"
 				// "Flights",
 				// "Apps"

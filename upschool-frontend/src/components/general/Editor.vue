@@ -57,7 +57,6 @@ export default {
 				[{ size: ["small", false, "large", "huge"] }],
 				["code-block", "link"]
 			],
-
 			rules: [
 				value =>
 					!value ||

@@ -671,7 +671,7 @@ export default {
 			}
 		},
 		async saveEnrolled() {
-			console.log(this.$store.state.selectedCourses);
+			// console.log(this.$store.state.selectedCourses);
 			try {
 				let res = await this.$store.dispatch("enrollCourses");
 				if (res.status) {
@@ -683,7 +683,7 @@ export default {
 					this.snackbar.text = res.message;
 				}
 			} catch (error) {
-				console.log(error);
+				throw error;
 			}
 		},
 		enroll() {
@@ -725,7 +725,7 @@ export default {
 					this.selectedAfterAdding = [];
 				}
 			} catch (error) {
-				console.log(error);
+				throw error;
 			}
 		},
 		getColor(val) {
@@ -811,9 +811,9 @@ export default {
 					"getCurrentEnrollment",
 					id
 				);
-				this.currentEnrollment = data;
+				this.currentEnrollment = data || {};
 			} catch (error) {
-				console.log(error);
+				throw error;
 			}
 		},
 		async getEnrollableItems() {
@@ -827,7 +827,7 @@ export default {
 				this.enrollableItems = res.data;
 				this.pendingItems = res.pending;
 			} catch (error) {
-				console.log(error);
+				throw error;
 			}
 		},
 		async getEnrollmentHistory() {
@@ -842,7 +842,7 @@ export default {
 				);
 				this.enrollments = data;
 			} catch (error) {
-				console.log(error);
+				throw error;
 			}
 		},
 		async approveEnrollment() {
@@ -859,7 +859,7 @@ export default {
 					this.getCurrentEnrollment();
 				}
 			} catch (error) {
-				console.log(error);
+				throw error;
 			}
 		}
 		// async getCurricula() {
@@ -872,8 +872,8 @@ export default {
 		// }
 	},
 	watch: {
-		selectedCourses(v) {
-			console.log(v);
+		selectedCourses() {
+			// console.log(v);
 		}
 	},
 	async mounted() {
@@ -883,7 +883,7 @@ export default {
 			this.getEnrollableItems();
 			this.getEnrollmentHistory();
 		} catch (error) {
-			console.log(error);
+			throw error;
 		}
 	}
 };

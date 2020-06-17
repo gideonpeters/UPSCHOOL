@@ -1,5 +1,12 @@
 <template>
-  <v-app>
-    <h1>Staff Calendar</h1>
-  </v-app>
+	<v-app>
+		<calendar isStaff />
+	</v-app>
 </template>
+
+<script>
+import Calendar from "@/components/general/Calendar";
+export default {
+	components: { Calendar }
+};
+</script>

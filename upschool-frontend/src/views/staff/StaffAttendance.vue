@@ -1,5 +1,20 @@
 <template>
-  <v-app>
-    <h1>Staff Attendance</h1>
-  </v-app>
+	<v-app>
+		<attendance-view isStaff />
+	</v-app>
 </template>
+
+<script>
+import AttendanceView from "@/components/general/AttendanceView";
+
+export default {
+	components: {
+		AttendanceView
+	},
+	computed: {
+		studentCourses() {
+			return this.$store.state.student_courses;
+		}
+	}
+};
+</script>

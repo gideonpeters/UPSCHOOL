@@ -1,10 +1,10 @@
 <template>
 	<div>
 		<v-row>
-			<v-col cols="12" md="3">
+			<v-col cols="12" md="3" v-if="!isStudent">
 				<div class="d-flex flex-column">
 					<student-card :isSuspended="isSuspended" :student="student" flat />
-					<v-menu v-if="!isStudent" bottom left>
+					<v-menu bottom left>
 						<template v-slot:activator="{ on }">
 							<v-btn color="primary" depressed v-on="on">Actions</v-btn>
 						</template>
@@ -19,7 +19,7 @@
 					</v-menu>
 				</div>
 			</v-col>
-			<v-col cols="12" md="9">
+			<v-col>
 				<div>
 					<v-tabs v-model="currentItem" fixed-tabs slider-color="white">
 						<v-tab v-for="(item, indx) in items" :key="indx" :href="'#tab-' + item">{{ item }}</v-tab>
@@ -45,9 +45,7 @@
 							<v-card flat>
 								<v-card-text>
 									<h2>{{ item }}</h2>
-									{{
-									tabText(item)
-									}}
+									{{ tabText(item) }}
 								</v-card-text>
 							</v-card>
 
@@ -56,14 +54,23 @@
 									<div class="d-flex flex-column mb-4">
 										<div class="font-weight-bold fs-4">PROGRAM</div>
 										<!-- <div>{{student.program.degree.name}} ({{student.progam.degree.short_name}})</div> -->
-										<div
-											class="font-italic"
-										>Major in {{student.program.name}}({{ student.program.degree.short_name }})</div>
+										<div class="font-italic">
+											Major in
+											{{ student.program.name }}({{
+											student.program.degree
+											.short_name
+											}})
+										</div>
 									</div>
 
 									<div class="d-flex flex-column mb-4">
 										<div class="font-weight-bold fs-4">DURATION</div>
-										<div>{{student.program.no_of_years}} Years</div>
+										<div>
+											{{
+											student.program.no_of_years
+											}}
+											Years
+										</div>
 									</div>
 
 									<div class="d-flex flex-column mb-4">
@@ -73,31 +80,46 @@
 
 									<div class="d-flex flex-column mb-4">
 										<div class="font-weight-bold fs-4">DEPARTMENT</div>
-										<div>{{student.program.department.name}} ({{student.program.department.short_name}})</div>
+										<div>
+											{{
+											student.program.department.name
+											}}
+											({{
+											student.program.department
+											.short_name
+											}})
+										</div>
 									</div>
 
 									<div class="d-flex flex-column mb-4">
 										<div class="font-weight-bold fs-4">COLLEGE</div>
-										<div>{{student.program.department.college.name}}</div>
+										<div>
+											{{
+											student.program.department
+											.college.name
+											}}
+										</div>
 									</div>
 
 									<div class="d-flex flex-column mb-4">
 										<div class="font-weight-bold fs-4">ACADEMIC STANDING</div>
-										<div>{{student.promotion_status}}</div>
+										<div>{{ student.promotion_status }}</div>
 									</div>
 
 									<div class="d-flex flex-column mb-4">
 										<div class="font-weight-bold fs-4">LEVEL/GRADE</div>
-										<div>{{student.level}} level</div>
+										<div>{{ student.level }} level</div>
 									</div>
 								</v-card>
 
 								<v-card flat v-if="item == 'Personal Information'" min-height="500">
 									<div class="d-flex flex-column mb-4">
 										<div class="font-weight-bold fs-4">FULL NAME</div>
-										<div
-											class="font-italic"
-										>{{ `${student.first_name} ${student.middle_name} ${student.last_name}` }}</div>
+										<div class="font-italic">
+											{{
+											`${student.first_name} ${student.middle_name} ${student.last_name}`
+											}}
+										</div>
 									</div>
 									<div class="d-flex flex-column mb-4">
 										<div class="font-weight-bold fs-4">PHONE NUMBER</div>
@@ -309,18 +331,21 @@
 								<v-card flat v-if="item == 'Curriculum'" min-height="500">
 									<v-card flat>
 										<v-tabs v-model="curriculumTab" background-color="transparent">
-											<v-tab v-for="(level, ix) in levels" :key="ix" :href="'#tab-'+level">{{ level }}</v-tab>
+											<v-tab v-for="(level, ix) in levels" :key="ix" :href="'#tab-' + level">{{ level }}</v-tab>
 										</v-tabs>
 
 										<v-tabs-items v-model="curriculumTab">
-											<v-tab-item v-for="(level, ix) in levels" :key="ix" :value="'tab-'+level">
+											<v-tab-item v-for="(level, ix) in levels" :key="ix" :value="'tab-' + level">
 												<v-card flat class="pa-3">
 													<curriculum-item
 														:level="`${level}`"
 														v-for="curriculumItem in curricula.filter(
-															it =>
+															(it) =>
 																it.level ==
-																level && it.curriculum_items.length > 0
+																	level &&
+																it
+																	.curriculum_items
+																	.length > 0
 														)"
 														:status="
 															curriculumItem.status
@@ -349,7 +374,81 @@
 								</v-card>
 
 								<v-card flat v-if="item == 'Issues'" min-height="500">
-									<v-btn color="error" text>CREATE ISSUE</v-btn>
+									<v-row justify="space-between" align="center">
+										<v-col cols="5">
+											<v-text-field
+												v-model="search"
+												single-line
+												hide-details
+												flat
+												outlined
+												label="Search Issues"
+												solo
+												prepend-inner-icon="mdi-magnify"
+											></v-text-field>
+										</v-col>
+										<v-col cols="3">
+											<v-dialog v-model="dialog" persistent max-width="600px">
+												<template v-slot:activator="{ on }">
+													<v-btn color="error" text dark depressed v-on="on">CREATE ISSUE</v-btn>
+												</template>
+												<v-card>
+													<v-card-title>
+														<span class="headline">Create Issue</span>
+													</v-card-title>
+													<v-card-text>
+														<v-container>
+															<v-row>
+																<v-col cols="12">
+																	<v-text-field outlined flat label="Title" solo depressed></v-text-field>
+																</v-col>
+																<v-col cols="12">
+																	<div>
+																		<vue-editor :editorToolbar="customToolbar" v-model="issueDescription"></vue-editor>
+																	</div>
+																</v-col>
+																<v-col cols="12">
+																	<v-file-input
+																		:rules="rules"
+																		prepend-inner-icon="mdi-paperclip"
+																		prepend-icon
+																		v-model="files"
+																		show-size
+																		outlined
+																		label="Select File"
+																	></v-file-input>
+																</v-col>
+															</v-row>
+														</v-container>
+														<small>
+															*indicates required
+															field
+														</small>
+													</v-card-text>
+													<v-card-actions>
+														<v-spacer></v-spacer>
+														<v-btn color="blue darken-1" text @click="dialog = false">Close</v-btn>
+														<v-btn color="success darken-1" text @click="dialog = false">Save</v-btn>
+													</v-card-actions>
+												</v-card>
+											</v-dialog>
+										</v-col>
+										<v-col cols="12">
+											<v-data-table :search="search" :headers="issueHeaders" :items="issues">
+												<template v-slot:item.action="{ item }">
+													<v-btn icon @click="showItem(item)" color="grey">
+														<v-icon small>mdi-eye</v-icon>
+													</v-btn>
+													<v-btn icon @click="editItem(item)" color="grey">
+														<v-icon small>mdi-pencil</v-icon>
+													</v-btn>
+													<v-btn icon @click="deleteItem(item)" color="grey">
+														<v-icon small>mdi-delete</v-icon>
+													</v-btn>
+												</template>
+											</v-data-table>
+										</v-col>
+									</v-row>
 								</v-card>
 							</div>
 						</v-tab-item>
@@ -364,8 +463,10 @@
 import StudentCard from "./StudentCard";
 import ResultTabs from "./ResultTabs";
 import CurriculumItem from "./CurriculumItem";
+import { VueEditor } from "vue2-editor";
+
 export default {
-	components: { StudentCard, ResultTabs, CurriculumItem },
+	components: { StudentCard, ResultTabs, CurriculumItem, VueEditor },
 	props: {
 		student: {
 			type: Object
@@ -377,8 +478,13 @@ export default {
 	},
 	data() {
 		return {
-			currentItem: null,
+			currentItem: "tab-Issues",
 			curriculumTab: null,
+			dialog: null,
+			files: [],
+			search: "",
+			issueDescription: "",
+			isReadOnly: null,
 			items: [
 				"Academic Profile",
 				"Personal Information",
@@ -396,22 +502,45 @@ export default {
 			issues: [
 				{
 					id: 1,
-					name: "Disciplinary case: Indecent Dressing",
+					title: "Disciplinary case: Indecent Dressing",
 					notes: "...",
+					updated_at: "1 month ago",
 					created_at: "4 days ago",
 					reviews: [],
 					attachments: []
 				},
 				{
-					id: 1,
-					name: "Commendation: Award of Global Excellence",
+					id: 2,
+					title: "Commendation: Award of Global Excellence",
 					notes: "....",
 					created_at: "13 months ago",
+					updated_at: "3 months ago",
 					reviews: [],
 					attachments: []
 				}
 			],
+			issueHeaders: [
+				{ text: "Title", value: "title" },
+				{ text: "Created", value: "created_at" },
+				{ text: "Updated", value: "updated_at" },
+				{ text: "Actions", value: "action" }
+			],
 			isSuspended: false,
+			customToolbar: [
+				["bold", "italic", "underline", "strike"],
+				[{ list: "ordered" }, { list: "bullet" }, { list: "check" }],
+				[{ align: "" }, { align: "justify" }, { align: "right" }],
+				[{ indent: "-1" }, { indent: "+1" }],
+				[{ script: "sub" }, { script: "super" }],
+				[{ size: ["small", false, "large", "huge"] }],
+				["code-block", "link"]
+			],
+			rules: [
+				value =>
+					!value ||
+					value.size < 2000000 ||
+					"Cover image size should be less than 2 MB!"
+			],
 			studentActions: [
 				{
 					id: 1,
@@ -438,6 +567,7 @@ export default {
 				}
 			],
 			curricula: [],
+			selectedIssue: {},
 			text:
 				"Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat."
 		};
@@ -454,6 +584,20 @@ export default {
 		}
 	},
 	methods: {
+		editItem(item) {
+			this.selectedIssue = item;
+			this.isReadOnly = false;
+			this.dialog = true;
+		},
+		showItem(item) {
+			this.selectedIssue = item;
+			this.isReadOnly = true;
+			this.dialog = true;
+		},
+		deleteItem(item) {
+			this.selectedIssue = item;
+			// this.dialog = true;
+		},
 		tabText(item) {
 			let res;
 			switch (item) {

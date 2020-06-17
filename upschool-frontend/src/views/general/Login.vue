@@ -116,7 +116,7 @@ export default {
 					} else if (res.type == "staff") {
 						return this.$router.push({ name: "staff.dashboard" });
 					} else if (res.type == "admin") {
-						return this.$router.push({ name: "parent.dashboard" });
+						return this.$router.push({ name: "parent.home" });
 					} else {
 						return;
 					}
@@ -128,7 +128,8 @@ export default {
 					"openSnackbar",
 					"Something went wrong. Try again."
 				);
-				console.log(error);
+				throw error;
+				// console.log(error);
 			}
 		}
 	}

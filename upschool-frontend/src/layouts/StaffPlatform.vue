@@ -255,11 +255,11 @@ export default {
 					title: "Planner",
 					icon: "mdi-clock-outline"
 				},
-				{
-					route: "staff.result",
-					title: "Results & Grading",
-					icon: "mdi-school"
-				},
+				// {
+				// 	route: "staff.result",
+				// 	title: "Results & Grading",
+				// 	icon: "mdi-school"
+				// },
 				{
 					route: "staff.attendance",
 					title: "Attendance",
@@ -343,11 +343,11 @@ export default {
 					title: "Planner",
 					icon: "mdi-clock-outline"
 				},
-				{
-					route: "staff.result",
-					title: "Results & Grading",
-					icon: "mdi-school-outline"
-				},
+				// {
+				// 	route: "staff.result",
+				// 	title: "Results & Grading",
+				// 	icon: "mdi-school-outline"
+				// },
 				{
 					route: "staff.attendance",
 					title: "Attendance",

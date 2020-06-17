@@ -1,116 +1,120 @@
 <template>
 	<v-app>
 		<v-container>
-			<v-card class="pa-3">
-				<v-subheader v-if="!isAdmin">{{ typeToShow[typee] }}</v-subheader>
-				<v-row>
-					<v-col>
-						<v-sheet height="64">
-							<v-toolbar flat color="white">
-								<v-btn outlined class="mr-4" color="grey darken-2" @click="setToday">Today</v-btn>
-								<v-btn fab text small color="grey darken-2" @click="prev">
-									<v-icon small>mdi-chevron-left</v-icon>
-								</v-btn>
-								<v-btn fab text small color="grey darken-2" @click="next">
-									<v-icon small>mdi-chevron-right</v-icon>
-								</v-btn>
-								<v-toolbar-title>{{ title }}</v-toolbar-title>
-								<v-spacer />
-								<v-menu bottom right v-if="!isAdmin">
-									<template v-slot:activator="{ on }">
-										<v-btn outlined color="grey darken-2" v-on="on">
-											<span>{{ typeToShow[typee] }}</span>
-											<v-icon right>mdi-menu-down</v-icon>
-										</v-btn>
-									</template>
-									<v-list>
-										<v-list-item @click="typee = 'all'">
-											<v-list-item-title>All</v-list-item-title>
-										</v-list-item>
-										<v-list-item @click="typee = 'school'">
-											<v-list-item-title>School Events</v-list-item-title>
-										</v-list-item>
-										<v-list-item @click="typee = 'course'">
-											<v-list-item-title>Course</v-list-item-title>
-										</v-list-item>
-										<v-list-item @click="typee = 'personal'">
-											<v-list-item-title>Personal</v-list-item-title>
-										</v-list-item>
-									</v-list>
-								</v-menu>
-								<div class="px-3"></div>
-								<v-menu bottom right>
-									<template v-slot:activator="{ on }">
-										<v-btn outlined color="grey darken-2" v-on="on">
-											<span>{{ typeToLabel[type] }}</span>
-											<v-icon right>mdi-menu-down</v-icon>
-										</v-btn>
-									</template>
-									<v-list>
-										<v-list-item @click="type = 'day'">
-											<v-list-item-title>Day</v-list-item-title>
-										</v-list-item>
-										<v-list-item @click="type = 'week'">
-											<v-list-item-title>Week</v-list-item-title>
-										</v-list-item>
-										<v-list-item @click="type = 'month'">
-											<v-list-item-title>Month</v-list-item-title>
-										</v-list-item>
-										<v-list-item @click="type = '4day'">
-											<v-list-item-title>4 days</v-list-item-title>
-										</v-list-item>
-									</v-list>
-								</v-menu>
-							</v-toolbar>
-						</v-sheet>
-						<v-sheet height="600">
-							<v-calendar
-								ref="calendar"
-								v-model="focus"
-								color="primary"
-								:events="events"
-								:event-color="getEventColor"
-								:now="today"
-								:type="type"
-								event-start="start_time"
-								event-end="end_time"
-								@click:event="showEvent"
-								@click:more="viewDay"
-								@click:date="viewDay"
-								@change="updateRange"
-							/>
-							<v-menu
-								v-model="selectedOpen"
-								:close-on-content-click="false"
-								:activator="selectedElement"
-								offset-x
-							>
-								<v-card color="grey lighten-4" min-width="350px" flat v-if="selectedEvent">
-									<v-toolbar :color="selectedEvent.color" dark>
-										<!-- <v-btn icon>
+			<!-- <v-card class="pa-3"> -->
+			<v-skeleton-loader :loading="isLoading" ref="skeleton" :type="'date-picker'" class="mx-auto">
+				<v-card class="pa-3">
+					<v-subheader v-if="!isAdmin">{{ typeToShow[typee] }}</v-subheader>
+					<v-row>
+						<v-col>
+							<v-sheet height="64">
+								<v-toolbar flat color="white">
+									<v-btn outlined class="mr-4" color="grey darken-2" @click="setToday">Today</v-btn>
+									<v-btn fab text small color="grey darken-2" @click="prev">
+										<v-icon small>mdi-chevron-left</v-icon>
+									</v-btn>
+									<v-btn fab text small color="grey darken-2" @click="next">
+										<v-icon small>mdi-chevron-right</v-icon>
+									</v-btn>
+									<v-toolbar-title>{{ title }}</v-toolbar-title>
+									<v-spacer />
+									<v-menu bottom right v-if="!isAdmin">
+										<template v-slot:activator="{ on }">
+											<v-btn outlined color="grey darken-2" v-on="on">
+												<span>{{ typeToShow[typee] }}</span>
+												<v-icon right>mdi-menu-down</v-icon>
+											</v-btn>
+										</template>
+										<v-list>
+											<v-list-item @click="typee = 'all'">
+												<v-list-item-title>All</v-list-item-title>
+											</v-list-item>
+											<v-list-item @click="typee = 'school'">
+												<v-list-item-title>School Events</v-list-item-title>
+											</v-list-item>
+											<v-list-item @click="typee = 'course'">
+												<v-list-item-title>Course</v-list-item-title>
+											</v-list-item>
+											<v-list-item @click="typee = 'personal'">
+												<v-list-item-title>Personal</v-list-item-title>
+											</v-list-item>
+										</v-list>
+									</v-menu>
+									<div class="px-3"></div>
+									<v-menu bottom right>
+										<template v-slot:activator="{ on }">
+											<v-btn outlined color="grey darken-2" v-on="on">
+												<span>{{ typeToLabel[type] }}</span>
+												<v-icon right>mdi-menu-down</v-icon>
+											</v-btn>
+										</template>
+										<v-list>
+											<v-list-item @click="type = 'day'">
+												<v-list-item-title>Day</v-list-item-title>
+											</v-list-item>
+											<v-list-item @click="type = 'week'">
+												<v-list-item-title>Week</v-list-item-title>
+											</v-list-item>
+											<v-list-item @click="type = 'month'">
+												<v-list-item-title>Month</v-list-item-title>
+											</v-list-item>
+											<v-list-item @click="type = '4day'">
+												<v-list-item-title>4 days</v-list-item-title>
+											</v-list-item>
+										</v-list>
+									</v-menu>
+								</v-toolbar>
+							</v-sheet>
+							<v-sheet height="600">
+								<v-calendar
+									ref="calendar"
+									v-model="focus"
+									color="primary"
+									:events="events"
+									:event-color="getEventColor"
+									:now="today"
+									:type="type"
+									event-start="start_time"
+									event-end="end_time"
+									@click:event="showEvent"
+									@click:more="viewDay"
+									@click:date="viewDay"
+									@change="updateRange"
+								/>
+								<v-menu
+									v-model="selectedOpen"
+									:close-on-content-click="false"
+									:activator="selectedElement"
+									offset-x
+								>
+									<v-card color="grey lighten-4" min-width="350px" flat v-if="selectedEvent">
+										<v-toolbar :color="selectedEvent.color" dark>
+											<!-- <v-btn icon>
 									<v-icon>mdi-pencil</v-icon>
-										</v-btn>-->
-										<v-toolbar-title v-html="selectedEvent.name" />
-										<v-spacer />
-										<!-- <v-btn icon>
+											</v-btn>-->
+											<v-toolbar-title v-html="selectedEvent.name" />
+											<v-spacer />
+											<!-- <v-btn icon>
 									<v-icon>mdi-heart</v-icon>
-										</v-btn>-->
-										<!-- <v-btn icon>
+											</v-btn>-->
+											<!-- <v-btn icon>
 									<v-icon>mdi-dots-vertical</v-icon>
-										</v-btn>-->
-									</v-toolbar>
-									<v-card-text>
-										<span v-if="selectedEvent.eventable" v-html="selectedEvent.eventable.description" />
-									</v-card-text>
-									<v-card-actions>
-										<v-btn text color="secondary" @click="selectedOpen = false">Cancel</v-btn>
-									</v-card-actions>
-								</v-card>
-							</v-menu>
-						</v-sheet>
-					</v-col>
-				</v-row>
-			</v-card>
+											</v-btn>-->
+										</v-toolbar>
+										<v-card-text>
+											<span v-if="selectedEvent.eventable" v-html="selectedEvent.eventable.description" />
+										</v-card-text>
+										<v-card-actions>
+											<v-btn text color="secondary" @click="selectedOpen = false">Cancel</v-btn>
+										</v-card-actions>
+									</v-card>
+								</v-menu>
+							</v-sheet>
+						</v-col>
+					</v-row>
+				</v-card>
+			</v-skeleton-loader>
+			<!-- </v-card> -->
 		</v-container>
 	</v-app>
 </template>
@@ -136,6 +140,7 @@ export default {
 	data: () => ({
 		focus: new Date().toISOString().substr(0, 10),
 		type: "month",
+		isLoading: false,
 		typeToLabel: {
 			month: "Month",
 			week: "Week",
@@ -214,12 +219,16 @@ export default {
 	},
 	async mounted() {
 		try {
+			this.isLoading = true;
+			await Axios.get("event").then(res => {
+				this.events = res.data.data;
+				// console.log(res.data);
+				this.isLoading = false;
+			});
 			this.$refs.calendar.checkChange();
-			let res = await Axios.get("event");
-			console.log(res.data.data);
-			this.events = res.data.data;
+			// console.log(res.data.data);
 		} catch (error) {
-			console.log(error);
+			throw error;
 		}
 	},
 	methods: {

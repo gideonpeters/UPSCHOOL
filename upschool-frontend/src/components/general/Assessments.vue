@@ -17,7 +17,7 @@
 <script>
 // import DownloadCsv from "vue-json-csv";
 import axios from "axios";
-import Papa from "papaparse";
+// import Papa from "papaparse";
 import MetricCard from "@/components/parent/Metric";
 
 export default {
@@ -86,11 +86,11 @@ export default {
 			let res = await axios.get(
 				`school-assessment-items?course_id=${id}`
 			);
-			console.log(res.data);
+			// console.log(res.data);
 
 			this.items = res.data.data;
 		} catch (error) {
-			console.log(error);
+			throw error;
 		}
 	}
 };

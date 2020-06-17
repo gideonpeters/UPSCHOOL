@@ -22,8 +22,22 @@
 								</div>
 							</v-col>
 							<v-col cols="12">
+								<!-- <v-col cols="12" sm="6" md="4"> -->
+								<v-text-field
+									v-model="search"
+									single-line
+									hide-details
+									flat
+									label="search assessments"
+									solo
+									prepend-inner-icon="mdi-magnify"
+								></v-text-field>
+								<!-- </v-col> -->
+							</v-col>
+							<v-col cols="12">
 								<v-data-table
 									:headers="headers"
+									:search="search"
 									:items="schoolAssessment.school_assessment_items"
 									hide-default-footer
 								>
@@ -197,6 +211,7 @@ export default {
 			dialog: null,
 			submission: [],
 			review: "",
+			search: "",
 			gradeScore: "",
 			isGrading: null,
 			schoolAssessment: {},
