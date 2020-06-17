@@ -633,7 +633,7 @@ export default {
 				let id = this.student.program_id;
 				this.curricula = await this.$store.dispatch("getCurricula", id);
 			} catch (error) {
-				console.log(error);
+				throw error;
 			}
 		}
 	},
@@ -646,7 +646,7 @@ export default {
 			// 	this.student.program.id
 			// );
 		} catch (error) {
-			console.log(error);
+			throw error;
 		}
 	}
 };

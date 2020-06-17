@@ -411,7 +411,7 @@ export default {
 			}
 			this.$store.dispatch("getNews");
 		} catch (err) {
-			console.log(err);
+			throw err;
 		}
 	},
 	mounted() {}
