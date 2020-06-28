@@ -16,7 +16,7 @@ class CreateCourseSectionsTable extends Migration
         Schema::create('course_sections', function (Blueprint $table) {
             $table->id();
             $table->string('title');
-            $table->foreignId('course_id');
+            $table->foreignId('course_id')->onDelete('cascade');
             $table->longText('body')->nullable();
             $table->timestamps();
         });

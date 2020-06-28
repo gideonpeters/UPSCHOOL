@@ -17,7 +17,7 @@ class CreateSchoolAssessmentsTable extends Migration
             $table->id();
             $table->string('name');
             $table->unsignedInteger('total_score');
-            $table->foreignId('course_id')->nullable();
+            $table->foreignId('course_id')->nullable()->onDelete('cascade');
             $table->unsignedInteger('percentage')->nullable();
             $table->boolean('active')->default(false);
             $table->boolean('visible')->default(false);

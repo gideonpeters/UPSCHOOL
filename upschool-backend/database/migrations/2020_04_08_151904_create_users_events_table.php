@@ -15,10 +15,10 @@ class CreateUsersEventsTable extends Migration
     {
         Schema::create('users_events', function (Blueprint $table) {
             $table->id();
-            $table->foreignId('user_id');
-            $table->foreignId('school_event_id')->nullable();
-            $table->foreignId('event_id')->nullable();
-            $table->boolean('status')->nullable();
+            $table->foreignId('user_id')->onDelete('cascade');
+            $table->foreignId('school_event_id')->nullable()->onDelete('cascade');
+            $table->foreignId('event_id')->nullable()->onDelete('cascade');
+            $table->boolean('status')->nullable()->onDelete('cascade');
             $table->timestamps();
         });
     }

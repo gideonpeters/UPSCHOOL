@@ -15,8 +15,8 @@ class CreateGraduationUnitsTable extends Migration
     {
         Schema::create('graduation_units', function (Blueprint $table) {
             $table->id();
-            $table->foreignId('program_id');
-            $table->foreignId('course_status_id');
+            $table->foreignId('program_id')->onDelete('cascade');
+            $table->foreignId('course_status_id')->onDelete('cascade');
             $table->unsignedInteger('units');
             $table->timestamps();
         });

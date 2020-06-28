@@ -25,8 +25,8 @@ class CreateRoomsTable extends Migration
             $table->json('preferred_student_type')->nullable();
             $table->json('preferred_nationality')->nullable();
             $table->json('preferred_program')->nullable();
-            $table->foreignId('room_type_id');
-            $table->foreignId('hall_id');
+            $table->foreignId('room_type_id')->onDelete('cascade');
+            $table->foreignId('hall_id')->onDelete('cascade');
             // $table->foreignId('key_possessor_id')->nullable();
             // $table->foreignId('_id');
             $table->timestamps();

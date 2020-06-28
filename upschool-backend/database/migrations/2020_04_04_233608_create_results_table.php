@@ -15,8 +15,8 @@ class CreateResultsTable extends Migration
     {
         Schema::create('results', function (Blueprint $table) {
             $table->id();
-            $table->foreignId('student_id');
-            $table->foreignId('semester_id');
+            $table->foreignId('student_id')->onDelete('cascade');
+            $table->foreignId('semester_id')->onDelete('cascade');
             $table->unsignedDecimal('gpa', 8, 4)->nullable();
             $table->unsignedDecimal('cgpa', 8, 4)->nullable();
             $table->unsignedInteger('total_units')->nullable();

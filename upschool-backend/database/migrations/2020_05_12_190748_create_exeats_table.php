@@ -16,9 +16,9 @@ class CreateExeatsTable extends Migration
         Schema::create('exeats', function (Blueprint $table) {
             $table->id();
             $table->string('exeat_id');
-            $table->foreignId('exeat_type_id');
-            $table->foreignId('student_id');
-            $table->foreignId('semester_id');
+            $table->foreignId('exeat_type_id')->onDelete('cascade');
+            $table->foreignId('student_id')->onDelete('cascade');
+            $table->foreignId('semester_id')->onDelete('cascade');
             $table->string('status')->default('pending');
             $table->longText('reason');
             $table->dateTime('requested_departure');

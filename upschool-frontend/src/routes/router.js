@@ -41,6 +41,11 @@ export default new VueRouter({
 			// beforeEnter: ifAuthenticated
 		},
 		{
+			path: "/welcome",
+			component: () => import('./../layouts/Welcome'), 
+			// beforeEnter: ifAuthenticated
+		},
+		{
 			path: "/select",
 			component: () => import("./../layouts/SelectApp"),
 		},

@@ -17,8 +17,8 @@ class CreateDepartmentsTable extends Migration
             $table->id();
             $table->string('name');
             $table->string('short_name')->nullable();
-            $table->foreignId('college_id')->nullable();
-            $table->foreignId('school_id')->nullable();
+            $table->foreignId('college_id')->nullable()->onDelete('cascade');
+            $table->foreignId('school_id')->nullable()->onDelete('cascade');
             $table->timestamps();
         });
     }

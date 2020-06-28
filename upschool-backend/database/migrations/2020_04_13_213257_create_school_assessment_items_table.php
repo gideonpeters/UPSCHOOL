@@ -15,8 +15,8 @@ class CreateSchoolAssessmentItemsTable extends Migration
     {
         Schema::create('school_assessment_items', function (Blueprint $table) {
             $table->id();
-            $table->foreignId('school_assessment_id');
-            $table->foreignId('student_course_id');
+            $table->foreignId('school_assessment_id')->onDelete('cascade');
+            $table->foreignId('student_course_id')->onDelete('cascade');
             $table->unsignedInteger('score')->default(0);
             $table->timestamps();
         });

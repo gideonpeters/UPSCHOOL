@@ -15,8 +15,8 @@ class CreateProgramsCurriculumItemsTable extends Migration
     {
         Schema::create('programs_curriculum_items', function (Blueprint $table) {
             $table->id();
-            $table->foreignId('program_id');
-            $table->foreignId('curriculum_item_id');
+            $table->foreignId('program_id')->onDelete('cascade');
+            $table->foreignId('curriculum_item_id')->onDelete('cascade');
             $table->timestamps();
         });
     }

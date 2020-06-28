@@ -17,7 +17,7 @@ class CreateProgramsTable extends Migration
             $table->id();
             $table->string('name');
             $table->string('short_name')->nullable();
-            $table->foreignId('department_id')->nullable();
+            $table->foreignId('department_id')->nullable()->onDelete('cascade');
             // $table->foreignId('school_id')->nullable();
             $table->integer('no_of_years')->nullable();
             $table->text('description')->nullable();

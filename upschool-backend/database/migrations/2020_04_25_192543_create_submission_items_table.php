@@ -15,9 +15,9 @@ class CreateSubmissionItemsTable extends Migration
     {
         Schema::create('submission_items', function (Blueprint $table) {
             $table->id();
-            $table->foreignId('submission_list_id');
-            $table->foreignId('student_course_id');
-            $table->foreignId('grade_item_id')->nullable();
+            $table->foreignId('submission_list_id')->onDelete('cascade');
+            $table->foreignId('student_course_id')->onDelete('cascade');
+            $table->foreignId('grade_item_id')->nullable()->onDelete('cascade');
             $table->longText('body')->nullable();
             $table->longText('review')->nullable();
             $table->timestamps();

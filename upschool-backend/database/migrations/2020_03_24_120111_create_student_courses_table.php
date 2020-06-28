@@ -15,10 +15,10 @@ class CreateStudentCoursesTable extends Migration
     {
         Schema::create('student_courses', function (Blueprint $table) {
             $table->id();
-            $table->foreignId('semester_id');
-            $table->foreignId('student_id');
-            $table->foreignId('course_id');
-            $table->foreignId('curriculum_item_id');
+            $table->foreignId('semester_id')->onDelete('cascade');
+            $table->foreignId('student_id')->onDelete('cascade');
+            $table->foreignId('course_id')->onDelete('cascade');
+            $table->foreignId('curriculum_item_id')->onDelete('cascade');
             $table->timestamps();
         });
     }

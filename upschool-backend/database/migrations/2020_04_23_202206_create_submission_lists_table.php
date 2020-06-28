@@ -15,13 +15,13 @@ class CreateSubmissionListsTable extends Migration
     {
         Schema::create('submission_lists', function (Blueprint $table) {
             $table->id();
-            $table->foreignId('subsection_id');
-            $table->foreignId('course_id');
+            $table->foreignId('subsection_id')->onDelete('cascade');
+            $table->foreignId('course_id')->onDelete('cascade');
             $table->dateTime('due_date')->nullable();
             $table->dateTime('open_date')->nullable();
             $table->unsignedInteger('total_score');
             $table->longText('body')->nullable();
-            $table->foreignId('gradelist_id')->nullable();
+            $table->foreignId('gradelist_id')->nullable()->onDelete('cascade');
 
             $table->timestamps();
         });

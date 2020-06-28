@@ -15,8 +15,8 @@ class CreateCurriculumBlocksTable extends Migration
     {
         Schema::create('curriculum_blocks', function (Blueprint $table) {
             $table->id();
-            $table->foreignId('program_id');
-            $table->foreignId('course_status_id');
+            $table->foreignId('program_id')->onDelete('cascade');
+            $table->foreignId('course_status_id')->onDelete('cascade');
             $table->string('level');
             $table->unsignedInteger('max_required_units')->nullable();
             $table->timestamps();

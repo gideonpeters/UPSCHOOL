@@ -23,7 +23,7 @@ class CreateGuardiansTable extends Migration
             $table->string('mobile_number')->nullable();
             $table->string('work_address')->nullable();
             $table->string('home_address')->nullable();
-            // $table->foreignId('student_id');
+            $table->foreignId('student_id')->onDelete('cascade');
             $table->timestamps();
         });
     }

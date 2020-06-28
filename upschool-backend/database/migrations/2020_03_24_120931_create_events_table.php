@@ -15,22 +15,19 @@ class CreateEventsTable extends Migration
     {
         Schema::create('events', function (Blueprint $table) {
             $table->id();
-            // $table->string('image')->nullable();
             $table->dateTime('start_time');
             $table->dateTime('end_time');
             $table->string('venue')->nullable();
-            $table->string('recurrence')->nullable(); //daily/weekly/none/monthly
-            $table->foreignId('event_id')->nullable(); //daily/weekly/none/monthly
 
+            $table->string('recurrence')->nullable()->onDelete('cascade'); //daily/weekly/none/monthly
+            $table->foreignId('event_id')->nullable()->onDelete('cascade'); //daily/weekly/none/monthly
             $table->foreignId('semester_id');
 
             $table->boolean('status')->default(false)->nullable();
             $table->boolean('priority')->default(false)->nullable();
 
-            // $table->date('date');
-
-            $table->unsignedBigInteger('eventable_id');
-            $table->string('eventable_type');
+            $table->unsignedBigInteger('eventable_id')->nullable();
+            $table->string('eventable_type')->nullable();
 
             $table->timestamps();
         });

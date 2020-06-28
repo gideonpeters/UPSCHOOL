@@ -15,8 +15,8 @@ class CreateEnrollmentsTable extends Migration
     {
         Schema::create('enrollments', function (Blueprint $table) {
             $table->id();
-            $table->foreignId('student_id');
-            $table->foreignId('semester_id');
+            $table->foreignId('student_id')->onDelete('cascade');
+            $table->foreignId('semester_id')->onDelete('cascade');
             $table->boolean('approval_status');
             $table->timestamps();
         });

@@ -17,7 +17,7 @@ class CreateScheduleItemsTable extends Migration
             $table->id();
             $table->string('title');
             $table->string('description')->nullable();
-            $table->foreignId('user_id')->nullable();
+            $table->foreignId('user_id')->nullable()->onDelete('cascade');
             $table->timestamps();
         });
     }

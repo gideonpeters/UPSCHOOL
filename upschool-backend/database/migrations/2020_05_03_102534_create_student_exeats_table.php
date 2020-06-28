@@ -15,7 +15,7 @@ class CreateStudentExeatsTable extends Migration
     {
         Schema::create('student_exeats', function (Blueprint $table) {
             $table->id();
-            $table->foreignId('exeat_type_id');
+            $table->foreignId('exeat_type_id')->onDelete('cascade');
             $table->unsignedInteger('status'); //0=pending, 1=approved, 2=declined
             $table->text('reason');
             $table->boolean('isFlagged')->default(false);

@@ -15,8 +15,8 @@ class CreatePrerequisiteCourseTable extends Migration
     {
         Schema::create('prerequisite_course', function (Blueprint $table) {
             $table->id();
-            $table->foreignId('course_id');
-            $table->foreignId('prerequisite_id');
+            $table->foreignId('course_id')->onDelete('cascade');
+            $table->foreignId('prerequisite_id')->onDelete('cascade');
             $table->timestamps();
         });
     }

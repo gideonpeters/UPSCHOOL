@@ -15,15 +15,15 @@ class CreateStudentRoomsTable extends Migration
     {
         Schema::create('student_rooms', function (Blueprint $table) {
             $table->id();
-            $table->foreignId('student_id');
-            $table->foreignId('room_id');
+            $table->foreignId('student_id')->onDelete('cascade');
+            $table->foreignId('room_id')->onDelete('cascade');
             $table->unsignedInteger('capacity')->nullable();
-            $table->foreignId('is_reserved')->nullable();
+            $table->foreignId('is_reserved')->nullable()->onDelete('cascade');
             $table->boolean('has_key')->nullable();
             $table->boolean('is_signed_in')->nullable();
             $table->boolean('is_signed_out')->nullable();
-            $table->foreignId('semester_id')->nullable();
-            $table->foreignId('session_id')->nullable();
+            $table->foreignId('semester_id')->nullable()->onDelete('cascade');
+            $table->foreignId('session_id')->nullable()->onDelete('cascade');
             $table->timestamps();
         });
     }

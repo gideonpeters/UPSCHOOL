@@ -20,12 +20,6 @@ class CreateContinuousAssessmentsTable extends Migration
             $table->unsignedInteger('total')->nullable();
             $table->string('assessable_type');
             $table->unsignedBigInteger('assessable_id');
-            // $table->foreignId('continuous_assessment_id')->nullable();
-            // $table->foreignId('course_id')->nullable();
-            // $table->foreignId('student_course_id')->nullable();
-            // $table->foreignId('semester_id')->nullable();
-            // $table->unsignedInteger('total_score')->nullable();
-            // $table->unsignedInteger('weighted_score')->nullable();
             $table->timestamps();
         });
     }

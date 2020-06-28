@@ -15,8 +15,8 @@ class CreateGradeItemsTable extends Migration
     {
         Schema::create('grade_items', function (Blueprint $table) {
             $table->id();
-            $table->foreignId('gradelist_id');
-            $table->foreignId('student_course_id');
+            $table->foreignId('gradelist_id')->onDelete('cascade');
+            $table->foreignId('student_course_id')->onDelete('cascade');
             $table->unsignedInteger('score');
             $table->timestamps();
         });

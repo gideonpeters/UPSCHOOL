@@ -21,7 +21,7 @@ class CreateStaffTable extends Migration
             $table->date('dob')->nullable();
             $table->string('staff_number')->unique();
             $table->year('year_of_entry')->nullable();
-            $table->foreignId('department_id')->nullable();
+            $table->foreignId('department_id')->nullable()->onDelete('cascade');
             $table->string('rank')->nullable();
             $table->string('phone_number')->nullable();
             $table->string('home_number')->nullable();

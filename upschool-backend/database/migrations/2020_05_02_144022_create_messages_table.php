@@ -15,8 +15,8 @@ class CreateMessagesTable extends Migration
     {
         Schema::create('messages', function (Blueprint $table) {
             $table->id();
-            $table->foreignId('sender_id');
-            $table->foreignId('conversation_id');
+            $table->foreignId('sender_id')->onDelete('cascade');
+            $table->foreignId('conversation_id')->onDelete('cascade');
             $table->text('body');
             $table->timestamps();
         });

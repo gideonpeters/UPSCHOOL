@@ -16,9 +16,8 @@ class CreateNewsTable extends Migration
         Schema::create('news', function (Blueprint $table) {
             $table->id();
             $table->string('title');
-            // $table->string('image')->nullable();
             $table->text('body');
-            $table->foreignId('semester_id');
+            $table->foreignId('semester_id')->onDelete('cascade');
             $table->boolean('featured')->default();
             $table->timestamps();
         });

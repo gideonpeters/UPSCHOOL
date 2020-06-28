@@ -15,8 +15,8 @@ class CreateStudentEnrollmentItemsTable extends Migration
     {
         Schema::create('student_enrollment_items', function (Blueprint $table) {
             $table->id();
-            $table->foreignId('student_id');
-            $table->foreignId('curriculum_item_id');
+            $table->foreignId('student_id')->onDelete('cascade');
+            $table->foreignId('curriculum_item_id')->onDelete('cascade');
             $table->string('status'); //failed, dropped, pending, ''passed', ongoing
             $table->timestamps();
         });

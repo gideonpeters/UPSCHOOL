@@ -28,9 +28,9 @@ class CreateStudentsTable extends Migration
             $table->string('reg_number')->unique();
             $table->string('level')->nullable();
             $table->year('year_of_entry')->nullable();
-            $table->foreignId('promotion_status_id')->nullable();
-            $table->foreignId('program_id')->nullable();
-            $table->foreignId('adviser_id')->nullable();
+            $table->foreignId('promotion_status_id')->nullable()->onDelete('cascade');
+            $table->foreignId('program_id')->nullable()->onDelete('cascade');
+            $table->foreignId('adviser_id')->nullable()->onDelete('cascade');
             $table->timestamps();
         });
     }

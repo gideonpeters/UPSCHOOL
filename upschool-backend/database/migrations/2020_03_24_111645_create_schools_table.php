@@ -17,7 +17,7 @@ class CreateSchoolsTable extends Migration
             $table->id();
             $table->string('name');
             $table->string('short_name');
-            $table->foreignId('college_id')->nullable();
+            $table->foreignId('college_id')->nullable()->onDelete('cascade');
             $table->timestamps();
         });
     }

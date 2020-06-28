@@ -15,8 +15,8 @@ class CreateCourseStaffTable extends Migration
     {
         Schema::create('course_staff', function (Blueprint $table) {
             $table->id();
-            $table->foreignId('staff_id');
-            $table->foreignId('course_id');
+            $table->foreignId('staff_id')->onDelete('cascade');
+            $table->foreignId('course_id')->onDelete('cascade');
             $table->timestamps();
         });
     }
