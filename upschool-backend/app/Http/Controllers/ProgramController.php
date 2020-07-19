@@ -14,6 +14,14 @@ class ProgramController extends Controller
         //
         $programs = Program::all();
 
+        if($programs->isEmpty()){
+            return response()->json([
+                'staus' => true,
+                'message' => 'No programs created yet',
+                'data' => []
+            ], 201);
+        }
+
         return response()->json([
             'staus' => true,
             'message' => 'these are all the programs',

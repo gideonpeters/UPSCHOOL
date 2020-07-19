@@ -13,7 +13,7 @@ class UserRepository
         $user = new User();
         $user->name = $userData->name;
         $user->email = $userData->email;
-        $user->password = bcrypt($userData->password);
+        $user->password = bcrypt($userData->password); 
 
 
         if ($userData->user_type == 'student') {
@@ -25,17 +25,18 @@ class UserRepository
             $student->save();
 
             $user->userable_id = $student->id;
-            $user->userable_type = 'App\Student';
+            $user->userable_type = 'App\\Student';
         } elseif ($userData->user_type == 'staff') {
 
             $staff = new Staff();
-            $staff->matric_number = $userData->matric_number;
-            $staff->reg_number = $userData->reg_number;
-            $staff->program_id = $userData->program_id;
+            $staff->first_name = $userData->first_name;
+            $staff->last_name = $userData->last_name;
+            $staff->staff_number = $userData->staff_number;
+            $staff->department_id = $userData->department_id;
             $staff->save();
 
             $user->userable_id = $staff->id;
-            $user->userable_type = 'App\Staff';
+            $user->userable_type = 'App\\Staff';
         } else {
             return false;
         }

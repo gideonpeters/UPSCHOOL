@@ -14,7 +14,7 @@ class AccountController extends Controller
     public function register(StoreUserRequest $request, UserRepository $userRepository)
     {
         // dd('ddd');
-        $user = $userRepository->store($request);
+        $user = $userRepository->store($request); 
 
         if (!$user) {
             return response()->json([
