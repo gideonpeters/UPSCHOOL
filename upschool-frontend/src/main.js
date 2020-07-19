@@ -27,8 +27,8 @@ Vue.use(lineClamp, {
 	// plugin options
 });
 
-axios.defaults.baseURL = "http://127.0.0.1:8000/api/";
-
+axios.defaults.baseURL = process.env.VUE_APP_API_URI;
+// console.log(process.env.VUE_APP_API_URI);
 let token = localStorage.getItem(`upschool-token`);
 
 if (token) {

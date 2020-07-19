@@ -6,7 +6,7 @@
           <div class="d-flex flex-column">
             <div>
               <v-card v-if="latestNews" class="pa-3 mb-5" flat>
-                <custom-header title="FEATUReED POST" ctaText="View" route="student.news"></custom-header>
+                <custom-header title="FEATURED POST" ctaText="View" route="student.news"></custom-header>
 
                 <v-img
                   :src="latestNews?
@@ -167,7 +167,7 @@ export default {
       this.$store.dispatch("getNews");
       this.$store.dispatch("getSchoolEvents");
     } catch (error) {
-      console.log(error);
+      throw error;
     }
   }
 };

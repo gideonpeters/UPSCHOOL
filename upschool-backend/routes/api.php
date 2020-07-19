@@ -34,14 +34,14 @@ Route::group([
 
 Route::post('message', 'AcademicSessionController@test');
 
-Route::group([], function ($router) {
-    Route::get('courses', 'CourseController@index');
-    Route::post('courses', 'CourseController@store');
-    Route::get('courses/{id}', 'CourseController@show');
+// Route::group([], function ($router) {
+    Route::get('course', 'CourseController@index');
+    Route::post('course', 'CourseController@store');
+    Route::get('course/{id}', 'CourseController@show');
     Route::get('courses-facilitators', 'CourseController@getFacilitatedCourses');
     Route::get('courses/{id}/participants', 'CourseController@indexParticipants');
     Route::get('courses-enrolled', 'CourseController@enrolledCourses');
-});
+// });
 Route::post('bulk/courses', 'CourseController@storeBulk');
 
 Route::post('enroll', 'EnrollmentController@enrollCourses');
