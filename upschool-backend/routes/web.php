@@ -22,3 +22,8 @@ Route::get('/', function () {
     return view('welcome');
     // dd(Carbon::parse('2020-05-20T03:15:00')->addCenturies(3));
 });
+
+Route::get('/test', function () {
+    // return view('welcome');
+    dd(Carbon::parse('2020-05-20T03:15:00')->addCenturies(3));
+});
