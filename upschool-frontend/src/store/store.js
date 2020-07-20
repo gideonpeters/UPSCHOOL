@@ -216,6 +216,7 @@ export default new Vuex.Store({
 
 				const token = res.data.token;
 				const userInfo = res.data.user;
+				// console.log(userInfo);
 
 				localStorage.setItem("upschool-token", token);
 				axios.defaults.headers.common[
@@ -253,7 +254,7 @@ export default new Vuex.Store({
 			state.loggedInUser = res.data.user;
 			// return res.data.user;
 		},
-		async getUserEvents({}, item) {
+		async getUserEvents({ }, item) {
 			let res = await axios.get(
 				`user-event?user_id=${item.id}&type=${item.type}`
 			);
@@ -315,7 +316,7 @@ export default new Vuex.Store({
 				throw error;
 			}
 		},
-		async getCourseParticipants({}, id) {
+		async getCourseParticipants({ }, id) {
 			try {
 				let res = await axios.get(`courses/${id}/participants`);
 
@@ -359,11 +360,11 @@ export default new Vuex.Store({
 
 			return res.data.data;
 		},
-		async getEnrollableItems({}, id) {
+		async getEnrollableItems({ }, id) {
 			let res = await axios.get(`curriculum-block-student/${id}`);
 			return res.data;
 		},
-		async getStudentEnrollments({}, id) {
+		async getStudentEnrollments({ }, id) {
 			let body = { student_id: id };
 			let res = await axios.post("enroll/student", body);
 
@@ -385,7 +386,7 @@ export default new Vuex.Store({
 
 			return res.data;
 		},
-		async addAndDrop({}, payload) {
+		async addAndDrop({ }, payload) {
 			let body = {
 				ids: JSON.stringify(payload),
 				// student_id: 1
@@ -396,7 +397,7 @@ export default new Vuex.Store({
 
 			return res.data;
 		},
-		async approveEnrollment({}, id) {
+		async approveEnrollment({ }, id) {
 			try {
 				let body = { enrollment_id: id };
 				let res = await axios.patch("enroll", body);
@@ -412,7 +413,7 @@ export default new Vuex.Store({
 
 			return res.data.data;
 		},
-		async getCourseSection({}, id) {
+		async getCourseSection({ }, id) {
 			let res = await axios.get(`course-section/${id}`);
 
 			return res.data.data;
@@ -422,11 +423,11 @@ export default new Vuex.Store({
 
 			state.courses = res.data.data;
 		},
-		async getCourseById({}, id) {
+		async getCourseById({ }, id) {
 			let res = await axios.get(`courses/${id}`);
 			return res.data.data;
 		},
-		async getCurricula({}, id) {
+		async getCurricula({ }, id) {
 			let res = await axios.get(`curriculum-block/${id}`);
 
 			return res.data.data;
@@ -445,7 +446,7 @@ export default new Vuex.Store({
 			commit("openSnackbar", res.data.message);
 			return res.data;
 		},
-		async getCourseGradelist({}, id) {
+		async getCourseGradelist({ }, id) {
 			let res = await axios.get(`gradelist?course_id=${id}`);
 
 			return res.data;
@@ -465,7 +466,7 @@ export default new Vuex.Store({
 
 			return res.data;
 		},
-		async addCourseToCurriculum({}, payload) {
+		async addCourseToCurriculum({ }, payload) {
 			let res = await axios.post(
 				`curriculum-item/${payload.blockId}`,
 				payload.body
@@ -485,7 +486,7 @@ export default new Vuex.Store({
 
 			return res.data;
 		},
-		async testEcho({}) {
+		async testEcho({ }) {
 			try {
 				await axios.post("message", { body: "yoooo" });
 			} catch (error) {

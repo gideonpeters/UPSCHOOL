@@ -39,7 +39,7 @@ window.io = require("socket.io-client");
 
 window.Echo = new Echo({
 	broadcaster: "socket.io",
-	host: "http://localhost:6001",
+	host: process.env.VUE_APP_BACKEND_URI + ":6001",
 	auth: {
 		headers: {
 			Authorization: "Bearer " + token,

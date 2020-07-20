@@ -26,4 +26,7 @@ Broadcast::channel('chat', function () {
     return true;
 });
 
+// Broadcast::channel('conversations.{conversation}', function(){
+//     return true;
+// });
 Broadcast::channel('conversations.{conversation}', ConversationChannel::class);

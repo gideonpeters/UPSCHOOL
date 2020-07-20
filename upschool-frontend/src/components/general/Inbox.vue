@@ -235,13 +235,14 @@ export default {
     },
     async sendMessage() {
       try {
+        console.table(this.$store.state.loggedInUser.user, this.userId);
         if (!this.body) {
           return alert("you have to send a message");
         }
         let text = this.body;
         let body = {
           body: text,
-          sender_id: this.userId,
+          sender_id: this.$store.state.loggedInUser.user.id,
           conversation_id: this.currentMessageList.id
         };
         let ownBody = body;
@@ -252,7 +253,7 @@ export default {
 
         let res = await Axios.post("messages", body);
 
-        // console.log(res.data);
+        console.log(res.data);
 
         if (res.data.status) {
           // this.currentMessageList.last_message = this.body;
@@ -289,17 +290,15 @@ export default {
       this.messages = [...v.messages];
     },
     messageList(v) {
+      // console.log(list.id);
       v.forEach(list => {
-        window.Echo.join(`conversations.${list.id}`).listen(
-          ".messageSent",
-          e => {
-            //
-            // this.messages.push(e.message);
-            this.currentMessageList.last_sent = e.message.created_at;
-            this.currentMessageList.last_message = e.message.body;
-            // console.log(e, "sent you a message");
-          }
-        );
+        window.Echo.join(`conversations.${1}`).listen(".messageSent", e => {
+          //
+          // this.messages.push(e.message);
+          this.currentMessageList.last_sent = e.message.created_at;
+          this.currentMessageList.last_message = e.message.body;
+          console.log(e, "sent you a message");
+        });
       });
     }
   }
