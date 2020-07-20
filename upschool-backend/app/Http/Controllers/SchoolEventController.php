@@ -34,7 +34,7 @@ class SchoolEventController extends Controller
         $schoolEvent->description = $request->description;
 
         $schoolEvent->save();
-
+$currentSemester = Semester::latest()->first();
         $event = new Event();
         $event->start_time = $request->start_time;
         $event->end_time = $request->end_time;
@@ -42,8 +42,8 @@ class SchoolEventController extends Controller
         $event->recurrence = $request->recurrence;
         $event->status = false;
         $event->eventable_id = $schoolEvent->id;
-        $event->eventable_type = 'App\SchoolEvent';
-        $event->semester_id = 2;
+        $event->eventable_type = 'App\\SchoolEvent';
+        $event->semester_id = $currentSemester->id;
 
         $event->save();
 

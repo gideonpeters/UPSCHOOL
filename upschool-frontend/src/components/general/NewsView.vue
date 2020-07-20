@@ -4,39 +4,17 @@
       <v-row>
         <v-col cols="12" md="8">
           <div class="d-flex flex-column">
-            <div>
-              <v-card v-if="latestNews" class="pa-3 mb-5" flat>
-                <custom-header title="FEATURED POST" ctaText="View" route="student.news"></custom-header>
-
-                <v-img
-                  :src="latestNews?
-										`http://127.0.0.1:8000${latestNews.image.url}`: ''
-									"
-                  class="white--text align-end"
-                  gradient="to bottom, rgba(0,0,0,.1), rgba(0,0,0,.8)"
-                  height="200px"
-                >
-                  <v-card-title class="py-0" v-text="latestNews? latestNews.title: ''"></v-card-title>
-                  <v-card-title class="fs-4 py-0">
-                    <div v-html="latestNews ? latestNews.body :''" v-line-clamp:20="4"></div>
-                  </v-card-title>
-                  <v-card-actions class="py-0">
-                    <v-spacer></v-spacer>
-
-                    <v-btn text color="white" @click="goToNews(latestNews.id)">READ MORE</v-btn>
-                  </v-card-actions>
-                </v-img>
-              </v-card>
-              <v-card v-else flat class="pa-3 mb-5">
-                <div>No Featured news available</div>
-              </v-card>
-            </div>
+            <featured-card
+              :latestNews="latestNews"
+              :route="'staff.news.details'"
+              :handleClick="goToNews"
+            />
 
             <div class="d-flex justify-space-between align-center">
               <v-subheader
                 class="pa-0 text-uppercase"
               >{{news.length > 0 ? 'NEWS & ANNOUNCEMENTS' : 'No news posted yet'}}</v-subheader>
-              <div v-if="!isStudent">
+              <div v-if="isAdmin">
                 <v-dialog
                   v-model="dialogFull"
                   fullscreen
@@ -81,11 +59,14 @@
         <v-col>
           <div class="d-flex justify-space-between align-center">
             <v-subheader class="pa-0">SCHOOL EVENTS</v-subheader>
-            <v-btn color="blue accent-4" text v-if="!isStudent">CREATE EVENT</v-btn>
+            <v-btn color="blue accent-4" text v-if="isAdmin">CREATE EVENT</v-btn>
           </div>
 
           <v-card class="pa-3 mb-4" flat v-for="event in events" :key="event.id">
             <event-item :event="event" />
+          </v-card>
+          <v-card class="pa-3 mb-4" flat v-if="events.length == 0">
+            <div>No school events created yet</div>
           </v-card>
         </v-col>
       </v-row>
@@ -97,6 +78,7 @@
 import NewsItem from "./NewsItem";
 import Editor from "./Editor";
 import EventItem from "./EventItem";
+import FeaturedCard from "./FeaturedCard";
 
 export default {
   name: "news-view",
@@ -117,11 +99,13 @@ export default {
   components: {
     NewsItem,
     Editor,
-    EventItem
+    EventItem,
+    FeaturedCard
   },
   data() {
     return {
-      dialogFull: false
+      dialogFull: false,
+      uri: process.env.VUE_APP_BACKEND_IMAGE_URI
     };
   },
   computed: {

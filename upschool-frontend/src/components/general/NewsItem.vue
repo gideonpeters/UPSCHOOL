@@ -2,11 +2,13 @@
   <v-row align="start">
     <v-col cols="4" md="3">
       <div>
-        <v-img
-          v-if="newsItem.image.url"
-          :src="`http://127.0.0.1:8000${newsItem.image.url}`"
-          height="150"
-        ></v-img>
+        <v-img :src="`${uri}${newsItem.image.url}`" height="150">
+          <template v-slot:placeholder>
+            <v-row class="fill-height grey ma-0" align="center" justify="center">
+              <div class="headline text-center white--text text-bold"></div>
+            </v-row>
+          </template>
+        </v-img>
       </div>
     </v-col>
     <v-col cols="8" md="9">
@@ -88,7 +90,9 @@ export default {
     newsActions: [
       { id: 1, title: "Edit", fn: () => {} },
       { id: 2, title: "Delete", fn: id => this.deleteItem(id) }
-    ]
+    ],
+    uri: process.env.VUE_APP_BACKEND_IMAGE_URI
+
     // 	img:
     // 		"https://static.wixstatic.com/media/415a35bc6e1642e2a0f53f9a1963eb1d.jpg"
   }),

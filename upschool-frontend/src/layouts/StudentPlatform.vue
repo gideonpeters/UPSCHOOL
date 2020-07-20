@@ -5,8 +5,8 @@
       <v-navigation-drawer
         app
         v-model="drawer"
-        :mini-variant.sync="mini"
-        :permanent="$vuetify.breakpoint.mdAndUp ? mini : false"
+        :mini-variant.sync="$vuetify.breakpoint.mdAndUp ? mini :false"
+        :permanent="$vuetify.breakpoint.mdAndUp ? true : false"
         :temporary="$vuetify.breakpoint.smAndDown ? true : false"
       >
         <v-list-item class="px-2 py-4">
@@ -108,7 +108,7 @@
 
         <v-menu offset-y :close-on-content-click="closeOnContentClick">
           <template v-slot:activator="{ on }">
-            <v-btn depressed color="primary" dark v-on="on" v-if="!(keyStat > 2)">
+            <v-btn depressed color="primary" dark v-on="on">
               <v-icon color="white" class="pointer">mdi-apps</v-icon>
             </v-btn>
           </template>
@@ -132,12 +132,10 @@
           </v-card>
         </v-menu>
 
-        <v-menu transition="slide-y-transition" bottom>
+        <!-- <v-menu transition="slide-y-transition" bottom>
           <template v-slot:activator="{ on }">
             <v-btn dark icon color="grey" v-on="on">
-              <!-- <v-btn icon> -->
               <v-icon color="white">mdi-bell-outline</v-icon>
-              <!-- </v-btn> -->
             </v-btn>
           </template>
           <v-list>
@@ -149,7 +147,7 @@
               </v-list-item-title>
             </v-list-item>
           </v-list>
-        </v-menu>
+        </v-menu>-->
 
         <!-- <v-menu transition="slide-y-transition" bottom color="primary">
 					<template v-slot:activator="{ on }">

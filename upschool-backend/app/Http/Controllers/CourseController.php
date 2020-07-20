@@ -78,15 +78,20 @@ class CourseController extends Controller
         $course->description = $request->description;
 
         // $course->staff_id = $request->staff_id;
-        $course->prerequisite_id = $request->prerequisite_id;
-        $course->semester_type_id = $request->semester_type_id;
+        // $course->prerequisite_id = $request->prerequisite_id;
+        // $course->semester_type_id = $request->semester_type_id;
 
         $course->save();
 
         // $facilitators = Staff::find($request->staff_id);
+if($request->staff_id){
 
-        $course->facilitators()->attach($request->staff_id);
-        $course->prerequisites()->attach($request->prerequisite_id);
+    $course->facilitators()->attach($request->staff_id);
+}
+if($request->prerequisite_id){
+
+    $course->prerequisites()->attach($request->prerequisite_id);
+}
 
         return response()->json([
             'status' => true,

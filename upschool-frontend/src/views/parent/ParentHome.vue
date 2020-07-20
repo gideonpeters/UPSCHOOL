@@ -35,8 +35,15 @@
                     results
                   </v-card-text>
                 </div>
-                <v-btn color="success" class="ma-5" @click="$router.push({ name: 'parent.setup' })">
+                <!-- <v-btn color="success" class="ma-5" @click="$router.push({ name: 'parent.setup' })">
                   <v-icon class="mr-2">mdi-settings</v-icon>Let's get you all set up
+                </v-btn>-->
+                <v-btn
+                  color="success"
+                  class="ma-5"
+                  @click="$router.push({ name: 'parent.dashboard' })"
+                >
+                  <v-icon class="mr-2">mdi-settings</v-icon>View Dashboard
                 </v-btn>
               </v-col>
             </v-row>

@@ -12,33 +12,11 @@
         </v-col>
         <v-col cols="12" sm="12" md="8">
           <div class="d-flex flex-column">
-            <div>
-              <v-card class="pa-3 mb-5" flat>
-                <custom-header
-                  title="FEATURED POST"
-                  ctaText="View more"
-                  :route="
-										isStaff ? 'staff.news' : 'student.news'
-									"
-                ></custom-header>
-                <v-img
-                  :src=" latestNews.image ? 
-										`${uri}${latestNews.image.url}`: 'ggdf'
-									"
-                  class="white--text align-end"
-                  gradient="to bottom, rgba(0,0,0,.1), rgba(0,0,0,.8)"
-                  height="200px"
-                >
-                  <v-card-title class="py-0" v-text="latestNews.title"></v-card-title>
-                  <v-card-title class="fs-4 py-0" v-html="latestNews.body" v-line-clamp:20="5"></v-card-title>
-                  <v-card-actions class="py-0">
-                    <v-spacer></v-spacer>
-
-                    <v-btn text color="white">READ MORE</v-btn>
-                  </v-card-actions>
-                </v-img>
-              </v-card>
-            </div>
+            <featured-card
+              :latestNews="latestNews"
+              route="staff.news.details"
+              :handleClick="goToNews"
+            />
             <div>
               <v-card class="pa-3 mb-5" flat>
                 <custom-header
@@ -367,6 +345,7 @@
 
 <script>
 import QuizCard from "@/components/general/QuizCard";
+import FeaturedCard from "@/components/general/FeaturedCard";
 // import DashboardCalendar from "@/components/general/Calendar";
 import AssignmentTable from "@/components/general/AssignmentTable";
 import Axios from "axios";
@@ -375,7 +354,8 @@ export default {
   components: {
     QuizCard,
     // DashboardCalendar,
-    AssignmentTable
+    AssignmentTable,
+    FeaturedCard
   },
   props: {
     isStaff: {
@@ -445,7 +425,7 @@ export default {
         }
       ],
       schedule: [],
-      uri: process.env.VUE_APP_BACKEND_URI
+      uri: process.env.VUE_APP_BACKEND_IMAGE_URI
     };
   },
   computed: {
@@ -483,6 +463,28 @@ export default {
         route = "staff." + route;
       }
       return route;
+    },
+    goToNews(id) {
+      if (this.isStudent) {
+        return this.$router.push({
+          name: "student.news.details",
+          params: { id: id }
+        });
+      } else if (this.isStaff) {
+        return this.$router.push({
+          name: "staff.news.details",
+          params: { id: id }
+        });
+      } else if (this.isAdmin) {
+        return this.$router.push({
+          name: "parent.news.details",
+          params: { id: id }
+        });
+      }
+      // this.$router.push({
+      // 	name: "parent.news.details",
+      // 	params: { id: id }
+      // });
     }
   },
   async mounted() {

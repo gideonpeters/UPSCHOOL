@@ -53,16 +53,16 @@
 
               <div class="pa-5">
                 <v-card flat v-if="item == 'Academic Profile'" min-height="500">
-                  <div class="d-flex flex-column mb-4">
+                  <!-- <div class="d-flex flex-column mb-4">
                     <div class="font-weight-bold fs-4">PROGRAM</div>
-                    <!-- <div>{{staff.program.degree.name}} ({{staff.progam.degree.short_name}})</div> -->
-                    <div class="font-italic">Major in</div>
-                  </div>
+                  <!-- <div>{{staff.program.degree.name}} ({{staff.progam.degree.short_name}})</div>-->
+                  <!-- <div class="font-italic">Major in</div>
+                  </div>-->
 
-                  <div class="d-flex flex-column mb-4">
+                  <!-- <div class="d-flex flex-column mb-4">
                     <div class="font-weight-bold fs-4">DURATION</div>
                     <div>Years</div>
-                  </div>
+                  </div>-->
 
                   <div class="d-flex flex-column mb-4">
                     <div class="font-weight-bold fs-4">YEAR OF ENTRY</div>
@@ -78,17 +78,17 @@
 
                   <div class="d-flex flex-column mb-4">
                     <div class="font-weight-bold fs-4">COLLEGE</div>
-                    <div></div>
+                    <div>{{ 'College of Engineering' }}</div>
                   </div>
 
                   <div class="d-flex flex-column mb-4">
-                    <div class="font-weight-bold fs-4">ACADEMIC STANDING</div>
-                    <div></div>
+                    <div class="font-weight-bold fs-4">RANK</div>
+                    <div>{{staff.rank ? staff.rank : 'Senior Lecturer'}}</div>
                   </div>
 
                   <div class="d-flex flex-column mb-4">
-                    <div class="font-weight-bold fs-4">LEVEL/GRADE</div>
-                    <div>level</div>
+                    <div class="font-weight-bold fs-4">STAFF NUMBER</div>
+                    <div>{{staff.staff_number}}</div>
                   </div>
                 </v-card>
 
@@ -97,7 +97,7 @@
                     <div class="font-weight-bold fs-4">FULL NAME</div>
                     <div
                       class="font-italic"
-                    >{{ `${staff.first_name} ${staff.middle_name} ${staff.last_name}` }}</div>
+                    >{{ `${staff.first_name} ${staff.middle_name ? staff.middle_name: ''} ${staff.last_name}` }}</div>
                   </div>
                   <div class="d-flex flex-column mb-4">
                     <div class="font-weight-bold fs-4">PHONE NUMBER</div>
@@ -113,14 +113,14 @@
                   </div>
                 </v-card>
 
-                <v-card flat v-if="item == 'Graduation Requirements'" min-height="500"></v-card>
+                <!-- <v-card flat v-if="item == 'Graduation Requirements'" min-height="500"></v-card> -->
 
-                <v-card flat v-if="item == 'Curriculum'" min-height="500"></v-card>
+                <v-card flat v-if="item == 'Course Evaluations'" min-height="500"></v-card>
 
-                <v-card flat v-if="item == 'Results/Transcripts'" min-height="500"></v-card>
+                <v-card flat v-if="item == 'Finances'" min-height="500"></v-card>
 
                 <v-card flat v-if="item == 'Issues'" min-height="500">
-                  <div></div>
+                  <issues />
                 </v-card>
               </div>
             </v-tab-item>
@@ -133,9 +133,10 @@
 
 <script>
 import StaffCard from "./StaffCard";
+import Issues from "./../general/room-view/Issues";
 
 export default {
-  components: { StaffCard },
+  components: { StaffCard, Issues },
   props: {
     staff: {
       type: Object

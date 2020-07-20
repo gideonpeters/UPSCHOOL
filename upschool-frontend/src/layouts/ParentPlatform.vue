@@ -3,9 +3,9 @@
     <v-navigation-drawer
       app
       v-model="drawer"
-      :mini-variant.sync="$vuetify.breakpoint.mdAndUp ? mini : !mini"
+      :mini-variant.sync="$vuetify.breakpoint.mdAndUp ? mini :false"
       :permanent="$vuetify.breakpoint.mdAndUp ? true : false"
-      :temporary="$vuetify.breakpoint.smAndDown ? true :false"
+      :temporary="$vuetify.breakpoint.smAndDown ? true : false"
       color="#43425D"
       dark
     >
@@ -19,8 +19,8 @@
         <v-btn
           icon
           @click="$vuetify.breakpoint.mdAndUp
-						? (mini = !mini)
-						: (drawer = !drawer)"
+							? (mini = !mini)
+							: (drawer = !drawer)"
         >
           <v-icon>mdi-chevron-left</v-icon>
         </v-btn>
@@ -82,8 +82,8 @@
         color="grey"
         @click="
 					$vuetify.breakpoint.mdAndUp
-						? (mini = !mini)
-						: (drawer = !drawer)
+						? ( mini = !mini)
+						: (mini = !mini,drawer = !drawer)
 				"
       >mdi-menu</v-icon>
       <!-- <v-text-field
@@ -104,7 +104,7 @@
         <v-icon>mdi-forum</v-icon>
       </v-btn>
 
-      <v-menu left bottom>
+      <!-- <v-menu left bottom>
         <template v-slot:activator="{ on }">
           <v-btn icon v-on="on">
             <v-icon>mdi-bell</v-icon>
@@ -116,7 +116,7 @@
             <v-list-item-title>Option {{ n }}</v-list-item-title>
           </v-list-item>
         </v-list>
-      </v-menu>
+      </v-menu>-->
 
       <v-menu offset-y bottom>
         <template v-slot:activator="{ on }">
@@ -160,7 +160,7 @@
 export default {
   data() {
     return {
-      drawer: true,
+      drawer: false,
       items: [
         {
           title: "Home",

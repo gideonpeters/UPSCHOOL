@@ -155,6 +155,11 @@ export default [
 		name: "staff.news",
 		component: () => import("./../views/staff/StaffNews")
 	},
+	{
+		path: "news/:id",
+		name: "staff.news.details",
+		component: () => import("./../views/staff/StaffNewsDetails")
+	},
 	// {
 	// 	path: "residence",
 	// 	name: "staff.residence",

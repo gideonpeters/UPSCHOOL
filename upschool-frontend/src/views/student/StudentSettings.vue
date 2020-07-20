@@ -1,3 +1,3 @@
 <template>
-	<v-app>settings</v-app>
+  <v-app>settings under construction</v-app>
 </template>

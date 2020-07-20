@@ -258,7 +258,7 @@ export default new Vuex.Store({
 		},
 		async getUser({ state }) {
 			let res = await axios.post("auth/me");
-			window.Echo.private(`App.User.${res.data.user.id}`)
+			window.Echo.private(`App.User.${res.data.user.user.id}`)
 				.listen(`App.User.${res.data.user.id}`, e => {
 					console.log(e);
 				})
@@ -266,6 +266,7 @@ export default new Vuex.Store({
 					console.table(notification);
 				});
 			state.loggedInUser = res.data.user;
+			console.log(state.loggedInUser);
 			// return res.data.user;
 		},
 		async getUserEvents({ }, item) {
@@ -293,6 +294,11 @@ export default new Vuex.Store({
 			let res = await axios.get("program");
 
 			state.programs = res.data.data;
+		},
+		async getProgramById({ state }, id) {
+			let res = await axios.get(`program/${id}`);
+
+			return res.data.data;
 		},
 		async getStudents({ state }) {
 			let res = await axios.get("student");
@@ -433,12 +439,12 @@ export default new Vuex.Store({
 			return res.data.data;
 		},
 		async getAllCourses({ state }) {
-			let res = await axios.get("courses");
+			let res = await axios.get("course");
 
 			state.courses = res.data.data;
 		},
 		async getCourseById({ }, id) {
-			let res = await axios.get(`courses/${id}`);
+			let res = await axios.get(`course/${id}`);
 			return res.data.data;
 		},
 		async getCurricula({ }, id) {

@@ -27,7 +27,7 @@
           ></v-text-field>
         </v-col>
         <v-spacer></v-spacer>
-        <v-col cols="12" md="3">
+        <!-- <v-col cols="12" md="3">
           <v-combobox
             outlined
             v-model="selectCategory"
@@ -37,7 +37,7 @@
             multiple
             chips
           ></v-combobox>
-        </v-col>
+        </v-col>-->
 
         <v-col cols="12" md="2" v-if="!isStudent">
           <div class="text-lg-right">
@@ -101,10 +101,10 @@
                           <v-col cols="6">
                             <v-text-field outlined label="Course Code" v-model="courseCode"></v-text-field>
                           </v-col>
-                          <v-col cols="6">
+                          <!-- <v-col cols="6">
                             <v-text-field outlined label="Credit Unit(s)" v-model="creditUnit"></v-text-field>
-                          </v-col>
-                          <v-col class="d-flex" cols="12" sm="6">
+                          </v-col>-->
+                          <!-- <v-col class="d-flex" cols="12" sm="6">
                             <v-select
                               :items="
 																semesterTypes
@@ -129,11 +129,11 @@
                                 }},
                               </template>
                             </v-select>
-                          </v-col>
+                          </v-col>-->
                           <v-col cols="12">
                             <div class="d-flex">
                               <v-spacer></v-spacer>
-                              <v-btn color="success" depressed>SAVE</v-btn>
+                              <v-btn color="success" depressed @click="saveCourse">SAVE</v-btn>
                             </div>
                           </v-col>
                         </v-row>
@@ -431,7 +431,7 @@ export default {
       courseCode: null,
       select: [],
       parseCsv: null,
-      isBulk: true,
+      isBulk: false,
       model: [
         {
           title: "",
@@ -589,7 +589,27 @@ export default {
         throw error;
       }
     },
-    async saveCourse() {}
+    async saveCourse() {
+      let body = {
+        title: this.courseTitle,
+        course_code: this.courseCode
+      };
+
+      let res = await Axios.post("course", body);
+      if (res.data.status) {
+        this.$store.commit("openSnackbar", res.data.message);
+        this.getAllCourses();
+      }
+    },
+    async getAllCourses() {
+      if (this.personal) {
+        this.getEnrolledCourses().then(() => (this.isLoadingCourses = false));
+      } else {
+        await this.$store
+          .dispatch("getAllCourses")
+          .then(() => (this.isLoadingCourses = false));
+      }
+    }
   },
   watch: {
     dummy() {
@@ -599,13 +619,7 @@ export default {
   async mounted() {
     try {
       // if (this.courses.length == 0) {
-      if (this.personal) {
-        this.getEnrolledCourses().then(() => (this.isLoadingCourses = false));
-      } else {
-        await this.$store
-          .dispatch("getAllCourses")
-          .then(() => (this.isLoadingCourses = false));
-      }
+      this.getAllCourses();
 
       // }
     } catch (error) {
