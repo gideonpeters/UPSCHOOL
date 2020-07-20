@@ -6,7 +6,7 @@
       </v-btn>
     </div>
     <div class="pa-3">
-      <v-img v-if="news.image.url" :src="`${uri}${news.image.url}`" height="300" contain>
+      <v-img v-if="news.image.url" :src="`${news.image.url}`" height="300" contain>
         <template v-slot:placeholder>
           <v-row class="fill-height grey ma-0" align="center" justify="center">
             <div class="headline text-center white--text text-bold"></div>

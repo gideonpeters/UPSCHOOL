@@ -2,7 +2,7 @@
   <v-row align="start">
     <v-col cols="4" md="3">
       <div>
-        <v-img :src="`${uri}${newsItem.image.url}`" height="150">
+        <v-img :src="`${newsItem.image.url}`" height="150">
           <template v-slot:placeholder>
             <v-row class="fill-height grey ma-0" align="center" justify="center">
               <div class="headline text-center white--text text-bold"></div>
