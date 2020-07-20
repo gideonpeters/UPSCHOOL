@@ -5,7 +5,7 @@
         <v-col cols="12" md="12">
           <div>Events & Attendance</div>
         </v-col>
-        <v-col cols="12" md="3">
+        <v-col cols="12" md="3" sm="6">
           <metric title="Number of Events" :value="events.length" />
         </v-col>
         <v-col cols="8"></v-col>

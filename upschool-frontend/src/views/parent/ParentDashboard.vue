@@ -5,20 +5,20 @@
         <v-col cols="12">
           <div>Dashboard</div>
         </v-col>
-        <v-col cols="12" md="3">
+        <v-col cols="12" md="3" sm="6">
           <metric title="Total Students" :value="students.length" routeName="parent.students" />
         </v-col>
-        <v-col cols="12" md="3">
+        <v-col cols="12" md="3" sm="6">
           <metric title="Total Staff" :value="staff.length" routeName="parent.staff" />
         </v-col>
-        <v-col cols="12" md="3">
+        <v-col cols="12" md="3" sm="6">
           <metric
             title="Total Departments"
             :value="departments.length"
             routeName="parent.students"
           />
         </v-col>
-        <v-col cols="12" md="3">
+        <v-col cols="12" md="3" sm="6">
           <metric title="Total Colleges" :value="colleges.length" routeName="parent.students" />
         </v-col>
         <v-col cols="12">

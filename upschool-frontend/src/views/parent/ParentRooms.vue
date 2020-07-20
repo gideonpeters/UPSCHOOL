@@ -2,10 +2,10 @@
 	<v-app>
 		<v-container>
 			<v-row>
-				<v-col cols="3">
+				<v-col cols="12" md="3" sm="6">
 					<metric-card title="Number of Rooms" :value="rooms.length" />
 				</v-col>
-				<v-col cols="3">
+				<v-col cols="12" md="3" sm="6">
 					<metric-card
 						title="Total Capacity"
 						:value="

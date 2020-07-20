@@ -3,7 +3,7 @@
     <div class="my-5">{{type}}</div>
 
     <v-row>
-      <v-col cols="12" md="3">
+      <v-col cols="12" md="3" sm="6">
         <metric-card :title="`Number of ${type}`" :value="items.length" />
       </v-col>
       <v-col cols="8" md="0"></v-col>
@@ -27,7 +27,7 @@
         </div>
         <v-spacer></v-spacer>
         <div class="d-flex align-center justify-end">
-          <v-menu offset-y :close-on-content-click="false">
+          <!-- <v-menu offset-y :close-on-content-click="false">
             <template v-slot:activator="{ on }">
               <v-btn :ripple="false" v-on="on" color="grey" text>
                 <v-icon color="grey" small>mdi-filter</v-icon>
@@ -74,7 +74,7 @@
                 <v-btn x-small color="success" text>Done</v-btn>
               </v-card-actions>
             </v-card>
-          </v-menu>
+          </v-menu>-->
 
           <v-menu offset-y :close-on-content-click="false">
             <template v-slot:activator="{ on }">

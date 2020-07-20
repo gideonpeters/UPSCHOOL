@@ -3,17 +3,17 @@
     <!-- <h1>Manage</h1> -->
     <v-container>
       <v-row>
-        <v-col cols="3">
+        <v-col cols="12" md="3" sm="6">
           <metric-card title="Number of Advisees" :value="0" />
         </v-col>
-        <v-col cols="3">
+        <v-col cols="12" md="3" sm="6">
           <metric-card title="Approved Enrollments" :value="0" />
         </v-col>
-        <v-col cols="3">
+        <v-col cols="12" md="3" sm="6">
           <metric-card title="Pending Enrollments" :value="0" />
         </v-col>
-        <v-col cols="3"></v-col>
-        <v-col cols="12" md="4">
+        <v-col cols="12" md="3" sm="6"></v-col>
+        <v-col cols="12" md="4" sm="7">
           <v-text-field
             v-model="search"
             flat
