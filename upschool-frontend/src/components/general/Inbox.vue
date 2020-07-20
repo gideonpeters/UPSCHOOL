@@ -235,7 +235,7 @@ export default {
     },
     async sendMessage() {
       try {
-        console.table(this.$store.state.loggedInUser.user, this.userId);
+        // console.table(this.$store.state.loggedInUser.user, this.userId);
         if (!this.body) {
           return alert("you have to send a message");
         }
@@ -292,13 +292,16 @@ export default {
     messageList(v) {
       // console.log(list.id);
       v.forEach(list => {
-        window.Echo.join(`conversations.${1}`).listen(".messageSent", e => {
-          //
-          // this.messages.push(e.message);
-          this.currentMessageList.last_sent = e.message.created_at;
-          this.currentMessageList.last_message = e.message.body;
-          console.log(e, "sent you a message");
-        });
+        window.Echo.join(`conversations.${list.id}`).listen(
+          ".messageSent",
+          e => {
+            //
+            // this.messages.push(e.message);
+            this.currentMessageList.last_sent = e.message.created_at;
+            this.currentMessageList.last_message = e.message.body;
+            console.log(e, "sent you a message");
+          }
+        );
       });
     }
   }

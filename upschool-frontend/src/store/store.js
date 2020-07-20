@@ -225,6 +225,13 @@ export default new Vuex.Store({
 
 				if (token) {
 					commit("auth_success", userInfo);
+					window.Echo.private(`App.User.${userInfo.id}`)
+						.listen(`App.User.${userInfo.id}`, e => {
+							console.log(e);
+						})
+						.notification(notification => {
+							console.table(notification);
+						});
 					commit(
 						"openSnackbar",
 						`Welcome to Upschool ${userInfo.name}`
@@ -239,10 +246,11 @@ export default new Vuex.Store({
 				localStorage.removeItem(`upschool-token`);
 			}
 		},
-		async logout({ commit }) {
+		async logout({ state, commit }) {
 			try {
 				await axios.post("auth/logout");
 				localStorage.removeItem(`upshool-token`);
+				window.Echo.private(`App.User.${state.loggedInUser.user.id}`);
 				commit("openSnackbar", "Logged out successfully!");
 			} catch (error) {
 				throw error;
@@ -250,7 +258,13 @@ export default new Vuex.Store({
 		},
 		async getUser({ state }) {
 			let res = await axios.post("auth/me");
-
+			window.Echo.private(`App.User.${res.data.user.id}`)
+				.listen(`App.User.${res.data.user.id}`, e => {
+					console.log(e);
+				})
+				.notification(notification => {
+					console.table(notification);
+				});
 			state.loggedInUser = res.data.user;
 			// return res.data.user;
 		},

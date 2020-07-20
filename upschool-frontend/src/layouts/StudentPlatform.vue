@@ -460,26 +460,40 @@ export default {
       this.goToPage("main.login");
     }
   },
-  async created() {
+  async mounted() {
     try {
-      if (!this.$store.state.loggedInUser) {
-        this.$store.dispatch("getUser");
-      }
+      //   if (!this.$store.state.loggedInUser) {
+      this.$store.dispatch("getUser");
+      //   }
       this.$store.dispatch("getNews");
     } catch (err) {
       throw err;
     }
-  },
-  async mounted() {
-    // console.log(this.$store.loggedInUser.user.id);
-    window.Echo.private(`App.User.${this.$store.state.loggedInUser.user.id}`)
-      .listen(`App.User.${this.$store.state.loggedInUser.user.id}`, e => {
-        console.log(e);
-      })
-      .notification(notification => {
-        console.table(notification);
-      });
   }
+  //   async mounted() {
+  // console.log(this.$store.loggedInUser.user.id);
+  // this.$store.state.loggedInUser.user.id
+  //   ? window.Echo.private(
+  //       `App.User.${this.$store.state.loggedInUser.user.id}`
+  //     )
+  //       .listen(`App.User.${this.$store.state.loggedInUser.user.id}`, e => {
+  //         console.log(e);
+  //       })
+  //       .notification(notification => {
+  //         console.table(notification);
+  //       })
+  //   : this.$store.dispatch("getUser").then(() => {
+  //       window.Echo.private(
+  //         `App.User.${this.$store.state.loggedInUser.user.id}`
+  //       )
+  //         .listen(`App.User.${this.$store.state.loggedInUser.user.id}`, e => {
+  //           console.log(e);
+  //         })
+  //         .notification(notification => {
+  //           console.table(notification);
+  //         });
+  //     });
+  //   }
 };
 </script>
 
