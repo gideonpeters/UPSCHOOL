@@ -3,7 +3,7 @@
     <v-container fluid class="pa-0">
       <v-row wrap>
         <v-col cols="12" sm="12" md="12">
-          <div class="d-flex align-baseline py-3">
+          <div class="d-flex flex-lg-row flex-column align-baseline py-3">
             <div class="fs-2 font-weight-light">Welcome, {{ user.first_name }}!</div>
             <v-spacer></v-spacer>
             <div>{{ date.toDateString() }}</div>
@@ -13,8 +13,8 @@
         <v-col cols="12" sm="12" md="8">
           <div class="d-flex flex-column">
             <featured-card
+              :route="isStudent? 'student.news':  'staff.news'"
               :latestNews="latestNews"
-              route="staff.news.details"
               :handleClick="goToNews"
             />
             <div>

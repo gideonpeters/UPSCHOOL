@@ -1,11 +1,11 @@
 <template>
   <div>
     <v-card v-if="latestNews" class="pa-3 mb-5" flat>
-      <custom-header title="FEATURED POST" ctaText="View" route="student.news"></custom-header>
+      <custom-header title="FEATURED POST" ctaText="View" :route="route" :hideAction="hideAction"></custom-header>
 
       <v-img
-        :src="latestNews?
-										`${latestNews.image.url}`: ''
+        :src="
+										`${latestNews.image? latestNews.image.url: ''}`
 									"
         class="white--text align-end"
         gradient="to bottom, rgba(0,0,0,.1), rgba(0,0,0,.8)"
@@ -38,6 +38,13 @@ export default {
   props: {
     latestNews: {
       type: Object
+    },
+    featureRoute: {
+      type: String
+    },
+    hideAction: {
+      type: Boolean,
+      default: false
     },
     route: {
       type: String

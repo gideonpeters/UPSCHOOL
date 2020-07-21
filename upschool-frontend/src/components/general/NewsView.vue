@@ -5,6 +5,7 @@
         <v-col cols="12" md="8">
           <div class="d-flex flex-column">
             <featured-card
+              hideAction
               :latestNews="latestNews"
               :route="'staff.news.details'"
               :handleClick="goToNews"
