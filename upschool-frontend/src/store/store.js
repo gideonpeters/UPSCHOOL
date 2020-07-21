@@ -142,7 +142,7 @@ export default new Vuex.Store({
 		messageList: [],
 		settings: {
 			canEnroll: true,
-			canAddAndDrop: true,
+			canAddAndDrop: false,
 			enrollBySemester: false,
 			enrollBySession: true,
 		},

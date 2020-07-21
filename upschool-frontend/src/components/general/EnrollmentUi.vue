@@ -50,7 +50,7 @@
                         color="primary"
                         v-if="
 													settings.canEnroll && isStudent &&
-														!isAddingAndDropping && !currentEnrollment
+														!isAddingAndDropping 
 												"
                         outlined
                         @click="enroll"
@@ -105,6 +105,9 @@
                         :key="curriculumItem.id"
                       >
                         <curriculum-table
+                          :isAdmin="isAdmin"
+                          :isStudent="isStudent"
+                          :isStaff="isStaff"
                           :isLoadingCurrent="isLoadingCurrent"
                           :isEnrolling="isEnrolling"
                           :selectedCourses="
@@ -371,9 +374,9 @@ export default {
       pendingSelected: [],
       awaitingApprovalCourses: [],
       showPendingSelect: false,
-      showEdit: false,
+      showEdit: true,
       showAwaiting: false,
-      isEnrolling: false,
+      isEnrolling: true,
       isAddingAndDropping: false,
       items: [
         { id: 1, tab: "OVERVIEW" },
@@ -689,7 +692,10 @@ export default {
     },
     enroll() {
       if (this.$store.state.selectedCourses.length <= 0 && this.isEnrolling) {
-        alert("You need to select courses to enroll");
+        this.$store.commit(
+          "openSnackbar",
+          "You need to select courses to enroll"
+        );
         return;
       }
       if (this.isEnrolling) {

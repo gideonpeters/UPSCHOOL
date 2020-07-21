@@ -240,6 +240,11 @@ export default {
           icon: "mdi-bookshelf"
         },
         {
+          route: "student.residence",
+          title: "Residency",
+          icon: "mdi-home"
+        },
+        {
           route: "student.payments",
           title: "Financials",
           icon: "mdi-finance"

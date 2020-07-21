@@ -19,8 +19,8 @@
           units
         </div>
       </div>
-      <div class="d-flex flex-column align-end">
-        <v-menu bottom left>
+      <div class="d-flex flex-column align-end justify-center">
+        <v-menu bottom left v-if="isAdmin">
           <template v-slot:activator="{ on }">
             <v-btn icon v-on="on">
               <v-icon>mdi-dots-vertical</v-icon>
@@ -251,6 +251,18 @@ export default {
     isLoadingCurrent: {
       type: Boolean,
       default: true
+    },
+    isAdmin: {
+      type: Boolean,
+      default: false
+    },
+    isStaff: {
+      type: Boolean,
+      default: false
+    },
+    isStudent: {
+      type: Boolean,
+      default: false
     },
     bus: {}
     // selectedCourses: {
