@@ -92,7 +92,11 @@
                 <v-container fluid class="pa-0">
                   <v-row no-gutters>
                     <v-col cols="12">
-                      <custom-header title="UPCOMING C.A." ctaText="View all" route="student.news"></custom-header>
+                      <custom-header
+                        title="UPCOMING C.A."
+                        ctaText="View all"
+                        route="student.courses.grading"
+                      ></custom-header>
                     </v-col>
                     <!-- <v-col cols="12" sm="3" v-for="i in 4" :key="i">
 														<quiz-card  />
@@ -492,7 +496,7 @@ export default {
       this.$store.dispatch("getNews");
       this.$store.dispatch("getSchoolEvents");
       let res = await Axios.get("event");
-      console.log(res.data);
+      // console.log(res.data);
 
       this.schedule = res.data.data.filter(item =>
         this.moment().isSame(this.moment(item.start_time), "day")
@@ -505,7 +509,7 @@ export default {
         });
       }
     } catch (error) {
-      console.log(error);
+      throw error;
     }
   }
 };
