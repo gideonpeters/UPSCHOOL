@@ -391,7 +391,7 @@
 
                 <v-card flat v-if="item == 'Issues'" min-height="500">
                   <v-row justify="space-between" align="center">
-                    <v-col cols="5">
+                    <v-col cols="12" md="5" sm="6">
                       <v-text-field
                         v-model="search"
                         single-line
@@ -403,10 +403,10 @@
                         prepend-inner-icon="mdi-magnify"
                       ></v-text-field>
                     </v-col>
-                    <v-col cols="3">
+                    <v-col cols="12" md="3">
                       <v-dialog v-model="dialog" persistent max-width="600px">
                         <template v-slot:activator="{ on }">
-                          <v-btn color="error" text dark depressed v-on="on">CREATE ISSUE</v-btn>
+                          <v-btn color="error" outlined dark depressed v-on="on">CREATE ISSUE</v-btn>
                         </template>
                         <v-card>
                           <v-card-title>

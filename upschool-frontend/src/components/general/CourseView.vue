@@ -1,7 +1,7 @@
 <template>
   <div>
     <div class="d-flex align-center">
-      <v-btn icon color="black" @click="goBack">
+      <v-btn icon color="black" @click="$router.go(-1)">
         <v-icon>mdi-arrow-left</v-icon>
       </v-btn>
       <div v-if="course">
@@ -87,7 +87,7 @@ export default {
       } else if (this.isStaff) {
         this.$router.push({ name: "staff.courses" });
       } else if (this.isStudent) {
-        this.$router.push({ name: "student.courses.plan" });
+        this.$router.push({ name: "student.courses" });
       }
     }
   },

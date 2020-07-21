@@ -2,7 +2,7 @@
   <div>
     <v-container>
       <v-row v-if="personal" align="center">
-        <v-col cols="12" md="4">
+        <v-col cols="12" md="4" sm="6">
           <v-skeleton-loader
             transition="scale-transition"
             :loading="isLoadingCourses"
@@ -17,7 +17,7 @@
         </v-col>
       </v-row>
       <v-row align="center">
-        <v-col cols="12" md="4">
+        <v-col cols="12" md="4" sm="8">
           <v-text-field
             v-model="search"
             flat
