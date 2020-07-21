@@ -133,7 +133,7 @@ if(!$student_room){
     return response()->json([
         'status' => true,
         'message' => 'no room allocation history',
-        'data' => []
+        'data' =>  []
     ], 201);
 }
             return response()->json([

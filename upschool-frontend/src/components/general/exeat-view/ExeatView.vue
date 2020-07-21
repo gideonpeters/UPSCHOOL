@@ -376,7 +376,7 @@ export default {
     async getExeatTypes() {
       try {
         let res = await Axios.get("exeat-type");
-        console.table(res.data);
+        // console.table(res.data);
         this.exeatTypes = res.data.data;
       } catch (error) {
         throw error;
@@ -391,7 +391,7 @@ export default {
         }
         // console.log(id);
         let res = await Axios.get(`exeat?student_id=${id}`);
-        console.table(res.data);
+        // console.table(res.data);
         this.exeats = res.data.data;
       } catch (error) {
         throw error;
@@ -451,7 +451,7 @@ export default {
         // console.log(...body);
         let res = await Axios.post("exeat", body);
         this.$store.commit("openSnackbar", res.data.message);
-        console.table(res.data);
+        // console.table(res.data);
         if (res.data.status) {
           this.getExeats().then(() => (this.isLoading = false));
         }
