@@ -19,7 +19,7 @@ class Conversation extends Model
 
     public function getTitleAttribute()
     {
-        return $this->name ? $this->name : $this->users->whereNotIn('id', [auth()->user()->id])->first()->name;
+        return $this->name && count($this->users) > 2 ? $this->name : $this->users->whereNotIn('id', [auth()->user()->id])->first()->name;
     }
 
     public function getLastMessageAttribute()

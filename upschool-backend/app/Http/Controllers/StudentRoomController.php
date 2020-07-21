@@ -129,7 +129,13 @@ class StudentRoomController extends Controller
         } else if ($allocation_settings->allocate_by_semester) {
 
             $student_room = StudentRoom::whereSemesterId($currentSemester->id)->whereStudentId($student->id)->first();
-
+if(!$student_room){
+    return response()->json([
+        'status' => true,
+        'message' => 'no room allocation history',
+        'data' => []
+    ], 201);
+}
             return response()->json([
                 'status' => true,
                 'message' => 'this is the allocated room for the semester',

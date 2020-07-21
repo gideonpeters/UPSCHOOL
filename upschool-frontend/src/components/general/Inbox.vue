@@ -236,8 +236,11 @@ export default {
     async sendMessage() {
       try {
         // console.table(this.$store.state.loggedInUser.user, this.userId);
-        if (!this.body) {
-          return alert("you have to send a message");
+        if (!this.body || !/\S/.test(this.body ? this.body : "")) {
+          return this.$store.commit(
+            "openSnackbar",
+            "you have to send a message"
+          );
         }
         let text = this.body;
         let body = {
